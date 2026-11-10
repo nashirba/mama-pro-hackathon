@@ -1,0 +1,5 @@
+*.mo
+.env
+.venv
+staticfiles/
+__pycache__/

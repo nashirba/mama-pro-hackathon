@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}{% if heading %}{{ heading }}{% else %}{% translate "Каталог специалистов" %}{% endif %} - kamqor{% endblock %}
+{% block extra_head %}{% include "partials/map_assets.html" %}<script src="{% static 'js/map/results.js' %}" defer></script>{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-7xl px-4 py-6">
+  {% include "search/_heading.html" %}
+  <div class="mt-6 grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)]">
+    <aside>{% include "search/_filters.html" %}</aside>
+    <div x-data="{ view: 'list' }" class="min-w-0">
+      <div class="mb-4 flex gap-2 text-sm xl:hidden">
+        <button type="button" @click="view = 'list'" :aria-pressed="view === 'list'"
+                class="rounded-full border border-slate-300 px-4 py-1.5 font-medium aria-pressed:border-teal-700 aria-pressed:bg-teal-700 aria-pressed:text-white">{% translate "Список" %}</button>
+        <button type="button" @click="view = 'map'" :aria-pressed="view === 'map'"
+                class="rounded-full border border-slate-300 px-4 py-1.5 font-medium aria-pressed:border-teal-700 aria-pressed:bg-teal-700 aria-pressed:text-white">{% translate "Карта" %}</button>
+      </div>
+      <div class="grid items-start gap-6 xl:grid-cols-2">
+        <section id="results" aria-live="polite" :class="view === 'map' ? 'max-xl:hidden' : ''">{% include "search/_results_partial.html" %}</section>
+        {% include "search/_map.html" %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("filters", (init) => ({
+      ageMin: init.ageMin,
+      ageMax: init.ageMax,
+      failed: false,
+      isAge(lo, hi) {
+        return this.ageMin === String(lo) && this.ageMax === String(hi);
+      },
+      setAge(form, lo, hi) {
+        this.ageMin = String(lo);
+        this.ageMax = String(hi);
+        // the inputs are updated by x-model on the next tick; htmx reads them on `change`
+        this.$nextTick(() => form.dispatchEvent(new Event("change", { bubbles: true })));
+      },
+      locate(form) {
+        this.failed = false;
+        if (!navigator.geolocation) { this.failed = true; return; }
+        navigator.geolocation.getCurrentPosition((pos) => {
+          const p = new URLSearchParams(new FormData(form));
+          for (const [key, value] of [...p.entries()]) { if (value === "") p.delete(key); }
+          p.set("near", pos.coords.longitude + "," + pos.coords.latitude);
+          p.set("sort", "distance");
+          location.href = form.action + "?" + p;
+        }, () => { this.failed = true; });
+      },
+    }));
+  });
+  // no `q=&price_min=&...` in the request and in the URL htmx pushes
+  document.addEventListener("htmx:configRequest", (event) => {
+    if (event.detail.elt.id !== "filters") return;
+    for (const [key, value] of [...event.detail.formData.entries()]) {
+      if (value === "") event.detail.formData.delete(key);
+    }
+  });
+</script>
+{% endblock %}

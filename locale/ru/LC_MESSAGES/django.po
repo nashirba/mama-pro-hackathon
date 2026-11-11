@@ -1,0 +1,653 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-11 11:48+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: apps/accounts/forms.py:12
+msgid "Номер телефона"
+msgstr ""
+
+#: apps/accounts/forms.py:19 apps/catalog/models/profile.py:34
+msgid "Введите казахстанский мобильный номер, например +7 701 123 45 67"
+msgstr ""
+
+#: apps/accounts/forms.py:24
+msgid "Код из SMS"
+msgstr ""
+
+#: apps/accounts/forms.py:33
+msgid "Необходимо ваше согласие, чтобы продолжить"
+msgstr ""
+
+#: apps/accounts/otp.py:24
+#, python-format
+msgid "Код входа в kamqor: %(code)s"
+msgstr ""
+
+#: apps/accounts/views.py:85 apps/accounts/views.py:101
+msgid "Неверный или просроченный код"
+msgstr ""
+
+#: apps/accounts/views.py:90
+msgid "Слишком много неверных попыток. Запросите новый код."
+msgstr ""
+
+#: apps/catalog/links.py:10
+msgid "Здравствуйте! Нашёл(ла) вас на kamqor, хочу записаться на консультацию"
+msgstr ""
+
+#: apps/catalog/models/profile.py:21
+msgid "Очно"
+msgstr ""
+
+#: apps/catalog/models/profile.py:22
+msgid "Выезд на дом"
+msgstr ""
+
+#: apps/catalog/models/profile.py:23 templates/search/_card.html:22
+msgid "Онлайн"
+msgstr ""
+
+#: apps/catalog/models/profile.py:27 templates/core/home.html:52
+msgid "Личность подтверждена"
+msgstr ""
+
+#: apps/catalog/models/profile.py:28 templates/core/home.html:53
+msgid "Образование подтверждено"
+msgstr ""
+
+#: apps/catalog/models/profile.py:29 templates/core/home.html:54
+msgid "Квалификация подтверждена"
+msgstr ""
+
+#: apps/catalog/models/profile.py:30 templates/core/home.html:55
+msgid "Проверка на безопасность пройдена"
+msgstr ""
+
+#: apps/catalog/models/profile.py:39
+msgid "Максимальный возраст не может быть меньше минимального"
+msgstr ""
+
+#: apps/catalog/models/profile.py:102
+msgid "Частная практика"
+msgstr ""
+
+#: apps/catalog/models/profile.py:103
+msgid "Организация"
+msgstr ""
+
+#: apps/catalog/models/reference.py:51
+msgid "есть доказательная база"
+msgstr ""
+
+#: apps/catalog/models/reference.py:52
+msgid "ограниченная доказательная база"
+msgstr ""
+
+#: apps/catalog/models/reference.py:53
+msgid "нет доказательств эффективности"
+msgstr ""
+
+#: apps/catalog/models/reference.py:54
+msgid "педагогическая система, не терапия"
+msgstr ""
+
+#: apps/catalog/models/service.py:61
+msgid "Укажите область выезда"
+msgstr ""
+
+#: apps/catalog/models/service.py:65
+msgid "У бесплатной услуги не должно быть цены"
+msgstr ""
+
+#: apps/geo/models.py:19
+msgid "Область"
+msgstr ""
+
+#: apps/geo/models.py:20 templates/core/home.html:17
+msgid "Город"
+msgstr ""
+
+#: apps/geo/models.py:21 templates/search/_filters.html:34
+msgid "Район"
+msgstr ""
+
+#: apps/geo/models.py:22
+msgid "Сельский округ"
+msgstr ""
+
+#: apps/geo/models.py:66
+#, python-format
+msgid "Ссылка должна начинаться с %(prefix)s"
+msgstr ""
+
+#: apps/search/forms.py:74
+msgid "По релевантности"
+msgstr ""
+
+#: apps/search/forms.py:75
+msgid "По цене"
+msgstr ""
+
+#: apps/search/forms.py:76
+msgid "По стажу"
+msgstr ""
+
+#: apps/search/templatetags/search_tags.py:28
+#: templates/catalog/specialist_detail.html:72 templates/search/_card.html:13
+msgid "бесплатно"
+msgstr ""
+
+#: apps/search/templatetags/search_tags.py:29 templates/search/_card.html:13
+#, python-format
+msgid "от %(price)s ₸"
+msgstr ""
+
+#: apps/search/templatetags/search_tags.py:30
+#: templates/catalog/specialist_detail.html:72 templates/search/_card.html:13
+msgid "цена по запросу"
+msgstr ""
+
+#: apps/search/templatetags/search_tags.py:31 templates/search/_card.html:26
+msgid "Подробнее"
+msgstr ""
+
+#: apps/search/templatetags/search_tags.py:32
+#: templates/catalog/specialist_detail.html:90
+msgid "Открыть в 2ГИС"
+msgstr ""
+
+#: apps/search/views.py:46
+#, python-format
+msgctxt "landing title without locative"
+msgid "%(name)s: %(city)s"
+msgstr ""
+
+#: apps/search/views.py:47
+#, python-format
+msgctxt "landing title"
+msgid "%(name)s %(locative)s"
+msgstr ""
+
+#: templates/accounts/_consent_fields.html:3
+msgid "Для регистрации нужно согласие"
+msgstr ""
+
+#: templates/accounts/_consent_fields.html:7
+msgid ""
+"Пользовательское соглашение: вы используете kamqor как справочник "
+"специалистов, сами отвечаете за выбор специалиста и не вносите реальные "
+"данные о детях в демо-версии."
+msgstr ""
+
+#: templates/accounts/_consent_fields.html:10
+msgid "Полный текст соглашения"
+msgstr ""
+
+#: templates/accounts/_consent_fields.html:15
+msgid "Я принимаю пользовательское соглашение"
+msgstr ""
+
+#: templates/accounts/_consent_fields.html:22
+msgid ""
+"Обработка персональных данных: мы храним ваш номер телефона и язык "
+"интерфейса, чтобы вы могли входить в аккаунт. Согласие можно отозвать."
+msgstr ""
+
+#: templates/accounts/_consent_fields.html:25
+msgid "Полный текст согласия"
+msgstr ""
+
+#: templates/accounts/_consent_fields.html:30
+msgid "Я даю согласие на обработку персональных данных"
+msgstr ""
+
+#: templates/accounts/code_form.html:3
+msgid "Код подтверждения"
+msgstr ""
+
+#: templates/accounts/code_form.html:6
+msgid "Введите код из SMS"
+msgstr ""
+
+#: templates/accounts/code_form.html:8
+#, python-format
+msgid "Код отправлен на номер %(phone)s."
+msgstr ""
+
+#: templates/accounts/code_form.html:9
+msgid "Изменить номер или отправить код заново"
+msgstr ""
+
+#: templates/accounts/code_form.html:13
+#, python-format
+msgid "В демо-версии SMS не отправляются, код публичный: %(code)s"
+msgstr ""
+
+#: templates/accounts/code_form.html:28
+msgid "Зарегистрироваться"
+msgstr ""
+
+#: templates/accounts/code_form.html:28 templates/partials/header.html:16
+msgid "Войти"
+msgstr ""
+
+#: templates/accounts/phone_form.html:3
+msgid "Вход"
+msgstr ""
+
+#: templates/accounts/phone_form.html:6
+msgid "Вход по номеру телефона"
+msgstr ""
+
+#: templates/accounts/phone_form.html:7
+msgid ""
+"В демо-версии SMS не отправляются, код входа будет показан на следующей "
+"странице."
+msgstr ""
+
+#: templates/accounts/phone_form.html:7
+msgid "Мы отправим код подтверждения в SMS. Пароль не нужен."
+msgstr ""
+
+#: templates/accounts/phone_form.html:19
+msgid "Получить код"
+msgstr ""
+
+#: templates/catalog/_badges.html:3
+msgid "Демо: проверка не проводилась"
+msgstr ""
+
+#: templates/catalog/_badges.html:4 templates/search/_filters.html:122
+msgid "демо"
+msgstr ""
+
+#: templates/catalog/_contact_buttons.html:9
+#: templates/catalog/_contact_buttons.html:15
+msgid "Позвонить"
+msgstr ""
+
+#: templates/catalog/_contact_buttons.html:16
+msgid "в демо-версии не работает"
+msgstr ""
+
+#: templates/catalog/_minimap.html:1
+msgid "Адреса на карте"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:14 templates/search/_card.html:11
+msgid "Стаж, лет"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:15
+msgid "Возраст детей, лет"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:16
+msgid "Языки"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:17
+#: templates/search/_filters.html:99
+msgid "Формат"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:26
+msgid "О себе"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:33
+msgid "Подход к работе"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:41
+msgid "С какими особенностями развития работает"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:50
+msgid "Методы"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:60
+msgid "Услуги и цены"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:66
+#, python-format
+msgid "%(n)s мин"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:72
+#, python-format
+msgid "%(price)s ₸ за занятие"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:73
+#, python-format
+msgid "%(price)s ₸ в месяц"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:83
+msgid "Адреса приёма"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:91
+msgid "Маршрут"
+msgstr ""
+
+#: templates/consents/pd_processing_v1.html:3
+#: templates/consents/user_agreement_v1.html:3
+msgid "Черновик: текст утверждает юрист."
+msgstr ""
+
+#: templates/consents/pd_processing_v1.html:4
+msgid ""
+"1. Вы даёте согласие на сбор и обработку следующих персональных данных: "
+"номер телефона, язык интерфейса, дата и IP-адрес принятия согласий."
+msgstr ""
+
+#: templates/consents/pd_processing_v1.html:8
+msgid ""
+"2. Цель обработки - вход в демо-версию. Демо-версия размещена на серверах за "
+"пределами Республики Казахстан (Render и Neon, Германия) и не предназначена "
+"для реальных данных."
+msgstr ""
+
+#: templates/consents/pd_processing_v1.html:12
+msgid ""
+"2. Цель обработки - создание аккаунта, вход в него и работа сервиса. Данные "
+"хранятся на территории Республики Казахстан и не передаются третьим лицам "
+"без вашего отдельного согласия."
+msgstr ""
+
+#: templates/consents/pd_processing_v1.html:16
+msgid ""
+"3. Согласие действует, пока существует ваш аккаунт. Вы можете отозвать его, "
+"и обработка будет прекращена в установленный законом срок."
+msgstr ""
+
+#: templates/consents/user_agreement_v1.html:4
+msgid ""
+"1. kamqor - каталог специалистов для детей. Сервис помогает найти "
+"специалиста и связаться с ним, но не оказывает медицинских, педагогических "
+"или психологических услуг."
+msgstr ""
+
+#: templates/consents/user_agreement_v1.html:7
+msgid ""
+"2. Выбор специалиста и решение об обращении к нему вы принимаете "
+"самостоятельно. Информацию в анкетах специалисты вносят сами."
+msgstr ""
+
+#: templates/consents/user_agreement_v1.html:10
+msgid ""
+"3. Вы обязуетесь указывать достоверный номер телефона и не передавать доступ "
+"к аккаунту третьим лицам."
+msgstr ""
+
+#: templates/core/home.html:3 templates/partials/footer.html:4
+msgid "каталог специалистов для детей"
+msgstr ""
+
+#: templates/core/home.html:7
+msgid "Найдите специалиста для ребёнка"
+msgstr ""
+
+#: templates/core/home.html:10
+msgid "Кого вы ищете"
+msgstr ""
+
+#: templates/core/home.html:11 templates/search/_filters.html:7
+msgid "Логопед, РАС, не говорит..."
+msgstr ""
+
+#: templates/core/home.html:19
+msgid "Любой город"
+msgstr ""
+
+#: templates/core/home.html:23
+msgid "Найти"
+msgstr ""
+
+#: templates/core/home.html:28
+msgid "Популярные специализации"
+msgstr ""
+
+#: templates/core/home.html:33
+msgid "Специалистов"
+msgstr ""
+
+#: templates/core/home.html:40
+msgid "Города"
+msgstr ""
+
+#: templates/core/home.html:49
+msgid "Что значит проверенный специалист"
+msgstr ""
+
+#: templates/core/home.html:50
+msgid ""
+"Мы показываем не общую галочку, а то, что именно проверено. Сырые документы "
+"не публикуются: видны только уровни проверки."
+msgstr ""
+
+#: templates/core/home.html:60
+msgid "Вы специалист?"
+msgstr ""
+
+#: templates/core/home.html:61
+msgid "Расскажите о себе и своих услугах родителям, которые ищут помощь."
+msgstr ""
+
+#: templates/core/home.html:62
+msgid "Разместить профиль"
+msgstr ""
+
+#: templates/partials/demo_banner.html:3
+msgid "Демо-версия: не вводите реальные данные о детях"
+msgstr ""
+
+#: templates/partials/demo_banner.html:3
+msgid "Анкеты специалистов и отметки о проверке вымышлены."
+msgstr ""
+
+#: templates/partials/header.html:9
+msgid "Выйти"
+msgstr ""
+
+#: templates/partials/header.html:13
+msgid "Выйти со всех устройств"
+msgstr ""
+
+#: templates/partials/language_switcher.html:4
+msgid "Язык интерфейса"
+msgstr ""
+
+#: templates/search/_card.html:23
+#, python-format
+msgid "≈ %(distance)s км"
+msgstr ""
+
+#: templates/search/_empty.html:3
+msgid "Ничего не нашлось"
+msgstr ""
+
+#: templates/search/_empty.html:4
+msgid "Попробуйте изменить условия поиска."
+msgstr ""
+
+#: templates/search/_empty.html:6
+msgid "расширить фильтры"
+msgstr ""
+
+#: templates/search/_empty.html:8
+msgid "включить онлайн-формат"
+msgstr ""
+
+#: templates/search/_filters.html:6
+msgid "Поиск"
+msgstr ""
+
+#: templates/search/_filters.html:13
+msgid "Рядом со мной"
+msgstr ""
+
+#: templates/search/_filters.html:14
+msgid "Не удалось определить местоположение"
+msgstr ""
+
+#: templates/search/_filters.html:19
+msgid "Сортировка"
+msgstr ""
+
+#: templates/search/_filters.html:22
+msgid "По расстоянию"
+msgstr ""
+
+#: templates/search/_filters.html:27
+msgid "Город или область"
+msgstr ""
+
+#: templates/search/_filters.html:29 templates/search/_filters.html:36
+msgid "Любой"
+msgstr ""
+
+#: templates/search/_filters.html:46
+msgid "Возраст ребёнка"
+msgstr ""
+
+#: templates/search/_filters.html:48
+msgid "Возраст от"
+msgstr ""
+
+#: templates/search/_filters.html:49 templates/search/_filters.html:85
+#: templates/search/_filters.html:92
+msgid "от"
+msgstr ""
+
+#: templates/search/_filters.html:50
+msgid "Возраст до"
+msgstr ""
+
+#: templates/search/_filters.html:51 templates/search/_filters.html:86
+#: templates/search/_filters.html:93
+msgid "до"
+msgstr ""
+
+#: templates/search/_filters.html:65
+msgid "Специализация"
+msgstr ""
+
+#: templates/search/_filters.html:74
+msgid "Особенности развития"
+msgstr ""
+
+#: templates/search/_filters.html:83
+msgid "Цена за занятие, ₸"
+msgstr ""
+
+#: templates/search/_filters.html:85
+msgid "Цена от"
+msgstr ""
+
+#: templates/search/_filters.html:86
+msgid "Цена до"
+msgstr ""
+
+#: templates/search/_filters.html:90
+msgid "Цена в месяц, ₸"
+msgstr ""
+
+#: templates/search/_filters.html:92
+msgid "Цена в месяц от"
+msgstr ""
+
+#: templates/search/_filters.html:93
+msgid "Цена в месяц до"
+msgstr ""
+
+#: templates/search/_filters.html:96
+msgid "Только бесплатные"
+msgstr ""
+
+#: templates/search/_filters.html:108
+msgid "Язык общения"
+msgstr ""
+
+#: templates/search/_filters.html:117
+msgid "Стаж от, лет"
+msgstr ""
+
+#: templates/search/_filters.html:122
+msgid "Подтверждённые документы"
+msgstr ""
+
+#: templates/search/_filters.html:131 templates/search/_suggest.html:1
+msgid "Метод"
+msgstr ""
+
+#: templates/search/_filters.html:140
+msgid "Показать"
+msgstr ""
+
+#: templates/search/_filters.html:141
+msgid "Сбросить"
+msgstr ""
+
+#: templates/search/_heading.html:1 templates/search/_results_partial.html:3
+#: templates/search/results.html:3
+msgid "Каталог специалистов"
+msgstr ""
+
+#: templates/search/_map.html:1
+msgid "Карта специалистов"
+msgstr ""
+
+#: templates/search/_results_partial.html:5
+msgid "Найдено"
+msgstr ""
+
+#: templates/search/_results_partial.html:10
+msgid "Страницы"
+msgstr ""
+
+#: templates/search/_results_partial.html:11
+msgid "Назад"
+msgstr ""
+
+#: templates/search/_results_partial.html:13
+msgid "Вперёд"
+msgstr ""
+
+#: templates/search/_suggest.html:1
+msgid "Специалист"
+msgstr ""
+
+#: templates/search/_suggest.html:1
+msgid "Особенность развития"
+msgstr ""
+
+#: templates/search/results.html:13
+msgid "Список"
+msgstr ""
+
+#: templates/search/results.html:15
+msgid "Карта"
+msgstr ""

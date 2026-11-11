@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load i18n catalog_tags %}
+{% block title %}{{ profile.display_name }} - kamqor{% endblock %}
+{% block extra_head %}{% if geojson.features %}{% include "partials/map_assets.html" %}{% endif %}{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-4xl space-y-8 px-4 py-6">
+  <header class="flex flex-wrap gap-4">
+    {% include "catalog/_photo.html" with size_class="h-24 w-24" %}
+    <div class="min-w-0 flex-1 space-y-2">
+      <h1 class="text-2xl font-bold">{{ profile.display_name }}</h1>
+      <p class="text-slate-600">{% for t in profile.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+      {% include "catalog/_badges.html" %}
+      <dl class="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
+        <div><dt class="inline text-slate-500">{% translate "Стаж, лет" %}:</dt> <dd class="inline">{{ profile.experience_years }}</dd></div>
+        <div><dt class="inline text-slate-500">{% translate "Возраст детей, лет" %}:</dt> <dd class="inline">{{ profile.age_min }}-{{ profile.age_max }}</dd></div>
+        <div><dt class="inline text-slate-500">{% translate "Языки" %}:</dt> <dd class="inline">{% for lang in profile.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</dd></div>
+        <div><dt class="inline text-slate-500">{% translate "Формат" %}:</dt> <dd class="inline">{% for f in profile.formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}</dd></div>
+      </dl>
+      {% include "catalog/_contact_buttons.html" with profile=profile %}
+    </div>
+  </header>
+
+  {% with bio=profile|tr:"bio" approach=profile|tr:"approach" %}
+  {% if bio %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "О себе" %}</h2>
+    <p class="mt-2 whitespace-pre-line text-slate-800">{{ bio }}</p>
+  </section>
+  {% endif %}
+
+  {% if approach %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Подход к работе" %}</h2>
+    <p class="mt-2 whitespace-pre-line text-slate-800">{{ approach }}</p>
+  </section>
+  {% endif %}
+  {% endwith %}
+
+  {% if profile.conditions.all %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "С какими особенностями развития работает" %}</h2>
+    <ul class="mt-2 flex flex-wrap gap-2 text-sm">
+      {% for c in profile.conditions.all %}<li class="rounded-full bg-slate-100 px-3 py-1">{{ c.name }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if profile.methods.all %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Методы" %}</h2>
+    <ul class="mt-2 space-y-1 text-sm">
+      {% for m in profile.methods.all %}
+      <li><span class="font-medium">{{ m.name }}</span> - <span class="text-slate-600">{{ m.get_evidence_level_display }}</span></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Услуги и цены" %}</h2>
+    <ul class="mt-2 divide-y divide-slate-200 rounded-lg border border-slate-200">
+      {% for s in services %}
+      <li class="space-y-1 p-4">
+        <p class="font-medium">{{ s.title }}</p>
+        <p class="text-sm text-slate-600">
+          {% blocktranslate with n=s.duration_min %}{{ n }} мин{% endblocktranslate %}
+          <span class="mx-1 text-slate-300">|</span>
+          {% for f in s.formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}
+          {% if s.home_visit_area %}({{ s.home_visit_area.name }}){% endif %}
+        </p>
+        <p class="text-sm font-semibold">
+          {% if s.is_free %}{% translate "бесплатно" %}{% elif s.price_session %}{% blocktranslate with price=s.price_session|floatformat:"0g" %}{{ price }} ₸ за занятие{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}
+          {% if s.price_month %}<span class="ml-2 font-normal text-slate-600">{% blocktranslate with price=s.price_month|floatformat:"0g" %}{{ price }} ₸ в месяц{% endblocktranslate %}</span>{% endif %}
+        </p>
+        {% if s.description %}<p class="text-sm text-slate-700">{{ s.description }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {% if addresses %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Адреса приёма" %}</h2>
+    {% if geojson.features %}{% include "catalog/_minimap.html" %}{% endif %}
+    <ul class="mt-2 space-y-3">
+      {% for a in addresses %}
+      <li class="text-sm">
+        <p>{{ a.kato.name }}, {{ a.street }}, {{ a.building }}</p>
+        <p class="mt-1 flex gap-4">
+          <a href="{{ a|two_gis_url }}" target="_blank" rel="noopener" class="font-medium text-teal-700 hover:underline">{% translate "Открыть в 2ГИС" %}</a>
+          <a href="{{ a|two_gis_route_url }}" target="_blank" rel="noopener" class="font-medium text-teal-700 hover:underline">{% translate "Маршрут" %}</a>
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

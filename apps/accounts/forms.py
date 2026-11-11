@@ -1,0 +1,41 @@
+from django import forms
+from django.utils.translation import gettext_lazy as _
+
+from apps.consents.models import Consent
+
+from .phone import InvalidPhone, normalize_kz_mobile
+
+CONSENT_KINDS = [Consent.USER_AGREEMENT, Consent.PD_PROCESSING]
+
+
+class PhoneForm(forms.Form):
+    phone = forms.CharField(label=_("Номер телефона"), max_length=32)
+
+    def clean_phone(self) -> str:
+        try:
+            return normalize_kz_mobile(self.cleaned_data["phone"])
+        except InvalidPhone:
+            raise forms.ValidationError(
+                _("Введите казахстанский мобильный номер, например +7 701 123 45 67")
+            ) from None
+
+
+class CodeForm(forms.Form):
+    code = forms.CharField(label=_("Код из SMS"), max_length=16)
+
+    def __init__(self, *args, require_consents: bool = False, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.require_consents = require_consents
+        if require_consents:
+            for kind in CONSENT_KINDS:
+                self.fields[kind] = forms.BooleanField(
+                    required=True,
+                    error_messages={"required": _("Необходимо ваше согласие, чтобы продолжить")},
+                )
+
+    def clean_code(self) -> str:
+        return self.cleaned_data["code"].strip()
+
+    @property
+    def accepted_kinds(self) -> list[str]:
+        return list(CONSENT_KINDS) if self.require_consents else []

@@ -1,0 +1,7 @@
+{% load i18n catalog_tags %}<ul class="flex flex-wrap gap-1 text-xs">
+  {% for level in profile.demo_verification_levels %}
+  <li class="rounded bg-teal-50 px-2 py-0.5 text-teal-800"{% if IS_DEMO %} title="{% translate 'Демо: проверка не проводилась' %}"{% endif %}>
+    {{ level|verification_label }}{% if IS_DEMO %} <span class="text-slate-500">({% translate "демо" %})</span>{% endif %}
+  </li>
+  {% endfor %}
+</ul>

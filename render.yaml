@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: kamqor-demo
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerCommand: ./scripts/start.sh
+    healthCheckPath: /healthz
+    envVars:
+      - key: DEPLOY_PROFILE
+        value: demo
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: DEMO_CONTACT_PHONE
+        sync: false

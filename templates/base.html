@@ -1,0 +1,21 @@
+{% load i18n static tailwind_cli %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}kamqor{% endblock %}</title>
+  {% tailwind_css %}
+  <script src="{% static 'vendor/htmx.min.js' %}" defer></script>
+  <script src="{% static 'vendor/alpine.min.js' %}" defer></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-full flex flex-col bg-white font-sans text-slate-900 antialiased">
+  {% include "partials/demo_banner.html" %}
+  {% include "partials/header.html" %}
+  <main class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+  {% include "partials/footer.html" %}
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

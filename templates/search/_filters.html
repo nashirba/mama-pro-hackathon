@@ -1,0 +1,144 @@
+{% load i18n l10n %}{% localize off %}
+<form id="filters" method="get" action="{% url 'search:results' %}"
+      hx-get="{% url 'search:results' %}" hx-target="#results" hx-push-url="true" hx-trigger="change, submit"
+      x-data="filters({ ageMin: '{{ params.child_age_min|default_if_none:'' }}', ageMax: '{{ params.child_age_max|default_if_none:'' }}' })" class="space-y-4 text-sm">
+  <div>
+    <label for="f-q" class="block font-medium">{% translate "Поиск" %}</label>
+    <input type="search" id="f-q" name="q" value="{{ params.q }}" placeholder="{% translate 'Логопед, РАС, не говорит...' %}"
+           class="mt-1 w-full rounded border border-slate-300 px-3 py-2">
+  </div>
+
+  <div>
+    <button type="button" data-geolocate @click="locate($el.form)"
+            class="w-full rounded border border-teal-700 px-3 py-2 font-semibold text-teal-700 hover:bg-teal-50">{% translate "Рядом со мной" %}</button>
+    <p x-show="failed" x-cloak class="mt-1 text-red-700" role="alert">{% translate "Не удалось определить местоположение" %}</p>
+    <input type="hidden" name="near" value="{{ near_value }}">
+  </div>
+
+  <div>
+    <label for="f-sort" class="block font-medium">{% translate "Сортировка" %}</label>
+    <select id="f-sort" name="sort" class="mt-1 w-full rounded border border-slate-300 px-3 py-2">
+      {% for value, label in choices.sorts %}<option value="{{ value }}"{% if params.sort == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
+      {% if near_value %}<option value="distance"{% if params.sort == "distance" %} selected{% endif %}>{% translate "По расстоянию" %}</option>{% endif %}
+    </select>
+  </div>
+
+  <div>
+    <label for="f-kato" class="block font-medium">{% translate "Город или область" %}</label>
+    <select id="f-kato" name="kato_id" class="mt-1 w-full rounded border border-slate-300 px-3 py-2">
+      <option value="">{% translate "Любой" %}</option>
+      {% for node in choices.cities %}<option value="{{ node.id }}"{% if node.id == selected_kato %} selected{% endif %}>{{ node.name }}</option>{% endfor %}
+    </select>
+  </div>
+  <div>
+    <label for="f-district" class="block font-medium">{% translate "Район" %}</label>
+    <select id="f-district" name="district_id" class="mt-1 w-full rounded border border-slate-300 px-3 py-2">
+      <option value="">{% translate "Любой" %}</option>
+      {% for parent, districts in choices.district_groups %}
+      <optgroup label="{{ parent.name }}">
+        {% for node in districts %}<option value="{{ node.id }}"{% if node.id == selected_district %} selected{% endif %}>{{ node.name }}</option>{% endfor %}
+      </optgroup>
+      {% endfor %}
+    </select>
+  </div>
+
+  <fieldset>
+    <legend class="font-medium">{% translate "Возраст ребёнка" %}</legend>
+    <div class="mt-1 flex items-center gap-2">
+      <input type="number" min="0" max="18" name="child_age_min" x-model="ageMin" value="{{ params.child_age_min|default_if_none:'' }}" aria-label="{% translate 'Возраст от' %}"
+             placeholder="{% translate 'от' %}" class="w-full rounded border border-slate-300 px-3 py-2">
+      <input type="number" min="0" max="18" name="child_age_max" x-model="ageMax" value="{{ params.child_age_max|default_if_none:'' }}" aria-label="{% translate 'Возраст до' %}"
+             placeholder="{% translate 'до' %}" class="w-full rounded border border-slate-300 px-3 py-2">
+    </div>
+    <ul class="mt-2 flex flex-wrap gap-2">
+      {% for g in age_groups %}
+      {# The href works without JS. With JS the click sets the inputs, so the filters changed since the page was rendered are kept. #}
+      <li><a href="{{ g.url }}"{% if g.current %} aria-current="true"{% endif %}
+             @click.prevent="setAge($el.closest('form'), {{ g.min }}, {{ g.max }})"
+             :aria-current="isAge({{ g.min }}, {{ g.max }}) ? 'true' : null"
+             class="rounded-full border border-slate-300 px-3 py-1 text-slate-700 hover:bg-slate-100 aria-[current=true]:border-teal-700 aria-[current=true]:bg-teal-700 aria-[current=true]:text-white">{{ g.min }}-{{ g.max }}</a></li>
+      {% endfor %}
+    </ul>
+  </fieldset>
+
+  <details {% if params.specialist_type_ids %}open{% endif %}>
+    <summary class="cursor-pointer font-medium">{% translate "Специализация" %}</summary>
+    <ul class="mt-2 space-y-1">
+      {% for t in choices.specialist_types %}
+      <li><label class="flex items-center gap-2"><input type="checkbox" name="specialist_type_ids" value="{{ t.id }}"{% if t.id in params.specialist_type_ids %} checked{% endif %}> {{ t.name }}</label></li>
+      {% endfor %}
+    </ul>
+  </details>
+
+  <details {% if params.condition_ids %}open{% endif %}>
+    <summary class="cursor-pointer font-medium">{% translate "Особенности развития" %}</summary>
+    <ul class="mt-2 space-y-1">
+      {% for c, depth in choices.conditions %}
+      <li class="{% if depth %}ml-5{% endif %}"><label class="flex items-center gap-2"><input type="checkbox" name="condition_ids" value="{{ c.id }}"{% if c.id in params.condition_ids %} checked{% endif %}> {{ c.name }}</label></li>
+      {% endfor %}
+    </ul>
+  </details>
+
+  <fieldset>
+    <legend class="font-medium">{% translate "Цена за занятие, ₸" %}</legend>
+    <div class="mt-1 flex items-center gap-2">
+      <input type="number" min="0" name="price_min" value="{{ params.price_min|default_if_none:'' }}" aria-label="{% translate 'Цена от' %}" placeholder="{% translate 'от' %}" class="w-full rounded border border-slate-300 px-3 py-2">
+      <input type="number" min="0" name="price_max" value="{{ params.price_max|default_if_none:'' }}" aria-label="{% translate 'Цена до' %}" placeholder="{% translate 'до' %}" class="w-full rounded border border-slate-300 px-3 py-2">
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend class="font-medium">{% translate "Цена в месяц, ₸" %}</legend>
+    <div class="mt-1 flex items-center gap-2">
+      <input type="number" min="0" name="price_month_min" value="{{ params.price_month_min|default_if_none:'' }}" aria-label="{% translate 'Цена в месяц от' %}" placeholder="{% translate 'от' %}" class="w-full rounded border border-slate-300 px-3 py-2">
+      <input type="number" min="0" name="price_month_max" value="{{ params.price_month_max|default_if_none:'' }}" aria-label="{% translate 'Цена в месяц до' %}" placeholder="{% translate 'до' %}" class="w-full rounded border border-slate-300 px-3 py-2">
+    </div>
+  </fieldset>
+  <label class="flex items-center gap-2"><input type="checkbox" name="free_only" value="1"{% if params.free_only %} checked{% endif %}> {% translate "Только бесплатные" %}</label>
+
+  <fieldset>
+    <legend class="font-medium">{% translate "Формат" %}</legend>
+    <ul class="mt-1 space-y-1">
+      {% for value, label in choices.formats %}
+      <li><label class="flex items-center gap-2"><input type="checkbox" name="formats" value="{{ value }}"{% if value in params.formats %} checked{% endif %}> {{ label }}</label></li>
+      {% endfor %}
+    </ul>
+  </fieldset>
+
+  <fieldset>
+    <legend class="font-medium">{% translate "Язык общения" %}</legend>
+    <ul class="mt-1 space-y-1">
+      {% for lang in choices.languages %}
+      <li><label class="flex items-center gap-2"><input type="checkbox" name="language_codes" value="{{ lang.code }}"{% if lang.code in params.language_codes %} checked{% endif %}> {{ lang.name }}</label></li>
+      {% endfor %}
+    </ul>
+  </fieldset>
+
+  <div>
+    <label for="f-exp" class="block font-medium">{% translate "Стаж от, лет" %}</label>
+    <input type="number" min="0" id="f-exp" name="experience_min" value="{{ params.experience_min|default_if_none:'' }}" class="mt-1 w-full rounded border border-slate-300 px-3 py-2">
+  </div>
+
+  <fieldset>
+    <legend class="font-medium">{% translate "Подтверждённые документы" %}{% if IS_DEMO %} ({% translate "демо" %}){% endif %}</legend>
+    <ul class="mt-1 space-y-1">
+      {% for value, label in choices.verification_levels %}
+      <li><label class="flex items-center gap-2"><input type="checkbox" name="verification_levels" value="{{ value }}"{% if value in params.verification_levels %} checked{% endif %}> {{ label }}</label></li>
+      {% endfor %}
+    </ul>
+  </fieldset>
+
+  <details {% if params.method_ids %}open{% endif %}>
+    <summary class="cursor-pointer font-medium">{% translate "Метод" %}</summary>
+    <ul class="mt-2 space-y-1">
+      {% for m in choices.methods %}
+      <li><label class="flex items-center gap-2"><input type="checkbox" name="method_ids" value="{{ m.id }}"{% if m.id in params.method_ids %} checked{% endif %}> {{ m.name }}</label></li>
+      {% endfor %}
+    </ul>
+  </details>
+
+  <div class="flex items-center gap-3">
+    <button type="submit" class="rounded bg-teal-700 px-4 py-2 font-semibold text-white hover:bg-teal-800">{% translate "Показать" %}</button>
+    <a href="{{ reset_url }}" class="text-slate-600 hover:underline">{% translate "Сбросить" %}</a>
+  </div>
+</form>
+{% endlocalize %}

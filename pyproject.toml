@@ -1,0 +1,29 @@
+[project]
+name = "kamqor"
+version = "0.1.0"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "django~=5.2",
+    "django-environ>=0.14.0",
+    "django-parler>=2.4",
+    "django-tailwind-cli>=4.8.2",
+    "gunicorn>=27.0.0",
+    "phonenumbers>=9.0.43",
+    "pillow>=13.0.0",
+    "psycopg[binary]>=3.2",
+    "whitenoise>=6.12.0",
+]
+
+[dependency-groups]
+dev = [
+    "factory-boy>=3.3.3",
+    "polib>=1.2.0",
+    "pytest>=9.2.0",
+    "pytest-django>=4.14.0",
+    "pytest-freezer>=0.4.9",
+    "ruff>=0.17.4",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings_test"
+python_files = ["test_*.py"]

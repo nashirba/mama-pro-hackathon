@@ -1,0 +1,273 @@
+[
+  {
+    "code": "DEMO-001",
+    "slug": "almaty",
+    "level": "city",
+    "parent": null,
+    "name": {
+      "ru": "Алматы",
+      "kk": "Алматы"
+    },
+    "name_locative": {
+      "ru": "в Алматы",
+      "kk": "Алматыдағы"
+    },
+    "two_gis_city_slug": "almaty",
+    "center": [
+      76.9286,
+      43.2567
+    ]
+  },
+  {
+    "code": "DEMO-002",
+    "slug": "almalinskiy",
+    "level": "district",
+    "parent": "almaty",
+    "name": {
+      "ru": "Алмалинский район",
+      "kk": "Алмалы ауданы"
+    },
+    "center": [
+      76.914,
+      43.253
+    ]
+  },
+  {
+    "code": "DEMO-003",
+    "slug": "medeuskiy",
+    "level": "district",
+    "parent": "almaty",
+    "name": {
+      "ru": "Медеуский район",
+      "kk": "Медеу ауданы"
+    },
+    "center": [
+      76.97,
+      43.238
+    ]
+  },
+  {
+    "code": "DEMO-004",
+    "slug": "bostandykskiy",
+    "level": "district",
+    "parent": "almaty",
+    "name": {
+      "ru": "Бостандыкский район",
+      "kk": "Бостандық ауданы"
+    },
+    "center": [
+      76.9,
+      43.21
+    ]
+  },
+  {
+    "code": "DEMO-005",
+    "slug": "astana",
+    "level": "city",
+    "parent": null,
+    "name": {
+      "ru": "Астана",
+      "kk": "Астана"
+    },
+    "name_locative": {
+      "ru": "в Астане",
+      "kk": "Астанадағы"
+    },
+    "two_gis_city_slug": "astana",
+    "center": [
+      71.4491,
+      51.1694
+    ]
+  },
+  {
+    "code": "DEMO-006",
+    "slug": "esilskiy",
+    "level": "district",
+    "parent": "astana",
+    "name": {
+      "ru": "Есильский район",
+      "kk": "Есіл ауданы"
+    },
+    "center": [
+      71.43,
+      51.13
+    ]
+  },
+  {
+    "code": "DEMO-007",
+    "slug": "saryarkinskiy",
+    "level": "district",
+    "parent": "astana",
+    "name": {
+      "ru": "Сарыаркинский район",
+      "kk": "Сарыарқа ауданы"
+    },
+    "center": [
+      71.416,
+      51.18
+    ]
+  },
+  {
+    "code": "DEMO-008",
+    "slug": "shymkent",
+    "level": "city",
+    "parent": null,
+    "name": {
+      "ru": "Шымкент",
+      "kk": "Шымкент"
+    },
+    "name_locative": {
+      "ru": "в Шымкенте",
+      "kk": "Шымкенттегі"
+    },
+    "two_gis_city_slug": "shymkent",
+    "center": [
+      69.5901,
+      42.3417
+    ]
+  },
+  {
+    "code": "DEMO-009",
+    "slug": "abaiskiy",
+    "level": "district",
+    "parent": "shymkent",
+    "name": {
+      "ru": "Абайский район",
+      "kk": "Абай ауданы"
+    },
+    "center": [
+      69.58,
+      42.33
+    ]
+  },
+  {
+    "code": "DEMO-010",
+    "slug": "karagandinskaya-oblast",
+    "level": "region",
+    "parent": null,
+    "name": {
+      "ru": "Карагандинская область",
+      "kk": "Қарағанды облысы"
+    },
+    "center": null
+  },
+  {
+    "code": "DEMO-011",
+    "slug": "karaganda",
+    "level": "city",
+    "parent": "karagandinskaya-oblast",
+    "name": {
+      "ru": "Караганда",
+      "kk": "Қарағанды"
+    },
+    "name_locative": {
+      "ru": "в Караганде",
+      "kk": "Қарағандыдағы"
+    },
+    "two_gis_city_slug": "karaganda",
+    "center": [
+      73.1021,
+      49.8047
+    ]
+  },
+  {
+    "code": "DEMO-012",
+    "slug": "kazybek-bi-district",
+    "level": "district",
+    "parent": "karaganda",
+    "name": {
+      "ru": "район имени Казыбек би",
+      "kk": "Қазыбек би ауданы"
+    },
+    "center": [
+      73.09,
+      49.81
+    ]
+  },
+  {
+    "code": "DEMO-013",
+    "slug": "oktyabrskiy-district",
+    "level": "district",
+    "parent": "karaganda",
+    "name": {
+      "ru": "Октябрьский район",
+      "kk": "Октябрь ауданы"
+    },
+    "center": [
+      73.15,
+      49.83
+    ]
+  },
+  {
+    "code": "DEMO-014",
+    "slug": "aktyubinskaya-oblast",
+    "level": "region",
+    "parent": null,
+    "name": {
+      "ru": "Актюбинская область",
+      "kk": "Ақтөбе облысы"
+    },
+    "center": null
+  },
+  {
+    "code": "DEMO-015",
+    "slug": "aktobe",
+    "level": "city",
+    "parent": "aktyubinskaya-oblast",
+    "name": {
+      "ru": "Актобе",
+      "kk": "Ақтөбе"
+    },
+    "name_locative": {
+      "ru": "в Актобе",
+      "kk": "Ақтөбедегі"
+    },
+    "two_gis_city_slug": "aktobe",
+    "center": [
+      57.2072,
+      50.2839
+    ]
+  },
+  {
+    "code": "DEMO-016",
+    "slug": "aktobe-almatinskiy",
+    "level": "district",
+    "parent": "aktobe",
+    "name": {
+      "ru": "Алматинский район",
+      "kk": "Алматы ауданы"
+    },
+    "center": [
+      57.23,
+      50.29
+    ]
+  },
+  {
+    "code": "DEMO-017",
+    "slug": "aktobe-astana-district",
+    "level": "district",
+    "parent": "aktobe",
+    "name": {
+      "ru": "район Астана",
+      "kk": "Астана ауданы"
+    },
+    "center": [
+      57.17,
+      50.3
+    ]
+  },
+  {
+    "code": "DEMO-018",
+    "slug": "rural-demo",
+    "level": "rural",
+    "parent": "karagandinskaya-oblast",
+    "name": {
+      "ru": "Сельский округ Демо",
+      "kk": "Демо ауылдық округі"
+    },
+    "center": [
+      70.0,
+      49.0
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+{% load i18n catalog_tags %}{% contact_links profile as contacts %}{% if contacts.visible %}
+<div class="flex flex-wrap items-center gap-2">
+  {% if contacts.whatsapp %}
+  <a href="{{ contacts.whatsapp }}" target="_blank" rel="noopener"
+     class="rounded bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-700">WhatsApp</a>
+  {% endif %}
+  {% if contacts.phone %}
+  <a href="{{ contacts.phone }}"
+     class="rounded border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100">{% translate "Позвонить" %}</a>
+  {% endif %}
+  {% if contacts.disabled_in_demo %}
+  <button type="button" aria-disabled="true"
+          class="cursor-not-allowed rounded bg-slate-200 px-3 py-2 text-sm font-semibold text-slate-500">WhatsApp</button>
+  <button type="button" aria-disabled="true"
+          class="cursor-not-allowed rounded bg-slate-200 px-3 py-2 text-sm font-semibold text-slate-500">{% translate "Позвонить" %}</button>
+  <span class="text-xs text-slate-500">{% translate "в демо-версии не работает" %}</span>
+  {% endif %}
+</div>
+{% endif %}

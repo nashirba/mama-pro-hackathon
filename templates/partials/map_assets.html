@@ -1,0 +1,4 @@
+{% load static %}{# the literal path keeps `@` (`{% static %}` would escape it as %40); the version in the path is the one vendored #}
+<link rel="stylesheet" href="{% get_static_prefix %}vendor/maplibre-gl@4.7.1/maplibre-gl.css">
+<script src="{% get_static_prefix %}vendor/maplibre-gl@4.7.1/maplibre-gl.js" defer></script>
+<script src="{% static 'js/map/map.js' %}" defer></script>

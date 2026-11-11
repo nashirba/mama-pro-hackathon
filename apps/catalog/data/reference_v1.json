@@ -1,0 +1,1110 @@
+{
+  "specialist_types": [
+    {
+      "slug": "special-educator",
+      "name": {
+        "ru": "Специальный педагог",
+        "kk": "Арнайы педагог"
+      },
+      "name_plural": {
+        "ru": "Специальные педагоги",
+        "kk": "Арнайы педагогтар"
+      },
+      "landing_name": {
+        "ru": "Специальные педагоги",
+        "kk": "арнайы педагогтар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "logoped",
+      "name": {
+        "ru": "Логопед",
+        "kk": "Логопед"
+      },
+      "name_plural": {
+        "ru": "Логопеды",
+        "kk": "Логопедтер"
+      },
+      "landing_name": {
+        "ru": "Логопеды",
+        "kk": "логопедтер"
+      },
+      "synonyms": "не говорит, запуск речи, постановка звуков"
+    },
+    {
+      "slug": "defectologist",
+      "name": {
+        "ru": "Дефектолог",
+        "kk": "Дефектолог"
+      },
+      "name_plural": {
+        "ru": "Дефектологи",
+        "kk": "Дефектологтар"
+      },
+      "landing_name": {
+        "ru": "Дефектологи",
+        "kk": "дефектологтар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "oligophrenopedagog",
+      "name": {
+        "ru": "Олигофренопедагог",
+        "kk": "Олигофренопедагог"
+      },
+      "name_plural": {
+        "ru": "Олигофренопедагоги",
+        "kk": "Олигофренопедагогтар"
+      },
+      "landing_name": {
+        "ru": "Олигофренопедагоги",
+        "kk": "олигофренопедагогтар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "surdopedagog",
+      "name": {
+        "ru": "Сурдопедагог",
+        "kk": "Сурдопедагог"
+      },
+      "name_plural": {
+        "ru": "Сурдопедагоги",
+        "kk": "Сурдопедагогтар"
+      },
+      "landing_name": {
+        "ru": "Сурдопедагоги",
+        "kk": "сурдопедагогтар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "tiflopedagog",
+      "name": {
+        "ru": "Тифлопедагог",
+        "kk": "Тифлопедагог"
+      },
+      "name_plural": {
+        "ru": "Тифлопедагоги",
+        "kk": "Тифлопедагогтар"
+      },
+      "landing_name": {
+        "ru": "Тифлопедагоги",
+        "kk": "тифлопедагогтар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "ergopedagog",
+      "name": {
+        "ru": "Эргопедагог",
+        "kk": "Эргопедагог"
+      },
+      "name_plural": {
+        "ru": "Эргопедагоги",
+        "kk": "Эргопедагогтар"
+      },
+      "landing_name": {
+        "ru": "Эргопедагоги",
+        "kk": "эргопедагогтар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "early-support-teacher",
+      "name": {
+        "ru": "Педагог ранней поддержки",
+        "kk": "Ерте қолдау педагогі"
+      },
+      "name_plural": {
+        "ru": "Педагоги ранней поддержки",
+        "kk": "Ерте қолдау педагогтары"
+      },
+      "landing_name": {
+        "ru": "Педагоги ранней поддержки",
+        "kk": "ерте қолдау педагогтары"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "zpr-teacher",
+      "name": {
+        "ru": "Педагог по работе с детьми с ЗПР"
+      },
+      "name_plural": {
+        "ru": "Педагоги по работе с детьми с ЗПР"
+      },
+      "landing_name": {
+        "ru": "Педагоги по работе с детьми с ЗПР"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "communication-teacher",
+      "name": {
+        "ru": "Педагог по работе с детьми с нарушениями общения и социального взаимодействия"
+      },
+      "name_plural": {
+        "ru": "Педагоги по работе с детьми с нарушениями общения"
+      },
+      "landing_name": {
+        "ru": "Педагоги по работе с детьми с нарушениями общения"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "tutor",
+      "name": {
+        "ru": "Педагог-ассистент (тьютор)",
+        "kk": "Педагог-ассистент"
+      },
+      "name_plural": {
+        "ru": "Педагоги-ассистенты",
+        "kk": "Педагог-ассистенттер"
+      },
+      "landing_name": {
+        "ru": "Педагоги-ассистенты",
+        "kk": "педагог-ассистенттер"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "aba-therapist",
+      "name": {
+        "ru": "ABA-терапевт",
+        "kk": "ABA-терапевт"
+      },
+      "name_plural": {
+        "ru": "ABA-терапевты",
+        "kk": "ABA-терапевттер"
+      },
+      "landing_name": {
+        "ru": "ABA-терапевты",
+        "kk": "ABA-терапевттер"
+      },
+      "synonyms": "аба, ABA, поведенческий терапевт"
+    },
+    {
+      "slug": "behavior-analyst",
+      "name": {
+        "ru": "Поведенческий аналитик",
+        "kk": "Мінез-құлық талдаушысы"
+      },
+      "name_plural": {
+        "ru": "Поведенческие аналитики",
+        "kk": "Мінез-құлық талдаушылары"
+      },
+      "landing_name": {
+        "ru": "Поведенческие аналитики",
+        "kk": "мінез-құлық талдаушылары"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "school-psychologist",
+      "name": {
+        "ru": "Педагог-психолог",
+        "kk": "Педагог-психолог"
+      },
+      "name_plural": {
+        "ru": "Педагоги-психологи",
+        "kk": "Педагог-психологтар"
+      },
+      "landing_name": {
+        "ru": "Педагоги-психологи",
+        "kk": "педагог-психологтар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "child-psychologist",
+      "name": {
+        "ru": "Детский психолог",
+        "kk": "Балалар психологы"
+      },
+      "name_plural": {
+        "ru": "Детские психологи",
+        "kk": "Балалар психологтары"
+      },
+      "landing_name": {
+        "ru": "Детские психологи",
+        "kk": "балалар психологтары"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "neuropsychologist",
+      "name": {
+        "ru": "Нейропсихолог",
+        "kk": "Нейропсихолог"
+      },
+      "name_plural": {
+        "ru": "Нейропсихологи",
+        "kk": "Нейропсихологтар"
+      },
+      "landing_name": {
+        "ru": "Нейропсихологи",
+        "kk": "нейропсихологтар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "child-neurologist",
+      "name": {
+        "ru": "Детский невролог",
+        "kk": "Балалар неврологы"
+      },
+      "name_plural": {
+        "ru": "Детские неврологи",
+        "kk": "Балалар неврологтары"
+      },
+      "landing_name": {
+        "ru": "Детские неврологи",
+        "kk": "балалар неврологтары"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "child-psychiatrist",
+      "name": {
+        "ru": "Детский психиатр",
+        "kk": "Балалар психиатры"
+      },
+      "name_plural": {
+        "ru": "Детские психиатры",
+        "kk": "Балалар психиатрлары"
+      },
+      "landing_name": {
+        "ru": "Детские психиатры",
+        "kk": "балалар психиатрлары"
+      },
+      "synonyms": "психиатр"
+    },
+    {
+      "slug": "developmental-pediatrician",
+      "name": {
+        "ru": "Педиатр развития"
+      },
+      "name_plural": {
+        "ru": "Педиатры развития"
+      },
+      "landing_name": {
+        "ru": "Педиатры развития"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "surdologist",
+      "name": {
+        "ru": "Сурдолог-оториноларинголог"
+      },
+      "name_plural": {
+        "ru": "Сурдологи-оториноларингологи"
+      },
+      "landing_name": {
+        "ru": "Сурдологи-оториноларингологи"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "ophthalmologist",
+      "name": {
+        "ru": "Офтальмолог"
+      },
+      "name_plural": {
+        "ru": "Офтальмологи"
+      },
+      "landing_name": {
+        "ru": "Офтальмологи"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "geneticist",
+      "name": {
+        "ru": "Генетик"
+      },
+      "name_plural": {
+        "ru": "Генетики"
+      },
+      "landing_name": {
+        "ru": "Генетики"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "orthopedist",
+      "name": {
+        "ru": "Ортопед"
+      },
+      "name_plural": {
+        "ru": "Ортопеды"
+      },
+      "landing_name": {
+        "ru": "Ортопеды"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "rehabilitation-doctor",
+      "name": {
+        "ru": "Врач ЛФК / реабилитолог",
+        "kk": "Оңалту дәрігері"
+      },
+      "name_plural": {
+        "ru": "Врачи ЛФК и реабилитологи",
+        "kk": "Оңалту дәрігерлері"
+      },
+      "landing_name": {
+        "ru": "Врачи ЛФК и реабилитологи",
+        "kk": "оңалту дәрігерлері"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "occupational-therapist",
+      "name": {
+        "ru": "Эрготерапевт",
+        "kk": "Эрготерапевт"
+      },
+      "name_plural": {
+        "ru": "Эрготерапевты",
+        "kk": "Эрготерапевттер"
+      },
+      "landing_name": {
+        "ru": "Эрготерапевты",
+        "kk": "эрготерапевттер"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "kinesitherapist",
+      "name": {
+        "ru": "Кинезитерапевт"
+      },
+      "name_plural": {
+        "ru": "Кинезитерапевты"
+      },
+      "landing_name": {
+        "ru": "Кинезитерапевты"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "lfk-instructor",
+      "name": {
+        "ru": "Инструктор ЛФК / АФК"
+      },
+      "name_plural": {
+        "ru": "Инструкторы ЛФК и АФК"
+      },
+      "landing_name": {
+        "ru": "Инструкторы ЛФК и АФК"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "art-therapist",
+      "name": {
+        "ru": "Арт-терапевт"
+      },
+      "name_plural": {
+        "ru": "Арт-терапевты"
+      },
+      "landing_name": {
+        "ru": "Арт-терапевты"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "music-therapist",
+      "name": {
+        "ru": "Музыкальный терапевт"
+      },
+      "name_plural": {
+        "ru": "Музыкальные терапевты"
+      },
+      "landing_name": {
+        "ru": "Музыкальные терапевты"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "nanny",
+      "name": {
+        "ru": "Няня или сиделка для детей с особенностями"
+      },
+      "name_plural": {
+        "ru": "Няни и сиделки"
+      },
+      "landing_name": {
+        "ru": "Няни и сиделки"
+      },
+      "synonyms": ""
+    }
+  ],
+  "conditions": [
+    {
+      "slug": "hearing-impairment",
+      "parent": null,
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Нарушения слуха",
+        "kk": "Есту қабілеті зақымдалған"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей с нарушениями слуха",
+        "kk": "есту қабілеті зақымдалған балаларға арналған мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "vision-impairment",
+      "parent": null,
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Нарушения зрения",
+        "kk": "Көру қабілеті зақымдалған"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей с нарушениями зрения",
+        "kk": "көру қабілеті зақымдалған балаларға арналған мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "intellectual-impairment",
+      "parent": null,
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Нарушения интеллекта",
+        "kk": "Зердесі зақымдалған"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей с нарушениями интеллекта",
+        "kk": "зердесі зақымдалған балаларға арналған мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "zpr",
+      "parent": null,
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Задержка психического развития (ЗПР)",
+        "kk": "Психикалық дамуы тежелген"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей с задержкой психического развития",
+        "kk": "психикалық дамуы тежелген балаларға арналған мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "speech-impairment",
+      "parent": null,
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Нарушения речи, в т. ч. письменной (ОНР)",
+        "kk": "Жазбаша сөйлеу бұзылыстары бар"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей с нарушениями речи",
+        "kk": "сөйлеу бұзылыстары бар балаларға арналған мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "motor-impairment",
+      "parent": null,
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Нарушения опорно-двигательного аппарата",
+        "kk": "Тірек-қимыл аппараты бұзылған"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей с нарушениями опорно-двигательного аппарата",
+        "kk": "тірек-қимыл аппараты бұзылған балаларға арналған мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "emotional-volitional",
+      "parent": null,
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Нарушения эмоционально-волевой сферы",
+        "kk": "Эмоциялық-ерік бұзылыстары бар"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей с нарушениями эмоционально-волевой сферы",
+        "kk": "эмоциялық-ерік бұзылыстары бар балаларға арналған мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "complex-impairment",
+      "parent": null,
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Сложные (сочетанные) нарушения",
+        "kk": "Күрделі (біріктірілген) бұзылыстар"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей со сложными (сочетанными) нарушениями",
+        "kk": "күрделі (біріктірілген) бұзылыстары бар балаларға арналған мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "general",
+      "parent": null,
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Общее: особые образовательные потребности",
+        "kk": "Ерекше білім беру қажеттіліктері"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей с особыми образовательными потребностями",
+        "kk": "ерекше білім беру қажеттіліктері бар балаларға арналған мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "ras",
+      "parent": "emotional-volitional",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "РАС",
+        "kk": "Аутистикалық спектрдегі бұзылыстар"
+      },
+      "landing_name": {
+        "ru": "Специалисты по РАС",
+        "kk": "РАС бойынша мамандар"
+      },
+      "synonyms": "аутизм, аутистический спектр"
+    },
+    {
+      "slug": "adhd",
+      "parent": "emotional-volitional",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "СДВГ",
+        "kk": "Зейін тапшылығы және гиперактивтілік синдромы"
+      },
+      "landing_name": {
+        "ru": "Специалисты по СДВГ",
+        "kk": "зейін тапшылығы және гиперактивтілік синдромы бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "anxiety-behavior",
+      "parent": "emotional-volitional",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Тревожность, нарушения поведения"
+      },
+      "landing_name": {
+        "ru": "Специалисты по тревожности и нарушениям поведения"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "zrr",
+      "parent": "speech-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "ЗРР (задержка речевого развития)",
+        "kk": "Сөйлеу дамуының тежелуі"
+      },
+      "landing_name": {
+        "ru": "Специалисты по ЗРР",
+        "kk": "сөйлеу дамуының тежелуі бойынша мамандар"
+      },
+      "synonyms": "не говорит, не говорит в 2-3 года, запуск речи"
+    },
+    {
+      "slug": "alalia",
+      "parent": "speech-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Алалия",
+        "kk": "Алалия"
+      },
+      "landing_name": {
+        "ru": "Специалисты по алалии",
+        "kk": "алалия бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "dysarthria",
+      "parent": "speech-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Дизартрия",
+        "kk": "Дизартрия"
+      },
+      "landing_name": {
+        "ru": "Специалисты по дизартрии",
+        "kk": "дизартрия бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "stuttering",
+      "parent": "speech-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Заикание",
+        "kk": "Тұтығу"
+      },
+      "landing_name": {
+        "ru": "Специалисты по заиканию",
+        "kk": "тұтығу бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "learning-difficulties",
+      "parent": "speech-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Трудности обучения (дислексия, дисграфия, дискалькулия)",
+        "kk": "Оқудағы ерекше қиындықтар"
+      },
+      "landing_name": {
+        "ru": "Специалисты по трудностям обучения",
+        "kk": "оқудағы ерекше қиындықтар бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "cerebral-palsy",
+      "parent": "motor-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "ДЦП",
+        "kk": "Балалар церебралды сал ауруы (БЦСА)"
+      },
+      "landing_name": {
+        "ru": "Специалисты по ДЦП",
+        "kk": "балалар церебралды сал ауруы (БЦСА) бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "down-syndrome",
+      "parent": "intellectual-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Синдром Дауна",
+        "kk": "Даун синдромы"
+      },
+      "landing_name": {
+        "ru": "Специалисты по синдрому Дауна",
+        "kk": "Даун синдромы бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "intellectual-disability",
+      "parent": "intellectual-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Умственная отсталость, интеллектуальные нарушения",
+        "kk": "Зияткерлік бұзылыстар"
+      },
+      "landing_name": {
+        "ru": "Специалисты по интеллектуальным нарушениям",
+        "kk": "зияткерлік бұзылыстар бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "genetic-syndromes",
+      "parent": "complex-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Генетические синдромы",
+        "kk": "Генетикалық синдромдар"
+      },
+      "landing_name": {
+        "ru": "Специалисты по генетическим синдромам",
+        "kk": "генетикалық синдромдар бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "hearing-loss-ci",
+      "parent": "hearing-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Тугоухость, кохлеарная имплантация",
+        "kk": "Есту қабілетінің бұзылуы"
+      },
+      "landing_name": {
+        "ru": "Специалисты по тугоухости и кохлеарной имплантации",
+        "kk": "есту қабілетінің бұзылуы бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "vision-disorder",
+      "parent": "vision-impairment",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Нарушения зрения",
+        "kk": "Көру қабілетінің бұзылуы"
+      },
+      "landing_name": {
+        "ru": "Специалисты по нарушениям зрения",
+        "kk": "көру қабілетінің бұзылуы бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "epilepsy",
+      "parent": "general",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Эпилепсия",
+        "kk": "Эпилепсия"
+      },
+      "landing_name": {
+        "ru": "Специалисты по эпилепсии",
+        "kk": "эпилепсия бойынша мамандар"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "sensory-processing",
+      "parent": "general",
+      "is_no_diagnosis": false,
+      "name": {
+        "ru": "Сенсорные особенности"
+      },
+      "landing_name": {
+        "ru": "Специалисты по сенсорным особенностям"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "no-diagnosis",
+      "parent": "general",
+      "is_no_diagnosis": true,
+      "name": {
+        "ru": "Нет диагноза / есть подозрения"
+      },
+      "landing_name": {
+        "ru": "Специалисты для детей без диагноза"
+      },
+      "synonyms": ""
+    }
+  ],
+  "methods": [
+    {
+      "slug": "aba",
+      "evidence_level": "established",
+      "name": {
+        "ru": "АВА-терапия"
+      },
+      "synonyms": "аба, ABA, прикладной анализ поведения"
+    },
+    {
+      "slug": "esdm",
+      "evidence_level": "established",
+      "name": {
+        "ru": "Денверская модель (ESDM)"
+      },
+      "synonyms": "денверская модель, ESDM"
+    },
+    {
+      "slug": "jasper",
+      "evidence_level": "established",
+      "name": {
+        "ru": "JASPER"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "prt",
+      "evidence_level": "established",
+      "name": {
+        "ru": "PRT"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "aac",
+      "evidence_level": "established",
+      "name": {
+        "ru": "Альтернативная коммуникация (AAC, PECS)"
+      },
+      "synonyms": "PECS, карточки"
+    },
+    {
+      "slug": "visual-supports",
+      "evidence_level": "established",
+      "name": {
+        "ru": "Визуальные подсказки и социальные истории"
+      },
+      "synonyms": "визуальное расписание, социальные истории"
+    },
+    {
+      "slug": "parent-training",
+      "evidence_level": "established",
+      "name": {
+        "ru": "Обучение родителей"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "cbt",
+      "evidence_level": "established",
+      "name": {
+        "ru": "КПТ (когнитивно-поведенческая терапия)"
+      },
+      "synonyms": "КПТ"
+    },
+    {
+      "slug": "speech-therapy",
+      "evidence_level": "established",
+      "name": {
+        "ru": "Логопедия"
+      },
+      "synonyms": "логопед"
+    },
+    {
+      "slug": "cp-motor-rehab",
+      "evidence_level": "established",
+      "name": {
+        "ru": "Двигательная реабилитация при ДЦП"
+      },
+      "synonyms": "ЛФК, CIMT, иппотерапия"
+    },
+    {
+      "slug": "ayres-sensory-integration",
+      "evidence_level": "limited",
+      "name": {
+        "ru": "Сенсорная интеграция (Ayres)"
+      },
+      "synonyms": "сенсорная интеграция"
+    },
+    {
+      "slug": "floortime",
+      "evidence_level": "limited",
+      "name": {
+        "ru": "Флортайм"
+      },
+      "synonyms": "DIR/Floortime"
+    },
+    {
+      "slug": "teacch",
+      "evidence_level": "limited",
+      "name": {
+        "ru": "TEACCH"
+      },
+      "synonyms": "структурированное обучение"
+    },
+    {
+      "slug": "music-therapy",
+      "evidence_level": "limited",
+      "name": {
+        "ru": "Музыкальная терапия"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "neuro-correction",
+      "evidence_level": "limited",
+      "name": {
+        "ru": "Нейрокоррекция"
+      },
+      "synonyms": "нейропсихологическая коррекция"
+    },
+    {
+      "slug": "vojta",
+      "evidence_level": "limited",
+      "name": {
+        "ru": "Войта-терапия"
+      },
+      "synonyms": "Войта"
+    },
+    {
+      "slug": "adeli-suit",
+      "evidence_level": "limited",
+      "name": {
+        "ru": "Костюм Адели"
+      },
+      "synonyms": "костюмная терапия"
+    },
+    {
+      "slug": "sensory-rooms",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Сенсорная комната"
+      },
+      "synonyms": "сенсорные комнаты"
+    },
+    {
+      "slug": "articulation-gymnastics",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Артикуляционная гимнастика"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "logo-massage",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Логомассаж"
+      },
+      "synonyms": "логопедический массаж"
+    },
+    {
+      "slug": "tomatis",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Томатис"
+      },
+      "synonyms": "томатис, Томатис"
+    },
+    {
+      "slug": "neurofeedback",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Нейробиоуправление"
+      },
+      "synonyms": "нейрофидбек, БОС"
+    },
+    {
+      "slug": "cerebellar-stimulation",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Мозжечковая стимуляция"
+      },
+      "synonyms": "микрополяризация"
+    },
+    {
+      "slug": "hyperbaric-chelation",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Барокамера"
+      },
+      "synonyms": "гипербарическая оксигенация, хелирование"
+    },
+    {
+      "slug": "craniosacral",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Краниосакральная терапия"
+      },
+      "synonyms": "краниосакральная"
+    },
+    {
+      "slug": "bobath",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Бобат"
+      },
+      "synonyms": "Бобат-терапия"
+    },
+    {
+      "slug": "stem-cells",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Стволовые клетки"
+      },
+      "synonyms": ""
+    },
+    {
+      "slug": "facilitated-communication",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "Облегчённая коммуникация"
+      },
+      "synonyms": "facilitated communication"
+    },
+    {
+      "slug": "gfcf-diet",
+      "evidence_level": "not_established_or_harmful",
+      "name": {
+        "ru": "БГБК-диета"
+      },
+      "synonyms": "безглютеновая, безказеиновая диета"
+    },
+    {
+      "slug": "montessori",
+      "evidence_level": "not_therapy",
+      "name": {
+        "ru": "Монтессори"
+      },
+      "synonyms": ""
+    }
+  ],
+  "service_kinds": [
+    {
+      "slug": "diagnostics",
+      "name": {
+        "ru": "Диагностика",
+        "kk": "Диагностика"
+      }
+    },
+    {
+      "slug": "consultation",
+      "name": {
+        "ru": "Консультация",
+        "kk": "Кеңес беру"
+      }
+    },
+    {
+      "slug": "session",
+      "name": {
+        "ru": "Занятие",
+        "kk": "Сабақ"
+      }
+    },
+    {
+      "slug": "course",
+      "name": {
+        "ru": "Курс занятий",
+        "kk": "Сабақ курсы"
+      }
+    },
+    {
+      "slug": "home_visit",
+      "name": {
+        "ru": "Выезд на дом",
+        "kk": "Үйге шығу"
+      }
+    }
+  ],
+  "communication_languages": [
+    {
+      "code": "kk",
+      "name": {
+        "ru": "Казахский",
+        "kk": "Қазақ тілі"
+      }
+    },
+    {
+      "code": "ru",
+      "name": {
+        "ru": "Русский",
+        "kk": "Орыс тілі"
+      }
+    },
+    {
+      "code": "en",
+      "name": {
+        "ru": "Английский",
+        "kk": "Ағылшын тілі"
+      }
+    }
+  ]
+}

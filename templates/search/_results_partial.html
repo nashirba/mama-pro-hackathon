@@ -1,0 +1,18 @@
+{% load i18n %}{{ map_config|json_script:"map-config" }}{% if partial %}{# htmx response: the filters may no longer match the landing heading, so it becomes the neutral one #}
+{% include "search/_heading.html" with oob=True %}
+<title>{% translate "Каталог специалистов" %} - kamqor</title>
+{% endif %}{% if result.cards %}
+<p class="mb-3 text-sm text-slate-600">{% translate "Найдено" %}: {{ result.total }}</p>
+<div class="space-y-4">
+  {% for card in result.cards %}{% include "search/_card.html" %}{% endfor %}
+</div>
+{% if prev_url or next_url %}
+<nav class="mt-6 flex items-center justify-between text-sm" aria-label="{% translate 'Страницы' %}">
+  {% if prev_url %}<a href="{{ prev_url }}" rel="prev" class="font-medium text-teal-700 hover:underline">{% translate "Назад" %}</a>{% else %}<span></span>{% endif %}
+  <span class="text-slate-600">{{ result.page }} / {{ result.pages }}</span>
+  {% if next_url %}<a href="{{ next_url }}" rel="next" class="font-medium text-teal-700 hover:underline">{% translate "Вперёд" %}</a>{% else %}<span></span>{% endif %}
+</nav>
+{% endif %}
+{% else %}
+{% include "search/_empty.html" %}
+{% endif %}

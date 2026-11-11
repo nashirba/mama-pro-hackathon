@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgis/postgis:17-3.5
+    platform: linux/amd64
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: kamqor
+      POSTGRES_PASSWORD: kamqor
+      POSTGRES_DB: kamqor
+
+  web:
+    build: .
+    environment:
+      PORT: "8000"
+      DATABASE_URL: postgis://kamqor:kamqor@db:5432/kamqor
+      DEPLOY_PROFILE: demo
+      SECRET_KEY: kamqor-compose-demo-secret-key
+      ALLOWED_HOSTS: localhost,127.0.0.1
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

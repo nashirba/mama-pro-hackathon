@@ -1,0 +1,31 @@
+{% load i18n catalog_tags search_tags %}{% with s=card.specialist %}
+<article data-specialist="{{ s.slug }}" class="flex gap-4 rounded-lg border border-slate-200 p-4">
+  {% include "catalog/_photo.html" with profile=s size_class="h-16 w-16" %}
+  <div class="min-w-0 flex-1 space-y-2">
+    <div>
+      <h2 class="text-lg font-semibold"><a href="{% url 'catalog:specialist' s.slug %}" class="hover:underline">{{ s.display_name }}</a></h2>
+      <p class="text-sm text-slate-600">{% for t in s.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    </div>
+    {% include "catalog/_badges.html" with profile=s %}
+    <p class="text-sm text-slate-700">
+      {% translate "Стаж, лет" %}: {{ s.experience_years }}
+      <span class="mx-1 text-slate-300">|</span>
+      <span class="font-semibold">{% if card.price_from == 0 %}{% translate "бесплатно" %}{% elif card.price_from %}{% blocktranslate with price=card.price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</span>
+    </p>
+    <p class="text-sm text-slate-600">
+      {% for f in card|card_formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}
+      <span class="mx-1 text-slate-300">|</span>
+      {% for lang in s.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+    </p>
+    <p class="flex flex-wrap items-center gap-2 text-sm text-slate-600">
+      {% if card.nearest_district_name %}<span>{{ card.nearest_district_name }}</span>{% endif %}
+      {% if card.has_online %}<span data-badge="online" class="rounded bg-sky-100 px-2 py-0.5 text-xs font-medium text-sky-800">{% translate "Онлайн" %}</span>{% endif %}
+      {% if card.distance_m is not None %}<span>{% blocktranslate with distance=card.distance_m|km %}≈ {{ distance }} км{% endblocktranslate %}</span>{% endif %}
+    </p>
+    <div class="flex flex-wrap items-center gap-2 pt-1">
+      <a href="{% url 'catalog:specialist' s.slug %}" class="rounded bg-teal-700 px-3 py-2 text-sm font-semibold text-white hover:bg-teal-800">{% translate "Подробнее" %}</a>
+      {% include "catalog/_contact_buttons.html" with profile=s %}
+    </div>
+  </div>
+</article>
+{% endwith %}

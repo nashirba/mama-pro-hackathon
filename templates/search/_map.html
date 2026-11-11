@@ -1,0 +1,4 @@
+{% load i18n search_tags %}<section :class="view === 'map' ? 'max-xl:block' : ''" class="hidden xl:sticky xl:top-4 xl:block xl:self-start" aria-label="{% translate 'Карта специалистов' %}">
+  <div id="map" class="h-[70vh] min-h-80 w-full rounded-lg border border-slate-200 xl:h-[calc(100vh-2rem)]"></div>
+</section>
+{% map_labels_script %}

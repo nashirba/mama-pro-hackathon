@@ -1,0 +1,12 @@
+.git
+.venv
+.env*
+!.env.example
+.django_tailwind_cli
+.idea
+.superpowers
+.pytest_cache
+.ruff_cache
+staticfiles
+**/__pycache__
+**/*.mo

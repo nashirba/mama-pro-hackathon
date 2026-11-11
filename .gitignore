@@ -24,3 +24,5 @@ build/
 coverage.xml
 openapi.generated.yaml
 
+static/css/
+/docs/

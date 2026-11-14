@@ -30,6 +30,7 @@ from apps.catalog.models import (
     SpecialistProfile,
 )
 from apps.catalog.pricing import lowest
+from apps.community.ratings import NO_RATING, Rating, ratings_for
 
 from .models import SearchOffer
 from .normalize import normalize_kk
@@ -150,6 +151,7 @@ class SpecialistCard:
     price_night: int | None = None
     price_month: int | None = None
     home_visit_area_name: str | None = None  # "city, district" of the first home visit offer
+    rating: Rating = NO_RATING
 
 
 @dataclass
@@ -351,4 +353,7 @@ def search(params: SearchParams) -> SearchResult:
         cards.append(
             _build_card(page_specialist_offers[0].specialist, page_specialist_offers, r.get("min_dist"), params.near)
         )
+    ratings = ratings_for(card.specialist.pk for card in cards)
+    for card in cards:
+        card.rating = ratings.get(card.specialist.pk, NO_RATING)
     return SearchResult(cards=cards, total=total, page=page, pages=pages)

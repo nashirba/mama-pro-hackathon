@@ -266,22 +266,22 @@ def test_post_page_query_count_does_not_grow_with_specialist_comments(client):
     assert html.count("/ru/specialist/") == 7 and hidden.slug not in html
 
 
-def test_specialist_page_shows_three_latest_reviews_and_all_link(client, catalog_fixture):
+def test_specialist_page_shows_ten_latest_reviews_and_all_link(client, catalog_fixture):
     from apps.catalog.models import SpecialistProfile
 
     spec = SpecialistProfile.objects.get(slug="ivanova-logoped")
-    for i in range(4):
-        PostFactory(kind=Post.Kind.REVIEW, specialist=spec, body=f"Отзыв номер {i}")
+    for i in range(11):
+        PostFactory(kind=Post.Kind.REVIEW, specialist=spec, body=f"Отзыв номер {i}", rating=5)
     html = _html(client.get("/ru/specialist/ivanova-logoped/"))
-    assert "Отзывы в сообществе" in html
-    assert html.count('id="post-') == 3
-    assert "Отзыв номер 3" in html and "Отзыв номер 0" not in html
+    assert 'id="reviews"' in html
+    assert html.count('id="post-') == 10
+    assert "Отзыв номер 10" in html and "Отзыв номер 0<" not in html
     assert f"/ru/community/?kind=review&amp;specialist={spec.pk}" in html
 
 
-def test_specialist_page_without_reviews_has_no_section(client, catalog_fixture):
+def test_specialist_page_without_reviews_says_so(client, catalog_fixture):
     html = _html(client.get("/ru/specialist/ivanova-logoped/"))
-    assert "Отзывы в сообществе" not in html
+    assert "Отзывов пока нет" in html and "Нет отзывов" in html
 
 
 def test_hidden_review_not_on_specialist_page(client, catalog_fixture):

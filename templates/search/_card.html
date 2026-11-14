@@ -9,6 +9,7 @@
       </div>
       <p class="shrink-0 text-base font-semibold text-slate-900 @xs:text-right">{% if card.price_from == 0 %}{% translate "бесплатно" %}{% elif card.price_from %}{% blocktranslate with price=card.price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>
     </div>
+    <p>{% include "catalog/_rating.html" with rating=card.rating %}</p>
     <p class="text-sm text-slate-600">{% for t in s.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     {% include "catalog/_badges.html" with profile=s compact=True %}
     <p class="text-sm text-slate-600">{% blocktranslate count n=s.experience_years %}Стаж {{ n }} год{% plural %}Стаж {{ n }} лет{% endblocktranslate %}{% with formats=card|card_formats %}{% if formats %} · {% for f in formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% endwith %}{% if s.languages.all %} · {% for lang in s.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}</p>

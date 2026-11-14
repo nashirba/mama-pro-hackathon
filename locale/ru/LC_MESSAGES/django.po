@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 23:10+0500\n"
+"POT-Creation-Date: 2026-11-14 23:50+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,9 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: apps/accounts/forms.py:13
 msgid "Номер телефона"
@@ -59,8 +57,8 @@ msgid "Мама"
 msgstr ""
 
 #: apps/accounts/models.py:15 apps/catalog/models/profile.py:29
-#: apps/community/forms.py:119 templates/community/_comment.html:6
-#: templates/community/_post_card.html:6 templates/search/_suggest.html:1
+#: templates/community/_comment.html:6 templates/community/_post_card.html:6
+#: templates/search/_suggest.html:1
 msgid "Специалист"
 msgstr ""
 
@@ -263,7 +261,7 @@ msgid "Автор"
 msgstr ""
 
 #: apps/community/admin.py:33 apps/community/admin.py:50
-#: apps/community/forms.py:73
+#: apps/community/forms.py:82
 msgid "Текст"
 msgstr ""
 
@@ -279,113 +277,125 @@ msgstr ""
 msgid "Закрыть жалобу"
 msgstr ""
 
-#: apps/community/forms.py:24
+#: apps/community/forms.py:23
 msgid "Псевдоним"
 msgstr ""
 
-#: apps/community/forms.py:33
+#: apps/community/forms.py:32
 msgid "Только буквы, цифры, пробел и _"
 msgstr ""
 
-#: apps/community/forms.py:35 apps/community/forms.py:47
+#: apps/community/forms.py:34 apps/community/forms.py:46
 msgid "Этот псевдоним уже занят"
 msgstr ""
 
-#: apps/community/forms.py:54
+#: apps/community/forms.py:53
 msgid "Похоже, в тексте есть ИИН или телефон. Не публикуйте данные ребёнка."
 msgstr ""
 
-#: apps/community/forms.py:60
+#: apps/community/forms.py:59 templates/community/_rating_field.html:2
+msgid "Оценка"
+msgstr ""
+
+#: apps/community/forms.py:63
+msgid "Поставьте оценку от 1 до 5"
+msgstr ""
+
+#: apps/community/forms.py:69
 msgid "Фото"
 msgstr ""
 
-#: apps/community/forms.py:63 templates/search/_suggest.html:1
+#: apps/community/forms.py:72 templates/search/_suggest.html:1
 msgid "Особенность развития"
 msgstr ""
 
-#: apps/community/forms.py:66 apps/geo/models.py:20
+#: apps/community/forms.py:75 apps/geo/models.py:20
 #: templates/community/feed.html:30 templates/core/home.html:24
 #: templates/partials/_city_picker.html:5
 msgid "Город"
 msgstr ""
 
-#: apps/community/forms.py:94
+#: apps/community/forms.py:103
 msgid "Фото больше 2 МБ"
 msgstr ""
 
-#: apps/community/forms.py:105
+#: apps/community/forms.py:114
 msgid "Загрузите фото в формате JPEG или PNG"
 msgstr ""
 
-#: apps/community/forms.py:128
+#: apps/community/forms.py:129
+msgid "Специалист или няня"
+msgstr ""
+
+#: apps/community/forms.py:140
 msgid "Тип"
 msgstr ""
 
-#: apps/community/forms.py:151
-msgid "Выберите специалиста"
+#: apps/community/forms.py:162
+msgid "Выберите специалиста или няню"
 msgstr ""
 
-#: apps/community/forms.py:158
+#: apps/community/forms.py:172
 msgid "Удалить фото"
 msgstr ""
 
-#: apps/community/forms.py:168 templates/community/_comment_form_body.html:5
+#: apps/community/forms.py:194 templates/community/_comment_form_body.html:5
 msgid "Комментарий"
 msgstr ""
 
-#: apps/community/forms.py:179
+#: apps/community/forms.py:205
 msgid "С упоминанием имени ответ длиннее 1000 символов. Сократите текст."
 msgstr ""
 
-#: apps/community/forms.py:192
+#: apps/community/forms.py:218
 msgid "Причина"
 msgstr ""
 
-#: apps/community/forms.py:193
+#: apps/community/forms.py:219
 msgid "Пояснение"
 msgstr ""
 
-#: apps/community/models.py:26
+#: apps/community/models.py:31
 msgid "Вопрос"
 msgstr ""
 
-#: apps/community/models.py:27
+#: apps/community/models.py:32
 msgid "История"
 msgstr ""
 
-#: apps/community/models.py:28
-msgid "Отзыв о специалисте"
+#: apps/community/models.py:33
+msgid "Отзыв"
 msgstr ""
 
-#: apps/community/models.py:135
+#: apps/community/models.py:148
 msgid "Реклама"
 msgstr ""
 
-#: apps/community/models.py:136
+#: apps/community/models.py:149
 msgid "Данные ребёнка"
 msgstr ""
 
-#: apps/community/models.py:137
+#: apps/community/models.py:150
 msgid "Оскорбление"
 msgstr ""
 
-#: apps/community/models.py:138
+#: apps/community/models.py:151
 msgid "Опасный медицинский совет"
 msgstr ""
 
-#: apps/community/models.py:139 apps/onboarding/models.py:94
+#: apps/community/models.py:152 apps/onboarding/models.py:94
 msgid "Другое"
 msgstr ""
 
-#: apps/community/models.py:142
+#: apps/community/models.py:155
 msgid "Новая"
 msgstr ""
 
-#: apps/community/models.py:143
+#: apps/community/models.py:156
 msgid "Закрыта"
 msgstr ""
 
-#: apps/community/views.py:60 templates/catalog/specialist_detail.html:88
+#: apps/community/views.py:60
 msgid "Все"
 msgstr ""
 
@@ -397,7 +407,7 @@ msgstr ""
 msgid "Истории"
 msgstr ""
 
-#: apps/community/views.py:63
+#: apps/community/views.py:63 templates/catalog/_reviews.html:3
 msgid "Отзывы"
 msgstr ""
 
@@ -526,16 +536,16 @@ msgid "Город или район"
 msgstr ""
 
 #: apps/onboarding/forms.py:43 apps/onboarding/services.py:56
-#: templates/catalog/nanny_detail.html:49
-#: templates/catalog/specialist_detail.html:31
+#: templates/catalog/nanny_detail.html:50
+#: templates/catalog/specialist_detail.html:32
 msgid "О себе"
 msgstr ""
 
-#: apps/onboarding/forms.py:44 templates/catalog/specialist_detail.html:38
+#: apps/onboarding/forms.py:44 templates/catalog/specialist_detail.html:39
 msgid "Подход к работе"
 msgstr ""
 
-#: apps/onboarding/forms.py:45 templates/catalog/specialist_detail.html:55
+#: apps/onboarding/forms.py:45 templates/catalog/specialist_detail.html:56
 msgid "Методы"
 msgstr ""
 
@@ -675,9 +685,9 @@ msgstr ""
 msgid "Сертификат курса"
 msgstr ""
 
-#: apps/onboarding/models.py:93 templates/catalog/nanny_detail.html:18
-#: templates/catalog/nanny_detail.html:33
-#: templates/search/_nannies_intro.html:7 templates/search/_nanny_card.html:12
+#: apps/onboarding/models.py:93 templates/catalog/nanny_detail.html:19
+#: templates/catalog/nanny_detail.html:34
+#: templates/search/_nannies_intro.html:7 templates/search/_nanny_card.html:13
 msgid "Справка о несудимости"
 msgstr ""
 
@@ -689,8 +699,8 @@ msgstr ""
 msgid "Заблокированные номера"
 msgstr ""
 
-#: apps/onboarding/services.py:53 templates/catalog/nanny_detail.html:24
-#: templates/catalog/specialist_detail.html:22
+#: apps/onboarding/services.py:53 templates/catalog/nanny_detail.html:25
+#: templates/catalog/specialist_detail.html:23
 msgid "Возраст детей"
 msgstr ""
 
@@ -844,7 +854,8 @@ msgid "Ребёнок может удерживать внимание на од
 msgstr ""
 
 #: apps/questionnaire/questions.py:69
-msgid "Может самостоятельно выполнять задания без постоянной помощи взрослого."
+msgid ""
+"Может самостоятельно выполнять задания без постоянной помощи взрослого."
 msgstr ""
 
 #: apps/questionnaire/questions.py:70
@@ -1029,8 +1040,8 @@ msgstr ""
 
 #: apps/questionnaire/questions.py:118
 msgid ""
-"Испытывает трудности с мелкой моторикой (застёгивание пуговиц, использование "
-"ножниц, рисование)."
+"Испытывает трудности с мелкой моторикой (застёгивание пуговиц, использование"
+" ножниц, рисование)."
 msgstr ""
 
 #: apps/questionnaire/questions.py:119
@@ -1112,7 +1123,7 @@ msgstr ""
 
 #: apps/search/templatetags/search_tags.py:28
 #: templates/catalog/specialist_detail.html:7
-#: templates/catalog/specialist_detail.html:75 templates/search/_card.html:10
+#: templates/catalog/specialist_detail.html:76 templates/search/_card.html:10
 msgid "бесплатно"
 msgstr ""
 
@@ -1123,9 +1134,10 @@ msgid "от %(price)s ₸"
 msgstr ""
 
 #: apps/search/templatetags/search_tags.py:30
-#: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
+#: templates/catalog/_nanny_prices.html:1
+#: templates/catalog/nanny_detail.html:6
 #: templates/catalog/specialist_detail.html:7
-#: templates/catalog/specialist_detail.html:75 templates/search/_card.html:10
+#: templates/catalog/specialist_detail.html:76 templates/search/_card.html:10
 msgid "цена по запросу"
 msgstr ""
 
@@ -1134,12 +1146,12 @@ msgid "Подробнее"
 msgstr ""
 
 #: apps/search/templatetags/search_tags.py:32
-#: templates/catalog/specialist_detail.html:105
+#: templates/catalog/specialist_detail.html:96
 msgid "Открыть в 2ГИС"
 msgstr ""
 
-#: apps/search/templatetags/search_tags.py:33 templates/catalog/_minimap.html:1
-#: templates/search/_map.html:2
+#: apps/search/templatetags/search_tags.py:33
+#: templates/catalog/_minimap.html:1 templates/search/_map.html:2
 msgid "Загружаем карту…"
 msgstr ""
 
@@ -1278,8 +1290,8 @@ msgstr ""
 #: templates/accounts/_consent_fields.html:22
 msgid ""
 "Обработка персональных данных: мы храним ваш номер телефона, фамилию, имя, "
-"дату рождения, язык интерфейса и данные детей, которых вы добавите, чтобы вы "
-"могли пользоваться личным кабинетом. Согласие можно отозвать."
+"дату рождения, язык интерфейса и данные детей, которых вы добавите, чтобы вы"
+" могли пользоваться личным кабинетом. Согласие можно отозвать."
 msgstr ""
 
 #: templates/accounts/_consent_fields.html:25
@@ -1380,13 +1392,14 @@ msgstr ""
 #: templates/cabinet/child_form.html:20 templates/cabinet/profile_form.html:17
 #: templates/community/comment_form.html:20
 #: templates/community/nickname_form.html:18
-#: templates/community/post_form.html:88 templates/onboarding/form.html:16
+#: templates/community/post_form.html:90 templates/onboarding/form.html:16
 msgid "Сохранить"
 msgstr ""
 
 #: templates/cabinet/child_form.html:21 templates/cabinet/profile_form.html:18
 #: templates/community/comment_form.html:21
-#: templates/community/complaint_form.html:25 templates/onboarding/form.html:17
+#: templates/community/complaint_form.html:25
+#: templates/onboarding/form.html:17
 msgid "Отмена"
 msgstr ""
 
@@ -1483,8 +1496,9 @@ msgstr ""
 msgid "Контакты в демо-версии недоступны"
 msgstr ""
 
-#: templates/catalog/_detail_back.html:1 templates/community/post_detail.html:7
-#: templates/community/post_form.html:7 templates/community/rules.html:7
+#: templates/catalog/_detail_back.html:1
+#: templates/community/post_detail.html:7 templates/community/post_form.html:7
+#: templates/community/rules.html:7
 msgid "Навигация"
 msgstr ""
 
@@ -1497,24 +1511,52 @@ msgstr ""
 msgid "%(price)s ₸ в час"
 msgstr ""
 
-#: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
+#: templates/catalog/_nanny_prices.html:1
+#: templates/catalog/nanny_detail.html:6
 #, python-format
 msgid "%(price)s ₸ за ночь"
 msgstr ""
 
-#: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
-#: templates/catalog/specialist_detail.html:76
+#: templates/catalog/_nanny_prices.html:1
+#: templates/catalog/nanny_detail.html:6
+#: templates/catalog/specialist_detail.html:77
 #, python-format
 msgid "%(price)s ₸ в месяц"
 msgstr ""
 
+#: templates/catalog/_rating.html:5
+#, python-format
+msgid "%(n)s отзыв"
+msgid_plural "%(n)s отзывов"
+msgstr[0] "%(n)s отзыв"
+msgstr[1] "%(n)s отзыва"
+msgstr[2] "%(n)s отзывов"
+msgstr[3] "%(n)s отзыва"
+
+#: templates/catalog/_rating.html:6
+msgid "Нет отзывов"
+msgstr ""
+
+#: templates/catalog/_reviews.html:7 templates/catalog/_reviews.html:9
+msgid "Оставить отзыв"
+msgstr ""
+
+#: templates/catalog/_reviews.html:16
+msgid "Все отзывы"
+msgstr ""
+
+#: templates/catalog/_reviews.html:19
+msgid ""
+"Отзывов пока нет. Отзыв может оставить мама, зарегистрированная на сайте."
+msgstr ""
+
 #: templates/catalog/_training_total.html:1
-#: templates/catalog/nanny_detail.html:26
+#: templates/catalog/nanny_detail.html:27
 msgid "Обучение"
 msgstr ""
 
 #: templates/catalog/_training_total.html:1
-#: templates/catalog/_trainings.html:13 templates/catalog/nanny_detail.html:26
+#: templates/catalog/_trainings.html:13 templates/catalog/nanny_detail.html:27
 #, python-format
 msgid "%(n)s час"
 msgid_plural "%(n)s часов"
@@ -1536,8 +1578,8 @@ msgstr[3] "%(n)s курса"
 msgid "Обучение и сертификаты"
 msgstr ""
 
-#: templates/catalog/_trainings.html:8 templates/catalog/nanny_detail.html:17
-#: templates/search/_nanny_card.html:11
+#: templates/catalog/_trainings.html:8 templates/catalog/nanny_detail.html:18
+#: templates/search/_nanny_card.html:12
 msgid "Первая помощь"
 msgstr ""
 
@@ -1565,16 +1607,16 @@ msgstr[3] "Всего: %(n)s часа обучения"
 msgid "от %(price)s ₸ в час"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:15
+#: templates/catalog/nanny_detail.html:16
 msgid "Няня для ребёнка с особенностями развития"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:23
+#: templates/catalog/nanny_detail.html:24
 msgid "Опыт"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:23
-#: templates/catalog/specialist_detail.html:21
+#: templates/catalog/nanny_detail.html:24
+#: templates/catalog/specialist_detail.html:22
 #, python-format
 msgid "%(n)s год"
 msgid_plural "%(n)s лет"
@@ -1583,105 +1625,101 @@ msgstr[1] "%(n)s года"
 msgstr[2] "%(n)s лет"
 msgstr[3] "%(n)s года"
 
-#: templates/catalog/nanny_detail.html:24
-#: templates/catalog/specialist_detail.html:22
+#: templates/catalog/nanny_detail.html:25
+#: templates/catalog/specialist_detail.html:23
 #, python-format
 msgid "%(min)s–%(max)s лет"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:25
+#: templates/catalog/nanny_detail.html:26
 msgid "Языки"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:34
+#: templates/catalog/nanny_detail.html:35
 #, python-format
 msgid "Есть, выдана %(date)s"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:39
+#: templates/catalog/nanny_detail.html:40
 msgid "С какими особенностями развития есть опыт"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:56
+#: templates/catalog/nanny_detail.html:57
 msgid "Как работаю"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:63
+#: templates/catalog/nanny_detail.html:64
 msgid "Когда может работать"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:70
-#: templates/catalog/nanny_detail.html:81
+#: templates/catalog/nanny_detail.html:71
+#: templates/catalog/nanny_detail.html:84
 msgid "Цены"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:72
+#: templates/catalog/nanny_detail.html:73
 msgid "За час"
 msgstr "За час"
 
-#: templates/catalog/nanny_detail.html:73
+#: templates/catalog/nanny_detail.html:74
 msgid "За ночь"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:74
+#: templates/catalog/nanny_detail.html:75
 msgid "За месяц"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:75
+#: templates/catalog/nanny_detail.html:76
 msgid "Район выезда"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:79
+#: templates/catalog/nanny_detail.html:82
 msgid ""
 "Няня не проводит коррекционных занятий и не ставит диагнозов. Оплата - "
 "напрямую няне."
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:21
+#: templates/catalog/specialist_detail.html:22
 msgid "Стаж"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:23
+#: templates/catalog/specialist_detail.html:24
 msgid "Язык занятий"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:24
+#: templates/catalog/specialist_detail.html:25
 #: templates/search/_filters.html:154
 msgid "Формат"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:46
+#: templates/catalog/specialist_detail.html:47
 msgid "С какими особенностями развития работает"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:65
-#: templates/catalog/specialist_detail.html:114
+#: templates/catalog/specialist_detail.html:66
+#: templates/catalog/specialist_detail.html:105
 msgid "Услуги и цены"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:71
+#: templates/catalog/specialist_detail.html:72
 #, python-format
 msgid "%(n)s мин"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:75
+#: templates/catalog/specialist_detail.html:76
 #, python-format
 msgid "%(price)s ₸ за занятие"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:87
-msgid "Отзывы в сообществе"
-msgstr ""
-
-#: templates/catalog/specialist_detail.html:98
+#: templates/catalog/specialist_detail.html:89
 msgid "Адреса приёма"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:106
+#: templates/catalog/specialist_detail.html:97
 msgid "Маршрут"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:114
+#: templates/catalog/specialist_detail.html:105
 msgid "Адреса и маршрут"
 msgstr ""
 
@@ -1695,7 +1733,7 @@ msgstr ""
 msgid "Скрыто модератором"
 msgstr ""
 
-#: templates/community/_comment.html:15 templates/community/_post_card.html:28
+#: templates/community/_comment.html:15 templates/community/_post_card.html:31
 #: templates/community/complaint_form.html:3
 #: templates/community/complaint_form.html:7
 msgid "Пожаловаться"
@@ -1720,7 +1758,7 @@ msgstr ""
 
 #: templates/community/_comment_form_body.html:11
 #: templates/community/comment_form.html:16
-#: templates/community/post_form.html:58
+#: templates/community/post_form.html:60
 msgid "Всё равно опубликовать"
 msgstr ""
 
@@ -1755,11 +1793,16 @@ msgstr[2] "%(n)s ответов"
 msgstr[3] "%(n)s ответа"
 
 #: templates/community/_specialist_options.html:14
-msgid "Специалист не найден"
+msgid "Никого не нашли"
 msgstr ""
 
 #: templates/community/_specialist_options.html:16
-msgid "Введите имя специалиста"
+msgid "Введите имя специалиста или няни"
+msgstr ""
+
+#: templates/community/_stars.html:1
+#, python-format
+msgid "Оценка %(value)s из 5"
 msgstr ""
 
 #: templates/community/comment_form.html:3
@@ -1869,22 +1912,22 @@ msgid "правила сообщества"
 msgstr ""
 
 #: templates/community/post_form.html:40
-msgid "Имя специалиста"
+msgid "Имя специалиста или няни"
 msgstr ""
 
-#: templates/community/post_form.html:65 templates/community/post_form.html:71
+#: templates/community/post_form.html:67 templates/community/post_form.html:73
 msgid "Не указывать"
 msgstr ""
 
-#: templates/community/post_form.html:80
+#: templates/community/post_form.html:82
 msgid "JPEG или PNG, до 2 МБ"
 msgstr ""
 
-#: templates/community/post_form.html:81
+#: templates/community/post_form.html:83
 msgid "Прикрепите фото ещё раз"
 msgstr ""
 
-#: templates/community/post_form.html:88
+#: templates/community/post_form.html:90
 msgid "Опубликовать"
 msgstr ""
 
@@ -1935,9 +1978,9 @@ msgstr ""
 
 #: templates/consents/pd_processing_v1.html:8
 msgid ""
-"2. Цель обработки — вход в демо-версию. Демо-версия размещена на серверах за "
-"пределами Республики Казахстан (Render и Neon, Германия) и не предназначена "
-"для реальных данных."
+"2. Цель обработки — вход в демо-версию. Демо-версия размещена на серверах за"
+" пределами Республики Казахстан (Render и Neon, Германия) и не предназначена"
+" для реальных данных."
 msgstr ""
 
 #: templates/consents/pd_processing_v1.html:12
@@ -1969,8 +2012,8 @@ msgstr ""
 
 #: templates/consents/user_agreement_v1.html:10
 msgid ""
-"3. Вы обязуетесь указывать достоверный номер телефона и не передавать доступ "
-"к аккаунту третьим лицам."
+"3. Вы обязуетесь указывать достоверный номер телефона и не передавать доступ"
+" к аккаунту третьим лицам."
 msgstr ""
 
 #: templates/core/home.html:3 templates/partials/footer.html:4
@@ -2014,8 +2057,8 @@ msgstr ""
 #: templates/core/home.html:53
 msgid ""
 "Няня для ребёнка с особенностями развития на несколько часов, на ночь или "
-"помесячно. У каждой няни есть сертификаты курсов, курс первой помощи детям и "
-"справка о несудимости."
+"помесячно. У каждой няни есть сертификаты курсов, курс первой помощи детям и"
+" справка о несудимости."
 msgstr ""
 
 #: templates/core/home.html:54
@@ -2261,7 +2304,8 @@ msgstr ""
 
 #: templates/onboarding/status.html:46
 msgid ""
-"Справка о несудимости и сертификаты курсов. Документы видит только модератор."
+"Справка о несудимости и сертификаты курсов. Документы видит только "
+"модератор."
 msgstr ""
 
 #: templates/onboarding/status.html:46
@@ -2448,8 +2492,8 @@ msgstr ""
 
 #: templates/questionnaire/result.html:43
 msgid ""
-"По результатам оценки особенностей развития ребёнка вам следует обратиться к "
-"следующим специалистам:"
+"По результатам оценки особенностей развития ребёнка вам следует обратиться к"
+" следующим специалистам:"
 msgstr ""
 
 #: templates/questionnaire/result.html:44
@@ -2470,7 +2514,7 @@ msgstr ""
 msgid "Пройти опросник заново"
 msgstr ""
 
-#: templates/search/_card.html:14
+#: templates/search/_card.html:15
 #, python-format
 msgid "Стаж %(n)s год"
 msgid_plural "Стаж %(n)s лет"
@@ -2479,7 +2523,7 @@ msgstr[1] "Стаж %(n)s года"
 msgstr[2] "Стаж %(n)s лет"
 msgstr[3] "Стаж %(n)s года"
 
-#: templates/search/_card.html:17
+#: templates/search/_card.html:18
 #, python-format
 msgid "≈ %(distance)s км"
 msgstr ""
@@ -2558,7 +2602,7 @@ msgstr ""
 msgid "Свернуть"
 msgstr ""
 
-#: templates/search/_filters.html:107 templates/search/_nanny_card.html:15
+#: templates/search/_filters.html:107 templates/search/_nanny_card.html:16
 msgid "Особенности развития"
 msgstr ""
 
@@ -2602,7 +2646,8 @@ msgstr ""
 msgid "Метод"
 msgstr ""
 
-#: templates/search/_filters.html:192 templates/search/_results_partial.html:11
+#: templates/search/_filters.html:192
+#: templates/search/_results_partial.html:11
 msgid "Сбросить"
 msgstr ""
 
@@ -2617,8 +2662,8 @@ msgstr ""
 #: templates/search/_nannies_intro.html:2
 msgid ""
 "Няня присматривает за ребёнком с особенностями развития у вас дома: "
-"несколько часов, ночью или постоянно. Она знает, как помочь ребёнку в быту и "
-"в трудной ситуации, но не проводит коррекционных занятий и не ставит "
+"несколько часов, ночью или постоянно. Она знает, как помочь ребёнку в быту и"
+" в трудной ситуации, но не проводит коррекционных занятий и не ставит "
 "диагнозов. Оплата - напрямую няне."
 msgstr ""
 
@@ -2630,7 +2675,7 @@ msgstr ""
 msgid "Сертификат о курсе обучения"
 msgstr ""
 
-#: templates/search/_nanny_card.html:8
+#: templates/search/_nanny_card.html:9
 #, python-format
 msgid "Опыт %(n)s год"
 msgid_plural "Опыт %(n)s лет"
@@ -2639,12 +2684,12 @@ msgstr[1] "Опыт %(n)s года"
 msgstr[2] "Опыт %(n)s лет"
 msgstr[3] "Опыт %(n)s года"
 
-#: templates/search/_nanny_card.html:8
+#: templates/search/_nanny_card.html:9
 #, python-format
 msgid "дети %(min)s–%(max)s лет"
 msgstr ""
 
-#: templates/search/_nanny_card.html:22
+#: templates/search/_nanny_card.html:23
 #, python-format
 msgid "Выезд: %(area)s"
 msgstr ""

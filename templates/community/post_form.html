@@ -37,14 +37,16 @@
 
     <div x-show="kind === 'review'" x-cloak class="space-y-2">
       <label for="specialist-q" class="block text-sm font-medium">{{ form.specialist.label }}</label>
-      <input id="specialist-q" type="search" placeholder="{% translate 'Имя специалиста' %}" autocomplete="off"
+      <input id="specialist-q" type="search" placeholder="{% translate 'Имя специалиста или няни' %}" autocomplete="off"
              hx-get="{% url 'community:specialist_options' %}" hx-trigger="input changed delay:300ms, search"
              hx-target="#specialist-options" name="q" hx-include="[name=specialist]:checked"
              class="min-h-11 w-full rounded-lg border border-slate-300 px-3">
       <div id="specialist-options" aria-live="polite">{% include "community/_specialist_options.html" with specialists=initial_specialists selected_id=selected_specialist.pk %}</div>
       {% if form.specialist.errors %}<p class="text-sm text-red-700">{{ form.specialist.errors.0 }}</p>{% endif %}
+      {% include "community/_rating_field.html" %}
     </div>
     {% endif %}
+    {% if post and post.kind == "review" %}{% include "community/_rating_field.html" %}{% endif %}
 
     <div>
       <label for="{{ form.body.id_for_label }}" class="block text-sm font-medium">{{ form.body.label }}</label>

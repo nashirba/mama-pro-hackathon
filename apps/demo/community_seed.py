@@ -15,15 +15,24 @@ from django.utils import timezone
 from PIL import Image
 
 from apps.accounts.models import User
-from apps.catalog.models import DevelopmentalCondition, SpecialistProfile
-from apps.catalog.visibility import catalog_visible_specialists
+from apps.catalog.models import (
+    DevelopmentalCondition,
+    ProfileCategory,
+    SpecialistProfile,
+)
+from apps.catalog.visibility import (
+    catalog_visible_profiles,
+    catalog_visible_specialists,
+)
 from apps.community.models import Comment, Complaint, Like, Post
 from apps.community.services import add_comment, save_post
-from apps.demo.generators import LOGIN_PHONE_PREFIX, load_json
+from apps.demo.generators import LOGIN_PHONE_PREFIX, NANNY_LOGIN_PHONE_PREFIX, load_json
 from apps.geo.models import KatoNode
 
 PARENT_PHONE_PREFIX = "+7700002"  # +7700000 specialists, +7700001 nannies
 IMAGE_EVERY = 4  # every 4th post (indices 1, 5, 9, ...) gets a photo: ~10 of ~40
+# Scores of the specialist reviews in order; fixed, so the random sequence of the rest of the seed does not change.
+REVIEW_RATINGS = [5, 4, 5, 5, 3, 4, 5, 2, 4, 5, 5, 4, 3, 5]
 
 
 def _placeholder_jpeg(rng: Random) -> tuple[bytes, str]:
@@ -84,6 +93,10 @@ def seed_community(rng: Random, *, reset: bool = False) -> tuple[int, bool]:
     if reset:
         clear_community()
     elif has_seed_posts():
+        # Seeds created before ratings existed get scores and the nanny reviews; nothing else is touched.
+        data = load_json("community_ru.json")
+        _backfill_ratings()
+        _seed_nanny_reviews(data["nanny_reviews"], _parents(data["nicknames"]))
         return Post.objects.filter(author__phone__startswith=PARENT_PHONE_PREFIX).count(), False
     data = load_json("community_ru.json")
     parents = _parents(data["nicknames"])
@@ -114,6 +127,7 @@ def seed_community(rng: Random, *, reset: bool = False) -> tuple[int, bool]:
             condition=conditions[item["condition"]],
             city=cities[item["city"]],
             specialist=specialist,
+            rating=REVIEW_RATINGS[len(used_reviews) % len(REVIEW_RATINGS)] if specialist else None,
             created_at=now - timedelta(hours=rng.randint(2, 24 * 30)),
         )
         upload = _placeholder_jpeg(rng) if index % IMAGE_EVERY == 1 else None
@@ -121,7 +135,46 @@ def seed_community(rng: Random, *, reset: bool = False) -> tuple[int, bool]:
         created += 1
         _seed_comments(rng, post, item["comments"], index, parents, specialists)
         _seed_likes(rng, post, parents)
+    created += _seed_nanny_reviews(data["nanny_reviews"], parents)
     return created, True
+
+
+def _backfill_ratings() -> None:
+    reviews = Post.objects.filter(
+        author__phone__startswith=PARENT_PHONE_PREFIX, kind=Post.Kind.REVIEW, rating__isnull=True
+    ).order_by("pk")
+    for i, post in enumerate(reviews, start=1):
+        post.rating = REVIEW_RATINGS[i % len(REVIEW_RATINGS)]
+        post.save(update_fields=["rating"])
+
+
+def _seed_nanny_reviews(items: list[dict], parents: list[User]) -> int:
+    """One review per seed nanny in turn, by a different parent each; skipped once any seed nanny review exists."""
+    nannies = list(
+        catalog_visible_profiles()
+        .filter(category=ProfileCategory.NANNY, user__phone__startswith=NANNY_LOGIN_PHONE_PREFIX)
+        .order_by("pk")
+    )
+    if not nannies or Post.objects.filter(
+        author__in=parents, kind=Post.Kind.REVIEW, specialist__category=ProfileCategory.NANNY
+    ).exists():
+        return 0
+    conditions = {c.slug: c for c in DevelopmentalCondition.objects.all()}
+    cities = {n.slug: n for n in KatoNode.objects.filter(level=KatoNode.Level.CITY)}
+    now = timezone.now()
+    for i, item in enumerate(items):
+        post = Post(
+            author=parents[(i * 3) % len(parents)],
+            kind=Post.Kind.REVIEW,
+            body=item["body"],
+            condition=conditions[item["condition"]],
+            city=cities[item["city"]],
+            specialist=nannies[i % len(nannies)],
+            rating=item["rating"],
+            created_at=now - timedelta(days=i + 1),
+        )
+        save_post(post)
+    return len(items)
 
 
 def _seed_comments(rng, post: Post, comments: list[dict], index: int, parents: list[User], specialists) -> None:

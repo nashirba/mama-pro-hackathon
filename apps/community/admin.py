@@ -19,7 +19,7 @@ class _HideShowMixin:
 
 @admin.register(Post)
 class PostAdmin(_HideShowMixin, admin.ModelAdmin):
-    list_display = ("id", "kind", "author_label", "short_body", "is_hidden", "is_deleted", "created_at")
+    list_display = ("id", "kind", "rating", "author_label", "short_body", "is_hidden", "is_deleted", "created_at")
     list_filter = ("is_hidden", "is_deleted", "kind")
     search_fields = ("body",)
     raw_id_fields = ("author", "specialist", "condition", "city")

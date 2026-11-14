@@ -57,7 +57,7 @@ class SpecialistFactory(factory.django.DjangoModelFactory):
         model = SpecialistProfile
         skip_postgeneration_save = True
 
-    user = factory.SubFactory(UserFactory)
+    user = factory.SubFactory(UserFactory, role="specialist")
     slug = factory.Sequence(lambda n: f"specialist-{n}")
     display_name = factory.Sequence(lambda n: f"Специалист {n}")
     bio = factory.LazyAttribute(lambda o: f"Био: {o.display_name}")
@@ -128,6 +128,7 @@ class ServiceFactory(factory.django.DjangoModelFactory):
 class NannyFactory(SpecialistFactory):
     """A nanny with a criminal record certificate; add `TrainingFactory` rows to make her visible in the section."""
 
+    user = factory.SubFactory(UserFactory, role="nanny")
     slug = factory.Sequence(lambda n: f"nanny-{n}")
     display_name = factory.Sequence(lambda n: f"Няня {n}")
     category = ProfileCategory.NANNY

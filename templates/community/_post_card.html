@@ -16,7 +16,10 @@
   {% if post.kind == "review" and post.specialist %}{% with sp=post.specialist %}
   <div class="relative z-10 flex items-center gap-3 rounded-lg bg-slate-50 p-3">
     {% include "catalog/_photo.html" with profile=sp size_class="h-10 w-10" %}
-    {% if post|review_specialist_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="font-semibold text-primary-700 hover:underline">{{ sp.display_name }}</a>{% else %}<span class="font-semibold">{{ sp.display_name }}</span>{% endif %}
+    <div class="min-w-0">
+      {% if post|review_specialist_visible %}<a href="{% if sp.is_nanny %}{% url 'catalog:nanny' sp.slug %}{% else %}{% url 'catalog:specialist' sp.slug %}{% endif %}" class="font-semibold text-primary-700 hover:underline">{{ sp.display_name }}</a>{% else %}<span class="font-semibold">{{ sp.display_name }}</span>{% endif %}
+      {% if post.rating %}<div class="mt-0.5">{% include "community/_stars.html" with value=post.rating %}</div>{% endif %}
+    </div>
   </div>
   {% endwith %}{% endif %}
   <p class="whitespace-pre-line break-words text-slate-800">{% if detail %}{{ post.body }}{% else %}{{ post.body|truncatechars:400 }}{% endif %}</p>

@@ -1,13 +1,18 @@
+from urllib.parse import urlencode
+
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 
 from apps.community.query import latest_reviews
+from apps.community.ratings import rating_for
 from apps.search.geojson import specialist_feature_collection
 
 from .models import ProfileCategory, Service, SpecialistProfile
 from .pricing import lowest
 from .visibility import is_catalog_visible, nanny_eligible
 
+REVIEWS_ON_PAGE = 10
 PROFILE_PREFETCH = (
     "translations",
     "conditions__translations",
@@ -39,6 +44,14 @@ def _load_profile(slug: str, category: str, prefetch: tuple[str, ...]) -> tuple[
     return profile, services
 
 
+def _reviews_context(request, profile: SpecialistProfile) -> dict:
+    return {
+        "community_reviews": latest_reviews(profile, request.user, limit=REVIEWS_ON_PAGE),
+        "rating": rating_for(profile.pk),
+        "new_review_url": f"{reverse('community:new')}?{urlencode({'kind': 'review', 'specialist': profile.pk})}",
+    }
+
+
 def specialist_detail(request, slug):
     profile, services = _load_profile(
         slug, ProfileCategory.SPECIALIST, ("specialist_types__translations", "methods__translations")
@@ -60,7 +73,7 @@ def specialist_detail(request, slug):
             "addresses": list(addresses.values()),
             "first_address_city": first_city.safe_translation_getter("name", any_language=True) if first_city else "",
             "geojson": specialist_feature_collection(profile),
-            "community_reviews": latest_reviews(profile, request.user),
+            **_reviews_context(request, profile),
         },
     )
 
@@ -84,5 +97,6 @@ def nanny_detail(request, slug):
             "price_hour": lowest(services, "price_hour"),
             "price_night": lowest(services, "price_night"),
             "price_month": lowest(services, "price_month"),
+            **_reviews_context(request, profile),
         },
     )

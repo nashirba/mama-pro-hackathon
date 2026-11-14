@@ -73,4 +73,5 @@ def test_cabinet_and_favorites_active_for_user(client, db):
 
 def test_nav_in_kazakh(client, db):
     nav = _nav(client.get("/kk/").content.decode())
-    assert "Басты бет" in nav and "Таңдаулылар" in nav
+    # short labels fit the five-item bar on a 375px phone
+    assert "Басты" in nav and "Таңдаулы" in nav and "Басты бет" not in nav and "Таңдаулылар" not in nav

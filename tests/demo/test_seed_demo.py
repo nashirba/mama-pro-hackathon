@@ -16,7 +16,7 @@ from apps.catalog.models import (
     SpecialistProfile,
     SpecialistType,
 )
-from apps.demo.generators import DATA_DIR, load_json
+from apps.demo.generators import DATA_DIR, LOGIN_PHONE_PREFIX, load_json
 from apps.geo.models import Address, KatoNode
 from apps.search.models import SearchOffer
 from apps.search.query import SearchParams, search
@@ -89,7 +89,7 @@ def test_seed_demo_rejects_invalid_contact_phone(db, settings):
 
 def test_seed_demo_users_are_not_staff(db):
     call_command("seed_demo", specialists=10, seed=1)
-    assert User.objects.count() == 10
+    assert User.objects.filter(phone__startswith=LOGIN_PHONE_PREFIX).count() == 10
     assert not User.objects.filter(is_staff=True).exists() and not User.objects.filter(is_superuser=True).exists()
     assert not any(u.has_usable_password() for u in User.objects.all())
 

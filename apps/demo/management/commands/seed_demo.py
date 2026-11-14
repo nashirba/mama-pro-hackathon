@@ -19,6 +19,7 @@ from apps.catalog.models import (
     SpecialistProfile,
     SpecialistType,
 )
+from apps.demo.community_seed import seed_community
 from apps.demo.generators import (
     SpecialistSpec,
     build_addresses,
@@ -87,6 +88,7 @@ class Command(BaseCommand):
         PracticeContext.objects.filter(pk__in=context_ids).update(catalog_enabled=True)
         offers = rebuild_all()
         self.stdout.write(f"Demo specialists: {total}, search offers: {offers}")
+        self.stdout.write(f"Community posts: {seed_community(Random(seed))}")
 
     @staticmethod
     def _contact_phone() -> str:

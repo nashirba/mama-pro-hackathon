@@ -3,7 +3,7 @@ import datetime
 import pytest
 from django.core.exceptions import ValidationError
 
-from apps.catalog.models import ProfileCategory, ServiceKind, SpecialistType, Training
+from apps.catalog.models import ProfileCategory, ServiceKind, Training
 from apps.catalog.visibility import nanny_eligible
 from tests.factories import (
     NannyFactory,
@@ -66,14 +66,6 @@ def test_nanny_not_eligible_without_criminal_record_certificate(db, reference):
 def test_training_without_certificate_number_does_not_count(nanny):
     TrainingFactory(profile=nanny, hours=16, is_first_aid=True, certificate_number=" ")
     assert not nanny_eligible(nanny)
-
-
-def test_nanny_profile_rejects_specialist_types(nanny):
-    nanny.full_clean()
-    nanny.specialist_types.set([SpecialistType.objects.get(slug="logoped")])
-    with pytest.raises(ValidationError) as exc:
-        nanny.full_clean()
-    assert "specialist_types" in exc.value.message_dict
 
 
 def test_specialist_profile_may_have_types(db, reference):

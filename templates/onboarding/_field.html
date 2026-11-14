@@ -1,0 +1,17 @@
+{% load i18n %}<div>
+  {% if field.field.widget.input_type == "checkbox" and field.field.widget.allow_multiple_selected %}
+  <fieldset>
+    <legend class="block text-sm font-medium">{{ field.label }}</legend>
+    <div class="mt-2 grid gap-1 sm:grid-cols-2">
+      {% for box in field %}<label class="flex min-h-11 cursor-pointer items-center gap-2 text-sm">{{ box.tag }}<span>{{ box.choice_label }}</span></label>{% endfor %}
+    </div>
+  </fieldset>
+  {% elif field.field.widget.input_type == "checkbox" %}
+  <label class="flex min-h-11 cursor-pointer items-center gap-2 text-sm font-medium">{{ field }}<span>{{ field.label }}</span></label>
+  {% else %}
+  <label for="{{ field.id_for_label }}" class="block text-sm font-medium">{{ field.label }}</label>
+  <div class="mt-1 [&>input]:min-h-12 [&>input]:w-full [&>input]:rounded [&>input]:border [&>input]:border-field [&>input]:px-3 [&>input]:py-2 [&>select]:min-h-12 [&>select]:w-full [&>select]:rounded [&>select]:border [&>select]:border-field [&>select]:px-3 [&>select]:py-2 [&>textarea]:w-full [&>textarea]:rounded [&>textarea]:border [&>textarea]:border-field [&>textarea]:px-3 [&>textarea]:py-2">{{ field }}</div>
+  {% endif %}
+  {% if field.help_text %}<p class="mt-1 text-sm text-slate-600">{{ field.help_text }}</p>{% endif %}
+  {% for error in field.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
+</div>

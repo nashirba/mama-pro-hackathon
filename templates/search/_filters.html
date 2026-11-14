@@ -175,14 +175,6 @@
   </div>
 
   {% if not is_nannies %}
-  <fieldset>
-    <legend class="font-medium">{% translate "Подтверждённые документы" %}{% if IS_DEMO %} ({% translate "демо" %}){% endif %}</legend>
-    <ul class="mt-1 space-y-1">
-      {% for value, label in choices.verification_levels %}
-      <li>{% include "search/_check.html" with name="verification_levels" value=value selected=params.verification_levels label=label %}</li>
-      {% endfor %}
-    </ul>
-  </fieldset>
 
   <details class="group" {% if params.method_ids %}open{% endif %}>
     <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-medium lg:min-h-8 [&::-webkit-details-marker]:hidden"><span class="min-w-0"><span class="block">{% translate "Метод" %}</span><span class="block truncate text-slate-500 group-open:hidden [&>span+span]:before:content-[',_']">{% for m in choices.methods %}{% if m.id in params.method_ids %}<span>{{ m.name }}</span>{% endif %}{% endfor %}</span></span><svg class="size-4 shrink-0 transition group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></summary>

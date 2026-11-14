@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     "apps.search",
     "apps.questionnaire",
     "apps.community",
+    "apps.onboarding",
     "apps.demo",
 ]
 

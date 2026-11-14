@@ -1,3 +1,5 @@
+from functools import wraps
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -9,6 +11,8 @@ from django.views.decorators.http import require_POST
 from apps.accounts.forms import CodeForm, PhoneForm
 from apps.accounts.models import User
 from apps.accounts.otp import OtpLocked, issue_code, verify_code
+from apps.onboarding import services as onboarding
+from apps.onboarding.views import status_page
 
 from .forms import ChildForm, ProfileForm
 from .models import Child
@@ -16,11 +20,29 @@ from .models import Child
 SESSION_NEW_PHONE = "cabinet_new_phone"
 
 
+def parent_required(view):
+    """Children belong to the parent cabinet only; a specialist or a nanny goes back to their own cabinet."""
+
+    @login_required
+    @wraps(view)
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_parent:
+            return redirect("cabinet:home")
+        return view(request, *args, **kwargs)
+
+    return wrapper
+
+
 @login_required
 def home(request):
-    return render(
-        request, "cabinet/home.html", {"children": request.user.children.all()}
-    )
+    user = request.user
+    if user.is_parent:
+        return render(request, "cabinet/home.html", {"children": user.children.all()})
+    profile = getattr(user, "specialist_profile", None)
+    if profile is not None and not hasattr(user, "application"):
+        # A profile created before applications existed (demo data, admin).
+        return render(request, "onboarding/profile_only.html", {"profile": profile})
+    return status_page(request, onboarding.start_application(user))
 
 
 @login_required
@@ -32,7 +54,7 @@ def profile_edit(request):
     return render(request, "cabinet/profile_form.html", {"form": form})
 
 
-@login_required
+@parent_required
 def child_add(request):
     form = ChildForm(request.POST or None)
     if request.method == "POST" and form.is_valid():
@@ -43,7 +65,7 @@ def child_add(request):
     return render(request, "cabinet/child_form.html", {"form": form, "child": None})
 
 
-@login_required
+@parent_required
 def child_edit(request, pk):
     child = get_object_or_404(Child, pk=pk, parent=request.user)
     form = ChildForm(request.POST or None, instance=child)
@@ -53,7 +75,7 @@ def child_edit(request, pk):
     return render(request, "cabinet/child_form.html", {"form": form, "child": child})
 
 
-@login_required
+@parent_required
 @require_POST
 def child_delete(request, pk):
     get_object_or_404(Child, pk=pk, parent=request.user).delete()

@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.utils import timezone
 
-from apps.accounts.models import User
+from apps.accounts.models import Role, User
 from apps.accounts.phone import InvalidPhone, normalize_kz_mobile
 from apps.catalog.models import (
     CommunicationLanguage,
@@ -23,6 +23,7 @@ from apps.catalog.models import (
 )
 from apps.demo.community_seed import seed_community
 from apps.demo.generators import (
+    VERIFICATION_ORDER,
     NannySpec,
     SpecialistSpec,
     build_addresses,
@@ -128,6 +129,7 @@ class Command(BaseCommand):
             spec.login_phone, preferred_language=spec.preferred_language
         )
         user.last_name, user.first_name = spec.display_name.split(" ", 1)
+        user.role = Role.SPECIALIST
         user.save()
         profile = SpecialistProfile.objects.filter(user=user).first() or SpecialistProfile(user=user, slug=spec.slug)
         profile.display_name = spec.display_name
@@ -173,6 +175,7 @@ class Command(BaseCommand):
             spec.login_phone, preferred_language=spec.preferred_language
         )
         user.last_name, user.first_name = spec.display_name.split(" ", 1)
+        user.role = Role.NANNY
         user.save()
         profile = SpecialistProfile.objects.filter(user=user).first() or SpecialistProfile(user=user, slug=spec.slug)
         profile.category = ProfileCategory.NANNY
@@ -181,7 +184,7 @@ class Command(BaseCommand):
         profile.age_min, profile.age_max = spec.age_min, spec.age_max
         profile.formats = ["home_visit"]
         profile.whatsapp_phone = profile.public_phone = self.contact_phone
-        profile.demo_verification_levels = []
+        profile.demo_verification_levels = list(VERIFICATION_ORDER)
         profile.criminal_record_issued_on = spec.criminal_record_issued_on
         _set_translations(profile, {"bio": spec.bio, "approach": spec.approach, "availability": spec.availability})
         profile.specialist_types.clear()

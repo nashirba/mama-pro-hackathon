@@ -11,8 +11,9 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.consents.services import record_consents
+from apps.onboarding.services import start_application
 
-from .forms import CodeForm, FullNameForm, PhoneForm
+from .forms import CodeForm, PhoneForm, RegisterForm
 from .models import User
 from .otp import OtpLocked, issue_code, verify_code
 
@@ -133,12 +134,16 @@ def register_view(request):
         return redirect("cabinet:home")
     next_url = _safe_next(request)
     if request.method == "POST":
-        form = FullNameForm(request.POST, instance=request.user)
+        form = RegisterForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            if not user.is_parent:
+                # A specialist or a nanny goes straight to the questionnaire.
+                start_application(user)
+                return redirect("onboarding:edit")
             return redirect(next_url or "cabinet:home")
     else:
-        form = FullNameForm(instance=request.user)
+        form = RegisterForm(instance=request.user)
     return render(request, "accounts/register.html", {"form": form, "next": next_url})
 
 

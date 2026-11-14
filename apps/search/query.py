@@ -28,7 +28,6 @@ from apps.catalog.models import (
     Format,
     ProfileCategory,
     SpecialistProfile,
-    VerificationLevel,
 )
 from apps.catalog.pricing import lowest
 
@@ -40,8 +39,6 @@ SECTIONS = ("specialists", "nannies")
 SECTION_CATEGORY = {"specialists": ProfileCategory.SPECIALIST, "nannies": ProfileCategory.NANNY}
 # a nanny's pay unit -> the price column that must be set
 PAY_UNIT_COLUMNS = {"hour": "price_hour", "night": "price_night", "month": "price_month"}
-# `identity` is a badge only, never a filter
-FILTERABLE_LEVELS = (VerificationLevel.EDUCATION, VerificationLevel.CREDENTIAL, VerificationLevel.SAFETY)
 
 INT_FIELDS = (
     "kato_id", "child_age_min", "child_age_max", "price_min", "price_max", "price_month_min", "price_month_max", "experience_min",
@@ -49,11 +46,11 @@ INT_FIELDS = (
 )
 # filters that exist in one section only; the other section ignores them, so a stale link cannot empty its results
 SPECIALIST_ONLY_FIELDS = (
-    "specialist_type_ids", "method_ids", "formats", "price_min", "price_max", "free_only", "verification_levels", "near",
+    "specialist_type_ids", "method_ids", "formats", "price_min", "price_max", "free_only", "near",
 )
 NANNY_ONLY_FIELDS = ("pay_units", "price_hour_min", "price_hour_max")
 INT_LIST_FIELDS = ("specialist_type_ids", "condition_ids", "method_ids")
-STR_LIST_FIELDS = ("formats", "language_codes", "verification_levels", "pay_units")
+STR_LIST_FIELDS = ("formats", "language_codes", "pay_units")
 
 
 def _int(value) -> int | None:
@@ -89,7 +86,6 @@ class SearchParams:
     formats: list[str] = field(default_factory=list)
     language_codes: list[str] = field(default_factory=list)
     experience_min: int | None = None
-    verification_levels: list[str] = field(default_factory=list)
     method_ids: list[int] = field(default_factory=list)
     sort: str = "relevance"
     near: tuple[float, float] | None = None  # (lon, lat)
@@ -229,10 +225,6 @@ def search_offers_queryset(params: SearchParams) -> QuerySet[SearchOffer]:
         for column in pay_columns:
             where |= Q(**{f"{column}__isnull": False})
         qs = qs.filter(where)
-
-    levels = [v for v in params.verification_levels if v in FILTERABLE_LEVELS]
-    if levels:
-        qs = qs.filter(verification_levels__contains=levels)
 
     normalized_q = normalize_kk(params.q)
     if normalized_q:

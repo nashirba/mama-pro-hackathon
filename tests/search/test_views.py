@@ -5,7 +5,7 @@ from apps.geo.models import KatoNode
 
 FILTER_NAMES = [
     "kato_id", "district_id", "specialist_type_ids", "child_age_min", "child_age_max", "condition_ids", "price_min", "price_max",
-    "price_month_min", "price_month_max", "free_only", "formats", "language_codes", "experience_min", "verification_levels",
+    "price_month_min", "price_month_max", "free_only", "formats", "language_codes", "experience_min",
     "method_ids", "sort", "q", "near",
 ]
 
@@ -18,8 +18,8 @@ def test_results_page_all_filters_render(client, catalog_fixture):
     html = client.get("/ru/specialists/").content.decode()
     for name in FILTER_NAMES:
         assert f'name="{name}"' in html, name
-    assert 'value="identity"' not in html
-    assert all(f'value="{v}"' in html for v in ("education", "credential", "safety"))
+    # Every catalog profile passed all checks, so there is no verification filter.
+    assert 'name="verification_levels"' not in html
 
 
 def test_near_me_button_present_and_distance_option_hidden_without_near(client, catalog_fixture):
@@ -233,18 +233,16 @@ def test_links_carry_no_empty_params(client, catalog_fixture):
     assert "price_max=100&amp;formats=in_person&amp;formats=online" in html  # the "online" link
 
 
-def test_demo_card_badges_and_filter_legend_marked_as_demo(client, catalog_fixture, settings):
+def test_card_shows_single_verified_mark(client, catalog_fixture, settings):
     settings.DEPLOY_PROFILE = "demo"
     html = client.get("/ru/specialists/").content.decode()
     card = card_html(html, "ivanova-logoped")
-    badges = re.findall(r'<p class="inline-flex max-w-full self-start items-start gap-1 rounded-md[^"]*"[^>]*>.*?</p>', card, re.S)
-    # the one-line badge summary keeps the demo mark only in the tooltip; there is no notice above the list
-    assert badges and all("(демо)" not in b and "Демо: проверка не проводилась" in b for b in badges)
-    assert "data-demo-notice" not in html and "данные учебные" not in html
-    assert "Подтверждённые документы (демо)" in html
+    assert card.count("data-verified") == 1 and "Проверено Мама Про" in card
+    assert "Демо: проверка не проводилась" in card and "Образование подтверждено" not in card
+    assert "data-demo-notice" not in html and "Подтверждённые документы" not in html and 'name="verification_levels"' not in html
 
 
-def test_card_badges_and_filter_legend_unmarked_outside_demo(client, catalog_fixture, settings):
+def test_card_mark_unmarked_outside_demo(client, catalog_fixture, settings):
     settings.DEPLOY_PROFILE = "test"
     html = client.get("/ru/specialists/").content.decode()
     assert "(демо)" not in html and "Демо: проверка не проводилась" not in html
@@ -253,7 +251,7 @@ def test_card_badges_and_filter_legend_unmarked_outside_demo(client, catalog_fix
 def test_specialists_intro_explains_verification(client, catalog_fixture):
     html = client.get("/ru/specialists/").content.decode()
     assert "Что значит проверенный специалист" in html
-    assert "Мы показываем не общую галочку" in html
+    assert "прошли все проверки Мама Про" in html
     for level in ("Личность подтверждена", "Образование подтверждено", "Квалификация подтверждена", "Проверка на безопасность пройдена"):
         assert level in html
 

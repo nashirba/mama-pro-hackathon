@@ -44,7 +44,7 @@ def test_params_nannies_section_resets_specialist_only_filters():
     )
     p = SearchParams.from_querydict(qd, section="nannies")
     assert (p.specialist_type_ids, p.method_ids, p.formats, p.price_min, p.price_max) == ([], [], [], None, None)
-    assert (p.free_only, p.verification_levels, p.near, p.sort) == (False, [], None, "relevance")
+    assert (p.free_only, p.near, p.sort) == (False, None, "relevance")
     assert (p.price_month_min, p.pay_units, p.price_hour_max) == (5000, ["night"], 3000)
 
 

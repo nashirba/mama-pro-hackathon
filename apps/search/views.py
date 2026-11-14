@@ -96,7 +96,6 @@ def _active_filter_count(params: SearchParams) -> int:
         params.condition_ids,
         params.formats,
         params.language_codes,
-        params.verification_levels,
         params.method_ids,
         params.pay_units,
     )
@@ -164,7 +163,6 @@ def _active_chips(qd: QueryDict, params: SearchParams, choices, results_path: st
     for key, selected, labels in (
         ("formats", params.formats, dict(choices.formats)),
         ("language_codes", params.language_codes, {lang.code: _name_of(lang) for lang in choices.languages}),
-        ("verification_levels", params.verification_levels, dict(choices.verification_levels)),
         ("pay_units", params.pay_units, dict(choices.pay_units)),
     ):
         for value in selected:

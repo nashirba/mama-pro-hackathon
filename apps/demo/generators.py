@@ -175,7 +175,8 @@ def build_specialist(rng: Random, index: int, names: dict, bios: dict, current_y
 
     conditions = rng.sample(archetype["conditions"], rng.randint(1, len(archetype["conditions"])))
     methods = rng.sample(archetype["methods"], rng.randint(1, len(archetype["methods"])))
-    levels = set(rng.sample(VERIFICATION_ORDER, rng.choice([0, 1, 1, 2, 2, 3, 4])))
+    # Every demo specialist passed all checks; the draw stays so the rest of the seeded data does not change.
+    rng.sample(VERIFICATION_ORDER, rng.choice([0, 1, 1, 2, 2, 3, 4]))
 
     bio_tail = rng.choice(bios["bio_tail"])
     approach_tail = rng.choice(bios["approach_tail"])
@@ -197,7 +198,7 @@ def build_specialist(rng: Random, index: int, names: dict, bios: dict, current_y
         conditions=conditions,
         methods=methods,
         languages=languages,
-        verification_levels=[level for level in VERIFICATION_ORDER if level in levels],
+        verification_levels=list(VERIFICATION_ORDER),
         online_only=online_only,
         bio=bio,
         approach=approach,

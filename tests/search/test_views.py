@@ -237,7 +237,7 @@ def test_demo_card_badges_and_filter_legend_marked_as_demo(client, catalog_fixtu
     settings.DEPLOY_PROFILE = "demo"
     html = client.get("/ru/specialists/").content.decode()
     card = card_html(html, "ivanova-logoped")
-    badges = re.findall(r'<p class="inline-flex max-w-full self-start items-start gap-1 rounded-xl[^"]*"[^>]*>.*?</p>', card, re.S)
+    badges = re.findall(r'<p class="inline-flex max-w-full self-start items-start gap-1 rounded-md[^"]*"[^>]*>.*?</p>', card, re.S)
     # the demo mark is stated once above the list, the one-line badge summary keeps only the tooltip
     assert badges and all("(демо)" not in b and "Демо: проверка не проводилась" in b for b in badges)
     assert html.count("data-demo-notice") == 1

@@ -4,9 +4,9 @@
       hx-indicator="#results, #filters"
       hx-on::before-request="document.getElementById('results').setAttribute('aria-busy','true')"
       hx-on::after-request="document.getElementById('results').removeAttribute('aria-busy')"
-      x-data="filters({ ageMin: '{{ params.child_age_min|default_if_none:'' }}', ageMax: '{{ params.child_age_max|default_if_none:'' }}' })" class="space-y-3 text-sm lg:space-y-4 lg:[&:has(#filters-count.inline-flex)_[data-reset-top]]:inline">
+      x-data="filters({ ageMin: '{{ params.child_age_min|default_if_none:'' }}', ageMax: '{{ params.child_age_max|default_if_none:'' }}' })" class="space-y-3 text-sm lg:space-y-4">
   <div>
-    <div class="flex items-baseline justify-between gap-2"><label for="f-q" class="block font-medium">{% translate "Поиск" %}</label><a href="{{ reset_url }}" data-reset-top class="hidden text-slate-600 underline hover:text-slate-900">{% translate "Сбросить" %}</a></div>
+    <div class="flex items-baseline justify-between gap-2"><label for="f-q" class="block font-medium">{% translate "Поиск" %}</label></div>
     <input type="search" enterkeyhint="search" id="f-q" name="q" value="{{ params.q }}" placeholder="{% translate 'Логопед, РАС, не говорит...' %}"
            class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
   </div>
@@ -82,7 +82,7 @@
       <li><a href="{{ g.url }}"{% if g.current %} aria-current="true"{% endif %}
              @click.prevent="setAge($el.closest('form'), {{ g.min }}, {{ g.max }})"
              :aria-current="isAge({{ g.min }}, {{ g.max }}) ? 'true' : null"
-             class="inline-flex min-h-11 items-center rounded-full border border-field px-4 text-slate-700 lg:min-h-0 lg:px-3 lg:py-1 hover:bg-slate-100 aria-[current=true]:border-primary-700 aria-[current=true]:bg-primary-700 aria-[current=true]:text-white">{{ g.min }}-{{ g.max }}</a></li>
+             class="inline-flex min-h-11 items-center rounded-full border border-field px-4 text-slate-700 lg:min-h-0 lg:px-3 lg:py-1 hover:bg-slate-100 aria-[current=true]:border-primary-700 aria-[current=true]:bg-primary-700 aria-[current=true]:text-white">{{ g.min }}–{{ g.max }}</a></li>
       {% endfor %}
     </ul>
   </fieldset>

@@ -3,9 +3,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import prefetch_related_objects
 from django.http import Http404, JsonResponse, QueryDict
 from django.shortcuts import get_object_or_404, render
+from django.template.defaultfilters import floatformat
 from django.urls import reverse
 from django.utils.cache import patch_vary_headers
 from django.utils.translation import get_language, override, pgettext
+from django.utils.translation import gettext as _
 
 from apps.catalog.models import DevelopmentalCondition, SpecialistType
 from apps.geo.models import KatoNode
@@ -94,11 +96,114 @@ def _active_filter_count(params: SearchParams) -> int:
     return sum(len(values) for values in lists) + sum(flags)
 
 
+def _active_chips(qd: QueryDict, params: SearchParams, choices, results_path: str) -> list[dict]:
+    """Removable chips for the selected filters: a label and the URL of the same search without that one value."""
+
+    def without(keys=(), **drop):
+        clean = QueryDict(mutable=True)
+        for key, values in qd.lists():
+            kept = [v for v in values if v != "" and key not in keys]
+            if key in drop:
+                kept = [v for v in kept if v != drop[key]]
+            if key != "page" and kept:
+                clean.setlist(key, kept)
+        return _url(results_path, clean.urlencode())
+
+    chips: list[dict] = []
+
+    def add(label, url):
+        chips.append({"label": label, "url": url})
+
+    def num(value):
+        return floatformat(value, "0g")
+
+    def rng(lo, hi, both, only_lo, only_hi):
+        if lo is not None and hi is not None:
+            return both % {"lo": num(lo), "hi": num(hi)}
+        if lo is not None:
+            return only_lo % {"lo": num(lo)}
+        return only_hi % {"hi": num(hi)}
+
+    if params.q:
+        add(f"«{params.q}»", without(["q"]))
+    nodes = {n.pk: n for n in choices.cities}
+    for _parent, districts in choices.district_groups:
+        nodes.update({n.pk: n for n in districts})
+    district_id = _int_or_none(qd.get("district_id"))
+    kato_id = _int_or_none(qd.get("kato_id"))
+    if district_id in nodes:
+        add(_name_of(nodes[district_id]), without(["district_id"]))
+    if kato_id in nodes:
+        add(_name_of(nodes[kato_id]), without(["kato_id", "district_id"]))
+    by_key = (
+        ("specialist_type_ids", params.specialist_type_ids, {o.pk: o for o in choices.specialist_types}),
+        ("condition_ids", params.condition_ids, {c.pk: c for c, _depth in choices.conditions}),
+        ("method_ids", params.method_ids, {m.pk: m for m in choices.methods}),
+    )
+    for key, selected, objs in by_key:
+        for value in selected:
+            if value in objs:
+                add(_name_of(objs[value]), without(**{key: str(value)}))
+    for key, selected, labels in (
+        ("formats", params.formats, dict(choices.formats)),
+        ("language_codes", params.language_codes, {lang.code: _name_of(lang) for lang in choices.languages}),
+        ("verification_levels", params.verification_levels, dict(choices.verification_levels)),
+    ):
+        for value in selected:
+            if value in labels:
+                add(str(labels[value]), without(**{key: value}))
+    if params.child_age_min is not None or params.child_age_max is not None:
+        add(
+            rng(
+                params.child_age_min,
+                params.child_age_max,
+                _("Возраст: %(lo)s–%(hi)s лет"),
+                _("Возраст: от %(lo)s лет"),
+                _("Возраст: до %(hi)s лет"),
+            ),
+            without(["child_age_min", "child_age_max"]),
+        )
+    if params.price_min is not None or params.price_max is not None:
+        add(
+            rng(
+                params.price_min,
+                params.price_max,
+                _("Цена за занятие: %(lo)s–%(hi)s ₸"),
+                _("Цена за занятие: от %(lo)s ₸"),
+                _("Цена за занятие: до %(hi)s ₸"),
+            ),
+            without(["price_min", "price_max"]),
+        )
+    if params.price_month_min is not None or params.price_month_max is not None:
+        add(
+            rng(
+                params.price_month_min,
+                params.price_month_max,
+                _("Цена в месяц: %(lo)s–%(hi)s ₸"),
+                _("Цена в месяц: от %(lo)s ₸"),
+                _("Цена в месяц: до %(hi)s ₸"),
+            ),
+            without(["price_month_min", "price_month_max"]),
+        )
+    if params.free_only:
+        add(_("Только бесплатные"), without(["free_only"]))
+    if params.experience_min is not None:
+        add(f"{_('Стаж от, лет')}: {params.experience_min}", without(["experience_min"]))
+    if params.near is not None:
+        add(_("Рядом со мной"), without(["near"] + (["sort"] if qd.get("sort") == "distance" else [])))
+    return chips
+
+
+def _name_of(obj) -> str:
+    return obj.safe_translation_getter("name", any_language=True) or ""
+
+
 def _render_results(request, qd: QueryDict, heading: str | None = None, extra: dict | None = None):
     """`qd` is the filter state shown in the form."""
     district_id = _int_or_none(qd.get("district_id"))
     params = _search_params(qd)
     result = search(params)
+    choices = build_filter_choices()
     prefetch_related_objects(
         [c.specialist for c in result.cards], "specialist_types__translations", "languages__translations"
     )
@@ -126,7 +231,8 @@ def _render_results(request, qd: QueryDict, heading: str | None = None, extra: d
         "heading": heading,
         "params": params,
         "result": result,
-        "choices": build_filter_choices(),
+        "choices": choices,
+        "active_chips": _active_chips(qd, params, choices, results_path),
         "selected_kato": _int_or_none(qd.get("kato_id")),
         "selected_district": district_id,
         "near_value": params.to_querydict().get("near", ""),

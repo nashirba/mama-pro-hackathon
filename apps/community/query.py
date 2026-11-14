@@ -10,6 +10,7 @@ from django.http import Http404, QueryDict
 from django.shortcuts import get_object_or_404
 
 from apps.catalog.models import SpecialistProfile
+from apps.catalog.visibility import specialist_visible_exists
 from apps.core.text import normalize_kk
 from apps.search.query import expand_conditions
 
@@ -102,7 +103,15 @@ def with_counts(qs: QuerySet[Post], viewer) -> QuerySet[Post]:
 
 
 def _cards(qs: QuerySet[Post], viewer) -> QuerySet[Post]:
-    return with_counts(qs, viewer).select_related("author__specialist_profile", "condition", "city", "specialist")
+    return (
+        with_counts(qs, viewer)
+        .annotate(
+            author_specialist_visible=specialist_visible_exists("author__specialist_profile__pk"),
+            review_specialist_visible=specialist_visible_exists("specialist_id"),
+        )
+        .select_related("author__specialist_profile", "condition", "city", "specialist")
+        .prefetch_related("condition__translations", "city__translations")
+    )
 
 
 def feed(params: FeedParams, viewer) -> QuerySet[Post]:
@@ -146,6 +155,7 @@ def comment_tree(post: Post, viewer) -> list[CommentNode]:
         .annotate(
             like_count=_count(Like, comment=OuterRef("pk")),
             viewer_liked=_viewer_liked(viewer, comment=OuterRef("pk")),
+            author_specialist_visible=specialist_visible_exists("author__specialist_profile__pk"),
         )
         .order_by("created_at", "pk")
     )

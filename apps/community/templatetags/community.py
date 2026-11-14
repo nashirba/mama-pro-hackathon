@@ -20,3 +20,16 @@ def is_specialist(user) -> bool:
 @register.filter
 def specialist_visible(profile) -> bool:
     return is_specialist_visible(profile)
+
+
+@register.filter
+def author_badge_visible(obj) -> bool:
+    """For a post or comment: does its author's specialist profile have a public page (annotated when available)."""
+    flag = getattr(obj, "author_specialist_visible", None)
+    return flag if flag is not None else is_specialist_visible(obj.author.specialist_profile)
+
+
+@register.filter
+def review_specialist_visible(post) -> bool:
+    flag = getattr(post, "review_specialist_visible", None)
+    return flag if flag is not None else is_specialist_visible(post.specialist)

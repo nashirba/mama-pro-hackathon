@@ -189,3 +189,49 @@ def test_kk_feed_renders(client):
     html = _html(response)
     assert "Қазақша пост" in html and "Қауымдастық" in html
     assert client.get("/kk/community/rules/").status_code == 200
+
+
+def _count_queries(client, url) -> int:
+    from django.db import connection
+    from django.test.utils import CaptureQueriesContext
+
+    with CaptureQueriesContext(connection) as ctx:
+        assert client.get(url).status_code == 200
+    return len(ctx)
+
+
+def test_feed_query_count_does_not_grow_with_cards(client, reference, kato_demo):
+    from apps.catalog.models import DevelopmentalCondition
+
+    cond = DevelopmentalCondition.objects.get(slug="ras")
+    city = kato_demo["almaty"]
+    PostFactory(condition=cond, city=city)
+    base = _count_queries(client, "/ru/community/")
+    for _ in range(6):
+        sp = SpecialistFactory()
+        PrivateContextFactory(specialist=sp)
+        PostFactory(condition=cond, city=city, author=sp.user)
+        review_sp = SpecialistFactory()
+        PrivateContextFactory(specialist=review_sp)
+        PostFactory(kind=Post.Kind.REVIEW, specialist=review_sp, condition=cond, city=city)
+    assert _count_queries(client, "/ru/community/") <= base + 1
+    html = _html(client.get("/ru/community/"))
+    assert html.count("<article") == 13 and html.count("/ru/specialist/") == 12
+
+
+def test_post_page_query_count_does_not_grow_with_specialist_comments(client):
+    post = PostFactory()
+    first = SpecialistFactory()
+    PrivateContextFactory(specialist=first)
+    CommentFactory(post=post, author=first.user)
+    base = _count_queries(client, f"/ru/community/{post.pk}/")
+    for _ in range(6):
+        sp = SpecialistFactory()
+        PrivateContextFactory(specialist=sp)
+        CommentFactory(post=post, author=sp.user)
+    assert _count_queries(client, f"/ru/community/{post.pk}/") <= base + 1
+    hidden = SpecialistFactory()
+    PrivateContextFactory(specialist=hidden, catalog_enabled=False)
+    CommentFactory(post=post, author=hidden.user)
+    html = _html(client.get(f"/ru/community/{post.pk}/"))
+    assert html.count("/ru/specialist/") == 7 and hidden.slug not in html

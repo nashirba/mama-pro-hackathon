@@ -3,7 +3,7 @@
   <p class="flex flex-wrap items-center gap-x-2 text-sm text-slate-600">
     <span class="font-semibold text-slate-900">{{ a|author_name }}</span>
     {% if a|is_specialist %}{% with sp=a.specialist_profile %}
-    {% if sp|specialist_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800 hover:underline">{% translate "Специалист" %}</a>{% else %}<span class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800">{% translate "Специалист" %}</span>{% endif %}
+    {% if comment|author_badge_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800 hover:underline">{% translate "Специалист" %}</a>{% else %}<span class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800">{% translate "Специалист" %}</span>{% endif %}
     {% endwith %}{% endif %}
     <span>· {% blocktranslate with t=comment.created_at|timesince %}{{ t }} назад{% endblocktranslate %}</span>
   </p>

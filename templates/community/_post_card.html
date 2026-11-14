@@ -3,7 +3,7 @@
   <header class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600">
     <span class="font-semibold text-slate-900">{{ a|author_name }}</span>
     {% if a|is_specialist %}{% with sp=a.specialist_profile %}
-    {% if sp|specialist_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="relative z-10 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800 hover:underline">{% translate "Специалист" %}</a>{% else %}<span class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800">{% translate "Специалист" %}</span>{% endif %}
+    {% if post|author_badge_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="relative z-10 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800 hover:underline">{% translate "Специалист" %}</a>{% else %}<span class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800">{% translate "Специалист" %}</span>{% endif %}
     {% endwith %}{% endif %}
     {% if post.city %}<span>· {{ post.city.name }}</span>{% endif %}
     <span>· {% if detail %}{% blocktranslate with t=post.created_at|timesince %}{{ t }} назад{% endblocktranslate %}{% else %}<a href="{% url 'community:post' post.pk %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{% blocktranslate with t=post.created_at|timesince %}{{ t }} назад{% endblocktranslate %}</a>{% endif %}</span>
@@ -16,7 +16,7 @@
   {% if post.kind == "review" and post.specialist %}{% with sp=post.specialist %}
   <div class="relative z-10 flex items-center gap-3 rounded-lg bg-slate-50 p-3">
     {% include "catalog/_photo.html" with profile=sp size_class="h-10 w-10" %}
-    {% if sp|specialist_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="font-semibold text-primary-700 hover:underline">{{ sp.display_name }}</a>{% else %}<span class="font-semibold">{{ sp.display_name }}</span>{% endif %}
+    {% if post|review_specialist_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="font-semibold text-primary-700 hover:underline">{{ sp.display_name }}</a>{% else %}<span class="font-semibold">{{ sp.display_name }}</span>{% endif %}
   </div>
   {% endwith %}{% endif %}
   <p class="whitespace-pre-line break-words text-slate-800">{% if detail %}{{ post.body }}{% else %}{{ post.body|truncatechars:400 }}{% endif %}</p>

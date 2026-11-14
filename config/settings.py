@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.accounts",
     "apps.cabinet",
+    "apps.favorites",
     "apps.consents",
     "apps.geo",
     "apps.catalog",

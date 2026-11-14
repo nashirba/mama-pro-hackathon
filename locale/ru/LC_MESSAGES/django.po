@@ -2121,3 +2121,7 @@ msgstr ""
 #: templates/search/results.html:5
 msgid "К результатам"
 msgstr ""
+
+#: templates/partials/header.html:9
+msgid "Специалисты"
+msgstr ""

@@ -2167,3 +2167,7 @@ msgstr "Карта"
 #: templates/search/results.html:5
 msgid "К результатам"
 msgstr "Нәтижелерге өту"
+
+#: templates/partials/header.html:9
+msgid "Специалисты"
+msgstr "Мамандар"

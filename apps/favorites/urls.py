@@ -5,5 +5,6 @@ from . import views
 app_name = "favorites"
 
 urlpatterns = [
+    path("favorites/", views.favorite_list, name="list"),
     path("favorites/<slug:slug>/toggle/", views.toggle, name="toggle"),
 ]

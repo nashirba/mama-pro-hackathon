@@ -302,6 +302,34 @@ def _build_card(specialist: SpecialistProfile, offers: list[SearchOffer], distan
     )
 
 
+def _offers_by_specialist(offers: QuerySet[SearchOffer], ids: list[int]) -> dict[int, list[SearchOffer]]:
+    """The offers of the given specialists, with everything a card reads loaded, grouped by specialist."""
+    by_specialist: dict[int, list[SearchOffer]] = {i: [] for i in ids}
+    page_offers = (
+        offers.filter(specialist_id__in=ids)
+        .select_related("specialist", "address__kato__parent__parent", "service__home_visit_area__parent")
+        .prefetch_related(
+            "specialist__translations",
+            "address__kato__translations",
+            "address__kato__parent__translations",
+            "address__kato__parent__parent__translations",
+            "service__translations",
+            "service__home_visit_area__translations",
+            "service__home_visit_area__parent__translations",
+        )
+        .order_by("pk")
+    )
+    for offer in page_offers:
+        by_specialist[offer.specialist_id].append(offer)
+    return by_specialist
+
+
+def cards_for_profiles(profiles: list[SpecialistProfile]) -> list[SpecialistCard]:
+    """Cards of the profiles in the given order; a profile without offers (not in the catalog) is dropped."""
+    by_specialist = _offers_by_specialist(SearchOffer.objects.all(), [p.pk for p in profiles])
+    return [_build_card(p, by_specialist[p.pk], None, None) for p in profiles if by_specialist[p.pk]]
+
+
 def search(params: SearchParams) -> SearchResult:
     offers = search_offers_queryset(params)
     aggregates = {
@@ -321,23 +349,7 @@ def search(params: SearchParams) -> SearchResult:
     rows = list(grouped[(page - 1) * page_size : page * page_size])
 
     ids = [r["specialist_id"] for r in rows]
-    by_specialist: dict[int, list[SearchOffer]] = {i: [] for i in ids}
-    page_offers = (
-        offers.filter(specialist_id__in=ids)
-        .select_related("specialist", "address__kato__parent__parent", "service__home_visit_area__parent")
-        .prefetch_related(
-            "specialist__translations",
-            "address__kato__translations",
-            "address__kato__parent__translations",
-            "address__kato__parent__parent__translations",
-            "service__translations",
-            "service__home_visit_area__translations",
-            "service__home_visit_area__parent__translations",
-        )
-        .order_by("pk")
-    )
-    for offer in page_offers:
-        by_specialist[offer.specialist_id].append(offer)
+    by_specialist = _offers_by_specialist(offers, ids)
 
     cards = []
     for r in rows:

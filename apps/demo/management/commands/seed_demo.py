@@ -14,14 +14,18 @@ from apps.catalog.models import (
     DevelopmentalCondition,
     Method,
     PracticeContext,
+    ProfileCategory,
     Service,
     ServiceKind,
     SpecialistProfile,
     SpecialistType,
+    Training,
 )
 from apps.demo.generators import (
+    NannySpec,
     SpecialistSpec,
     build_addresses,
+    build_nanny,
     build_specialist,
     is_online_only,
     load_json,
@@ -42,16 +46,20 @@ def _set_translations(obj, fields: dict[str, dict[str, str]]) -> None:
 
 
 class Command(BaseCommand):
-    help = "Fill the demo with synthetic specialists (idempotent: a rerun with the same --seed replaces, not duplicates)"
+    help = (
+        "Fill the demo with synthetic specialists and nannies "
+        "(idempotent: a rerun with the same --seed replaces, not duplicates)"
+    )
 
     def add_arguments(self, parser):
         parser.add_argument("--specialists", type=int, default=80)
+        parser.add_argument("--nannies", type=int, default=24)
         parser.add_argument("--seed", type=int, default=42)
 
     def handle(self, *args, **options):
-        total, seed = options["specialists"], options["seed"]
-        if total < 0:
-            raise CommandError("--specialists must not be negative")
+        total, nannies, seed = options["specialists"], options["nannies"], options["seed"]
+        if total < 0 or nannies < 0:
+            raise CommandError("--specialists and --nannies must not be negative")
         contact_phone = self._contact_phone()
 
         call_command("load_kato_demo", stdout=self.stdout)
@@ -65,7 +73,8 @@ class Command(BaseCommand):
         self.contact_phone = contact_phone
         self.kinds = {k.slug: k for k in ServiceKind.objects.all()}
         rng = Random(seed)
-        year = timezone.localdate().year
+        today = timezone.localdate()
+        year = today.year
 
         in_person_index = 0
         context_ids = []
@@ -84,9 +93,16 @@ class Command(BaseCommand):
                     addresses = build_addresses(rng, streets, center)
                 context_ids.append(self._save(spec, district, addresses))
 
+            # Its own generator, so adding or removing nannies never changes the specialists of a seed.
+            nanny_rng = Random(f"nannies:{seed}")
+            nanny_data = load_json("nannies.json")
+            for i in range(nannies):
+                spec = build_nanny(nanny_rng, i, self.names, nanny_data, year, today)
+                context_ids.append(self._save_nanny(spec, districts[i % len(districts)]))
+
         PracticeContext.objects.filter(pk__in=context_ids).update(catalog_enabled=True)
         offers = rebuild_all()
-        self.stdout.write(f"Demo specialists: {total}, search offers: {offers}")
+        self.stdout.write(f"Demo specialists: {total}, nannies: {nannies}, search offers: {offers}")
 
     @staticmethod
     def _contact_phone() -> str:
@@ -139,6 +155,55 @@ class Command(BaseCommand):
             _set_translations(service, {"title": s.title, "description": s.description})
             if "in_person" in s.formats:
                 service.addresses.set(address_rows)
+        return context.pk
+
+    def _save_nanny(self, spec: NannySpec, district: KatoNode) -> int:
+        """Write one nanny with her courses and her childcare service; returns the id of the private practice context."""
+        user = User.objects.filter(phone=spec.login_phone).first() or User.objects.create_user(
+            spec.login_phone, preferred_language=spec.preferred_language
+        )
+        profile = SpecialistProfile.objects.filter(user=user).first() or SpecialistProfile(user=user, slug=spec.slug)
+        profile.category = ProfileCategory.NANNY
+        profile.display_name = spec.display_name
+        profile.practice_start_year = spec.practice_start_year
+        profile.age_min, profile.age_max = spec.age_min, spec.age_max
+        profile.formats = ["home_visit"]
+        profile.whatsapp_phone = profile.public_phone = self.contact_phone
+        profile.demo_verification_levels = []
+        profile.criminal_record_issued_on = spec.criminal_record_issued_on
+        _set_translations(profile, {"bio": spec.bio, "approach": spec.approach, "availability": spec.availability})
+        profile.specialist_types.clear()
+        profile.methods.clear()
+        profile.conditions.set(DevelopmentalCondition.objects.filter(slug__in=spec.conditions))
+        profile.languages.set(CommunicationLanguage.objects.filter(code__in=spec.languages))
+
+        profile.trainings.all().delete()
+        for t in spec.trainings:
+            training = Training(
+                profile=profile,
+                issuer=t.issuer,
+                year=t.year,
+                hours=t.hours,
+                certificate_number=t.certificate_number,
+                is_first_aid=t.is_first_aid,
+            )
+            _set_translations(training, {"title": {lang: t.title[lang] for lang in spec.bio}})
+
+        context, _ = PracticeContext.objects.update_or_create(
+            specialist=profile, kind=PracticeContext.Kind.PRIVATE, defaults={"catalog_enabled": False}
+        )
+        self._drop_services(context)
+        service = Service(
+            context=context,
+            kind=self.kinds["childcare"],
+            duration_min=60,
+            formats=["home_visit"],
+            price_hour=spec.price_hour,
+            price_night=spec.price_night,
+            price_month=spec.price_month,
+            home_visit_area=district,
+        )
+        _set_translations(service, {"title": spec.service_title, "description": spec.service_description})
         return context.pk
 
     @staticmethod

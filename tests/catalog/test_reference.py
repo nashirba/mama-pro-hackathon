@@ -16,7 +16,7 @@ def test_seed_is_idempotent(db):
     call_command("seed_reference_data")
     counts = (SpecialistType.objects.count(), DevelopmentalCondition.objects.count(), Method.objects.count(), ServiceKind.objects.count(), CommunicationLanguage.objects.count())
     call_command("seed_reference_data")
-    assert counts == (30, 26, 30, 5, 3)
+    assert counts == (29, 26, 30, 6, 3)
     assert (SpecialistType.objects.count(), DevelopmentalCondition.objects.count(), Method.objects.count(), ServiceKind.objects.count(), CommunicationLanguage.objects.count()) == counts
 
 
@@ -77,7 +77,7 @@ def test_specialist_type_landing_name_is_in_title_case(db, reference):
     assert landing("aba-therapist", "kk") == "ABA-терапевттер"  # abbreviation intact
     assert landing("early-support-teacher", "kk") == "ерте қолдау педагогтары"
     assert SpecialistType.objects.language("kk").get(slug="logoped").name_plural == "Логопедтер"  # the filter lists keep the capital
-    assert landing("nanny", "kk") == "күтушілер мен сиделкалар"
+    assert landing("music-therapist", "kk") == "музыкалық терапевтер"
 
 
 def test_condition_kk_landing_name_case(db, reference):
@@ -150,3 +150,19 @@ def test_landing_slugs_disjoint(db, reference, kato_demo):
     assert not (types & conditions)
     assert not (types & cities)
     assert not (conditions & cities)
+
+
+def test_nanny_is_not_a_specialist_type(db, reference):
+    assert not SpecialistType.objects.filter(slug="nanny").exists()
+
+
+def test_seed_removes_legacy_nanny_type(db):
+    SpecialistType.objects.language("ru").create(slug="nanny", name="Няня или сиделка", name_plural="Няни", landing_name="Няни")
+    call_command("seed_reference_data")
+    assert not SpecialistType.objects.filter(slug="nanny").exists()
+
+
+def test_childcare_service_kind(db, reference):
+    kind = ServiceKind.objects.get(slug="childcare")
+    assert kind.safe_translation_getter("name", language_code="ru") == "Услуги няни"
+    assert kind.safe_translation_getter("name", language_code="kk") == "Бала күтуші қызметі"

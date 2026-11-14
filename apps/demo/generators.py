@@ -1,9 +1,10 @@
-"""Pure generators of synthetic specialists for the demo. No database access: `seed_demo` writes the specs to the DB.
+"""Pure generators of synthetic specialists and nannies for the demo. No database access: `seed_demo` writes the specs to the DB.
 
 Everything random goes through the `random.Random` passed in, so one seed always yields the same catalog.
 Shares that must not be left to luck (online-only, KZ translation) are derived from the specialist index.
 """
 
+import datetime
 import json
 import math
 from dataclasses import dataclass, field
@@ -220,3 +221,133 @@ def build_addresses(rng: Random, streets: list[str], center: tuple[float, float]
         lon, lat = random_point_near(rng, *center)
         result.append(AddressSpec(street=rng.choice(streets), building=str(rng.randint(1, 150)), lon=lon, lat=lat))
     return result
+
+
+# --- nannies -----------------------------------------------------------------------------------------------------
+
+NANNY_LOGIN_PHONE_PREFIX = "+7700001"  # a block of its own, so nanny logins never meet specialist logins
+
+
+@dataclass(frozen=True)
+class TrainingSpec:
+    title: dict[str, str]
+    issuer: str
+    year: int
+    hours: int
+    certificate_number: str
+    is_first_aid: bool
+
+
+@dataclass(frozen=True)
+class NannySpec:
+    index: int
+    login_phone: str
+    preferred_language: str
+    display_name: str
+    slug: str
+    practice_start_year: int
+    age_min: int
+    age_max: int
+    conditions: list[str]
+    languages: list[str]
+    criminal_record_issued_on: datetime.date | None
+    trainings: list[TrainingSpec]
+    bio: dict[str, str]  # ru always; kk only when the nanny has a KZ translation
+    approach: dict[str, str]
+    availability: dict[str, str]
+    service_title: dict[str, str]
+    service_description: dict[str, str]
+    price_hour: int
+    price_night: int | None
+    price_month: int | None
+
+
+def nanny_without_record(index: int) -> bool:
+    return index % 12 == 3
+
+
+def nanny_without_first_aid(index: int) -> bool:
+    return index % 24 == 9
+
+
+def _certificate(rng: Random, prefix: str, year: int) -> str:
+    return f"{prefix}-{year}-{rng.randint(1000, 9999)}"
+
+
+def _trainings(rng: Random, data: dict, current_year: int, first_aid: bool) -> list[TrainingSpec]:
+    """A pediatric first aid course (16-40 hours) and 1-3 other courses (24-120 hours)."""
+    result = []
+    if first_aid:
+        course = rng.choice(data["first_aid_courses"])
+        year = current_year - rng.randint(0, 3)
+        result.append(
+            TrainingSpec(
+                title=course["title"],
+                issuer=course["issuer"],
+                year=year,
+                hours=rng.randrange(course["hours"][0], course["hours"][1] + 1, 4),
+                certificate_number=_certificate(rng, course["prefix"], year),
+                is_first_aid=True,
+            )
+        )
+    for course in rng.sample(data["courses"], rng.randint(1, 3)):
+        year = current_year - rng.randint(0, 5)
+        result.append(
+            TrainingSpec(
+                title=course["title"],
+                issuer=course["issuer"],
+                year=year,
+                hours=rng.randrange(24, 121, 8),
+                certificate_number=_certificate(rng, course["prefix"], year),
+                is_first_aid=False,
+            )
+        )
+    return result
+
+
+def build_nanny(rng: Random, index: int, names: dict, data: dict, current_year: int, today: datetime.date) -> NannySpec:
+    """A nanny of the demo. Indexes picked by `nanny_without_record` / `nanny_without_first_aid` break the visibility
+    rule on purpose: they exist in the database but the nanny section does not show them."""
+    has_kk = has_kk_translation(index)
+    kazakh_name = rng.random() < 0.5
+    group = names["kk" if kazakh_name else "ru"]
+    first = rng.choice(group["female"])
+    last = rng.choice(group["surnames"])[1]
+    languages = ["kk", "ru"] if kazakh_name else ["ru"]
+    if not kazakh_name and rng.random() < 0.2:
+        languages.insert(0, "kk")
+    age_min, age_max = rng.choice(data["age_ranges"])
+    conditions = rng.sample(data["conditions"], rng.randint(1, 4))
+    record = None
+    if not nanny_without_record(index):
+        record = today - datetime.timedelta(days=rng.randint(30, 700))
+    low, high = data["prices"]["hour"]
+    price_hour = _round_price(rng, low, high)
+    price_night = _round_price(rng, *data["prices"]["night"]) if rng.random() < 0.6 else None
+    price_month = round(rng.randint(*data["prices"]["month"]) / 10_000) * 10_000 if rng.random() < 0.5 else None
+
+    def texts(key: str) -> dict[str, str]:
+        return _langs(rng.choice(data[key]), has_kk)
+
+    return NannySpec(
+        index=index,
+        login_phone=f"{NANNY_LOGIN_PHONE_PREFIX}{index:04d}",
+        preferred_language="kk" if kazakh_name else "ru",
+        display_name=f"{last} {first}",
+        slug=f"{_slug_part(first)}-{_slug_part(last)}-n{index + 1}",
+        practice_start_year=current_year - rng.randint(1, 15),
+        age_min=age_min,
+        age_max=age_max,
+        conditions=conditions,
+        languages=languages,
+        criminal_record_issued_on=record,
+        trainings=_trainings(rng, data, current_year, first_aid=not nanny_without_first_aid(index)),
+        bio=texts("bio"),
+        approach=texts("approach"),
+        availability=texts("availability"),
+        service_title=_langs(data["service"]["title"], has_kk),
+        service_description=_langs(data["service"]["description"], has_kk),
+        price_hour=price_hour,
+        price_night=price_night,
+        price_month=price_month,
+    )

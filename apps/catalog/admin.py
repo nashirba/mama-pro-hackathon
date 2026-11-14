@@ -1,15 +1,19 @@
 from django.contrib import admin
-from parler.admin import TranslatableAdmin
+from django.utils.translation import gettext_lazy as _
+from parler.admin import TranslatableAdmin, TranslatableTabularInline
+from parler.forms import TranslatableModelForm
 
 from .models import (
     CommunicationLanguage,
     DevelopmentalCondition,
     Method,
     PracticeContext,
+    ProfileCategory,
     Service,
     ServiceKind,
     SpecialistProfile,
     SpecialistType,
+    Training,
 )
 
 
@@ -42,11 +46,34 @@ class CommunicationLanguageAdmin(TranslatableAdmin):
     list_display = ("code", "name")
 
 
+class TrainingInline(TranslatableTabularInline):
+    model = Training
+    extra = 0
+    fields = ("title", "issuer", "year", "hours", "certificate_number", "is_first_aid")
+
+
+class SpecialistProfileForm(TranslatableModelForm):
+    """The model `clean()` cannot see the many-to-many field of the form, so the nanny rule lives here."""
+
+    class Meta:
+        model = SpecialistProfile
+        fields = "__all__"
+
+    def clean(self):
+        cleaned = super().clean()
+        if cleaned.get("category") == ProfileCategory.NANNY and cleaned.get("specialist_types"):
+            self.add_error("specialist_types", _("У няни нет типов специалиста"))
+        return cleaned
+
+
 @admin.register(SpecialistProfile)
 class SpecialistProfileAdmin(TranslatableAdmin):
-    list_display = ("display_name", "slug", "practice_start_year")
+    form = SpecialistProfileForm
+    list_display = ("display_name", "slug", "category", "practice_start_year")
+    list_filter = ("category",)
     search_fields = ("display_name", "slug")
     filter_horizontal = ("specialist_types", "conditions", "methods", "languages")
+    inlines = (TrainingInline,)
 
 
 @admin.register(PracticeContext)
@@ -57,6 +84,6 @@ class PracticeContextAdmin(admin.ModelAdmin):  # not translatable, so a plain Mo
 
 @admin.register(Service)
 class ServiceAdmin(TranslatableAdmin):
-    list_display = ("title", "context", "kind", "price_session", "is_free")
+    list_display = ("title", "context", "kind", "price_session", "price_hour", "is_free")
     list_filter = ("kind", "is_free")
     filter_horizontal = ("addresses", "conditions", "methods", "languages")

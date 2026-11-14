@@ -1,11 +1,12 @@
 {% load i18n static %}
 <header class="border-b border-t-[3px] border-slate-200 border-t-brand bg-white">
-  <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 sm:gap-4 sm:px-6 sm:py-3">
+  <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-3 gap-y-0 px-4 py-2 sm:flex-nowrap sm:gap-4 sm:px-6 sm:py-3">
     <a href="{% url 'core:home' %}" class="flex min-w-0 items-center gap-2 text-sm font-bold leading-tight text-slate-900 sm:text-lg">
       <img src="{% static 'img/brand/mamapro-mark.png' %}" alt="" class="h-8 w-8 shrink-0" width="32" height="32">
       <span class="min-w-0 text-balance">{{ BRAND_NAME }}</span>
     </a>
-    <div class="flex shrink-0 flex-wrap items-center justify-end gap-x-1 sm:gap-x-3">
+    <div class="flex basis-full flex-wrap items-center justify-between gap-x-1 sm:basis-auto sm:shrink-0 sm:justify-end sm:gap-x-3">
+      {% url 'search:nannies' as nannies_url %}<a href="{{ nannies_url }}"{% if request.path == nannies_url %} aria-current="page"{% endif %} class="inline-flex min-h-11 items-center px-2 lg:min-h-9 text-sm font-medium text-slate-700 hover:underline aria-[current=page]:text-primary-700">{% translate "Няни" %}</a>
       {% if user.is_authenticated %}
       <form action="{% url 'accounts:logout' %}" method="post">
         {% csrf_token %}

@@ -8,6 +8,7 @@ app_name = "search"
 urlpatterns = [
     path("specialists/", views.results, name="results"),
     path("specialists/map.geojson", views.map_geojson, name="map_geojson"),
+    path("nannies/", views.nannies, name="nannies"),
     path("suggest/", views.suggest, name="suggest"),
     path("<slug:city_slug>/<slug:slug>/", views.landing, name="landing"),
 ]

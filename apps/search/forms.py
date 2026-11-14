@@ -14,6 +14,8 @@ from apps.catalog.models import (
 )
 from apps.geo.models import KatoNode
 
+from .query import PAY_UNIT_COLUMNS
+
 AGE_GROUPS = [(0, 3), (3, 7), (7, 12), (12, 18)]
 FILTERABLE_LEVELS = (VerificationLevel.EDUCATION, VerificationLevel.CREDENTIAL, VerificationLevel.SAFETY)
 
@@ -33,6 +35,7 @@ class FilterChoices:
     formats: list[tuple[str, str]]
     verification_levels: list[tuple[str, str]]
     sorts: list[tuple[str, str]]
+    pay_units: list[tuple[str, str]]
 
 
 def _condition_rows(conditions: list[DevelopmentalCondition]) -> list[tuple[DevelopmentalCondition, int]]:
@@ -50,7 +53,17 @@ def _condition_rows(conditions: list[DevelopmentalCondition]) -> list[tuple[Deve
     return rows
 
 
-def build_filter_choices() -> FilterChoices:
+_PAY_UNIT_LABELS = {"hour": _("По часам"), "night": _("Ночью"), "month": _("Помесячно")}
+PAY_UNITS = [(unit, _PAY_UNIT_LABELS[unit]) for unit in PAY_UNIT_COLUMNS]
+
+
+def _sorts(section: str) -> list[tuple[str, str]]:
+    if section == "nannies":
+        return [("relevance", _("По релевантности")), ("price", _("По цене за час")), ("experience", _("По опыту"))]
+    return [("relevance", _("По релевантности")), ("price", _("По цене")), ("experience", _("По стажу"))]
+
+
+def build_filter_choices(section: str = "specialists") -> FilterChoices:
     nodes = list(KatoNode.objects.prefetch_related("translations").select_related("parent"))
     cities = sorted((n for n in nodes if n.level in (KatoNode.Level.REGION, KatoNode.Level.CITY)), key=_name)
     groups: dict[int, list[KatoNode]] = {}
@@ -70,9 +83,6 @@ def build_filter_choices() -> FilterChoices:
         languages=sorted(CommunicationLanguage.objects.prefetch_related("translations"), key=_name),
         formats=list(Format.choices),
         verification_levels=[(level.value, level.label) for level in FILTERABLE_LEVELS],
-        sorts=[
-            ("relevance", _("По релевантности")),
-            ("price", _("По цене")),
-            ("experience", _("По стажу")),
-        ],
+        sorts=_sorts(section),
+        pay_units=PAY_UNITS,
     )

@@ -1,0 +1,1 @@
+{% load i18n %}{% with hours=profile.training_hours courses=profile.trainings.all|length %}{% translate "Обучение" %}: {% blocktranslate count n=hours %}{{ n }} час{% plural %}{{ n }} часов{% endblocktranslate %}, {% blocktranslate count n=courses %}{{ n }} курс{% plural %}{{ n }} курсов{% endblocktranslate %}{% endwith %}

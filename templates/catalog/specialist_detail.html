@@ -4,24 +4,18 @@
 {% block extra_head %}{% if geojson.features %}{% include "partials/map_assets.html" %}{% endif %}{% endblock %}
 {% block content %}
 {% contact_links profile as contacts %}
+{% if price_from == 0 %}{% translate "бесплатно" as price_label %}{% elif price_from %}{% blocktranslate with price=price_from|floatformat:"0g" asvar price_label %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" as price_label %}{% endif %}
 <div class="mx-auto max-w-7xl px-4 pb-28 pt-4 sm:px-6 lg:pb-10 lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-10">
  <div class="min-w-0 space-y-8 [&>*]:max-w-3xl">
-  <nav aria-label="{% translate 'Навигация' %}" class="-mb-2">
-    <a href="{% url 'search:results' %}" x-data @click="const r = document.referrer && new URL(document.referrer); if (r && r.origin === location.origin && history.length > 1) { $event.preventDefault(); history.back(); }" class="-ml-2 inline-flex min-h-11 items-center gap-1 rounded px-2 text-sm font-medium text-primary-700 hover:underline">
-      <svg class="size-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5l-5 5 5 5"/></svg>
-      {% translate "Каталог специалистов" %}
-    </a>
-  </nav>
+  {% url 'search:results' as back_url %}{% translate "Каталог специалистов" as back_label %}
+  {% include "catalog/_detail_back.html" %}
   <header class="flex flex-wrap gap-4">
     {% include "catalog/_photo.html" with size_class="h-16 w-16 text-2xl sm:h-24 sm:w-24 sm:text-4xl" %}
     <div class="min-w-0 flex-1 space-y-2">
       <h1 class="text-2xl font-bold">{{ profile.display_name }}</h1>
       <p class="text-slate-600">{% for t in profile.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
       {% include "catalog/_badges.html" %}
-      <p class="font-semibold lg:hidden">{% if price_from == 0 %}{% translate "бесплатно" %}{% elif price_from %}{% blocktranslate with price=price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>
-      <div class="lg:hidden">
-      {% if contacts.disabled_in_demo %}<p class="text-sm text-slate-500">{% translate "Контакты в демо-версии недоступны" %}</p>{% else %}{% include "catalog/_contact_buttons.html" with profile=profile %}{% endif %}
-      </div>
+      {% include "catalog/_detail_mobile_contacts.html" %}
     </div>
   <dl class="grid w-full grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4 sm:gap-x-6">
     <div><dt class="text-xs text-slate-500">{% translate "Стаж" %}</dt><dd class="text-sm text-slate-900">{% blocktranslate count n=profile.experience_years %}{{ n }} год{% plural %}{{ n }} лет{% endblocktranslate %}</dd></div>
@@ -105,27 +99,11 @@
   </section>
   {% endif %}
  </div>
-<aside class="mt-8 hidden lg:mt-0 lg:block">
-  <div class="sticky top-6 space-y-3 rounded-lg border border-slate-200 p-4">
-    <p class="text-2xl font-semibold">{% if price_from == 0 %}{% translate "бесплатно" %}{% elif price_from %}{% blocktranslate with price=price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>
-    {% if contacts.disabled_in_demo %}<p class="text-sm text-slate-500">{% translate "Контакты в демо-версии недоступны" %}</p>
-    {% if addresses %}<a href="#addresses" class="btn-press inline-flex min-h-11 w-full items-center justify-center rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Адреса и маршрут" %}</a>{% endif %}
-    <a href="#services" class="inline-flex min-h-11 w-full items-center justify-center rounded border border-primary-700 px-4 py-2 font-semibold text-primary-700 hover:bg-primary-50">{% translate "Услуги и цены" %}</a>
-    {% else %}{% include "catalog/_contact_buttons.html" with profile=profile %}{% endif %}
-    {% with a=addresses.0 %}{% if a %}<p class="text-sm text-slate-600">{% with city=a.kato.city %}{% if city %}{{ city.name }}{% else %}{{ a.kato.name }}{% endif %}{% endwith %}</p>{% endif %}{% endwith %}
-  </div>
-</aside>
+{% translate "Адреса и маршрут" as addresses_label %}{% translate "Услуги и цены" as services_label %}
+{% include "catalog/_detail_aside.html" with primary_href=addresses|yesno:"#addresses," primary_label=addresses_label secondary_href="#services" secondary_label=services_label aside_note=first_address_city %}
 </div>
 
 {% contact_links profile as contacts %}{% if contacts.visible and not contacts.disabled_in_demo or contacts.disabled_in_demo and addresses %}
-<style>@media (max-width: 1023.98px) { body > footer { padding-bottom: 5rem; } }</style>
-<div data-action-bar class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
- <div class="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 sm:px-6">
-  <div class="min-w-0"><p class="text-base font-semibold">{% if price_from == 0 %}{% translate "бесплатно" %}{% elif price_from %}{% blocktranslate with price=price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>{% if contacts.disabled_in_demo %}<p class="text-xs text-slate-500">{% translate "Контакты в демо-версии недоступны" %}</p>{% endif %}</div>
-  <div class="ml-auto">
-    {% if contacts.disabled_in_demo %}<a href="#addresses" class="btn-press inline-flex min-h-11 items-center rounded bg-primary-700 px-5 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Адреса и маршрут" %}</a>{% else %}{% include "catalog/_contact_buttons.html" with profile=profile %}{% endif %}
-  </div>
- </div>
-</div>
+{% include "catalog/_detail_action_bar.html" with demo_href="#addresses" demo_label=addresses_label %}
 {% endif %}
 {% endblock %}

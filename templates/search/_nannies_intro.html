@@ -1,0 +1,9 @@
+{% load i18n %}<section aria-labelledby="nannies-rule" class="mt-3 max-w-4xl rounded-2xl bg-slate-50 p-4 sm:p-6">
+  <p class="text-slate-700">{% translate "Няня присматривает за ребёнком с особенностями развития у вас дома: несколько часов, ночью или постоянно. Она знает, как помочь ребёнку в быту и в трудной ситуации, но не проводит коррекционных занятий и не ставит диагнозов. Оплата - напрямую няне." %}</p>
+  <h2 id="nannies-rule" class="mt-4 font-semibold">{% translate "У каждой няни в разделе есть" %}</h2>
+  <ul class="mt-2 grid gap-2 text-sm text-slate-800 sm:grid-cols-3">
+    <li class="flex items-start gap-2">{% include "search/_check_icon.html" %}<span>{% translate "Сертификат о курсе обучения" %}</span></li>
+    <li class="flex items-start gap-2">{% include "search/_check_icon.html" %}<span>{% translate "Курс первой помощи детям" %}</span></li>
+    <li class="flex items-start gap-2">{% include "search/_check_icon.html" %}<span>{% translate "Справка о несудимости" %}</span></li>
+  </ul>
+</section>

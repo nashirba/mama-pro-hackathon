@@ -68,3 +68,51 @@ def test_detail_demo_badges_are_marked_as_demo(client, catalog_fixture, settings
     settings.DEPLOY_PROFILE = "test"
     html = client.get("/ru/specialist/ivanova-logoped/").content.decode()
     assert "(демо)" not in html and "Демо: проверка не проводилась" not in html
+
+
+def test_nanny_page_shows_trainings_total_record_and_prices(client, nannies):
+    r = client.get("/ru/nanny/aigul-nanny/")
+    html = r.content.decode()
+    assert r.status_code == 200
+    assert "Няня для ребёнка с особенностями развития" in html and "Обучение и сертификаты" in html
+    assert "Первая помощь детям" in html and "Центр «Забота»" in html and "Сертификат №" in html and "2024 год" in html
+    assert "Всего: 112 часов обучения" in html and html.count("data-first-aid") == 1
+    assert "Справка о несудимости" in html and "Есть, выдана" in html
+    assert "С какими особенностями развития есть опыт" in html and "О себе: Сапарова Айгуль" in html
+    assert "Как работаю: Сапарова Айгуль" in html and "Когда может работать" in html and "График: Сапарова Айгуль" in html
+    assert "3\xa0000 ₸" in html and "15\xa0000 ₸" in html and "За месяц" not in html and "Алмалинский район" in html
+    assert "от 3\xa0000 ₸ в час" in html and "data-action-bar" in html
+    assert "не проводит коррекционных занятий и не ставит диагнозов" in html
+    assert "Каталог специалистов" not in html and 'href="/ru/nannies/"' in html
+
+
+def test_nanny_page_whatsapp_text_is_about_nanny_work(client, nannies):
+    html = client.get("/ru/nanny/aigul-nanny/").content.decode()
+    assert "https://wa.me/77011234567?text=" in html and "%D0%BD%D1%8F%D0%BD%D0%B5%D0%B9" in html  # «няней»
+    assert 'href="tel:+77011234567"' in html
+
+
+def test_nanny_page_demo_contacts_use_demo_phone(client, nannies, settings):
+    settings.DEPLOY_PROFILE = "demo"
+    settings.DEMO_CONTACT_PHONE = "+77012223344"
+    html = client.get("/ru/nanny/aigul-nanny/").content.decode()
+    assert "wa.me/77012223344" in html and "wa.me/77011234567" not in html
+
+
+def test_nanny_page_404_for_hidden_nannies_and_wrong_urls(client, nannies):
+    for slug in ("no-record-nanny", "no-first-aid-nanny", "no-training-nanny", "no-such-nanny"):
+        assert client.get(f"/ru/nanny/{slug}/").status_code == 404, slug
+    assert client.get("/ru/specialist/aigul-nanny/").status_code == 404
+    assert client.get("/ru/nanny/ivanova-logoped/").status_code == 404
+
+
+def test_nanny_page_kk(client, nannies):
+    r = client.get("/kk/nanny/aigul-nanny/")
+    html = r.content.decode()
+    assert r.status_code == 200 and "Оқу және сертификаттар" in html and "Обучение и сертификаты" not in html
+
+
+def test_specialist_page_keeps_shared_blocks(client, catalog_fixture):
+    html = client.get("/ru/specialist/ivanova-logoped/").content.decode()
+    assert "data-action-bar" in html and "от 8\xa0000 ₸" in html and 'href="/ru/specialists/"' in html
+    assert "Каталог специалистов" in html and "Алматы" in html

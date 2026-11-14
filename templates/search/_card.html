@@ -1,22 +1,21 @@
 {% load i18n catalog_tags search_tags %}{% with s=card.specialist h=heading|default:'' %}{% contact_links s as contacts %}
-<article data-specialist="{{ s.slug }}" class="relative flex h-full gap-4 rounded-lg border border-slate-200 p-4 transition-colors hover:border-primary-300 hover:bg-slate-50 focus-within:border-primary-300 motion-reduce:transition-none">
-  {% include "catalog/_photo.html" with profile=s size_class="h-16 w-16" %}
-  <div class="min-w-0 flex-1 space-y-2">
-    <div>
-      <h2 class="text-lg font-semibold"><a href="{% url 'catalog:specialist' s.slug %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{{ s.display_name }}</a></h2>
-      <p class="text-sm text-slate-600">{% for t in s.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<article data-specialist="{{ s.slug }}" class="card-lift relative flex h-full gap-3 rounded-lg border border-slate-200 p-4 hover:border-primary-300 hover:bg-slate-50 focus-within:border-primary-300 sm:gap-4">
+  {% include "catalog/_photo.html" with profile=s size_class="h-12 w-12 sm:h-16 sm:w-16" %}
+  <div class="@container flex min-w-0 flex-1 flex-col space-y-1.5">
+    <div class="flex flex-col gap-0.5 @xs:flex-row @xs:items-baseline @xs:justify-between @xs:gap-3">
+      <div class="min-w-0">
+        <h2 class="text-lg font-semibold"><a href="{% url 'catalog:specialist' s.slug %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{{ s.display_name }}</a></h2>
+      </div>
+      <p class="shrink-0 text-base font-semibold text-slate-900 @xs:text-right">{% if card.price_from == 0 %}{% translate "бесплатно" %}{% elif card.price_from %}{% blocktranslate with price=card.price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>
     </div>
+    <p class="text-sm text-slate-600">{% for t in s.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     {% include "catalog/_badges.html" with profile=s compact=True %}
-    <p class="text-sm font-semibold text-slate-900">{% if card.price_from == 0 %}{% translate "бесплатно" %}{% elif card.price_from %}{% blocktranslate with price=card.price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>
-    <p class="text-sm text-slate-700">{% blocktranslate count n=s.experience_years %}Стаж {{ n }} год{% plural %}Стаж {{ n }} лет{% endblocktranslate %}</p>
-    <p class="text-sm text-slate-600">{% for f in card|card_formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-    <p class="text-sm text-slate-600">{% for lang in s.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-    <p class="flex flex-wrap items-center gap-2 text-sm text-slate-600">
-      {% if card.nearest_district_name %}<span>{% if card.nearest_city_name and card.nearest_city_name not in h %}{{ card.nearest_city_name }}, {% endif %}{{ card.nearest_district_name }}</span>{% endif %}
-      {% if card.distance_m is not None %}<span>{% blocktranslate with distance=card.distance_m|km %}≈ {{ distance }} км{% endblocktranslate %}</span>{% endif %}
-    </p>
-    <div class="relative z-10 flex flex-wrap items-center gap-2 pt-1{% if not contacts.visible or contacts.disabled_in_demo %} max-sm:hidden{% endif %}">
-      <a href="{% url 'catalog:specialist' s.slug %}" class="inline-flex min-h-11 items-center rounded border border-primary-700 bg-white px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-50 max-sm:hidden">{% translate "Подробнее" %}</a>
+    <p class="text-sm text-slate-600">{% blocktranslate count n=s.experience_years %}Стаж {{ n }} год{% plural %}Стаж {{ n }} лет{% endblocktranslate %}{% with formats=card|card_formats %}{% if formats %} · {% for f in formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% endwith %}{% if s.languages.all %} · {% for lang in s.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}</p>
+    {% if card.nearest_district_name or card.distance_m is not None %}<p class="flex items-start gap-2 text-sm text-slate-600">
+      <svg class="mt-0.5 size-4 shrink-0 text-slate-500" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 18s6-5.2 6-9.5a6 6 0 10-12 0C4 12.8 10 18 10 18z"/><circle cx="10" cy="8.5" r="2"/></svg>
+      <span class="min-w-0">{% if card.nearest_district_name %}{% if card.nearest_city_name and card.nearest_city_name not in h %}{{ card.nearest_city_name }}, {% endif %}{{ card.nearest_district_name }}{% endif %}{% if card.distance_m is not None %}{% if card.nearest_district_name %} · {% endif %}{% blocktranslate with distance=card.distance_m|km %}≈ {{ distance }} км{% endblocktranslate %}{% endif %}</span>
+    </p>{% endif %}
+    <div class="relative z-10 mt-auto flex flex-wrap items-center gap-2 pt-1{% if not contacts.visible or contacts.disabled_in_demo %} hidden{% endif %}">
       {% if not contacts.disabled_in_demo %}{% include "catalog/_contact_buttons.html" with profile=s %}{% endif %}
     </div>
   </div>

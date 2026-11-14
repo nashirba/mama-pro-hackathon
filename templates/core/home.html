@@ -27,7 +27,7 @@
           {% for city in cities %}<option value="{{ city.id|unlocalize }}">{{ city|tr:"name" }}</option>{% endfor %}
         </select>
       </div>
-      <button type="submit" @click="open = false" class="min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Найти" %}</button>
+      <button type="submit" @click="open = false" class="btn-press min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Найти" %}</button>
     </form>
   </section>
 
@@ -35,9 +35,9 @@
     <h2 class="text-xl font-semibold">{% translate "Популярные специализации" %}</h2>
     <ul class="mt-4 divide-y divide-slate-200 overflow-hidden rounded-lg border border-slate-200 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:overflow-visible sm:border-0 lg:grid-cols-4">
       {% for t in popular_types %}
-      <li><a href="{% url 'search:results' %}?specialist_type_ids={{ t.id|unlocalize }}" class="flex min-h-12 items-center justify-between gap-3 px-4 py-2 hover:bg-primary-50 sm:block sm:rounded-lg sm:border sm:border-slate-200 sm:p-4 sm:hover:border-primary-700">
-        <span class="font-medium">{{ t|tr:"name" }}</span>
-        <span class="shrink-0 text-sm text-slate-500 sm:block sm:text-slate-600"><span class="sr-only sm:not-sr-only">{% translate "Специалистов" %}: </span>{{ t.specialists_count }}</span>
+      <li class="sm:h-full"><a href="{% url 'search:results' %}?specialist_type_ids={{ t.id|unlocalize }}" title="{{ t|tr:"name" }}" class="card-lift flex min-h-12 items-center justify-between gap-3 px-4 py-2 hover:bg-primary-50 sm:h-full sm:flex-col sm:items-stretch sm:justify-start sm:rounded-lg sm:border sm:border-slate-200 sm:p-4 sm:hover:border-primary-700">
+        <span class="font-medium sm:line-clamp-3">{{ t|tr:"name" }}</span>
+        <span class="shrink-0 text-sm text-slate-500 sm:mt-auto sm:block sm:pt-2 sm:text-slate-600"><span class="sr-only sm:not-sr-only">{% translate "Специалистов" %}: </span>{{ t.specialists_count }}</span>
       </a></li>
       {% endfor %}
     </ul>
@@ -47,7 +47,7 @@
     <h2 class="text-xl font-semibold">{% translate "Города" %}</h2>
     <ul class="mt-4 flex flex-wrap gap-2">
       {% for city in cities %}
-      <li><a href="{% url 'search:results' %}?kato_id={{ city.id|unlocalize }}" class="inline-flex min-h-11 items-center rounded-full border border-field px-4 text-sm hover:border-primary-700">{{ city|tr:"name" }}</a></li>
+      <li><a href="{% url 'search:results' %}?kato_id={{ city.id|unlocalize }}" class="card-lift inline-flex min-h-11 items-center rounded-full border border-field px-4 text-sm hover:border-primary-700">{{ city|tr:"name" }}</a></li>
       {% endfor %}
     </ul>
   </section>

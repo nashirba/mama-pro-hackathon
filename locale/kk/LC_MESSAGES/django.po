@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 12:01+0500\n"
+"POT-Creation-Date: 2026-11-14 12:18+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,14 +156,14 @@ msgstr "Өтілі бойынша"
 #: templates/catalog/specialist_detail.html:21
 #: templates/catalog/specialist_detail.html:81
 #: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:12
+#: templates/catalog/specialist_detail.html:123 templates/search/_card.html:10
 msgid "бесплатно"
 msgstr "тегін"
 
 #: apps/search/templatetags/search_tags.py:29
 #: templates/catalog/specialist_detail.html:21
 #: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:12
+#: templates/catalog/specialist_detail.html:123 templates/search/_card.html:10
 #, python-format
 msgid "от %(price)s ₸"
 msgstr "%(price)s ₸ бастап"
@@ -172,11 +172,11 @@ msgstr "%(price)s ₸ бастап"
 #: templates/catalog/specialist_detail.html:21
 #: templates/catalog/specialist_detail.html:81
 #: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:12
+#: templates/catalog/specialist_detail.html:123 templates/search/_card.html:10
 msgid "цена по запросу"
 msgstr "бағасы сұраныс бойынша"
 
-#: apps/search/templatetags/search_tags.py:31 templates/search/_card.html:21
+#: apps/search/templatetags/search_tags.py:31 templates/search/_card.html:20
 msgid "Подробнее"
 msgstr "Толығырақ"
 
@@ -309,16 +309,11 @@ msgstr "Код алу"
 msgid "Перейти к содержанию"
 msgstr "Мазмұнға өту"
 
-#: templates/catalog/_badges.html:2 templates/catalog/_badges.html:9
+#: templates/catalog/_badges.html:3 templates/catalog/_badges.html:10
 msgid "Демо: проверка не проводилась"
 msgstr "Демо: тексеру жүргізілмеген"
 
-#: templates/catalog/_badges.html:4
-#, python-format
-msgid "Проверено: %(n)s из %(total)s"
-msgstr "Тексерілген: %(n)s / %(total)s"
-
-#: templates/catalog/_badges.html:10 templates/search/_filters.html:148
+#: templates/catalog/_badges.html:11 templates/search/_filters.html:154
 msgid "демо"
 msgstr "демо"
 
@@ -345,39 +340,38 @@ msgid "Каталог специалистов"
 msgstr "Мамандар каталогы"
 
 #: templates/catalog/specialist_detail.html:23
+#: templates/catalog/specialist_detail.html:111
+msgid "Контакты в демо-версии недоступны"
+msgstr "Демо-нұсқада байланыс қолжетімсіз"
+
+#: templates/catalog/specialist_detail.html:27
 msgid "Стаж"
 msgstr "Өтілі"
 
-#: templates/catalog/specialist_detail.html:23 templates/search/_card.html:11
+#: templates/catalog/specialist_detail.html:27
 #, python-format
-msgid "Стаж %(n)s год"
-msgid_plural "Стаж %(n)s лет"
-msgstr[0] "%(n)s жыл тәжірибе"
-msgstr[1] "%(n)s жыл тәжірибе"
+msgid "%(n)s год"
+msgid_plural "%(n)s лет"
+msgstr[0] "%(n)s жыл"
+msgstr[1] "%(n)s жыл"
 
-#: templates/catalog/specialist_detail.html:24
+#: templates/catalog/specialist_detail.html:28
 msgid "Возраст детей"
 msgstr "Балалардың жасы"
 
-#: templates/catalog/specialist_detail.html:24
+#: templates/catalog/specialist_detail.html:28
 #, python-format
-msgid "Дети %(min)s–%(max)s лет"
-msgstr "%(min)s–%(max)s жастағы балалар"
-
-#: templates/catalog/specialist_detail.html:25
-msgid "Языки"
-msgstr "Тілдер"
-
-#: templates/catalog/specialist_detail.html:26
-#: templates/search/_filters.html:125
-msgid "Формат"
-msgstr "Формат"
+msgid "%(min)s–%(max)s лет"
+msgstr "%(min)s–%(max)s жас"
 
 #: templates/catalog/specialist_detail.html:29
-#: templates/catalog/specialist_detail.html:111
-#: templates/catalog/specialist_detail.html:122
-msgid "Контакты в демо-версии недоступны"
-msgstr "Демо-нұсқада байланыс қолжетімсіз"
+msgid "Язык занятий"
+msgstr "Сабақ тілі"
+
+#: templates/catalog/specialist_detail.html:30
+#: templates/search/_filters.html:131
+msgid "Формат"
+msgstr "Формат"
 
 #: templates/catalog/specialist_detail.html:37
 msgid "О себе"
@@ -396,6 +390,7 @@ msgid "Методы"
 msgstr "Әдістер"
 
 #: templates/catalog/specialist_detail.html:71
+#: templates/catalog/specialist_detail.html:113
 msgid "Услуги и цены"
 msgstr "Қызметтер мен бағалар"
 
@@ -421,6 +416,11 @@ msgstr "Қабылдау мекенжайлары"
 #: templates/catalog/specialist_detail.html:100
 msgid "Маршрут"
 msgstr "Бағыт"
+
+#: templates/catalog/specialist_detail.html:112
+#: templates/catalog/specialist_detail.html:125
+msgid "Адреса и маршрут"
+msgstr "Мекенжайлар және бағыт"
 
 #: templates/consents/pd_processing_v1.html:3
 #: templates/consents/user_agreement_v1.html:3
@@ -571,7 +571,14 @@ msgstr "Барлық құрылғылардан шығу"
 msgid "Язык интерфейса"
 msgstr "Интерфейс тілі"
 
-#: templates/search/_card.html:18
+#: templates/search/_card.html:13
+#, python-format
+msgid "Стаж %(n)s год"
+msgid_plural "Стаж %(n)s лет"
+msgstr[0] "%(n)s жыл тәжірибе"
+msgstr[1] "%(n)s жыл тәжірибе"
+
+#: templates/search/_card.html:17
 #, python-format
 msgid "≈ %(distance)s км"
 msgstr "≈ %(distance)s км"
@@ -595,6 +602,10 @@ msgstr "Барлық сүзгілерді тазалау"
 #: templates/search/_filters.html:9
 msgid "Поиск"
 msgstr "Іздеу"
+
+#: templates/search/_filters.html:9 templates/search/_filters.html:174
+msgid "Сбросить"
+msgstr "Тазалау"
 
 #: templates/search/_filters.html:19 templates/search/_filters.html:31
 msgid "Фильтры"
@@ -636,8 +647,8 @@ msgstr "Баланың жасы"
 msgid "Возраст от"
 msgstr "Жасы (бастап)"
 
-#: templates/search/_filters.html:75 templates/search/_filters.html:111
-#: templates/search/_filters.html:118
+#: templates/search/_filters.html:75 templates/search/_filters.html:117
+#: templates/search/_filters.html:124
 msgid "от"
 msgstr "бастап"
 
@@ -645,8 +656,8 @@ msgstr "бастап"
 msgid "Возраст до"
 msgstr "Жасы (дейін)"
 
-#: templates/search/_filters.html:77 templates/search/_filters.html:112
-#: templates/search/_filters.html:119
+#: templates/search/_filters.html:77 templates/search/_filters.html:118
+#: templates/search/_filters.html:125
 msgid "до"
 msgstr "дейін"
 
@@ -654,61 +665,65 @@ msgstr "дейін"
 msgid "Специализация"
 msgstr "Мамандану"
 
-#: templates/search/_filters.html:100
+#: templates/search/_filters.html:98 templates/search/_filters.html:110
+msgid "Показать все"
+msgstr "Барлығын көрсету"
+
+#: templates/search/_filters.html:98 templates/search/_filters.html:110
+msgid "Свернуть"
+msgstr "Жасыру"
+
+#: templates/search/_filters.html:103
 msgid "Особенности развития"
 msgstr "Даму ерекшеліктері"
 
-#: templates/search/_filters.html:109
+#: templates/search/_filters.html:115
 msgid "Цена за занятие, ₸"
 msgstr "Сабақ бағасы, ₸"
 
-#: templates/search/_filters.html:111
+#: templates/search/_filters.html:117
 msgid "Цена от"
 msgstr "Бағасы (бастап)"
 
-#: templates/search/_filters.html:112
+#: templates/search/_filters.html:118
 msgid "Цена до"
 msgstr "Бағасы (дейін)"
 
-#: templates/search/_filters.html:116
+#: templates/search/_filters.html:122
 msgid "Цена в месяц, ₸"
 msgstr "Айлық баға, ₸"
 
-#: templates/search/_filters.html:118
+#: templates/search/_filters.html:124
 msgid "Цена в месяц от"
 msgstr "Айлық баға (бастап)"
 
-#: templates/search/_filters.html:119
+#: templates/search/_filters.html:125
 msgid "Цена в месяц до"
 msgstr "Айлық баға (дейін)"
 
-#: templates/search/_filters.html:122
+#: templates/search/_filters.html:128
 msgid "Только бесплатные"
 msgstr "Тек тегін"
 
-#: templates/search/_filters.html:134
+#: templates/search/_filters.html:140
 msgid "Язык общения"
 msgstr "Қарым-қатынас тілі"
 
-#: templates/search/_filters.html:143
+#: templates/search/_filters.html:149
 msgid "Стаж от, лет"
 msgstr "Өтілі (бастап), жыл"
 
-#: templates/search/_filters.html:148
+#: templates/search/_filters.html:154
 msgid "Подтверждённые документы"
 msgstr "Расталған құжаттар"
 
-#: templates/search/_filters.html:157 templates/search/_suggest.html:1
+#: templates/search/_filters.html:163 templates/search/_suggest.html:1
 msgid "Метод"
 msgstr "Әдіс"
 
-#: templates/search/_filters.html:167
+#: templates/search/_filters.html:173
 msgid "Показать"
 msgstr "Көрсету"
-
-#: templates/search/_filters.html:168
-msgid "Сбросить"
-msgstr "Тазалау"
 
 #: templates/search/_map.html:1
 msgid "Карта специалистов"

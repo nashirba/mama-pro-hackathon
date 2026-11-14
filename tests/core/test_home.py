@@ -55,3 +55,22 @@ def test_robots_disallows_all(client):
     r = client.get("/robots.txt")
     assert r.status_code == 200 and r.content.decode().splitlines() == ["User-agent: *", "Disallow: /"]
     assert r["Content-Type"].startswith("text/plain")
+
+
+def test_home_has_nannies_block_with_count_of_shown_nannies(client, nannies):
+    r = client.get("/ru/")
+    html = r.content.decode()
+    assert r.context["nannies_count"] == 2  # three nannies are hidden by the rule
+    assert "Обученные няни" in html and 'href="/ru/nannies/"' in html and "2 няни в разделе" in html
+
+
+def test_home_popular_types_ignore_nannies(client, nannies):
+    popular = client.get("/ru/").context["popular_types"]
+    assert popular[0].slug == "logoped" and popular[0].specialists_count == 2
+
+
+def test_header_links_to_nannies(client, catalog_fixture):
+    for url, link in (("/ru/", 'href="/ru/nannies/"'), ("/ru/specialists/", 'href="/ru/nannies/"'), ("/kk/", 'href="/kk/nannies/"')):
+        header = client.get(url).content.decode().split("<header")[1].split("</header>")[0]
+        assert link in header, url
+    assert ">Няни<" in client.get("/ru/").content.decode().split("</header>")[0]

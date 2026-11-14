@@ -45,6 +45,17 @@
     </div>
   </section>
 
+  <section aria-labelledby="home-nannies" class="rounded-2xl border border-slate-200 p-5 sm:p-8">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+      <div class="max-w-2xl">
+        <h2 id="home-nannies" class="text-xl font-semibold">{% translate "Обученные няни" %}</h2>
+        <p class="mt-2 text-slate-700">{% translate "Няня для ребёнка с особенностями развития на несколько часов, на ночь или помесячно. У каждой няни есть сертификаты курсов, курс первой помощи детям и справка о несудимости." %}</p>
+        {% if nannies_count %}<p class="mt-2 text-sm text-slate-600">{% blocktranslate count n=nannies_count %}{{ n }} няня в разделе{% plural %}{{ n }} нянь в разделе{% endblocktranslate %}</p>{% endif %}
+      </div>
+      <a href="{% url 'search:nannies' %}" class="btn-press inline-flex min-h-12 shrink-0 items-center justify-center rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Найти няню" %}</a>
+    </div>
+  </section>
+
   <section>
     <h2 class="text-xl font-semibold">{% translate "Города" %}</h2>
     <ul class="mt-4 flex flex-wrap gap-2">

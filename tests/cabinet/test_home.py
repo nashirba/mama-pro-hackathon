@@ -62,3 +62,10 @@ def test_cabinet_in_kazakh(client, db):
     client.force_login(UserFactory())
     html = client.get("/kk/cabinet/").content.decode()
     assert "Личный кабинет" not in html and "Жеке кабинет" in html
+
+
+def test_header_has_single_logout_button(client, db):
+    client.force_login(UserFactory())
+    html = client.get("/ru/").content.decode()
+    assert "Выйти со всех устройств" not in html
+    assert html.count('action="/ru/logout/"') == 1

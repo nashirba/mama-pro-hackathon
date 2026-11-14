@@ -14,10 +14,6 @@
         {% csrf_token %}
         <button type="submit" class="inline-flex min-h-11 items-center px-2 lg:min-h-9 text-sm text-slate-700 hover:underline">{% translate "Выйти" %}</button>
       </form>
-      <form action="{% url 'accounts:logout_all' %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="inline-flex min-h-11 items-center px-2 lg:min-h-9 text-sm text-slate-700 hover:underline">{% translate "Выйти со всех устройств" %}</button>
-      </form>
       {% else %}
       <a href="{% url 'accounts:login' %}" class="inline-flex min-h-11 items-center px-2 lg:min-h-9 text-sm font-medium text-slate-700 hover:underline">{% translate "Войти" %}</a>
       {% endif %}

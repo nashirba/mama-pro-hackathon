@@ -49,13 +49,16 @@ def test_method_evidence_level_counts(db, reference):
 
 
 def test_kk_fallback_to_ru_when_missing(db, reference):
-    m = Method.objects.language("kk").get(slug="jasper")  # без kk-перевода в fixture
+    # every reference row has a KZ name now, so the fallback is checked on rows that only have RU
+    m = Method.objects.language("ru").create(slug="only-ru-method", evidence_level="established", name="Тестовый метод")
+    m = Method.objects.language("kk").get(slug="only-ru-method")
     assert not m.has_translation("kk")
     assert m.get_current_language() == "kk"
-    assert m.name == "JASPER"
-    nanny = SpecialistType.objects.language("kk").get(slug="nanny")  # у типа нет строки kk
-    assert not nanny.has_translation("kk")
-    assert nanny.name_plural == "Няни и сиделки"
+    assert m.name == "Тестовый метод"
+    t = SpecialistType.objects.language("ru").create(slug="only-ru-type", name="Тип", name_plural="Типы", landing_name="Типы")
+    t = SpecialistType.objects.language("kk").get(slug="only-ru-type")
+    assert not t.has_translation("kk")
+    assert t.name_plural == "Типы"
 
 
 def test_name_plural_and_landing_name(db, reference):
@@ -74,7 +77,7 @@ def test_specialist_type_landing_name_is_in_title_case(db, reference):
     assert landing("aba-therapist", "kk") == "ABA-терапевттер"  # abbreviation intact
     assert landing("early-support-teacher", "kk") == "ерте қолдау педагогтары"
     assert SpecialistType.objects.language("kk").get(slug="logoped").name_plural == "Логопедтер"  # the filter lists keep the capital
-    assert not SpecialistType.objects.get(slug="nanny").has_translation("kk")
+    assert landing("nanny", "kk") == "күтушілер мен сиделкалар"
 
 
 def test_condition_kk_landing_name_case(db, reference):

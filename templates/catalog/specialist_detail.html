@@ -7,7 +7,7 @@
 <div class="mx-auto max-w-7xl px-4 pb-28 pt-4 sm:px-6 md:pb-10 lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-10">
  <div class="min-w-0 space-y-8 [&>*]:max-w-3xl">
   <nav aria-label="{% translate 'Навигация' %}" class="-mb-2">
-    <a href="{% url 'search:results' %}" class="-ml-2 inline-flex min-h-11 items-center gap-1 rounded px-2 text-sm font-medium text-primary-700 hover:underline">
+    <a href="{% url 'search:results' %}" x-data @click="const r = document.referrer && new URL(document.referrer); if (r && r.origin === location.origin && history.length > 1) { $event.preventDefault(); history.back(); }" class="-ml-2 inline-flex min-h-11 items-center gap-1 rounded px-2 text-sm font-medium text-primary-700 hover:underline">
       <svg class="size-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5l-5 5 5 5"/></svg>
       {% translate "Каталог специалистов" %}
     </a>
@@ -20,10 +20,10 @@
       {% include "catalog/_badges.html" %}
       <p class="font-semibold lg:hidden">{% if price_from == 0 %}{% translate "бесплатно" %}{% elif price_from %}{% blocktranslate with price=price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>
       <dl class="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
-        <div><dt class="inline text-slate-500">{% translate "Стаж, лет" %}:</dt> <dd class="inline">{{ profile.experience_years }}</dd></div>
-        <div><dt class="inline text-slate-500">{% translate "Возраст детей, лет" %}:</dt> <dd class="inline">{{ profile.age_min }}-{{ profile.age_max }}</dd></div>
-        <div><dt class="inline text-slate-500">{% translate "Языки" %}:</dt> <dd class="inline">{% for lang in profile.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</dd></div>
-        <div><dt class="inline text-slate-500">{% translate "Формат" %}:</dt> <dd class="inline">{% for f in profile.formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}</dd></div>
+        <div><dt class="sr-only">{% translate "Стаж" %}</dt> <dd>{% blocktranslate count n=profile.experience_years %}Стаж {{ n }} год{% plural %}Стаж {{ n }} лет{% endblocktranslate %}</dd></div>
+        <div><dt class="sr-only">{% translate "Возраст детей" %}</dt> <dd>{% blocktranslate with min=profile.age_min max=profile.age_max %}Дети {{ min }}–{{ max }} лет{% endblocktranslate %}</dd></div>
+        <div><dt class="sr-only">{% translate "Языки" %}</dt> <dd>{% for lang in profile.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</dd></div>
+        <div><dt class="sr-only">{% translate "Формат" %}</dt> <dd>{% for f in profile.formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}</dd></div>
       </dl>
       <div class="hidden md:block lg:hidden">
       {% if contacts.disabled_in_demo %}<p class="text-sm text-slate-500">{% translate "Контакты в демо-версии недоступны" %}</p>{% else %}{% include "catalog/_contact_buttons.html" with profile=profile %}{% endif %}
@@ -73,11 +73,9 @@
       {% for s in services %}
       <li class="space-y-1 p-4">
         <p class="font-medium">{{ s.title }}</p>
-        <p class="text-sm text-slate-600">
-          {% blocktranslate with n=s.duration_min %}{{ n }} мин{% endblocktranslate %}
-          <span class="mx-1 text-slate-300">|</span>
-          {% for f in s.formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}
-          {% if s.home_visit_area %}({{ s.home_visit_area.name }}){% endif %}
+        <p class="flex flex-wrap gap-x-3 gap-y-1 text-sm text-slate-600 [&>span+span]:before:mr-3 [&>span+span]:before:text-slate-400 [&>span+span]:before:content-['·']">
+          <span>{% blocktranslate with n=s.duration_min %}{{ n }} мин{% endblocktranslate %}</span>
+          <span>{% for f in s.formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}{% if s.home_visit_area %} ({{ s.home_visit_area.name }}){% endif %}</span>
         </p>
         <p class="text-sm font-semibold">
           {% if s.is_free %}{% translate "бесплатно" %}{% elif s.price_session %}{% blocktranslate with price=s.price_session|floatformat:"0g" %}{{ price }} ₸ за занятие{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}

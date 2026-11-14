@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Literal
 
+from django.db.models import Case, IntegerField, When
 from django.urls import reverse
 from django.utils.translation import override
 
@@ -9,6 +10,7 @@ from apps.core.i18n import first_translated
 from apps.core.text import normalize_kk
 
 MIN_QUERY_LENGTH = 2
+PER_KIND_LIMIT = 5  # so conditions and methods still fit into the limit
 
 # kind, model, results filter parameter; the order is the order in the list
 SOURCES = (
@@ -43,7 +45,13 @@ def suggest(q: str, lang: str, limit: int = 8, kato_id: int | None = None) -> li
             remaining = limit - len(suggestions)
             if remaining <= 0:
                 break
-            rows = model.objects.filter(search_key__contains=key).prefetch_related("translations").order_by("slug")[:remaining]
+            prefix = Case(When(search_key__startswith=key, then=0), default=1, output_field=IntegerField())
+            rows = (
+                model.objects.filter(search_key__contains=key)
+                .annotate(prefix=prefix)
+                .prefetch_related("translations")
+                .order_by("prefix", "slug")[: min(remaining, PER_KIND_LIMIT)]
+            )
             suggestions.extend(
                 Suggestion(kind, row.slug, first_translated(row, "name") or row.slug, f"{results_url}?{param}={row.pk}{city}")
                 for row in rows

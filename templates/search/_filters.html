@@ -1,11 +1,14 @@
 {% load i18n l10n %}{% localize off %}
 <form id="filters" method="get" action="{% url 'search:results' %}"
       hx-get="{% url 'search:results' %}" hx-target="#results" hx-push-url="true" hx-trigger="change, submit"
+      hx-indicator="#results, #filters"
+      hx-on::before-request="document.getElementById('results').setAttribute('aria-busy','true')"
+      hx-on::after-request="document.getElementById('results').removeAttribute('aria-busy')"
       x-data="filters({ ageMin: '{{ params.child_age_min|default_if_none:'' }}', ageMax: '{{ params.child_age_max|default_if_none:'' }}' })" class="space-y-3 text-sm lg:space-y-4">
   <div>
     <label for="f-q" class="block font-medium">{% translate "Поиск" %}</label>
     <input type="search" enterkeyhint="search" id="f-q" name="q" value="{{ params.q }}" placeholder="{% translate 'Логопед, РАС, не говорит...' %}"
-           class="mt-1 min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
+           class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
   </div>
 
 
@@ -40,7 +43,7 @@
 
   <div>
     <label for="f-sort" class="block font-medium">{% translate "Сортировка" %}</label>
-    <select id="f-sort" name="sort" class="mt-1 min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
+    <select id="f-sort" name="sort" class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
       {% for value, label in choices.sorts %}<option value="{{ value }}"{% if params.sort == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
       {% if near_value %}<option value="distance"{% if params.sort == "distance" %} selected{% endif %}>{% translate "По расстоянию" %}</option>{% endif %}
     </select>
@@ -48,14 +51,14 @@
 
   <div>
     <label for="f-kato" class="block font-medium">{% translate "Город или область" %}</label>
-    <select id="f-kato" name="kato_id" class="mt-1 min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
+    <select id="f-kato" name="kato_id" class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
       <option value="">{% translate "Любой" %}</option>
       {% for node in choices.cities %}<option value="{{ node.id }}"{% if node.id == selected_kato %} selected{% endif %}>{{ node.name }}</option>{% endfor %}
     </select>
   </div>
   <div>
     <label for="f-district" class="block font-medium">{% translate "Район" %}</label>
-    <select id="f-district" name="district_id" class="mt-1 min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
+    <select id="f-district" name="district_id" class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
       <option value="">{% translate "Любой" %}</option>
       {% for parent, districts in choices.district_groups %}
       <optgroup label="{{ parent.name }}">
@@ -69,9 +72,9 @@
     <legend class="font-medium">{% translate "Возраст ребёнка" %}</legend>
     <div class="mt-1 flex items-center gap-2">
       <input type="number" min="0" max="18" name="child_age_min" x-model="ageMin" value="{{ params.child_age_min|default_if_none:'' }}" aria-label="{% translate 'Возраст от' %}"
-             placeholder="{% translate 'от' %}" class="min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
+             placeholder="{% translate 'от' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
       <input type="number" min="0" max="18" name="child_age_max" x-model="ageMax" value="{{ params.child_age_max|default_if_none:'' }}" aria-label="{% translate 'Возраст до' %}"
-             placeholder="{% translate 'до' %}" class="min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
+             placeholder="{% translate 'до' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
     </div>
     <ul class="mt-2 flex flex-wrap gap-2">
       {% for g in age_groups %}
@@ -79,7 +82,7 @@
       <li><a href="{{ g.url }}"{% if g.current %} aria-current="true"{% endif %}
              @click.prevent="setAge($el.closest('form'), {{ g.min }}, {{ g.max }})"
              :aria-current="isAge({{ g.min }}, {{ g.max }}) ? 'true' : null"
-             class="inline-flex min-h-11 items-center rounded-full border border-slate-300 px-4 text-slate-700 lg:min-h-0 lg:px-3 lg:py-1 hover:bg-slate-100 aria-[current=true]:border-primary-700 aria-[current=true]:bg-primary-700 aria-[current=true]:text-white">{{ g.min }}-{{ g.max }}</a></li>
+             class="inline-flex min-h-11 items-center rounded-full border border-field px-4 text-slate-700 lg:min-h-0 lg:px-3 lg:py-1 hover:bg-slate-100 aria-[current=true]:border-primary-700 aria-[current=true]:bg-primary-700 aria-[current=true]:text-white">{{ g.min }}-{{ g.max }}</a></li>
       {% endfor %}
     </ul>
   </fieldset>
@@ -105,15 +108,15 @@
   <fieldset>
     <legend class="font-medium">{% translate "Цена за занятие, ₸" %}</legend>
     <div class="mt-1 flex items-center gap-2">
-      <input type="number" min="0" name="price_min" value="{{ params.price_min|default_if_none:'' }}" aria-label="{% translate 'Цена от' %}" placeholder="{% translate 'от' %}" class="min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
-      <input type="number" min="0" name="price_max" value="{{ params.price_max|default_if_none:'' }}" aria-label="{% translate 'Цена до' %}" placeholder="{% translate 'до' %}" class="min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
+      <input type="number" min="0" name="price_min" value="{{ params.price_min|default_if_none:'' }}" aria-label="{% translate 'Цена от' %}" placeholder="{% translate 'от' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
+      <input type="number" min="0" name="price_max" value="{{ params.price_max|default_if_none:'' }}" aria-label="{% translate 'Цена до' %}" placeholder="{% translate 'до' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
     </div>
   </fieldset>
   <fieldset>
     <legend class="font-medium">{% translate "Цена в месяц, ₸" %}</legend>
     <div class="mt-1 flex items-center gap-2">
-      <input type="number" min="0" name="price_month_min" value="{{ params.price_month_min|default_if_none:'' }}" aria-label="{% translate 'Цена в месяц от' %}" placeholder="{% translate 'от' %}" class="min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
-      <input type="number" min="0" name="price_month_max" value="{{ params.price_month_max|default_if_none:'' }}" aria-label="{% translate 'Цена в месяц до' %}" placeholder="{% translate 'до' %}" class="min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
+      <input type="number" min="0" name="price_month_min" value="{{ params.price_month_min|default_if_none:'' }}" aria-label="{% translate 'Цена в месяц от' %}" placeholder="{% translate 'от' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
+      <input type="number" min="0" name="price_month_max" value="{{ params.price_month_max|default_if_none:'' }}" aria-label="{% translate 'Цена в месяц до' %}" placeholder="{% translate 'до' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
     </div>
   </fieldset>
   <label class="flex min-h-11 cursor-pointer items-center gap-3 lg:min-h-7 lg:gap-2"><input type="checkbox" name="free_only" value="1" class="size-5 shrink-0 accent-primary-700 lg:size-4"{% if params.free_only %} checked{% endif %}> <span>{% translate "Только бесплатные" %}</span></label>
@@ -138,7 +141,7 @@
 
   <div>
     <label for="f-exp" class="block font-medium">{% translate "Стаж от, лет" %}</label>
-    <input type="number" min="0" id="f-exp" name="experience_min" value="{{ params.experience_min|default_if_none:'' }}" class="mt-1 min-h-11 w-full rounded border border-slate-300 px-3 py-2 lg:min-h-0">
+    <input type="number" min="0" id="f-exp" name="experience_min" value="{{ params.experience_min|default_if_none:'' }}" class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
   </div>
 
   <fieldset>

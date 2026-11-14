@@ -3,28 +3,31 @@
 {% block title %}{{ BRAND_NAME }} - {% translate "каталог специалистов для детей" %}{% endblock %}
 {% block content %}
 <div class="mx-auto max-w-7xl space-y-12 px-4 py-6 sm:px-6 sm:py-10">
-  <section class="relative overflow-hidden rounded-2xl bg-brand-50 px-5 py-8 sm:px-8 sm:py-12">
-    <img src="{% static 'img/brand/mamapro-mark.png' %}" alt="" width="235" height="235" class="pointer-events-none absolute -right-10 -top-10 h-56 w-56 -rotate-12 opacity-[0.12] sm:-right-6 sm:-top-6 sm:h-72 sm:w-72" aria-hidden="true">
+  <section class="relative rounded-2xl bg-brand-50 px-5 py-8 sm:px-8 sm:py-12">
+    <div class="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl" aria-hidden="true">
+    <img src="{% static 'img/brand/mamapro-mark.png' %}" alt="" width="235" height="235" class="pointer-events-none absolute -right-10 -top-10 h-56 w-56 -rotate-12 opacity-[0.12] sm:-right-6 sm:-top-6 sm:h-72 sm:w-72">
+    </div>
     <div class="relative max-w-3xl">
       <h1 class="text-3xl font-bold leading-tight sm:text-4xl">{% translate "Найдите специалиста для ребёнка" %}</h1>
       <p class="mt-3 text-base text-slate-700 sm:text-lg">{% translate "Специалисты для детей с особенностями развития в Казахстане: понятные цены, адреса на карте и прозрачные уровни проверки документов." %}</p>
     </div>
-    <form method="get" action="{% url 'search:results' %}" class="relative mt-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_14rem_auto]">
-      <div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false">
+    <form method="get" action="{% url 'search:results' %}" x-data="{ open: false, links() { return [...$refs.list.querySelectorAll('a')] }, move(e, step) { const l = this.links(); if (!l.length) return; e.preventDefault(); this.open = true; const i = l.indexOf(document.activeElement); l[(i + step + l.length) % l.length].focus() } }" @click.outside="open = false" @keydown.escape="$refs.input.focus(); open = false" class="relative mt-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_14rem_auto]">
+      <div class="relative">
         <label for="home-q" class="sr-only">{% translate "Кого вы ищете" %}</label>
-        <input type="search" id="home-q" name="q" autocomplete="off" placeholder="{% translate 'Логопед, РАС, не говорит...' %}"
+        <input type="search" id="home-q" name="q" autocomplete="off" x-ref="input" role="combobox" aria-autocomplete="list" aria-controls="home-suggest" :aria-expanded="open"
+               @keydown.down="move($event, 1)" @keydown.up="move($event, -1)" placeholder="{% translate 'Логопед, РАС, не говорит...' %}"
                hx-get="{% url 'search:suggest' %}" hx-include="#home-city" @input="open = true" @focus="open = true" hx-trigger="input changed delay:250ms" hx-target="#home-suggest" hx-swap="innerHTML"
-               class="min-h-12 w-full rounded border border-slate-300 bg-white px-3 py-2">
-        <div id="home-suggest" x-show="open" class="absolute inset-x-0 top-full z-10 mt-1" aria-live="polite"></div>
+               class="min-h-12 w-full rounded border border-field bg-white px-3 py-2">
+        <div id="home-suggest" x-ref="list" x-show="open" @keydown.down="move($event, 1)" @keydown.up="move($event, -1)" class="absolute inset-x-0 top-full z-20 mt-1 max-h-[min(60vh,22rem)] overflow-y-auto rounded-lg" aria-live="polite"></div>
       </div>
       <div>
         <label for="home-city" class="sr-only">{% translate "Город" %}</label>
-        <select id="home-city" name="kato_id" class="min-h-12 w-full rounded border border-slate-300 bg-white px-3 py-2">
+        <select id="home-city" name="kato_id" @focus="open = false" class="min-h-12 w-full rounded border border-field bg-white px-3 py-2">
           <option value="">{% translate "Любой город" %}</option>
           {% for city in cities %}<option value="{{ city.id|unlocalize }}">{{ city|tr:"name" }}</option>{% endfor %}
         </select>
       </div>
-      <button type="submit" class="min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Найти" %}</button>
+      <button type="submit" @click="open = false" class="min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Найти" %}</button>
     </form>
   </section>
 
@@ -44,7 +47,7 @@
     <h2 class="text-xl font-semibold">{% translate "Города" %}</h2>
     <ul class="mt-4 flex flex-wrap gap-2">
       {% for city in cities %}
-      <li><a href="{% url 'search:results' %}?kato_id={{ city.id|unlocalize }}" class="inline-flex min-h-11 items-center rounded-full border border-slate-300 px-4 text-sm hover:border-primary-700">{{ city|tr:"name" }}</a></li>
+      <li><a href="{% url 'search:results' %}?kato_id={{ city.id|unlocalize }}" class="inline-flex min-h-11 items-center rounded-full border border-field px-4 text-sm hover:border-primary-700">{{ city|tr:"name" }}</a></li>
       {% endfor %}
     </ul>
   </section>

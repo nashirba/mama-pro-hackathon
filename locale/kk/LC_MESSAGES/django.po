@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 11:30+0500\n"
+"POT-Creation-Date: 2026-11-14 12:01+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,23 +63,23 @@ msgstr "Бетпе-бет"
 msgid "Выезд на дом"
 msgstr "Үйге шығу"
 
-#: apps/catalog/models/profile.py:23 templates/search/_card.html:22
+#: apps/catalog/models/profile.py:23
 msgid "Онлайн"
 msgstr "Онлайн"
 
-#: apps/catalog/models/profile.py:27 templates/core/home.html:56
+#: apps/catalog/models/profile.py:27 templates/core/home.html:59
 msgid "Личность подтверждена"
 msgstr "Жеке басы расталған"
 
-#: apps/catalog/models/profile.py:28 templates/core/home.html:57
+#: apps/catalog/models/profile.py:28 templates/core/home.html:60
 msgid "Образование подтверждено"
 msgstr "Білімі расталған"
 
-#: apps/catalog/models/profile.py:29 templates/core/home.html:58
+#: apps/catalog/models/profile.py:29 templates/core/home.html:61
 msgid "Квалификация подтверждена"
 msgstr "Біліктілігі расталған"
 
-#: apps/catalog/models/profile.py:30 templates/core/home.html:59
+#: apps/catalog/models/profile.py:30 templates/core/home.html:62
 msgid "Проверка на безопасность пройдена"
 msgstr "Қауіпсіздік тексерісінен өтті"
 
@@ -123,11 +123,11 @@ msgstr "Тегін қызметтің бағасы болмауы керек"
 msgid "Область"
 msgstr "Облыс"
 
-#: apps/geo/models.py:20 templates/core/home.html:21
+#: apps/geo/models.py:20 templates/core/home.html:24
 msgid "Город"
 msgstr "Қала"
 
-#: apps/geo/models.py:21 templates/search/_filters.html:57
+#: apps/geo/models.py:21 templates/search/_filters.html:60
 msgid "Район"
 msgstr "Аудан"
 
@@ -154,34 +154,34 @@ msgstr "Өтілі бойынша"
 
 #: apps/search/templatetags/search_tags.py:28
 #: templates/catalog/specialist_detail.html:21
-#: templates/catalog/specialist_detail.html:83
-#: templates/catalog/specialist_detail.html:112
-#: templates/catalog/specialist_detail.html:122 templates/search/_card.html:13
+#: templates/catalog/specialist_detail.html:81
+#: templates/catalog/specialist_detail.html:110
+#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:12
 msgid "бесплатно"
 msgstr "тегін"
 
 #: apps/search/templatetags/search_tags.py:29
 #: templates/catalog/specialist_detail.html:21
-#: templates/catalog/specialist_detail.html:112
-#: templates/catalog/specialist_detail.html:122 templates/search/_card.html:13
+#: templates/catalog/specialist_detail.html:110
+#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:12
 #, python-format
 msgid "от %(price)s ₸"
 msgstr "%(price)s ₸ бастап"
 
 #: apps/search/templatetags/search_tags.py:30
 #: templates/catalog/specialist_detail.html:21
-#: templates/catalog/specialist_detail.html:83
-#: templates/catalog/specialist_detail.html:112
-#: templates/catalog/specialist_detail.html:122 templates/search/_card.html:13
+#: templates/catalog/specialist_detail.html:81
+#: templates/catalog/specialist_detail.html:110
+#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:12
 msgid "цена по запросу"
 msgstr "бағасы сұраныс бойынша"
 
-#: apps/search/templatetags/search_tags.py:31 templates/search/_card.html:26
+#: apps/search/templatetags/search_tags.py:31 templates/search/_card.html:21
 msgid "Подробнее"
 msgstr "Толығырақ"
 
 #: apps/search/templatetags/search_tags.py:32
-#: templates/catalog/specialist_detail.html:101
+#: templates/catalog/specialist_detail.html:99
 msgid "Открыть в 2ГИС"
 msgstr "2ГИС-те ашу"
 
@@ -297,9 +297,17 @@ msgstr "Демо-нұсқада SMS жіберілмейді, кіру коды 
 msgid "Мы отправим код подтверждения в SMS. Пароль не нужен."
 msgstr "Растау кодын SMS арқылы жібереміз. Құпиясөз қажет емес."
 
-#: templates/accounts/phone_form.html:19
+#: templates/accounts/phone_form.html:16
+msgid "Например: +7 701 123 45 67"
+msgstr "Мысалы: +7 701 123 45 67"
+
+#: templates/accounts/phone_form.html:20
 msgid "Получить код"
 msgstr "Код алу"
+
+#: templates/base.html:14
+msgid "Перейти к содержанию"
+msgstr "Мазмұнға өту"
 
 #: templates/catalog/_badges.html:2 templates/catalog/_badges.html:9
 msgid "Демо: проверка не проводилась"
@@ -310,7 +318,7 @@ msgstr "Демо: тексеру жүргізілмеген"
 msgid "Проверено: %(n)s из %(total)s"
 msgstr "Тексерілген: %(n)s / %(total)s"
 
-#: templates/catalog/_badges.html:10 templates/search/_filters.html:145
+#: templates/catalog/_badges.html:10 templates/search/_filters.html:148
 msgid "демо"
 msgstr "демо"
 
@@ -336,28 +344,38 @@ msgstr "Навигация"
 msgid "Каталог специалистов"
 msgstr "Мамандар каталогы"
 
+#: templates/catalog/specialist_detail.html:23
+msgid "Стаж"
+msgstr "Өтілі"
+
 #: templates/catalog/specialist_detail.html:23 templates/search/_card.html:11
-msgid "Стаж, лет"
-msgstr "Өтілі, жыл"
+#, python-format
+msgid "Стаж %(n)s год"
+msgid_plural "Стаж %(n)s лет"
+msgstr[0] "%(n)s жыл тәжірибе"
+msgstr[1] "%(n)s жыл тәжірибе"
 
 #: templates/catalog/specialist_detail.html:24
-#: templates/catalog/specialist_detail.html:113
-msgid "Возраст детей, лет"
-msgstr "Балалардың жасы, жыл"
+msgid "Возраст детей"
+msgstr "Балалардың жасы"
+
+#: templates/catalog/specialist_detail.html:24
+#, python-format
+msgid "Дети %(min)s–%(max)s лет"
+msgstr "%(min)s–%(max)s жастағы балалар"
 
 #: templates/catalog/specialist_detail.html:25
 msgid "Языки"
 msgstr "Тілдер"
 
 #: templates/catalog/specialist_detail.html:26
-#: templates/catalog/specialist_detail.html:113
-#: templates/search/_filters.html:122
+#: templates/search/_filters.html:125
 msgid "Формат"
 msgstr "Формат"
 
 #: templates/catalog/specialist_detail.html:29
-#: templates/catalog/specialist_detail.html:114
-#: templates/catalog/specialist_detail.html:124
+#: templates/catalog/specialist_detail.html:111
+#: templates/catalog/specialist_detail.html:122
 msgid "Контакты в демо-версии недоступны"
 msgstr "Демо-нұсқада байланыс қолжетімсіз"
 
@@ -386,21 +404,21 @@ msgstr "Қызметтер мен бағалар"
 msgid "%(n)s мин"
 msgstr "%(n)s мин"
 
-#: templates/catalog/specialist_detail.html:83
+#: templates/catalog/specialist_detail.html:81
 #, python-format
 msgid "%(price)s ₸ за занятие"
 msgstr "сабақ үшін %(price)s ₸"
 
-#: templates/catalog/specialist_detail.html:84
+#: templates/catalog/specialist_detail.html:82
 #, python-format
 msgid "%(price)s ₸ в месяц"
 msgstr "айына %(price)s ₸"
 
-#: templates/catalog/specialist_detail.html:94
+#: templates/catalog/specialist_detail.html:92
 msgid "Адреса приёма"
 msgstr "Қабылдау мекенжайлары"
 
-#: templates/catalog/specialist_detail.html:102
+#: templates/catalog/specialist_detail.html:100
 msgid "Маршрут"
 msgstr "Бағыт"
 
@@ -476,11 +494,11 @@ msgstr ""
 msgid "каталог специалистов для детей"
 msgstr "балаларға арналған мамандар каталогы"
 
-#: templates/core/home.html:9
+#: templates/core/home.html:11
 msgid "Найдите специалиста для ребёнка"
 msgstr "Баланың маманын табыңыз"
 
-#: templates/core/home.html:10
+#: templates/core/home.html:12
 msgid ""
 "Специалисты для детей с особенностями развития в Казахстане: понятные цены, "
 "адреса на карте и прозрачные уровни проверки документов."
@@ -489,39 +507,39 @@ msgstr ""
 "түсінікті бағалар, картадағы мекенжайлар және құжаттарды тексерудің айқын "
 "деңгейлері."
 
-#: templates/core/home.html:14
+#: templates/core/home.html:16
 msgid "Кого вы ищете"
 msgstr "Кімді іздеп жүрсіз"
 
-#: templates/core/home.html:15 templates/search/_filters.html:7
+#: templates/core/home.html:18 templates/search/_filters.html:10
 msgid "Логопед, РАС, не говорит..."
 msgstr "Логопед, РАС, сөйлемейді..."
 
-#: templates/core/home.html:23
+#: templates/core/home.html:26
 msgid "Любой город"
 msgstr "Кез келген қала"
 
-#: templates/core/home.html:27
+#: templates/core/home.html:30
 msgid "Найти"
 msgstr "Іздеу"
 
-#: templates/core/home.html:32
+#: templates/core/home.html:35
 msgid "Популярные специализации"
 msgstr "Танымал мамандықтар"
 
-#: templates/core/home.html:37
+#: templates/core/home.html:40
 msgid "Специалистов"
 msgstr "Мамандар саны"
 
-#: templates/core/home.html:44
+#: templates/core/home.html:47
 msgid "Города"
 msgstr "Қалалар"
 
-#: templates/core/home.html:53
+#: templates/core/home.html:56
 msgid "Что значит проверенный специалист"
 msgstr "Тексерілген маман дегеніміз не"
 
-#: templates/core/home.html:54
+#: templates/core/home.html:57
 msgid ""
 "Мы показываем не общую галочку, а то, что именно проверено. Сырые документы "
 "не публикуются: видны только уровни проверки."
@@ -529,15 +547,15 @@ msgstr ""
 "Біз жалпы белгіні емес, нақты нені тексергенімізді көрсетеміз. Құжаттардың "
 "түпнұсқасы жарияланбайды: тек тексеру деңгейлері көрінеді."
 
-#: templates/core/home.html:64
+#: templates/core/home.html:67
 msgid "Вы специалист?"
 msgstr "Сіз маманысыз ба?"
 
-#: templates/core/home.html:65
+#: templates/core/home.html:68
 msgid "Расскажите о себе и своих услугах родителям, которые ищут помощь."
 msgstr "Көмек іздеген ата-аналарға өзіңіз және қызметтеріңіз туралы айтыңыз."
 
-#: templates/core/home.html:66
+#: templates/core/home.html:69
 msgid "Разместить профиль"
 msgstr "Профиль орналастыру"
 
@@ -553,7 +571,7 @@ msgstr "Барлық құрылғылардан шығу"
 msgid "Язык интерфейса"
 msgstr "Интерфейс тілі"
 
-#: templates/search/_card.html:23
+#: templates/search/_card.html:18
 #, python-format
 msgid "≈ %(distance)s км"
 msgstr "≈ %(distance)s км"
@@ -566,135 +584,139 @@ msgstr "Ештеңе табылмады"
 msgid "Попробуйте изменить условия поиска."
 msgstr "Іздеу шарттарын өзгертіп көріңіз."
 
-#: templates/search/_empty.html:6
-msgid "расширить фильтры"
-msgstr "сүзгілерді кеңейту"
+#: templates/search/_empty.html:7
+msgid "Показать онлайн-специалистов"
+msgstr "Онлайн мамандарды көрсету"
 
-#: templates/search/_empty.html:8
-msgid "включить онлайн-формат"
-msgstr "онлайн форматты қосу"
+#: templates/search/_empty.html:9
+msgid "Сбросить все фильтры"
+msgstr "Барлық сүзгілерді тазалау"
 
-#: templates/search/_filters.html:6
+#: templates/search/_filters.html:9
 msgid "Поиск"
 msgstr "Іздеу"
 
-#: templates/search/_filters.html:16 templates/search/_filters.html:28
+#: templates/search/_filters.html:19 templates/search/_filters.html:31
 msgid "Фильтры"
 msgstr "Сүзгілер"
 
-#: templates/search/_filters.html:29
+#: templates/search/_filters.html:32
 msgid "Закрыть"
 msgstr "Жабу"
 
-#: templates/search/_filters.html:36
+#: templates/search/_filters.html:39
 msgid "Рядом со мной"
 msgstr "Маған жақын"
 
-#: templates/search/_filters.html:37
+#: templates/search/_filters.html:40
 msgid "Не удалось определить местоположение"
 msgstr "Орналасқан жерді анықтау мүмкін болмады"
 
-#: templates/search/_filters.html:42
+#: templates/search/_filters.html:45
 msgid "Сортировка"
 msgstr "Сұрыптау"
 
-#: templates/search/_filters.html:45
+#: templates/search/_filters.html:48
 msgid "По расстоянию"
 msgstr "Қашықтығы бойынша"
 
-#: templates/search/_filters.html:50
+#: templates/search/_filters.html:53
 msgid "Город или область"
 msgstr "Қала немесе облыс"
 
-#: templates/search/_filters.html:52 templates/search/_filters.html:59
+#: templates/search/_filters.html:55 templates/search/_filters.html:62
 msgid "Любой"
 msgstr "Кез келген"
 
-#: templates/search/_filters.html:69
+#: templates/search/_filters.html:72
 msgid "Возраст ребёнка"
 msgstr "Баланың жасы"
 
-#: templates/search/_filters.html:71
+#: templates/search/_filters.html:74
 msgid "Возраст от"
 msgstr "Жасы (бастап)"
 
-#: templates/search/_filters.html:72 templates/search/_filters.html:108
-#: templates/search/_filters.html:115
+#: templates/search/_filters.html:75 templates/search/_filters.html:111
+#: templates/search/_filters.html:118
 msgid "от"
 msgstr "бастап"
 
-#: templates/search/_filters.html:73
+#: templates/search/_filters.html:76
 msgid "Возраст до"
 msgstr "Жасы (дейін)"
 
-#: templates/search/_filters.html:74 templates/search/_filters.html:109
-#: templates/search/_filters.html:116
+#: templates/search/_filters.html:77 templates/search/_filters.html:112
+#: templates/search/_filters.html:119
 msgid "до"
 msgstr "дейін"
 
-#: templates/search/_filters.html:88
+#: templates/search/_filters.html:91
 msgid "Специализация"
 msgstr "Мамандану"
 
-#: templates/search/_filters.html:97
+#: templates/search/_filters.html:100
 msgid "Особенности развития"
 msgstr "Даму ерекшеліктері"
 
-#: templates/search/_filters.html:106
+#: templates/search/_filters.html:109
 msgid "Цена за занятие, ₸"
 msgstr "Сабақ бағасы, ₸"
 
-#: templates/search/_filters.html:108
+#: templates/search/_filters.html:111
 msgid "Цена от"
 msgstr "Бағасы (бастап)"
 
-#: templates/search/_filters.html:109
+#: templates/search/_filters.html:112
 msgid "Цена до"
 msgstr "Бағасы (дейін)"
 
-#: templates/search/_filters.html:113
+#: templates/search/_filters.html:116
 msgid "Цена в месяц, ₸"
 msgstr "Айлық баға, ₸"
 
-#: templates/search/_filters.html:115
+#: templates/search/_filters.html:118
 msgid "Цена в месяц от"
 msgstr "Айлық баға (бастап)"
 
-#: templates/search/_filters.html:116
+#: templates/search/_filters.html:119
 msgid "Цена в месяц до"
 msgstr "Айлық баға (дейін)"
 
-#: templates/search/_filters.html:119
+#: templates/search/_filters.html:122
 msgid "Только бесплатные"
 msgstr "Тек тегін"
 
-#: templates/search/_filters.html:131
+#: templates/search/_filters.html:134
 msgid "Язык общения"
 msgstr "Қарым-қатынас тілі"
 
-#: templates/search/_filters.html:140
+#: templates/search/_filters.html:143
 msgid "Стаж от, лет"
 msgstr "Өтілі (бастап), жыл"
 
-#: templates/search/_filters.html:145
+#: templates/search/_filters.html:148
 msgid "Подтверждённые документы"
 msgstr "Расталған құжаттар"
 
-#: templates/search/_filters.html:154 templates/search/_suggest.html:1
+#: templates/search/_filters.html:157 templates/search/_suggest.html:1
 msgid "Метод"
 msgstr "Әдіс"
 
-#: templates/search/_filters.html:164
+#: templates/search/_filters.html:167
 msgid "Показать"
 msgstr "Көрсету"
 
-#: templates/search/_filters.html:165
+#: templates/search/_filters.html:168
 msgid "Сбросить"
 msgstr "Тазалау"
 
 #: templates/search/_map.html:1
 msgid "Карта специалистов"
 msgstr "Мамандар картасы"
+
+#: templates/search/_map.html:4 templates/search/_view_toggle.html:3
+msgid "Список"
+msgstr "Тізім"
 
 #: templates/search/_results_partial.html:6
 msgid "Демо-версия: данные учебные, проверка документов не проводилась."
@@ -728,10 +750,10 @@ msgstr "Даму ерекшелігі"
 msgid "Вид результатов"
 msgstr "Нәтижелерді көрсету түрі"
 
-#: templates/search/_view_toggle.html:3
-msgid "Список"
-msgstr "Тізім"
-
 #: templates/search/_view_toggle.html:5
 msgid "Карта"
 msgstr "Карта"
+
+#: templates/search/results.html:5
+msgid "К результатам"
+msgstr "Нәтижелерге өту"

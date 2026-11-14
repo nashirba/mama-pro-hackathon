@@ -1,8 +1,7 @@
 {% load i18n catalog_tags %}{% if compact %}{% with levels=profile.demo_verification_levels %}{% if levels %}
-<p class="flex items-center gap-1.5 text-xs text-primary-800"{% if IS_DEMO %} title="{% translate 'Демо: проверка не проводилась' %}"{% endif %}>
-  <svg class="size-4 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>
-  <span>{% blocktranslate with n=levels|length total=4 %}Проверено: {{ n }} из {{ total }}{% endblocktranslate %}</span>
-  <span class="sr-only">: {% for level in levels %}{{ level|verification_label }}{% if not forloop.last %}; {% endif %}{% endfor %}</span>
+<p class="flex items-start gap-1.5 text-xs text-primary-800"{% if IS_DEMO %} title="{% translate 'Демо: проверка не проводилась' %}"{% endif %}>
+  <svg class="mt-0.5 size-4 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>
+  <span>{% for level in levels %}{{ level|verification_label }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
 </p>
 {% endif %}{% endwith %}{% else %}<ul class="flex flex-wrap gap-1 text-xs">
   {% for level in profile.demo_verification_levels %}

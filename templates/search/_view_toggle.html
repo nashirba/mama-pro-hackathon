@@ -1,6 +1,6 @@
-{% load i18n %}<div class="inline-flex overflow-hidden rounded border border-slate-300 text-sm" role="group" aria-label="{% translate 'Вид результатов' %}">
+{% load i18n %}<div class="inline-flex overflow-hidden rounded border border-field text-sm" role="group" aria-label="{% translate 'Вид результатов' %}">
   <button type="button" @click="view = 'list'" :aria-pressed="view === 'list'"
           class="inline-flex min-h-11 items-center px-4 font-medium text-slate-700 aria-pressed:bg-primary-700 aria-pressed:text-white">{% translate "Список" %}</button>
   <button type="button" @click="view = 'map'; $nextTick(() => $el.closest('[data-view-root]').querySelector('#map').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }))" :aria-pressed="view === 'map'"
-          class="inline-flex min-h-11 items-center border-l border-slate-300 px-4 font-medium text-slate-700 aria-pressed:bg-primary-700 aria-pressed:text-white">{% translate "Карта" %}</button>
+          class="inline-flex min-h-11 items-center border-l border-field px-4 font-medium text-slate-700 aria-pressed:bg-primary-700 aria-pressed:text-white">{% translate "Карта" %}</button>
 </div>

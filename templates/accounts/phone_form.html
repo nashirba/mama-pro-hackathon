@@ -11,8 +11,9 @@
     <div>
       <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium">{{ form.phone.label }}</label>
       <input type="tel" name="phone" id="{{ form.phone.id_for_label }}" value="{{ form.phone.value|default:'' }}"
-             inputmode="tel" autocomplete="tel" placeholder="+7 701 123 45 67" required
-             class="mt-1 min-h-12 w-full rounded border border-slate-300 px-3 py-2">
+             inputmode="tel" autocomplete="tel" placeholder="+7 701 123 45 67" required autofocus aria-describedby="phone-hint"
+             class="mt-1 min-h-12 w-full rounded border border-field px-3 py-2">
+      <p id="phone-hint" class="mt-1 text-sm text-slate-600">{% translate "Например: +7 701 123 45 67" %}</p>
       {% for error in form.phone.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
     </div>
     <button type="submit" class="min-h-12 w-full rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800">

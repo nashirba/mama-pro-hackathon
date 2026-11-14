@@ -11,8 +11,10 @@
   {% block extra_head %}{% endblock %}
 </head>
 <body class="min-h-full flex flex-col bg-white font-sans text-slate-900 antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-white focus:px-4 focus:py-3 focus:shadow">{% translate "Перейти к содержанию" %}</a>
+  {% block skip_links %}{% endblock %}
   {% include "partials/header.html" %}
-  <main class="flex-1">
+  <main id="main" tabindex="-1" class="flex-1 focus:outline-none">
     {% block content %}{% endblock %}
   </main>
   {% include "partials/footer.html" %}

@@ -74,7 +74,9 @@ def test_full_page_has_results_container(client, catalog_fixture):
 def test_empty_state(client, catalog_fixture):
     r = client.get("/ru/specialists/?price_max=100")
     html = r.content.decode()
-    assert r.status_code == 200 and "Ничего не нашлось" in html and "formats=online" in html
+    assert r.status_code == 200 and "Ничего не нашлось" in html and "formats=online" not in html  # no city: no way to widen
+    html = client.get("/ru/specialists/?price_max=100&kato_id=1").content.decode()
+    assert "formats=online" in html
 
 
 def test_landing_title_type(client, catalog_fixture):
@@ -93,11 +95,18 @@ def test_landing_title_keeps_abbreviations_and_lowercases_kk_words(client, catal
 
 
 def test_landing_title_kk_without_kk_row_is_all_ru(client, catalog_fixture):
-    assert not SpecialistType.objects.get(slug="zpr-teacher").has_translation("kk")
-    html = client.get("/kk/almaty/zpr-teacher/").content.decode()
-    assert "Педагоги по работе с детьми с ЗПР в Алматы" in html
-    assert not DevelopmentalCondition.objects.get(slug="sensory-processing").has_translation("kk")
-    assert "Специалисты по сенсорным особенностям в Алматы" in client.get("/kk/almaty/sensory-processing/").content.decode()
+    # the reference data now has KZ names for every type and condition, so make rows that only have RU
+    only_ru_type = SpecialistType.objects.language("ru").create(
+        slug="only-ru-type", name="Тестовый тип", name_plural="Тестовые типы", landing_name="Тестовые типы"
+    )
+    assert not only_ru_type.has_translation("kk")
+    html = client.get("/kk/almaty/only-ru-type/").content.decode()
+    assert "Тестовые типы в Алматы" in html
+    only_ru_condition = DevelopmentalCondition.objects.language("ru").create(
+        slug="only-ru-condition", name="Тестовая особенность", landing_name="Специалисты по тестовой особенности"
+    )
+    assert not only_ru_condition.has_translation("kk")
+    assert "Специалисты по тестовой особенности в Алматы" in client.get("/kk/almaty/only-ru-condition/").content.decode()
 
 
 def test_landing_title_kk_for_city_without_kk_locative_is_all_ru(client, catalog_fixture):
@@ -216,7 +225,7 @@ def test_age_quick_group_has_href_and_client_handler(client, catalog_fixture):
 
 
 def test_links_carry_no_empty_params(client, catalog_fixture):
-    html = client.get("/ru/specialists/?q=&near=&price_min=&price_max=100&formats=in_person").content.decode()
+    html = client.get("/ru/specialists/?q=&near=&price_min=&price_max=100&formats=in_person&kato_id=1").content.decode()
     hrefs = re.findall(r'href="(/ru/specialists/\?[^"]*)"', html)
     assert hrefs
     for href in hrefs:
@@ -228,9 +237,9 @@ def test_demo_card_badges_and_filter_legend_marked_as_demo(client, catalog_fixtu
     settings.DEPLOY_PROFILE = "demo"
     html = client.get("/ru/specialists/").content.decode()
     card = card_html(html, "ivanova-logoped")
-    badges = re.findall(r'<p class="flex items-center gap-1.5 text-xs text-primary-800"[^>]*>.*?</p>', card, re.S)
+    badges = re.findall(r'<p class="flex items-start gap-1.5 text-xs text-primary-800"[^>]*>.*?</p>', card, re.S)
     # the demo mark is stated once above the list, the one-line badge summary keeps only the tooltip
-    assert badges and all("(демо)" not in b and "Демо: проверка не проводилась" in b and "Проверено:" in b for b in badges)
+    assert badges and all("(демо)" not in b and "Демо: проверка не проводилась" in b for b in badges)
     assert html.count("data-demo-notice") == 1
     assert "Подтверждённые документы (демо)" in html
 

@@ -2,6 +2,7 @@
 {% load i18n static %}
 {% block title %}{% if heading %}{{ heading }}{% else %}{% translate "Каталог специалистов" %}{% endif %} - {{ BRAND_NAME }}{% endblock %}
 {% block extra_head %}{% include "partials/map_assets.html" %}<script src="{% static 'js/map/results.js' %}" defer></script><noscript><style>[data-panel-cloak]{display:block!important}</style></noscript>{% endblock %}
+{% block skip_links %}<a href="#results" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-16 focus:z-[60] focus:rounded focus:bg-white focus:px-4 focus:py-3 focus:shadow">{% translate "К результатам" %}</a>{% endblock %}
 {% block content %}
 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6">
   {% include "search/_heading.html" %}
@@ -10,7 +11,7 @@
     <div class="min-w-0">
       <div class="mb-4 hidden lg:flex xl:hidden">{% include "search/_view_toggle.html" %}</div>
       <div class="grid items-start gap-6 xl:grid-cols-2">
-        <section id="results" :class="view === 'map' ? 'max-xl:hidden' : ''">{% include "search/_results_partial.html" %}</section>
+        <section id="results" tabindex="-1" class="focus:outline-none" :class="view === 'map' ? 'max-xl:hidden' : ''">{% include "search/_results_partial.html" %}</section>
         {% include "search/_map.html" %}
       </div>
     </div>

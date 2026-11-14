@@ -6,7 +6,7 @@
   <h1 class="text-2xl font-bold">{% translate "Введите код из SMS" %}</h1>
   <p class="mt-2 text-sm text-slate-600">
     {% blocktranslate %}Код отправлен на номер {{ phone }}.{% endblocktranslate %}
-    <a href="{% url 'accounts:login' %}" class="inline-block py-2 text-primary-700 underline">{% translate "Изменить номер или отправить код заново" %}</a>
+    <a href="{% url 'accounts:login' %}" class="inline-flex min-h-11 items-center text-primary-700 underline">{% translate "Изменить номер или отправить код заново" %}</a>
   </p>
   {% if IS_DEMO %}
   <p data-demo-code="{{ demo_otp_code }}" class="mt-4 rounded bg-amber-50 px-3 py-2 text-sm text-amber-900">
@@ -20,7 +20,7 @@
       <label for="{{ form.code.id_for_label }}" class="block text-sm font-medium">{{ form.code.label }}</label>
       <input type="text" name="code" id="{{ form.code.id_for_label }}" inputmode="numeric"
              autocomplete="one-time-code" required autofocus
-             class="mt-1 min-h-12 w-full rounded border border-slate-300 px-3 py-2 tracking-widest">
+             class="mt-1 min-h-12 w-full rounded border border-field px-3 py-2 tracking-widest">
       {% for error in form.code.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
     </div>
     {% if is_new %}{% include "accounts/_consent_fields.html" %}{% endif %}

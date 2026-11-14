@@ -114,7 +114,11 @@ def _render_results(request, qd: QueryDict, heading: str | None = None, extra: d
         for lo, hi in AGE_GROUPS
     ]
     formats = qd.getlist("formats")
-    online_url = None if "online" in formats else _url(results_path, _query_string(qd, formats=[*formats, "online"]))
+    online_url = (
+        None
+        if "online" in formats or params.kato_id is None
+        else _url(results_path, _query_string(qd, formats=[*formats, "online"]))
+    )
     page_query = _query_string(qd)
     sep = "&" if page_query else ""
 

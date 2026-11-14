@@ -56,6 +56,9 @@
   --color-brand: #e72f49;
   --color-brand-50: #fdf1f3;
   --color-brand-100: #fbe0e4;
+
+  /* boundary of form controls: 3:1 on white (WCAG 1.4.11) */
+  --color-field: #7b8798;
 }
 
 @layer base {
@@ -83,4 +86,27 @@
 
 [x-cloak] {
   display: none !important;
+}
+
+/* htmx request in flight: dim the stale results (delayed so fast responses do not flicker) */
+#results.htmx-request {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 150ms 120ms;
+}
+#filters.htmx-request button[type="submit"] {
+  opacity: 0.6;
+}
+@media (prefers-reduced-motion: reduce) {
+  #results.htmx-request {
+    transition: none;
+  }
+}
+
+/* maplibre-gl.css sets 12px Helvetica on the map; keep the site font for everything inside */
+.maplibregl-map.maplibregl-map,
+.maplibregl-map .maplibregl-popup-content {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.4;
 }

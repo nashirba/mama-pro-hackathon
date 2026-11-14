@@ -10,9 +10,9 @@
 </div>
 {% if prev_url or next_url %}
 <nav class="mt-6 flex items-center justify-between text-sm" aria-label="{% translate 'Страницы' %}">
-  {% if prev_url %}<a href="{{ prev_url }}" rel="prev" class="inline-flex min-h-11 items-center rounded border border-slate-300 px-4 font-medium text-primary-700 hover:bg-primary-50">{% translate "Назад" %}</a>{% else %}<span></span>{% endif %}
+  {% if prev_url %}<a href="{{ prev_url }}" rel="prev" class="inline-flex min-h-11 items-center rounded border border-field px-4 font-medium text-primary-700 hover:bg-primary-50">{% translate "Назад" %}</a>{% else %}<span></span>{% endif %}
   <span class="text-slate-600">{{ result.page }} / {{ result.pages }}</span>
-  {% if next_url %}<a href="{{ next_url }}" rel="next" class="inline-flex min-h-11 items-center rounded border border-slate-300 px-4 font-medium text-primary-700 hover:bg-primary-50">{% translate "Вперёд" %}</a>{% else %}<span></span>{% endif %}
+  {% if next_url %}<a href="{{ next_url }}" rel="next" class="inline-flex min-h-11 items-center rounded border border-field px-4 font-medium text-primary-700 hover:bg-primary-50">{% translate "Вперёд" %}</a>{% else %}<span></span>{% endif %}
 </nav>
 {% endif %}
 {% else %}

@@ -7,16 +7,10 @@
       <p class="text-sm text-slate-600">{% for t in s.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     </div>
     {% include "catalog/_badges.html" with profile=s compact=True %}
-    <p class="text-sm text-slate-700">
-      {% translate "Стаж, лет" %}: {{ s.experience_years }}
-      <span class="mx-1 text-slate-300">|</span>
-      <span class="font-semibold">{% if card.price_from == 0 %}{% translate "бесплатно" %}{% elif card.price_from %}{% blocktranslate with price=card.price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</span>
-    </p>
-    <p class="text-sm text-slate-600">
-      {% for f in card|card_formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}
-      <span class="mx-1 text-slate-300">|</span>
-      {% for lang in s.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
-    </p>
+    <p class="text-sm font-semibold text-slate-900">{% if card.price_from == 0 %}{% translate "бесплатно" %}{% elif card.price_from %}{% blocktranslate with price=card.price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>
+    <p class="text-sm text-slate-700">{% blocktranslate count n=s.experience_years %}Стаж {{ n }} год{% plural %}Стаж {{ n }} лет{% endblocktranslate %}</p>
+    <p class="text-sm text-slate-600">{% for f in card|card_formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    <p class="text-sm text-slate-600">{% for lang in s.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     <p class="flex flex-wrap items-center gap-2 text-sm text-slate-600">
       {% if card.nearest_district_name %}<span>{% if card.nearest_city_name and card.nearest_city_name not in h %}{{ card.nearest_city_name }}, {% endif %}{{ card.nearest_district_name }}</span>{% endif %}
       {% if card.distance_m is not None %}<span>{% blocktranslate with distance=card.distance_m|km %}≈ {{ distance }} км{% endblocktranslate %}</span>{% endif %}

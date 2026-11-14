@@ -9,7 +9,7 @@ def test_home_has_search_and_popular_types(client, catalog_fixture):
 
 def test_home_suggest_dropdown_closes_and_keeps_city(client, catalog_fixture):
     html = client.get("/ru/").content.decode()
-    assert 'x-data="{ open: false }"' in html and '@click.outside="open = false"' in html and '@keydown.escape="open = false"' in html
+    assert 'x-data="{ open: false,' in html and 'role="combobox"' in html and '@click.outside="open = false"' in html and '@keydown.escape="$refs.input.focus(); open = false"' in html
     assert '@input="open = true"' in html and '@focus="open = true"' in html and 'x-show="open"' in html
     assert 'hx-include="#home-city"' in html and 'id="home-city"' in html
 

@@ -5,7 +5,7 @@ from django.core.management import call_command
 
 from apps.accounts.models import User
 from apps.catalog.models import DevelopmentalCondition, SpecialistProfile
-from apps.catalog.visibility import catalog_visible_specialists
+from apps.catalog.visibility import catalog_visible_profiles
 from apps.community.models import Comment, Like, Post
 from apps.community.pii import looks_sensitive
 from apps.community.services import add_comment, file_complaint, save_post, toggle_like
@@ -40,7 +40,7 @@ def test_seed_community_idempotent(db):
 def test_seed_reviews_only_visible_specialists_and_unique(seeded):
     reviews = Post.objects.filter(kind="review")
     assert reviews.exists()
-    visible = set(catalog_visible_specialists().values_list("pk", flat=True))
+    visible = set(catalog_visible_profiles().values_list("pk", flat=True))
     pairs = list(reviews.values_list("author_id", "specialist_id"))
     assert {s for _, s in pairs} <= visible
     assert len(pairs) == len(set(pairs))
@@ -181,3 +181,17 @@ def test_seed_skips_visible_non_seed_specialists(db):
 def test_seed_parents_have_full_name(seeded):
     parent = User.objects.filter(phone__startswith=PARENT_PHONE_PREFIX).first()
     assert parent.has_full_name
+
+
+def test_seed_reviews_have_ratings_and_nannies_are_reviewed(seeded):
+    reviews = Post.objects.filter(kind="review")
+    assert not reviews.filter(rating__isnull=True).exists()
+    assert set(reviews.values_list("rating", flat=True)) <= {1, 2, 3, 4, 5}
+    assert reviews.filter(specialist__category="nanny").count() == len(load_json("community_ru.json")["nanny_reviews"])
+
+
+def test_reseed_backfills_missing_ratings(db):
+    call_command("seed_demo", specialists=10, seed=1)
+    Post.objects.filter(kind="review", specialist__category="specialist").update(rating=None)
+    call_command("seed_demo", specialists=10, seed=1)
+    assert not Post.objects.filter(kind="review", rating__isnull=True).exists()

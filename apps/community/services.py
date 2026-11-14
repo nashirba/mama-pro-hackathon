@@ -14,7 +14,7 @@ def set_image(post: Post, upload: tuple[bytes, str] | None, *, remove: bool = Fa
         PostImage.objects.filter(post=post).delete()
 
 
-POST_EDIT_FIELDS = ["body", "condition", "city", "updated_at"]
+POST_EDIT_FIELDS = ["body", "condition", "city", "rating", "updated_at"]
 
 
 @transaction.atomic
@@ -32,7 +32,7 @@ def save_post(
 
 
 def save_post_edit(post: Post, upload: tuple[bytes, str] | None = None, *, remove_image: bool = False) -> Post:
-    """Persist an author's edit: only the editable fields, never `is_hidden`, `is_deleted`, `kind` or `specialist`."""
+    """Persist an author's edit: only the editable fields, never `is_hidden`, `is_deleted`, `kind` or `specialist` (a review's rating is editable)."""
     return save_post(post, upload, remove_image=remove_image, update_fields=POST_EDIT_FIELDS)
 
 

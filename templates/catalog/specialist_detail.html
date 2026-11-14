@@ -13,6 +13,7 @@
     {% include "catalog/_photo.html" with size_class="h-16 w-16 text-2xl sm:h-24 sm:w-24 sm:text-4xl" %}
     <div class="min-w-0 flex-1 space-y-2">
       <h1 class="text-2xl font-bold">{{ profile.display_name }}</h1>
+      <p>{% include "catalog/_rating.html" with href="#reviews" %}</p>
       <p class="text-slate-600">{% for t in profile.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
       {% include "catalog/_badges.html" %}
       {% include "catalog/_detail_mobile_contacts.html" %}
@@ -81,17 +82,7 @@
     </ul>
   </section>
 
-  {% if community_reviews %}
-  <section id="community-reviews" class="scroll-mt-4">
-    <div class="flex items-baseline justify-between gap-3">
-      <h2 class="text-lg font-semibold">{% translate "Отзывы в сообществе" %}</h2>
-      <a href="{% url 'community:feed' %}?kind=review&amp;specialist={{ profile.pk|unlocalize }}" class="inline-flex min-h-11 items-center px-2 font-medium text-primary-700 hover:underline">{% translate "Все" %}</a>
-    </div>
-    <div class="mt-2 space-y-3">
-      {% for post in community_reviews %}{% include "community/_post_card.html" %}{% endfor %}
-    </div>
-  </section>
-  {% endif %}
+  {% include "catalog/_reviews.html" %}
 
   {% if addresses %}
   <section id="addresses" class="scroll-mt-4">

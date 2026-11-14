@@ -1,0 +1,21 @@
+{% load i18n l10n %}<section id="reviews" class="scroll-mt-4">
+  <div class="flex flex-wrap items-baseline justify-between gap-3">
+    <h2 class="text-lg font-semibold">{% translate "Отзывы" %}</h2>
+    {% include "catalog/_rating.html" %}
+  </div>
+  {% if not user.is_authenticated %}
+  <a href="{% url 'accounts:login' %}?next={{ new_review_url|urlencode }}" class="mt-3 inline-flex min-h-11 items-center rounded border-2 border-primary-700 px-4 font-semibold text-primary-800 hover:bg-primary-50">{% translate "Оставить отзыв" %}</a>
+  {% elif user.is_parent %}
+  <a href="{{ new_review_url }}" class="mt-3 inline-flex min-h-11 items-center rounded border-2 border-primary-700 px-4 font-semibold text-primary-800 hover:bg-primary-50">{% translate "Оставить отзыв" %}</a>
+  {% endif %}
+  {% if community_reviews %}
+  <div class="mt-3 space-y-3">
+    {% for post in community_reviews %}{% include "community/_post_card.html" %}{% endfor %}
+  </div>
+  {% if rating.count > community_reviews|length %}
+  <a href="{% url 'community:feed' %}?kind=review&amp;specialist={{ profile.pk|unlocalize }}" class="mt-2 inline-flex min-h-11 items-center font-medium text-primary-700 hover:underline">{% translate "Все отзывы" %}</a>
+  {% endif %}
+  {% else %}
+  <p class="mt-2 text-slate-600">{% translate "Отзывов пока нет. Отзыв может оставить мама, зарегистрированная на сайте." %}</p>
+  {% endif %}
+</section>

@@ -1,0 +1,6 @@
+{% load i18n %}{# `rating` is apps.community.ratings.Rating; `href` optionally links the summary to the reviews. #}{% if rating.count %}<span class="inline-flex items-center gap-1 text-sm text-slate-700" data-rating="{{ rating.average|stringformat:'.1f' }}">
+  <svg class="size-4 shrink-0 text-amber-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z"/></svg>
+  <span class="font-semibold text-slate-900">{{ rating.average|floatformat:1 }}</span>
+  <span>·</span>
+  {% if href %}<a href="{{ href }}" class="relative z-10 hover:underline">{% endif %}{% blocktranslate count n=rating.count %}{{ n }} отзыв{% plural %}{{ n }} отзывов{% endblocktranslate %}{% if href %}</a>{% endif %}
+</span>{% else %}<span class="text-sm text-slate-500" data-rating="">{% translate "Нет отзывов" %}</span>{% endif %}

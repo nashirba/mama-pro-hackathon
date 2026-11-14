@@ -25,7 +25,7 @@ from django.http import QueryDict
 from django.shortcuts import get_object_or_404
 
 from apps.catalog.models import SpecialistProfile
-from apps.catalog.visibility import specialist_visible_exists
+from apps.catalog.visibility import profile_visible_exists, specialist_visible_exists
 from apps.core.text import normalize_kk
 from apps.search.query import expand_conditions
 
@@ -120,7 +120,7 @@ def _cards(qs: QuerySet[Post], viewer) -> QuerySet[Post]:
         with_counts(qs, viewer)
         .annotate(
             author_specialist_visible=specialist_visible_exists("author__specialist_profile__pk"),
-            review_specialist_visible=specialist_visible_exists("specialist_id"),
+            review_specialist_visible=profile_visible_exists("specialist_id"),
         )
         .select_related("author__specialist_profile", "condition", "city", "specialist")
         .prefetch_related("condition__translations", "city__translations")

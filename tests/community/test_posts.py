@@ -82,7 +82,9 @@ def test_create_review_requires_visible_specialist(client, member, catalog_fixtu
     assert response.status_code == 200 and not Post.objects.exists()
     visible = catalog_fixture.specialists["ivanova-logoped"]
     response = client.post(NEW, {"kind": "review", "body": "Хороший", "specialist": visible.pk})
-    assert response.status_code == 302 and Post.objects.get().specialist == visible
+    assert response.status_code == 200 and "Поставьте оценку от 1 до 5" in _html(response)
+    response = client.post(NEW, {"kind": "review", "body": "Хороший", "specialist": visible.pk, "rating": "4"})
+    assert response.status_code == 302 and Post.objects.get().specialist == visible and Post.objects.get().rating == 4
 
 
 def test_specialist_cannot_choose_review(client, catalog_fixture):
@@ -96,7 +98,7 @@ def test_specialist_cannot_choose_review(client, catalog_fixture):
 def test_second_review_redirects_to_edit_existing(client, member, catalog_fixture):
     visible = catalog_fixture.specialists["ivanova-logoped"]
     first = PostFactory(author=member, kind=Post.Kind.REVIEW, specialist=visible)
-    response = client.post(NEW, {"kind": "review", "body": "Ещё раз", "specialist": visible.pk}, follow=True)
+    response = client.post(NEW, {"kind": "review", "body": "Ещё раз", "specialist": visible.pk, "rating": "5"}, follow=True)
     assert response.redirect_chain[-1][0] == reverse("community:edit", args=[first.pk])
     assert "уже писали отзыв" in _html(response)
     assert Post.objects.count() == 1
@@ -158,13 +160,14 @@ def test_image_404_without_photo(client):
 
 def test_edit_keeps_kind_specialist_and_hidden(client, member, catalog_fixture):
     visible = catalog_fixture.specialists["ivanova-logoped"]
-    post = PostFactory(author=member, kind=Post.Kind.REVIEW, specialist=visible, is_hidden=True)
+    post = PostFactory(author=member, kind=Post.Kind.REVIEW, specialist=visible, is_hidden=True, rating=3)
     page = client.get(reverse("community:edit", args=[post.pk]))
     assert page.status_code == 200 and "Скрыто модератором" in _html(page)
-    response = client.post(reverse("community:edit", args=[post.pk]), {"kind": "story", "body": "Новый текст"})
+    response = client.post(reverse("community:edit", args=[post.pk]), {"kind": "story", "body": "Новый текст", "rating": "5"})
     assert response.status_code == 302
     post.refresh_from_db()
     assert post.body == "Новый текст" and post.kind == Post.Kind.REVIEW and post.specialist == visible and post.is_hidden
+    assert post.rating == 5
 
 
 def test_edit_replaces_and_removes_image(client, member):
@@ -257,7 +260,7 @@ def test_review_race_integrity_error_redirects_to_existing(client, member, catal
         return real_save(post, *args, **kwargs)
 
     monkeypatch.setattr(views, "save_post", racing_save)
-    response = client.post(NEW, {"kind": "review", "body": "Гонка", "specialist": visible.pk})
+    response = client.post(NEW, {"kind": "review", "body": "Гонка", "specialist": visible.pk, "rating": "4"})
     assert response.status_code == 302
     assert response["Location"] == reverse("community:edit", args=[competing["post"].pk])
     assert Post.objects.count() == 1

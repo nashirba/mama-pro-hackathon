@@ -10,7 +10,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from apps.catalog.models import DevelopmentalCondition
-from apps.catalog.visibility import catalog_visible_specialists
+from apps.catalog.visibility import catalog_visible_profiles
 from apps.geo.models import KatoNode
 
 from .access import is_safe_url, member_required
@@ -80,7 +80,7 @@ def feed_view(request):
         # The fragment URL is not a page to come back to: like buttons fall back to the post page.
         return render(request, "community/_feed_page.html", {**context, "fragment": True})
 
-    specialist = catalog_visible_specialists().filter(pk=params.specialist_id).first() if params.specialist_id else None
+    specialist = catalog_visible_profiles().filter(pk=params.specialist_id).first() if params.specialist_id else None
     conditions = sorted(DevelopmentalCondition.objects.prefetch_related("translations"), key=lambda c: c.name)
     cities = sorted(KatoNode.objects.filter(level=KatoNode.Level.CITY).prefetch_related("translations"), key=lambda c: c.name)
     context.update(
@@ -135,7 +135,7 @@ def _form_context(form, *, post=None) -> dict:
     selected = None
     if post is None:
         raw = str(form["specialist"].value() or "")
-        selected = catalog_visible_specialists().filter(pk=raw).first() if raw.isdigit() else None
+        selected = catalog_visible_profiles().filter(pk=raw).first() if raw.isdigit() else None
     return {
         "form": form,
         "post": post,
@@ -172,7 +172,7 @@ def new(request):
                 return _already_reviewed(request, existing)
             return redirect("community:post", pk=post.pk)
     else:
-        form = PostForm(user=user, initial={"kind": request.GET.get("kind")})
+        form = PostForm(user=user, initial={"kind": request.GET.get("kind"), "specialist": request.GET.get("specialist")})
     return render(request, "community/post_form.html", _form_context(form))
 
 
@@ -319,7 +319,7 @@ def complain(request, target: str, pk: int):
 
 def specialist_options(request):
     q = (request.GET.get("q") or "").strip()
-    visible = catalog_visible_specialists()
+    visible = catalog_visible_profiles()
     specialists = list(visible.filter(display_name__icontains=q).order_by("display_name")[:10]) if q else []
     raw = request.GET.get("specialist", "")
     selected = visible.filter(pk=raw).first() if raw.isdigit() else None

@@ -12,6 +12,7 @@
     {% include "catalog/_photo.html" with size_class="h-16 w-16 text-2xl sm:h-24 sm:w-24 sm:text-4xl" %}
     <div class="min-w-0 flex-1 space-y-2">
       <h1 class="text-2xl font-bold">{{ profile.display_name }}</h1>
+      <p>{% include "catalog/_rating.html" with href="#reviews" %}</p>
       <p class="text-slate-600">{% translate "Няня для ребёнка с особенностями развития" %}</p>
       <ul class="flex flex-wrap gap-1 text-xs font-medium text-primary-800">
         <li class="inline-flex items-center gap-1 rounded-md bg-primary-50 px-2 py-0.5"><svg class="size-3.5 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>{% translate "Первая помощь" %}</li>
@@ -75,6 +76,8 @@
       {% if areas %}<div class="flex items-baseline justify-between gap-4 px-4 py-3"><dt class="text-slate-700">{% translate "Район выезда" %}</dt><dd class="text-right">{% for area in areas %}{% with city=area.city %}{% if city and city.pk != area.pk %}{{ city.name }}, {% endif %}{% endwith %}{{ area.name }}{% if not forloop.last %}; {% endif %}{% endfor %}</dd></div>{% endif %}
     </dl>
   </section>
+
+  {% include "catalog/_reviews.html" %}
 
   <p data-nanny-disclaimer class="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">{% translate "Няня не проводит коррекционных занятий и не ставит диагнозов. Оплата - напрямую няне." %}</p>
  </div>

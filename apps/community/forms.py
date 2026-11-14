@@ -10,11 +10,10 @@ from PIL import Image, UnidentifiedImageError
 
 from apps.accounts.models import User
 from apps.catalog.models import DevelopmentalCondition
-from apps.catalog.visibility import catalog_visible_specialists
+from apps.catalog.visibility import catalog_visible_profiles
 from apps.geo.models import KatoNode
 
-from .models import COMMENT_BODY_MAX, Complaint, Post
-from .names import is_specialist
+from .models import COMMENT_BODY_MAX, RATING_MAX, RATING_MIN, Complaint, Post
 from .pii import looks_sensitive
 
 NICKNAME_RE = re.compile(r"^[\w ]+$")
@@ -52,6 +51,16 @@ class NicknameForm(forms.Form):
 # Phone cameras write multi-picture JPEGs that Pillow reports as MPO; they are served as plain JPEG.
 IMAGE_TYPES = {"JPEG": "image/jpeg", "MPO": "image/jpeg", "PNG": "image/png"}
 SENSITIVE_MESSAGE = _("Похоже, в тексте есть ИИН или телефон. Не публикуйте данные ребёнка.")
+RATING_CHOICES = [(n, str(n)) for n in range(RATING_MIN, RATING_MAX + 1)]
+
+
+def rating_field() -> forms.TypedChoiceField:
+    return forms.TypedChoiceField(
+        label=_("Оценка"), choices=RATING_CHOICES, coerce=int, required=False, empty_value=None, widget=forms.RadioSelect
+    )
+
+
+RATING_REQUIRED = _("Поставьте оценку от 1 до 5")
 
 
 class _PostFieldsForm(forms.ModelForm):
@@ -116,19 +125,21 @@ class _PostFieldsForm(forms.ModelForm):
 
 
 class PostForm(_PostFieldsForm):
-    specialist = forms.ModelChoiceField(label=_("Специалист"), queryset=catalog_visible_specialists(), required=False)
+    specialist = forms.ModelChoiceField(
+        label=_("Специалист или няня"), queryset=catalog_visible_profiles(), required=False
+    )
+    rating = rating_field()
 
     class Meta:
         model = Post
-        fields = ["kind", "body", "condition", "city", "specialist"]
+        fields = ["kind", "body", "condition", "city", "specialist", "rating"]
 
     def __init__(self, *args, user: User, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = user
         self.fields["kind"].label = _("Тип")
-        self.fields["kind"].choices = [
-            c for c in Post.Kind.choices if not (c[0] == Post.Kind.REVIEW and is_specialist(user))
-        ]
+        # Only a mother rates specialists and nannies.
+        self.fields["kind"].choices = [c for c in Post.Kind.choices if c[0] != Post.Kind.REVIEW or user.is_parent]
         self.initial.setdefault("kind", Post.Kind.QUESTION)
         if self.initial["kind"] not in self.allowed_kinds:
             self.initial["kind"] = Post.Kind.QUESTION
@@ -148,18 +159,33 @@ class PostForm(_PostFieldsForm):
         kind = cleaned.get("kind")
         if kind == Post.Kind.REVIEW:
             if not cleaned.get("specialist") and "specialist" not in self.errors:
-                self.add_error("specialist", _("Выберите специалиста"))
+                self.add_error("specialist", _("Выберите специалиста или няню"))
+            if cleaned.get("rating") is None and "rating" not in self.errors:
+                self.add_error("rating", RATING_REQUIRED)
         elif kind:
             cleaned["specialist"] = None
+            cleaned["rating"] = None
         return cleaned
 
 
 class PostEditForm(_PostFieldsForm):
     remove_image = forms.BooleanField(label=_("Удалить фото"), required=False)
+    rating = rating_field()
 
     class Meta:
         model = Post
-        fields = ["body", "condition", "city"]
+        fields = ["body", "condition", "city", "rating"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.kind != Post.Kind.REVIEW:
+            del self.fields["rating"]
+
+    def clean_rating(self):
+        value = self.cleaned_data.get("rating")
+        if value is None:
+            raise forms.ValidationError(RATING_REQUIRED)
+        return value
 
 
 class CommentForm(forms.Form):

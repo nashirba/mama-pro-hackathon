@@ -1,7 +1,11 @@
 from django.conf import settings
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVector, SearchVectorField
-from django.core.validators import MaxLengthValidator
+from django.core.validators import (
+    MaxLengthValidator,
+    MaxValueValidator,
+    MinValueValidator,
+)
 from django.db import models
 from django.db.models import Q, Value
 from django.utils import timezone
@@ -10,6 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.core.text import normalize_kk
 
 POST_BODY_MAX = 3000
+RATING_MIN, RATING_MAX = 1, 5
 COMMENT_BODY_MAX = 1000
 
 
@@ -25,7 +30,7 @@ class Post(models.Model):
     class Kind(models.TextChoices):
         QUESTION = "question", _("Вопрос")
         STORY = "story", _("История")
-        REVIEW = "review", _("Отзыв о специалисте")
+        REVIEW = "review", _("Отзыв")
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="community_posts")
     kind = models.CharField(max_length=10, choices=Kind.choices)
@@ -38,6 +43,10 @@ class Post(models.Model):
     )
     specialist = models.ForeignKey(
         "catalog.SpecialistProfile", null=True, blank=True, on_delete=models.PROTECT, related_name="community_reviews"
+    )
+    # A review's score. NULL only for reviews written before ratings existed; they are left out of the average.
+    rating = models.PositiveSmallIntegerField(
+        null=True, blank=True, validators=[MinValueValidator(RATING_MIN), MaxValueValidator(RATING_MAX)]
     )
     is_hidden = models.BooleanField(default=False)
     is_deleted = models.BooleanField(default=False)
@@ -61,6 +70,10 @@ class Post(models.Model):
             models.CheckConstraint(
                 condition=Q(kind="review", specialist__isnull=False) | (~Q(kind="review") & Q(specialist__isnull=True)),
                 name="community_review_has_specialist",
+            ),
+            models.CheckConstraint(
+                condition=Q(rating__isnull=True) | Q(kind="review", rating__gte=RATING_MIN, rating__lte=RATING_MAX),
+                name="community_rating_on_review_in_range",
             ),
         ]
 

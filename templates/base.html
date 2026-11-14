@@ -10,7 +10,7 @@
   <script src="{% static 'vendor/alpine.min.js' %}" defer></script>
   {% block extra_head %}{% endblock %}
 </head>
-<body class="min-h-full flex flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0bg-white font-sans text-slate-900 antialiased">
+<body class="min-h-full flex flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0 bg-white font-sans text-slate-900 antialiased">
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-white focus:px-4 focus:py-3 focus:shadow">{% translate "Перейти к содержанию" %}</a>
   {% block skip_links %}{% endblock %}
   {% include "partials/header.html" %}

@@ -26,10 +26,9 @@ def test_nav_hidden_on_desktop_and_fixed(client, db):
 
 def test_body_has_bottom_padding_on_mobile(client, db):
     html = client.get("/ru/").content.decode()
-    assert re.search(
-        r'<body class="[^"]*pb-\[calc\(4rem\+env\(safe-area-inset-bottom\)\)\][^"]*lg:pb-0',
-        html,
-    )
+    tokens = re.search(r'<body class="([^"]*)"', html).group(1).split()
+    assert "pb-[calc(4rem+env(safe-area-inset-bottom))]" in tokens
+    assert "lg:pb-0" in tokens and "bg-white" in tokens
 
 
 @pytest.mark.parametrize(
@@ -38,9 +37,10 @@ def test_body_has_bottom_padding_on_mobile(client, db):
         ("/ru/", "Главная"),
         ("/ru/community/", "Сообщество"),
         ("/ru/specialists/", "Поиск"),
+        ("/ru/almaty/logoped/", "Поиск"),
     ],
 )
-def test_active_item(client, db, path, label):
+def test_active_item(client, catalog_fixture, path, label):
     nav = _nav(client.get(path).content.decode())
     current = nav.split('aria-current="page"')[1].split("</a>")[0]
     assert label in current and nav.count('aria-current="page"') == 1

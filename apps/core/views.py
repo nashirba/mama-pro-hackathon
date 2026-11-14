@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import connection
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.utils.translation import gettext_lazy
 from django.views.i18n import set_language as django_set_language
 
 from apps.catalog.models import ProfileCategory, SpecialistType
@@ -70,3 +71,29 @@ def set_language(request) -> HttpResponse:
         user.preferred_language = lang
         user.save(update_fields=["preferred_language"])
     return response
+
+
+# Mama Pro foundation pages; the content lives there, this page links to it.
+MAMAPRO_ANNOUNCEMENTS_URL = "https://project2418305.tilda.ws/page40285738.html#!/tab/651857742-2"
+MAMAPRO_COURSES_URL = "https://mamapro.kz/#rec199050404"
+MAMAPRO_DONATE_URL = "https://kaspi.kz/pay/mamapro"
+MAMAPRO_BRANCHES = [  # (city, Instagram); the foundation publishes no street addresses
+    (gettext_lazy("Астана"), "https://instagram.com/mamapro_org"),
+    (gettext_lazy("Алматы"), "https://instagram.com/mamapro_almaty"),
+    (gettext_lazy("Усть-Каменогорск"), "https://instagram.com/mamapro_oskemen"),
+    (gettext_lazy("Шымкент"), "https://instagram.com/mamapro_shymkent"),
+    (gettext_lazy("Костанай"), "https://instagram.com/mamapro_kst"),
+]
+
+
+def mamapro(request):
+    return render(
+        request,
+        "core/mamapro.html",
+        {
+            "announcements_url": MAMAPRO_ANNOUNCEMENTS_URL,
+            "courses_url": MAMAPRO_COURSES_URL,
+            "donate_url": MAMAPRO_DONATE_URL,
+            "branches": MAMAPRO_BRANCHES,
+        },
+    )

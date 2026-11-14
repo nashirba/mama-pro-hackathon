@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 21:16+0500\n"
+"POT-Creation-Date: 2026-11-14 21:47+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -158,19 +158,23 @@ msgstr ""
 msgid "Няня"
 msgstr ""
 
-#: apps/catalog/models/profile.py:34 templates/core/home.html:85
+#: apps/catalog/models/profile.py:34
+#: templates/partials/_verification_levels.html:2
 msgid "Личность подтверждена"
 msgstr ""
 
-#: apps/catalog/models/profile.py:35 templates/core/home.html:86
+#: apps/catalog/models/profile.py:35
+#: templates/partials/_verification_levels.html:3
 msgid "Образование подтверждено"
 msgstr ""
 
-#: apps/catalog/models/profile.py:36 templates/core/home.html:87
+#: apps/catalog/models/profile.py:36
+#: templates/partials/_verification_levels.html:4
 msgid "Квалификация подтверждена"
 msgstr ""
 
-#: apps/catalog/models/profile.py:37 templates/core/home.html:88
+#: apps/catalog/models/profile.py:37
+#: templates/partials/_verification_levels.html:5
 msgid "Проверка на безопасность пройдена"
 msgstr ""
 
@@ -390,6 +394,26 @@ msgstr ""
 
 #: apps/community/views.py:313
 msgid "Жалоба отправлена"
+msgstr ""
+
+#: apps/core/views.py:81
+msgid "Астана"
+msgstr ""
+
+#: apps/core/views.py:82
+msgid "Алматы"
+msgstr ""
+
+#: apps/core/views.py:83
+msgid "Усть-Каменогорск"
+msgstr ""
+
+#: apps/core/views.py:84
+msgid "Шымкент"
+msgstr ""
+
+#: apps/core/views.py:85
+msgid "Костанай"
 msgstr ""
 
 #: apps/geo/models.py:19
@@ -975,7 +999,7 @@ msgstr ""
 msgid "Зарегистрироваться"
 msgstr ""
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:22
+#: templates/accounts/code_form.html:28 templates/partials/header.html:20
 msgid "Войти"
 msgstr ""
 
@@ -1044,7 +1068,7 @@ msgid "Отмена"
 msgstr ""
 
 #: templates/cabinet/home.html:3 templates/cabinet/home.html:6
-#: templates/partials/header.html:12
+#: templates/partials/header.html:14
 msgid "Личный кабинет"
 msgstr ""
 
@@ -1443,7 +1467,7 @@ msgstr ""
 #: templates/community/post_detail.html:3
 #: templates/community/post_detail.html:10
 #: templates/community/post_form.html:10 templates/community/rules.html:10
-#: templates/partials/header.html:10
+#: templates/partials/header.html:11
 msgid "Сообщество"
 msgstr ""
 
@@ -1711,58 +1735,156 @@ msgstr ""
 msgid "Города"
 msgstr ""
 
-#: templates/core/home.html:82
+#: templates/core/home.html:82 templates/search/_specialists_intro.html:2
 msgid "Что значит проверенный специалист"
 msgstr ""
 
-#: templates/core/home.html:83
+#: templates/core/home.html:83 templates/search/_specialists_intro.html:3
 msgid ""
 "Мы показываем не общую галочку, а то, что именно проверено. Сами документы "
 "(паспорт, дипломы) мы не публикуем, видны только уровни проверки."
 msgstr ""
 
-#: templates/core/home.html:85
-msgid "Сверили паспорт или удостоверение с фото"
-msgstr ""
-
-#: templates/core/home.html:86
-msgid "Видели диплом по специальности"
-msgstr ""
-
-#: templates/core/home.html:87
-msgid "Видели сертификаты курсов и повышения квалификации"
-msgstr ""
-
 #: templates/core/home.html:88
-msgid "Есть справка об отсутствии судимости"
-msgstr ""
-
-#: templates/core/home.html:93
 msgid "Вы специалист?"
 msgstr ""
 
-#: templates/core/home.html:94
+#: templates/core/home.html:89
 msgid "Расскажите о себе и своих услугах родителям, которые ищут помощь."
 msgstr ""
 
-#: templates/core/home.html:95
+#: templates/core/home.html:90
 msgid "Разместить профиль"
 msgstr ""
 
-#: templates/core/home.html:96
+#: templates/core/home.html:91
 msgid "В демо-версии анкеты специалистов заполняет команда Мама Про."
 msgstr ""
 
+#: templates/core/mamapro.html:3 templates/core/mamapro.html:7
+#: templates/partials/header.html:12
+msgid "Мама Про"
+msgstr ""
+
+#: templates/core/mamapro.html:8
+msgid ""
+"Общественный фонд поддержки и развития социально уязвимых женщин «Мама Про» "
+"основан в 2018 году родителями особенных детей. Фонд помогает семьям, "
+"которые растят детей с особенностями развития: обучает мам основам "
+"предпринимательства, даёт психологическую поддержку и работает в пяти "
+"городах Казахстана."
+msgstr ""
+
+#: templates/core/mamapro.html:12
+msgid "Анонс ближайших курсов"
+msgstr ""
+
+#: templates/core/mamapro.html:13
+msgid ""
+"Даты, города и запись на ближайшие потоки фонд публикует на своей странице."
+msgstr ""
+
+#: templates/core/mamapro.html:14
+msgid "Смотреть анонс"
+msgstr ""
+
+#: templates/core/mamapro.html:18
+msgid "Курсы фонда"
+msgstr ""
+
+#: templates/core/mamapro.html:19
+msgid ""
+"Очные курсы в учебных центрах фонда, бесплатно за счёт грантов партнёров. "
+"Пока мама учится, за ребёнком присматривают."
+msgstr ""
+
+#: templates/core/mamapro.html:21
+msgid "Основы предпринимательства"
+msgstr ""
+
+#: templates/core/mamapro.html:21
+msgid "20 занятий, в конце - защита своего бизнес-проекта."
+msgstr ""
+
+#: templates/core/mamapro.html:22
+msgid "Сиблинги"
+msgstr ""
+
+#: templates/core/mamapro.html:22
+msgid ""
+"Психологическая поддержка братьев и сестёр особенного ребёнка, 1,5 месяца."
+msgstr ""
+
+#: templates/core/mamapro.html:23
+msgid "Психологическая поддержка"
+msgstr ""
+
+#: templates/core/mamapro.html:23
+msgid "Группа поддержки для мам, 1,5 месяца."
+msgstr ""
+
+#: templates/core/mamapro.html:25
+msgid "Подробнее на mamapro.kz"
+msgstr ""
+
+#: templates/core/mamapro.html:30
+msgid "Купить онлайн курсы"
+msgstr ""
+
+#: templates/core/mamapro.html:31
+msgid "Скоро"
+msgstr ""
+
+#: templates/core/mamapro.html:33
+msgid "Онлайн-курсы фонда появятся здесь."
+msgstr ""
+
+#: templates/core/mamapro.html:37
+msgid "Филиалы в Казахстане"
+msgstr ""
+
+#: templates/core/mamapro.html:38
+msgid "Адреса и расписание каждого филиала - на его странице в Instagram."
+msgstr ""
+
+#: templates/core/mamapro.html:45
+msgid "Поддержка фонда"
+msgstr ""
+
+#: templates/core/mamapro.html:46
+msgid "Взнос в фонд через Kaspi: откроется страница с QR-кодом для оплаты."
+msgstr ""
+
+#: templates/core/mamapro.html:47
+msgid "Поддержать фонд"
+msgstr ""
+
+#: templates/partials/_verification_levels.html:2
+msgid "Сверили паспорт или удостоверение с фото"
+msgstr ""
+
+#: templates/partials/_verification_levels.html:3
+msgid "Видели диплом по специальности"
+msgstr ""
+
+#: templates/partials/_verification_levels.html:4
+msgid "Видели сертификаты курсов и повышения квалификации"
+msgstr ""
+
+#: templates/partials/_verification_levels.html:5
+msgid "Есть справка об отсутствии судимости"
+msgstr ""
+
 #: templates/partials/header.html:9
+msgid "Специалисты"
+msgstr ""
+
+#: templates/partials/header.html:10
 msgid "Няни"
 msgstr ""
 
-#: templates/partials/header.html:15
+#: templates/partials/header.html:17
 msgid "Выйти"
-msgstr ""
-
-#: templates/partials/header.html:19
-msgid "Выйти со всех устройств"
 msgstr ""
 
 #: templates/partials/language_switcher.html:4
@@ -2120,8 +2242,4 @@ msgstr ""
 
 #: templates/search/results.html:5
 msgid "К результатам"
-msgstr ""
-
-#: templates/partials/header.html:9
-msgid "Специалисты"
 msgstr ""

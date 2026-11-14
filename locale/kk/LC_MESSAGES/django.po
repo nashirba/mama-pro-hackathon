@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 21:16+0500\n"
+"POT-Creation-Date: 2026-11-14 21:47+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,19 +155,23 @@ msgstr "Маман"
 msgid "Няня"
 msgstr "Бала күтуші"
 
-#: apps/catalog/models/profile.py:34 templates/core/home.html:85
+#: apps/catalog/models/profile.py:34
+#: templates/partials/_verification_levels.html:2
 msgid "Личность подтверждена"
 msgstr "Жеке басы расталған"
 
-#: apps/catalog/models/profile.py:35 templates/core/home.html:86
+#: apps/catalog/models/profile.py:35
+#: templates/partials/_verification_levels.html:3
 msgid "Образование подтверждено"
 msgstr "Білімі расталған"
 
-#: apps/catalog/models/profile.py:36 templates/core/home.html:87
+#: apps/catalog/models/profile.py:36
+#: templates/partials/_verification_levels.html:4
 msgid "Квалификация подтверждена"
 msgstr "Біліктілігі расталған"
 
-#: apps/catalog/models/profile.py:37 templates/core/home.html:88
+#: apps/catalog/models/profile.py:37
+#: templates/partials/_verification_levels.html:5
 msgid "Проверка на безопасность пройдена"
 msgstr "Қауіпсіздік тексерісінен өтті"
 
@@ -390,6 +394,26 @@ msgstr "Сіз бұл маман туралы пікір жазғансыз - о
 #: apps/community/views.py:313
 msgid "Жалоба отправлена"
 msgstr "Шағым жіберілді"
+
+#: apps/core/views.py:81
+msgid "Астана"
+msgstr "Астана"
+
+#: apps/core/views.py:82
+msgid "Алматы"
+msgstr "Алматы"
+
+#: apps/core/views.py:83
+msgid "Усть-Каменогорск"
+msgstr "Өскемен"
+
+#: apps/core/views.py:84
+msgid "Шымкент"
+msgstr "Шымкент"
+
+#: apps/core/views.py:85
+msgid "Костанай"
+msgstr "Қостанай"
 
 #: apps/geo/models.py:19
 msgid "Область"
@@ -988,7 +1012,7 @@ msgstr "Демо-нұсқада SMS жіберілмейді, код ашық: %
 msgid "Зарегистрироваться"
 msgstr "Тіркелу"
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:22
+#: templates/accounts/code_form.html:28 templates/partials/header.html:20
 msgid "Войти"
 msgstr "Кіру"
 
@@ -1057,7 +1081,7 @@ msgid "Отмена"
 msgstr "Бас тарту"
 
 #: templates/cabinet/home.html:3 templates/cabinet/home.html:6
-#: templates/partials/header.html:12
+#: templates/partials/header.html:14
 msgid "Личный кабинет"
 msgstr "Жеке кабинет"
 
@@ -1448,7 +1472,7 @@ msgstr "Шағым жіберу"
 #: templates/community/post_detail.html:3
 #: templates/community/post_detail.html:10
 #: templates/community/post_form.html:10 templates/community/rules.html:10
-#: templates/partials/header.html:10
+#: templates/partials/header.html:11
 msgid "Сообщество"
 msgstr "Қауымдастық"
 
@@ -1750,11 +1774,11 @@ msgstr "Қауымдастыққа өту"
 msgid "Города"
 msgstr "Қалалар"
 
-#: templates/core/home.html:82
+#: templates/core/home.html:82 templates/search/_specialists_intro.html:2
 msgid "Что значит проверенный специалист"
 msgstr "Тексерілген маман дегеніміз не"
 
-#: templates/core/home.html:83
+#: templates/core/home.html:83 templates/search/_specialists_intro.html:3
 msgid ""
 "Мы показываем не общую галочку, а то, что именно проверено. Сами документы "
 "(паспорт, дипломы) мы не публикуем, видны только уровни проверки."
@@ -1762,49 +1786,158 @@ msgstr ""
 "Біз жалпы белгіні емес, нақты нені тексергенімізді көрсетеміз. Құжаттарды "
 "(төлқұжат, дипломдар) жарияламаймыз, тек тексеру деңгейлері көрінеді."
 
-#: templates/core/home.html:85
-msgid "Сверили паспорт или удостоверение с фото"
-msgstr "Төлқұжатты немесе жеке куәлікті фотосымен салыстырып тексердік"
-
-#: templates/core/home.html:86
-msgid "Видели диплом по специальности"
-msgstr "Мамандығы бойынша дипломды көрдік"
-
-#: templates/core/home.html:87
-msgid "Видели сертификаты курсов и повышения квалификации"
-msgstr "Курстар мен біліктілікті арттыру сертификаттарын көрдік"
-
 #: templates/core/home.html:88
-msgid "Есть справка об отсутствии судимости"
-msgstr "Сотталмағаны туралы анықтама бар"
-
-#: templates/core/home.html:93
 msgid "Вы специалист?"
 msgstr "Сіз маманысыз ба?"
 
-#: templates/core/home.html:94
+#: templates/core/home.html:89
 msgid "Расскажите о себе и своих услугах родителям, которые ищут помощь."
 msgstr "Көмек іздеген ата-аналарға өзіңіз және қызметтеріңіз туралы айтыңыз."
 
-#: templates/core/home.html:95
+#: templates/core/home.html:90
 msgid "Разместить профиль"
 msgstr "Профиль орналастыру"
 
-#: templates/core/home.html:96
+#: templates/core/home.html:91
 msgid "В демо-версии анкеты специалистов заполняет команда Мама Про."
 msgstr "Демо-нұсқада мамандардың анкетасын Мама Про командасы толтырады."
 
+#: templates/core/mamapro.html:3 templates/core/mamapro.html:7
+#: templates/partials/header.html:12
+msgid "Мама Про"
+msgstr "Мама Про"
+
+#: templates/core/mamapro.html:8
+msgid ""
+"Общественный фонд поддержки и развития социально уязвимых женщин «Мама Про» "
+"основан в 2018 году родителями особенных детей. Фонд помогает семьям, "
+"которые растят детей с особенностями развития: обучает мам основам "
+"предпринимательства, даёт психологическую поддержку и работает в пяти "
+"городах Казахстана."
+msgstr ""
+"«Мама Про» әлеуметтік осал әйелдерді қолдау және дамыту қоғамдық қорын 2018 "
+"жылы ерекше балалардың ата-аналары құрды. Қор дамуында ерекшелігі бар "
+"балаларды тәрбиелеп отырған отбасыларға көмектеседі: аналарды кәсіпкерлік "
+"негіздеріне оқытады, психологиялық қолдау көрсетеді және Қазақстанның бес "
+"қаласында жұмыс істейді."
+
+#: templates/core/mamapro.html:12
+msgid "Анонс ближайших курсов"
+msgstr "Жақын курстар анонсы"
+
+#: templates/core/mamapro.html:13
+msgid ""
+"Даты, города и запись на ближайшие потоки фонд публикует на своей странице."
+msgstr ""
+"Жақын ағындардың күндерін, қалаларын және оларға жазылуды қор өз парағында "
+"жариялайды."
+
+#: templates/core/mamapro.html:14
+msgid "Смотреть анонс"
+msgstr "Анонсты көру"
+
+#: templates/core/mamapro.html:18
+msgid "Курсы фонда"
+msgstr "Қор курстары"
+
+#: templates/core/mamapro.html:19
+msgid ""
+"Очные курсы в учебных центрах фонда, бесплатно за счёт грантов партнёров. "
+"Пока мама учится, за ребёнком присматривают."
+msgstr ""
+"Қордың оқу орталықтарындағы күндізгі курстар серіктестер гранттары есебінен "
+"тегін. Ана оқып жүргенде балаға қарап отырады."
+
+#: templates/core/mamapro.html:21
+msgid "Основы предпринимательства"
+msgstr "Кәсіпкерлік негіздері"
+
+#: templates/core/mamapro.html:21
+msgid "20 занятий, в конце - защита своего бизнес-проекта."
+msgstr "20 сабақ, соңында өз бизнес-жобаңды қорғау."
+
+#: templates/core/mamapro.html:22
+msgid "Сиблинги"
+msgstr "Сиблингтер"
+
+#: templates/core/mamapro.html:22
+msgid ""
+"Психологическая поддержка братьев и сестёр особенного ребёнка, 1,5 месяца."
+msgstr ""
+"Ерекше баланың аға-апаларына және іні-қарындастарына психологиялық қолдау, "
+"1,5 ай."
+
+#: templates/core/mamapro.html:23
+msgid "Психологическая поддержка"
+msgstr "Психологиялық қолдау"
+
+#: templates/core/mamapro.html:23
+msgid "Группа поддержки для мам, 1,5 месяца."
+msgstr "Аналарға арналған қолдау тобы, 1,5 ай."
+
+#: templates/core/mamapro.html:25
+msgid "Подробнее на mamapro.kz"
+msgstr "Толығырақ mamapro.kz сайтында"
+
+#: templates/core/mamapro.html:30
+msgid "Купить онлайн курсы"
+msgstr "Онлайн курстарды сатып алу"
+
+#: templates/core/mamapro.html:31
+msgid "Скоро"
+msgstr "Жақында"
+
+#: templates/core/mamapro.html:33
+msgid "Онлайн-курсы фонда появятся здесь."
+msgstr "Қордың онлайн курстары осында пайда болады."
+
+#: templates/core/mamapro.html:37
+msgid "Филиалы в Казахстане"
+msgstr "Қазақстандағы филиалдар"
+
+#: templates/core/mamapro.html:38
+msgid "Адреса и расписание каждого филиала - на его странице в Instagram."
+msgstr "Әр филиалдың мекенжайы мен кестесі оның Instagram парағында."
+
+#: templates/core/mamapro.html:45
+msgid "Поддержка фонда"
+msgstr "Қорды қолдау"
+
+#: templates/core/mamapro.html:46
+msgid "Взнос в фонд через Kaspi: откроется страница с QR-кодом для оплаты."
+msgstr "Kaspi арқылы қорға жарна: төлеуге арналған QR-коды бар парақ ашылады."
+
+#: templates/core/mamapro.html:47
+msgid "Поддержать фонд"
+msgstr "Қорды қолдау"
+
+#: templates/partials/_verification_levels.html:2
+msgid "Сверили паспорт или удостоверение с фото"
+msgstr "Төлқұжатты немесе жеке куәлікті фотосымен салыстырып тексердік"
+
+#: templates/partials/_verification_levels.html:3
+msgid "Видели диплом по специальности"
+msgstr "Мамандығы бойынша дипломды көрдік"
+
+#: templates/partials/_verification_levels.html:4
+msgid "Видели сертификаты курсов и повышения квалификации"
+msgstr "Курстар мен біліктілікті арттыру сертификаттарын көрдік"
+
+#: templates/partials/_verification_levels.html:5
+msgid "Есть справка об отсутствии судимости"
+msgstr "Сотталмағаны туралы анықтама бар"
+
 #: templates/partials/header.html:9
+msgid "Специалисты"
+msgstr "Мамандар"
+
+#: templates/partials/header.html:10
 msgid "Няни"
 msgstr "Бала күтушілер"
 
-#: templates/partials/header.html:15
+#: templates/partials/header.html:17
 msgid "Выйти"
 msgstr "Шығу"
-
-#: templates/partials/header.html:19
-msgid "Выйти со всех устройств"
-msgstr "Барлық құрылғылардан шығу"
 
 #: templates/partials/language_switcher.html:4
 msgid "Язык интерфейса"
@@ -2167,7 +2300,3 @@ msgstr "Карта"
 #: templates/search/results.html:5
 msgid "К результатам"
 msgstr "Нәтижелерге өту"
-
-#: templates/partials/header.html:9
-msgid "Специалисты"
-msgstr "Мамандар"

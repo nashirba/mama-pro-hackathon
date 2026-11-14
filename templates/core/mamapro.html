@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Мама Про" %} — {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-4xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
+  <section>
+    <h1 class="text-3xl font-bold leading-tight">{% translate "Мама Про" %}</h1>
+    <p class="mt-3 text-slate-700">{% translate "Общественный фонд поддержки и развития социально уязвимых женщин «Мама Про» основан в 2018 году родителями особенных детей. Фонд помогает семьям, которые растят детей с особенностями развития: обучает мам основам предпринимательства, даёт психологическую поддержку и работает в пяти городах Казахстана." %}</p>
+  </section>
+
+  <section aria-labelledby="mp-announcements" class="rounded-2xl bg-slate-50 p-5 sm:p-6">
+    <h2 id="mp-announcements" class="text-xl font-semibold">{% translate "Анонс ближайших курсов" %}</h2>
+    <p class="mt-2 text-slate-700">{% translate "Даты, города и запись на ближайшие потоки фонд публикует на своей странице." %}</p>
+    <a href="{{ announcements_url }}" target="_blank" rel="noopener" class="mt-4 inline-flex min-h-12 items-center rounded bg-primary-700 px-5 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Смотреть анонс" %}</a>
+  </section>
+
+  <section aria-labelledby="mp-courses" class="rounded-2xl bg-slate-50 p-5 sm:p-6">
+    <h2 id="mp-courses" class="text-xl font-semibold">{% translate "Курсы фонда" %}</h2>
+    <p class="mt-2 text-slate-700">{% translate "Очные курсы в учебных центрах фонда, бесплатно за счёт грантов партнёров. Пока мама учится, за ребёнком присматривают." %}</p>
+    <ul class="mt-4 grid gap-3 sm:grid-cols-3">
+      <li class="rounded-lg bg-white p-4 ring-1 ring-slate-200"><span class="block font-medium">{% translate "Основы предпринимательства" %}</span><span class="mt-1 block text-sm text-slate-600">{% translate "20 занятий, в конце - защита своего бизнес-проекта." %}</span></li>
+      <li class="rounded-lg bg-white p-4 ring-1 ring-slate-200"><span class="block font-medium">{% translate "Сиблинги" %}</span><span class="mt-1 block text-sm text-slate-600">{% translate "Психологическая поддержка братьев и сестёр особенного ребёнка, 1,5 месяца." %}</span></li>
+      <li class="rounded-lg bg-white p-4 ring-1 ring-slate-200"><span class="block font-medium">{% translate "Психологическая поддержка" %}</span><span class="mt-1 block text-sm text-slate-600">{% translate "Группа поддержки для мам, 1,5 месяца." %}</span></li>
+    </ul>
+    <a href="{{ courses_url }}" target="_blank" rel="noopener" class="mt-4 inline-flex min-h-11 items-center font-medium text-primary-700 underline">{% translate "Подробнее на mamapro.kz" %}</a>
+  </section>
+
+  <section aria-labelledby="mp-online" class="rounded-2xl bg-slate-50 p-5 sm:p-6">
+    <div class="flex flex-wrap items-center gap-3">
+      <h2 id="mp-online" class="text-xl font-semibold">{% translate "Купить онлайн курсы" %}</h2>
+      <span class="rounded-full bg-amber-100 px-3 py-1 text-sm font-medium text-amber-900">{% translate "Скоро" %}</span>
+    </div>
+    <p class="mt-2 text-slate-700">{% translate "Онлайн-курсы фонда появятся здесь." %}</p>
+  </section>
+
+  <section aria-labelledby="mp-branches" class="rounded-2xl bg-slate-50 p-5 sm:p-6">
+    <h2 id="mp-branches" class="text-xl font-semibold">{% translate "Филиалы в Казахстане" %}</h2>
+    <p class="mt-2 text-slate-700">{% translate "Адреса и расписание каждого филиала - на его странице в Instagram." %}</p>
+    <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+      {% for city, url in branches %}<li><a href="{{ url }}" target="_blank" rel="noopener" class="flex min-h-12 items-center justify-between gap-3 rounded-lg bg-white px-4 py-2 ring-1 ring-slate-200 hover:bg-slate-50"><span class="font-medium">{{ city }}</span><span class="text-sm text-primary-700">Instagram</span></a></li>{% endfor %}
+    </ul>
+  </section>
+
+  <section aria-labelledby="mp-support" class="rounded-2xl bg-primary-800 p-5 text-white sm:p-6">
+    <h2 id="mp-support" class="text-xl font-semibold">{% translate "Поддержка фонда" %}</h2>
+    <p class="mt-2 text-primary-100">{% translate "Взнос в фонд через Kaspi: откроется страница с QR-кодом для оплаты." %}</p>
+    <a href="{{ donate_url }}" target="_blank" rel="noopener" class="mt-4 inline-flex min-h-12 items-center rounded bg-white px-6 py-2 font-semibold text-primary-800 hover:bg-primary-50">{% translate "Поддержать фонд" %}</a>
+  </section>
+</div>
+{% endblock %}

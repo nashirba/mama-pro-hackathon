@@ -8,10 +8,12 @@ from apps.catalog.models import (
     DevelopmentalCondition,
     Method,
     PracticeContext,
+    ProfileCategory,
     Service,
     ServiceKind,
     SpecialistProfile,
     SpecialistType,
+    Training,
 )
 from apps.geo.models import Address, KatoNode
 
@@ -110,3 +112,42 @@ class ServiceFactory(factory.django.DjangoModelFactory):
     conditions = _m2m("conditions", DevelopmentalCondition, "slug")
     methods = _m2m("methods", Method, "slug")
     languages = _m2m("languages", CommunicationLanguage, "code")
+
+
+class NannyFactory(SpecialistFactory):
+    """A nanny with a criminal record certificate; add `TrainingFactory` rows to make her visible in the section."""
+
+    slug = factory.Sequence(lambda n: f"nanny-{n}")
+    display_name = factory.Sequence(lambda n: f"Няня {n}")
+    category = ProfileCategory.NANNY
+    formats = factory.LazyFunction(lambda: ["home_visit"])
+    criminal_record_issued_on = factory.LazyFunction(lambda: timezone.localdate().replace(month=1, day=15))
+    availability = "Будни с 9 до 18"
+
+
+class TrainingFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Training
+
+    profile = factory.SubFactory(NannyFactory)
+    title = factory.Sequence(lambda n: f"Курс {n}")
+    issuer = "Учебный центр"
+    year = 2024
+    hours = 24
+    certificate_number = factory.Sequence(lambda n: f"CERT-{n:05d}")
+    is_first_aid = False
+
+
+class NannyServiceFactory(ServiceFactory):
+    """Needs the reference data (`childcare`) and the `kato_demo` fixture (the home visit area defaults to `almaty`)."""
+
+    context = factory.SubFactory(PrivateContextFactory, specialist=factory.SubFactory(NannyFactory))
+    kind = factory.LazyFunction(lambda: ServiceKind.objects.get(slug="childcare"))
+    title = "Услуги няни"
+    duration_min = 60
+    formats = factory.LazyFunction(lambda: ["home_visit"])
+    home_visit_area = factory.LazyFunction(lambda: KatoNode.objects.get(slug="almaty"))
+    price_session = None
+    price_hour = 3000
+    price_night = 15000
+    price_month = None

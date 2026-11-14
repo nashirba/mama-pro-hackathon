@@ -1,4 +1,4 @@
-from .profile import Format, PracticeContext, SpecialistProfile, VerificationLevel
+from .profile import Format, PracticeContext, ProfileCategory, SpecialistProfile, VerificationLevel
 from .reference import (
     CommunicationLanguage,
     DevelopmentalCondition,
@@ -6,18 +6,22 @@ from .reference import (
     ServiceKind,
     SpecialistType,
 )
-from .service import Service, ServiceAttrs
+from .service import CHILDCARE_KIND, Service, ServiceAttrs
+from .training import Training
 
 __all__ = [
+    "CHILDCARE_KIND",
     "CommunicationLanguage",
     "DevelopmentalCondition",
     "Format",
     "Method",
     "PracticeContext",
+    "ProfileCategory",
     "Service",
     "ServiceAttrs",
     "ServiceKind",
     "SpecialistProfile",
     "SpecialistType",
+    "Training",
     "VerificationLevel",
 ]

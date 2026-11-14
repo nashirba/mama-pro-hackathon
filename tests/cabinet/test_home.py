@@ -49,3 +49,9 @@ def test_profile_edit_requires_names(client, db):
     client.force_login(UserFactory())
     r = client.post("/ru/cabinet/edit/", {"last_name": "", "first_name": "Алия"})
     assert r.status_code == 200
+
+
+def test_cabinet_in_kazakh(client, db):
+    client.force_login(UserFactory())
+    html = client.get("/kk/cabinet/").content.decode()
+    assert "Личный кабинет" not in html and "Жеке кабинет" in html

@@ -11,8 +11,8 @@
         <p class="flex flex-wrap gap-x-3 gap-y-1 text-sm text-slate-600 [&>span+span]:before:mr-3 [&>span+span]:before:text-slate-400 [&>span+span]:before:content-['·']">
           <span>{% blocktranslate with year=t.year|stringformat:"d" %}{{ year }} год{% endblocktranslate %}</span>
           <span>{% blocktranslate count n=t.hours %}{{ n }} час{% plural %}{{ n }} часов{% endblocktranslate %}</span>
-          <span>{% blocktranslate with number=t.certificate_number %}Сертификат № {{ number }}{% endblocktranslate %}</span>
         </p>
+        <p class="text-sm text-slate-600">{% blocktranslate with number=t.certificate_number %}Сертификат № {{ number }}{% endblocktranslate %}</p>
       </li>
       {% endfor %}
     </ul>

@@ -1962,3 +1962,21 @@ msgstr ""
 #: templates/search/results.html:5
 msgid "К результатам"
 msgstr ""
+
+#: apps/cabinet/ages.py
+#, python-format
+msgid "%(n)d год"
+msgid_plural "%(n)d лет"
+msgstr[0] "%(n)d год"
+msgstr[1] "%(n)d года"
+msgstr[2] "%(n)d лет"
+msgstr[3] "%(n)d года"
+
+#: apps/cabinet/ages.py
+#, python-format
+msgid "%(n)d мес."
+msgid_plural "%(n)d мес."
+msgstr[0] "%(n)d мес."
+msgstr[1] "%(n)d мес."
+msgstr[2] "%(n)d мес."
+msgstr[3] "%(n)d мес."

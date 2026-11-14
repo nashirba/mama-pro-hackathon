@@ -11,6 +11,7 @@ This is a demo MVP: it contains what the demo needs. Production hardening comes 
 - Catalog of specialists with search and filters: city and district, specialization, developmental condition, child age, price per session or per month, format, language, experience, and verified documents.
 - Results as a list or on a map (MapLibre + OpenFreeMap). On the specialist page: "Open in 2GIS" links and a WhatsApp contact button.
 - Landing pages "type × city" and "condition × city", for example `/ru/almaty/logoped/`.
+- Community feed: parents and specialists post questions, stories and specialist reviews, with photos, comments, replies and likes. Guests read; writing needs sign-in and a nickname. Search and filters (type, condition, city, specialist), complaints and moderation in Django admin.
 - Login by phone and one-time code. In the demo no SMS is sent: the code is `0000` and is shown on the page.
 - Synthetic demo data: 80 specialists in Almaty, Astana, Shymkent, Karaganda and Aktobe. Profiles and verification badges are fictional.
 
@@ -53,6 +54,7 @@ Tests use `config/settings_test.py` and the PostGIS container.
 - `apps/geo`: KATO (administrative units), addresses, 2GIS links
 - `apps/catalog`: reference data, specialist profiles, services, specialist page
 - `apps/search`: search index (`SearchOffer`), filters, results, landings, map GeoJSON, suggestions
+- `apps/community`: community feed (posts, reviews, comments, likes, complaints), visibility rules, admin moderation
 - `apps/demo`: `seed_demo` command
 - `config/`: settings (env-driven), URLs
 - `locale/`: RU/KZ translations; `.mo` files are compiled at build time and not committed

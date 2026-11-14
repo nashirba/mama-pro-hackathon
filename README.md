@@ -18,6 +18,9 @@ This is a demo MVP: it contains what the demo needs. Production hardening comes 
 - Registration: after the code a new user enters last and first name and chooses who they are: mother, specialist or nanny (`/ru/register/`).
 - Specialist and nanny onboarding: the questionnaire (`/ru/cabinet/application/`), document scans and a nanny's courses, "send for review", then manual review in Django admin ("Заявки специалистов и нянь"): approve (the profile, its service and search rows are created), return for changes with a comment, or reject (the phone number goes to the block list and cannot apply again). Documents are stored in the database and served only to the owner and staff.
 - Parent cabinet `/ru/cabinet/`: in the cabinet the parent edits their data (last name, first name, birth date), changes the phone number with an SMS code and adds, edits and deletes child profiles (first name, last name, birth date, sex; age is computed).
+- City in the header: the parent picks a city once (cookie `city`, one year), and `/ru/specialists/` and `/ru/nannies/` without query parameters open filtered by it; the home page city field is preselected. «Любой город» clears the choice.
+- Mobile bottom navigation (hidden on desktop): Home, Community, Favorites, Search (catalog with the search field focused), Cabinet; the current section is highlighted.
+- Favorites: a heart on catalog cards and on specialist and nanny pages adds the profile to favorites (HTMX, plain POST without JS; guests go to login). `/ru/favorites/` lists specialists, then nannies, newest first, and is linked from the cabinet. Profiles that stopped passing the visibility rules are not shown.
 - Synthetic demo data: 80 specialists and 24 nannies in Almaty, Astana, Shymkent, Karaganda and Aktobe (3 nannies break the visibility rule on purpose and are not shown). Profiles, courses and certificates are fictional; every demo profile is marked as fully verified.
 
 ## Stack
@@ -54,9 +57,10 @@ Tests use `config/settings_test.py` and the PostGIS container. `compilemessages`
 
 ## Structure
 
-- `apps/core`: home page, language switching, healthz
+- `apps/core`: home page, language switching, city in the header, healthz
 - `apps/accounts`: phone + OTP login, registration step (last and first name, role), logout from all devices
 - `apps/onboarding`: specialist and nanny questionnaire, documents, review decisions, blocked phones
+- `apps/favorites`: favorites (model, heart toggle, favorites page)
 - `apps/cabinet`: parent cabinet, child profiles, phone change
 - `apps/consents`: consents at registration
 - `apps/geo`: KATO (administrative units), addresses, 2GIS links

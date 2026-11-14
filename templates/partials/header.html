@@ -6,6 +6,7 @@
       <span class="min-w-0 text-balance">{{ BRAND_NAME }}</span>
     </a>
     <div class="flex basis-full flex-wrap items-center justify-between gap-x-1 sm:basis-auto sm:shrink-0 sm:justify-end sm:gap-x-3">
+      {% include "partials/_city_picker.html" %}
       {% url 'search:results' as specialists_url %}<a href="{{ specialists_url }}"{% if request.path == specialists_url %} aria-current="page"{% endif %} class="inline-flex min-h-11 items-center px-2 lg:min-h-9 text-sm font-medium text-slate-700 hover:underline aria-[current=page]:text-primary-700">{% translate "Специалисты" %}</a>
       {% url 'search:nannies' as nannies_url %}<a href="{{ nannies_url }}"{% if request.path == nannies_url %} aria-current="page"{% endif %} class="inline-flex min-h-11 items-center px-2 lg:min-h-9 text-sm font-medium text-slate-700 hover:underline aria-[current=page]:text-primary-700">{% translate "Няни" %}</a>
       {% url 'community:feed' as community_url %}<a href="{{ community_url }}"{% if request.path == community_url %} aria-current="page"{% endif %} class="inline-flex min-h-11 items-center px-2 lg:min-h-9 text-sm font-medium text-slate-700 hover:underline aria-[current=page]:text-primary-700">{% translate "Сообщество" %}</a>

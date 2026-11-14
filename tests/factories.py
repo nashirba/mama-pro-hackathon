@@ -17,6 +17,7 @@ from apps.catalog.models import (
     Training,
 )
 from apps.community.models import Comment, Post
+from apps.favorites.models import Favorite
 from apps.geo.models import Address, KatoNode
 
 
@@ -187,3 +188,11 @@ class ChildFactory(factory.django.DjangoModelFactory):
 
     parent = factory.SubFactory(UserFactory)
     first_name = "Арман"
+
+
+class FavoriteFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Favorite
+
+    user = factory.SubFactory(UserFactory)
+    profile = factory.SubFactory(SpecialistFactory)

@@ -1,3 +1,8 @@
+import re
+
+import pytest
+
+
 def test_detail_has_2gis_and_route_links(client, catalog_fixture):
     html = client.get("/ru/specialist/ivanova-logoped/").content.decode()
     assert "https://2gis.kz/almaty/geo/76.91%2C43.251" in html
@@ -116,3 +121,10 @@ def test_specialist_page_keeps_shared_blocks(client, catalog_fixture):
     html = client.get("/ru/specialist/ivanova-logoped/").content.decode()
     assert "data-action-bar" in html and "от 8\xa0000 ₸" in html and 'href="/ru/specialists/"' in html
     assert "Каталог специалистов" in html and "Алматы" in html
+
+
+@pytest.mark.parametrize("path", ["/ru/specialist/ivanova-logoped/", "/ru/nanny/aigul-nanny/"])
+def test_action_bar_sits_above_bottom_nav(client, nannies, path):
+    html = client.get(path).content.decode()
+    tokens = re.search(r'<div data-action-bar class="([^"]*)"', html).group(1).split()
+    assert "bottom-[calc(3.5rem+1px+env(safe-area-inset-bottom))]" in tokens and "bottom-0" not in tokens

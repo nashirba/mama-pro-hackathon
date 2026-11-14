@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import prefetch_related_objects
 from django.http import Http404, JsonResponse, QueryDict
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.defaultfilters import floatformat
 from django.urls import reverse
 from django.utils.cache import patch_vary_headers
@@ -10,6 +10,7 @@ from django.utils.translation import get_language, override, pgettext
 from django.utils.translation import gettext as _
 
 from apps.catalog.models import DevelopmentalCondition, SpecialistType
+from apps.core.city import selected_city
 from apps.geo.models import KatoNode
 
 from .forms import AGE_GROUPS, build_filter_choices
@@ -296,12 +297,26 @@ def map_geojson(request):
     return JsonResponse(feature_collection(offers.iterator(), settings.GEOJSON_MAX_FEATURES))
 
 
+def _redirect_to_selected_city(request):
+    """A bare catalog URL (no filters, not HTMX) opens in the city chosen in the header."""
+    if request.headers.get("HX-Request") or not set(request.GET) <= {"focus"}:
+        return None
+    city = selected_city(request)
+    if city is None:
+        return None
+    query = QueryDict(mutable=True)
+    query["kato_id"] = str(city.pk)
+    if "focus" in request.GET:
+        query["focus"] = request.GET["focus"]
+    return redirect(_url(request.path, query.urlencode()))
+
+
 def results(request):
-    return _render_results(request, request.GET)
+    return _redirect_to_selected_city(request) or _render_results(request, request.GET)
 
 
 def nannies(request):
-    return _render_results(request, request.GET, section="nannies")
+    return _redirect_to_selected_city(request) or _render_results(request, request.GET, section="nannies")
 
 
 def landing(request, city_slug, slug):

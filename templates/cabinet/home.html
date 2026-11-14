@@ -20,6 +20,13 @@
 
   <section class="mt-8">
     <div class="flex items-center justify-between gap-4">
+      <h2 class="text-lg font-semibold">{% translate "Избранное" %}</h2>
+      <a href="{% url 'favorites:list' %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Открыть избранное" %}</a>
+    </div>
+  </section>
+
+  <section class="mt-8">
+    <div class="flex items-center justify-between gap-4">
       <h2 class="text-lg font-semibold">{% translate "Дети" %}</h2>
       <a href="{% url 'cabinet:child_add' %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Добавить ребёнка" %}</a>
     </div>

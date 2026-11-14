@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Опросник для родителей" %} - {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-10">
+  <header>
+    <h1 class="text-3xl font-bold leading-tight">{% translate "Опросник для родителей" %}</h1>
+    <p class="mt-2 text-lg text-slate-700">{% translate "Первичная оценка особенностей развития ребёнка" %}</p>
+    {% for p in intro %}<p class="mt-3 text-slate-700">{{ p }}</p>{% endfor %}
+    <p class="mt-4 rounded border-l-4 border-primary-600 bg-brand-50 px-4 py-3 text-slate-800">{% translate "Это не медицинская диагностика, а рекомендация." %}</p>
+    <p class="mt-3 rounded border-l-4 border-slate-400 bg-slate-50 px-4 py-3 text-slate-700">{% translate "Ответы не сохраняются. Баллы считаются только для показа результата." %}</p>
+  </header>
+
+  <form id="questionnaire-form" method="post" action="{% url 'questionnaire:questionnaire' %}" class="space-y-10">
+    {% csrf_token %}
+    {% for section in sections %}
+    <section aria-labelledby="sec-{{ section.key }}" class="space-y-4">
+      <h2 id="sec-{{ section.key }}" class="text-xl font-semibold">{{ section.title }}</h2>
+      {% if section.hint %}<p class="text-slate-700">{{ section.hint }}</p>{% endif %}
+      {% for q in section.questions %}
+        {% if q.kind == "scale" %}
+        <fieldset>
+          <legend class="mb-2 font-medium">{{ q.text }}</legend>
+          <div class="grid grid-cols-4 gap-1">
+            {% for value, label in scale %}
+            <label class="relative block cursor-pointer">
+              <input type="radio" class="peer sr-only" name="{{ q.key }}" value="{{ value }}" id="{{ q.key }}-{{ value }}">
+              <span class="hover:bg-primary-50 peer-checked:bg-primary-700 peer-checked:text-white peer-checked:hover:bg-primary-700 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-600 min-h-14 flex flex-col items-center justify-center rounded border border-field px-1 text-sm"><span class="block">{{ label }}</span> <span class="block text-xs">{{ value }}</span></span>
+            </label>
+            {% endfor %}
+          </div>
+        </fieldset>
+        {% elif q.kind == "textarea" %}
+        <div>
+          <label for="{{ q.key }}" class="mb-1 block font-medium">{{ q.text }}</label>
+          <textarea id="{{ q.key }}" rows="3" autocomplete="off" class="w-full rounded border border-field bg-white px-3 py-2"></textarea>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </section>
+    {% endfor %}
+    <button type="submit" class="min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Получить рекомендацию" %}</button>
+  </form>
+</div>
+{% endblock %}

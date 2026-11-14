@@ -55,3 +55,8 @@ def test_robots_disallows_all(client):
     r = client.get("/robots.txt")
     assert r.status_code == 200 and r.content.decode().splitlines() == ["User-agent: *", "Disallow: /"]
     assert r["Content-Type"].startswith("text/plain")
+
+
+def test_home_has_questionnaire_button(client, catalog_fixture):
+    html = client.get("/ru/").content.decode()
+    assert 'href="/ru/questionnaire/"' in html and "Пройти опросник для определения необходимых специалистов" in html

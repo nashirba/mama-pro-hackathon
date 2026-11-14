@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 12:01+0500\n"
+"POT-Creation-Date: 2026-11-14 14:00+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,19 +67,19 @@ msgstr "Үйге шығу"
 msgid "Онлайн"
 msgstr "Онлайн"
 
-#: apps/catalog/models/profile.py:27 templates/core/home.html:59
+#: apps/catalog/models/profile.py:27 templates/core/home.html:60
 msgid "Личность подтверждена"
 msgstr "Жеке басы расталған"
 
-#: apps/catalog/models/profile.py:28 templates/core/home.html:60
+#: apps/catalog/models/profile.py:28 templates/core/home.html:61
 msgid "Образование подтверждено"
 msgstr "Білімі расталған"
 
-#: apps/catalog/models/profile.py:29 templates/core/home.html:61
+#: apps/catalog/models/profile.py:29 templates/core/home.html:62
 msgid "Квалификация подтверждена"
 msgstr "Біліктілігі расталған"
 
-#: apps/catalog/models/profile.py:30 templates/core/home.html:62
+#: apps/catalog/models/profile.py:30 templates/core/home.html:63
 msgid "Проверка на безопасность пройдена"
 msgstr "Қауіпсіздік тексерісінен өтті"
 
@@ -140,6 +140,385 @@ msgstr "Ауылдық округ"
 msgid "Ссылка должна начинаться с %(prefix)s"
 msgstr "Сілтеме %(prefix)s деп басталуы керек"
 
+#: apps/questionnaire/questions.py:8
+msgid "Оцените следующие утверждения:"
+msgstr "Төмендегі тұжырымдарды бағалаңыз:"
+
+#: apps/questionnaire/questions.py:28
+msgid "Никогда"
+msgstr "Ешқашан"
+
+#: apps/questionnaire/questions.py:29
+msgid "Редко"
+msgstr "Сирек"
+
+#: apps/questionnaire/questions.py:30
+msgid "Иногда"
+msgstr "Кейде"
+
+#: apps/questionnaire/questions.py:31
+msgid "Часто"
+msgstr "Жиі"
+
+#: apps/questionnaire/questions.py:37
+msgid ""
+"Данный опросник предназначен для выявления индивидуальных особенностей "
+"развития ребёнка, определения его сильных сторон и областей, в которых ему "
+"требуется дополнительная помощь."
+msgstr ""
+"Бұл сауалнама баланың дамуындағы жеке ерекшеліктерді анықтауға, оның күшті "
+"жақтарын және қосымша көмек қажет салаларды айқындауға арналған."
+
+#: apps/questionnaire/questions.py:38
+msgid ""
+"Пожалуйста, внимательно прочитайте каждый вопрос и выберите наиболее "
+"подходящий вариант ответа."
+msgstr "Өтінеміз, әр сұрақты мұқият оқып, ең қолайлы жауап нұсқасын таңдаңыз."
+
+#: apps/questionnaire/questions.py:53
+msgid "Общая информация"
+msgstr "Жалпы ақпарат"
+
+#: apps/questionnaire/questions.py:54
+msgid "Посещает ли ребёнок образовательное учреждение?"
+msgstr "Бала білім беру ұйымына бара ма?"
+
+#: apps/questionnaire/questions.py:55
+msgid "Есть ли у ребёнка официальное заключение специалистов? Если да, какое?"
+msgstr ""
+"Баланың мамандардан алған ресми қорытындысы бар ма? Егер бар болса, қандай?"
+
+#: apps/questionnaire/questions.py:56
+msgid "Посещает ли ребёнок дополнительные занятия? Какие?"
+msgstr "Бала қосымша сабақтарға бара ма? Қандай?"
+
+#: apps/questionnaire/questions.py:57
+msgid "Какие специалисты уже работали с ребёнком?"
+msgstr "Баламен бұрын қандай мамандар жұмыс істеді?"
+
+#: apps/questionnaire/questions.py:59
+msgid "Речевое развитие и коммуникация"
+msgstr "Сөйлеу тілінің дамуы және коммуникация"
+
+#: apps/questionnaire/questions.py:60
+msgid "Ребёнок понимает обращённую к нему речь."
+msgstr "Бала өзіне қаратылған сөзді түсінеді."
+
+#: apps/questionnaire/questions.py:61
+msgid "Выполняет простые устные инструкции."
+msgstr "Қарапайым ауызша нұсқауларды орындайды."
+
+#: apps/questionnaire/questions.py:62
+msgid "Выполняет инструкции из двух-трёх действий."
+msgstr "Екі-үш әрекеттен тұратын нұсқауларды орындайды."
+
+#: apps/questionnaire/questions.py:63
+msgid "Использует речь для выражения своих потребностей."
+msgstr "Өз қажеттіліктерін білдіру үшін сөйлеуді қолданады."
+
+#: apps/questionnaire/questions.py:64
+msgid "Может самостоятельно составить предложение."
+msgstr "Өз бетінше сөйлем құрай алады."
+
+#: apps/questionnaire/questions.py:65
+msgid "Может поддержать диалог."
+msgstr "Диалогты жалғастыра алады."
+
+#: apps/questionnaire/questions.py:66
+msgid "Правильно произносит большинство звуков."
+msgstr "Дыбыстардың көпшілігін дұрыс айтады."
+
+#: apps/questionnaire/questions.py:67
+msgid "Различает и правильно использует слова по смыслу."
+msgstr "Сөздерді мағынасына қарай ажыратып, дұрыс қолданады."
+
+#: apps/questionnaire/questions.py:68
+msgid "Может пересказать услышанный рассказ или событие."
+msgstr "Естіген әңгімесін немесе оқиғаны қайталап айтып бере алады."
+
+#: apps/questionnaire/questions.py:69
+msgid "Может самостоятельно рассказать о своих желаниях и переживаниях."
+msgstr "Өз қалаулары мен сезімдері туралы өз бетінше айтып бере алады."
+
+#: apps/questionnaire/questions.py:70
+msgid "Использует жесты, указание или альтернативные способы коммуникации."
+msgstr ""
+"Ымдауды, нұсқап көрсетуді немесе коммуникацияның балама тәсілдерін қолданады."
+
+#: apps/questionnaire/questions.py:71
+msgid "Ребёнку трудно выразить свои мысли словами."
+msgstr "Балаға өз ойын сөзбен жеткізу қиын."
+
+#: apps/questionnaire/questions.py:73
+msgid "Познавательное развитие"
+msgstr "Танымдық даму"
+
+#: apps/questionnaire/questions.py:74
+msgid "Ребёнок может удерживать внимание на одном задании."
+msgstr "Бала зейінін бір тапсырмада ұстай алады."
+
+#: apps/questionnaire/questions.py:75
+msgid "Может самостоятельно выполнять задания без постоянной помощи взрослого."
+msgstr "Ересектің тұрақты көмегінсіз тапсырмаларды өз бетінше орындай алады."
+
+#: apps/questionnaire/questions.py:76
+msgid "Запоминает новую информацию."
+msgstr "Жаңа ақпаратты есте сақтайды."
+
+#: apps/questionnaire/questions.py:77
+msgid "Может вспомнить ранее изученный материал."
+msgstr "Бұрын оқып-үйренген материалды еске түсіре алады."
+
+#: apps/questionnaire/questions.py:78
+msgid "Различает цвета, формы и величины."
+msgstr "Түстерді, пішіндерді және шамаларды ажыратады."
+
+#: apps/questionnaire/questions.py:79
+msgid "Ориентируется в пространстве (право, лево, верх, низ)."
+msgstr "Кеңістікте бағдарлай алады (оң, сол, жоғары, төмен)."
+
+#: apps/questionnaire/questions.py:80
+msgid "Ориентируется во времени (вчера, сегодня, завтра, времена года)."
+msgstr "Уақытта бағдарлай алады (кеше, бүгін, ертең, жыл мезгілдері)."
+
+#: apps/questionnaire/questions.py:81
+msgid "Умеет сравнивать предметы и находить отличия."
+msgstr "Заттарды салыстырып, айырмашылықтарын таба алады."
+
+#: apps/questionnaire/questions.py:82
+msgid "Может классифицировать предметы по определённым признакам."
+msgstr "Заттарды белгілі бір белгілері бойынша топтастыра алады."
+
+#: apps/questionnaire/questions.py:83
+msgid "Понимает причинно-следственные связи."
+msgstr "Себеп-салдарлық байланыстарды түсінеді."
+
+#: apps/questionnaire/questions.py:84
+msgid "Может решать простые логические задачи."
+msgstr "Қарапайым логикалық есептерді шеше алады."
+
+#: apps/questionnaire/questions.py:85
+msgid "Испытывает трудности при усвоении новых знаний."
+msgstr "Жаңа білімді меңгеруде қиындықтарға тап болады."
+
+#: apps/questionnaire/questions.py:86
+msgid "Быстро забывает ранее изученный материал."
+msgstr "Бұрын оқып-үйренген материалды тез ұмытады."
+
+#: apps/questionnaire/questions.py:88
+msgid "Эмоциональное развитие и поведение"
+msgstr "Эмоционалдық даму және мінез-құлық"
+
+#: apps/questionnaire/questions.py:89
+msgid "Ребёнок умеет контролировать свои эмоции."
+msgstr "Бала өз эмоцияларын басқара алады."
+
+#: apps/questionnaire/questions.py:90
+msgid "Спокойно реагирует на отказ или запрет."
+msgstr "Өтініші орындалмағанда немесе тыйым салынғанда сабыр сақтайды."
+
+#: apps/questionnaire/questions.py:91
+msgid "Может самостоятельно справляться с неудачами."
+msgstr "Сәтсіздіктерді өз бетінше жеңе алады."
+
+#: apps/questionnaire/questions.py:92
+msgid "Принимает изменения привычного распорядка."
+msgstr "Үйреншікті күн тәртібінің өзгеруін қабылдайды."
+
+#: apps/questionnaire/questions.py:93
+msgid "Может ждать своей очереди."
+msgstr "Өз кезегін күте алады."
+
+#: apps/questionnaire/questions.py:94
+msgid "Соблюдает правила и договорённости."
+msgstr "Ережелер мен уағдаластықтарды сақтайды."
+
+#: apps/questionnaire/questions.py:95
+msgid "Может длительное время заниматься одним видом деятельности."
+msgstr "Бір іс-әрекет түрімен ұзақ уақыт айналыса алады."
+
+#: apps/questionnaire/questions.py:96
+msgid "Проявляет агрессию по отношению к окружающим."
+msgstr "Айналасындағыларға агрессия танытады."
+
+#: apps/questionnaire/questions.py:97
+msgid "Часто возникают истерики или эмоциональные срывы."
+msgstr "Жиі истерикаға түседі немесе эмоциясын ұстай алмай қалады."
+
+#: apps/questionnaire/questions.py:98
+msgid "Может причинять вред себе (бьёт себя, кусает, ударяется)."
+msgstr ""
+"Өзіне зиян келтіруі мүмкін (өзін ұрады, тістейді, басын немесе денесін "
+"заттарға соғады)."
+
+#: apps/questionnaire/questions.py:99
+msgid "Проявляет повторяющиеся действия или движения."
+msgstr "Қайталанатын әрекеттер немесе қимылдар байқалады."
+
+#: apps/questionnaire/questions.py:100
+msgid "Трудно переключается с одного занятия на другое."
+msgstr "Бір іс-әрекеттен екіншісіне ауысуы қиын."
+
+#: apps/questionnaire/questions.py:102
+msgid "Социальное взаимодействие"
+msgstr "Әлеуметтік өзара әрекеттестік"
+
+#: apps/questionnaire/questions.py:103
+msgid "Ребёнок самостоятельно вступает в контакт со взрослыми."
+msgstr "Бала ересектермен өз бетінше байланысқа түседі."
+
+#: apps/questionnaire/questions.py:104
+msgid "Инициирует общение со сверстниками."
+msgstr "Құрдастарымен қарым-қатынасты өзі бастайды."
+
+#: apps/questionnaire/questions.py:105
+msgid "Проявляет интерес к совместным играм."
+msgstr "Бірлескен ойындарға қызығушылық танытады."
+
+#: apps/questionnaire/questions.py:106
+msgid "Умеет играть по правилам."
+msgstr "Ереже бойынша ойнай алады."
+
+#: apps/questionnaire/questions.py:107
+msgid "Понимает эмоции других людей."
+msgstr "Басқа адамдардың эмоцияларын түсінеді."
+
+#: apps/questionnaire/questions.py:108
+msgid "Может обратиться за помощью."
+msgstr "Көмек сұрай алады."
+
+#: apps/questionnaire/questions.py:109
+msgid "Умеет делиться игрушками и предметами."
+msgstr "Ойыншықтарымен және заттарымен бөлісе алады."
+
+#: apps/questionnaire/questions.py:110
+msgid "Поддерживает зрительный контакт в естественных ситуациях общения."
+msgstr "Табиғи қарым-қатынас жағдайларында көзбен байланысты сақтайды."
+
+#: apps/questionnaire/questions.py:111
+msgid "Проявляет интерес к окружающим людям."
+msgstr "Айналасындағы адамдарға қызығушылық танытады."
+
+#: apps/questionnaire/questions.py:112
+msgid "Предпочитает находиться в одиночестве."
+msgstr "Жалғыз болуды қалайды."
+
+#: apps/questionnaire/questions.py:113
+msgid "Испытывает трудности при взаимодействии с другими детьми."
+msgstr "Басқа балалармен өзара әрекеттесуде қиындықтарға тап болады."
+
+#: apps/questionnaire/questions.py:115
+msgid "Двигательное развитие и физическая активность"
+msgstr "Қимыл-қозғалыс дамуы және дене белсенділігі"
+
+#: apps/questionnaire/questions.py:116
+msgid "Ребёнок уверенно ходит, бегает и прыгает."
+msgstr "Бала сенімді түрде жүреді, жүгіреді және секіреді."
+
+#: apps/questionnaire/questions.py:117
+msgid "Хорошо сохраняет равновесие."
+msgstr "Тепе-теңдікті жақсы сақтайды."
+
+#: apps/questionnaire/questions.py:118
+msgid "Может выполнять движения по показу взрослого."
+msgstr "Ересектің көрсетуі бойынша қимылдарды орындай алады."
+
+#: apps/questionnaire/questions.py:119
+msgid "Координирует движения рук и ног."
+msgstr "Қол мен аяқ қимылдарын үйлестіреді."
+
+#: apps/questionnaire/questions.py:120
+msgid "Может ловить и бросать мяч."
+msgstr "Допты қағып алып, лақтыра алады."
+
+#: apps/questionnaire/questions.py:121
+msgid "Испытывает трудности при выполнении физических упражнений."
+msgstr "Дене жаттығуларын орындауда қиындықтарға тап болады."
+
+#: apps/questionnaire/questions.py:122
+msgid "Быстро утомляется при физической нагрузке."
+msgstr "Дене жүктемесінде тез шаршайды."
+
+#: apps/questionnaire/questions.py:123
+msgid "Наблюдается неловкость движений."
+msgstr "Қимылдарында ебедейсіздік байқалады."
+
+#: apps/questionnaire/questions.py:124
+msgid ""
+"Испытывает трудности с мелкой моторикой (застёгивание пуговиц, использование "
+"ножниц, рисование)."
+msgstr ""
+"Ұсақ моторикада қиындықтарға тап болады (түйме салу, қайшы қолдану, сурет "
+"салу)."
+
+#: apps/questionnaire/questions.py:125
+msgid "Избегает подвижных игр и физических упражнений."
+msgstr "Қимылды ойындар мен дене жаттығуларынан қашқақтайды."
+
+#: apps/questionnaire/questions.py:127
+msgid "Навыки самообслуживания и самостоятельность"
+msgstr "Өзіне-өзі қызмет көрсету дағдылары және дербестік"
+
+#: apps/questionnaire/questions.py:128
+msgid "Самостоятельно одевается и раздевается."
+msgstr "Өз бетінше киінеді және шешінеді."
+
+#: apps/questionnaire/questions.py:129
+msgid "Самостоятельно принимает пищу."
+msgstr "Өз бетінше тамақтанады."
+
+#: apps/questionnaire/questions.py:130
+msgid "Пользуется туалетом без помощи взрослого."
+msgstr "Ересектің көмегінсіз дәретханаға барады."
+
+#: apps/questionnaire/questions.py:131
+msgid "Соблюдает правила личной гигиены."
+msgstr "Жеке гигиена ережелерін сақтайды."
+
+#: apps/questionnaire/questions.py:132
+msgid "Может самостоятельно организовать простые бытовые действия."
+msgstr "Қарапайым тұрмыстық әрекеттерді өз бетінше ұйымдастыра алады."
+
+#: apps/questionnaire/questions.py:133
+msgid "Убирает за собой игрушки и личные вещи."
+msgstr "Ойыншықтары мен жеке заттарын өзі жинастырады."
+
+#: apps/questionnaire/questions.py:134
+msgid "Может самостоятельно выполнять привычные повседневные действия."
+msgstr "Үйреншікті күнделікті әрекеттерді өз бетінше орындай алады."
+
+#: apps/questionnaire/questions.py:135
+msgid "Требует постоянного контроля и помощи взрослых."
+msgstr "Ересектердің үнемі бақылауы мен көмегін қажет етеді."
+
+#: apps/questionnaire/questions.py:137
+msgid "Дополнительная информация от родителей"
+msgstr "Ата-аналардан қосымша ақпарат"
+
+#: apps/questionnaire/questions.py:138
+msgid "Какие трудности в развитии ребёнка беспокоят вас больше всего?"
+msgstr "Баланың дамуындағы қандай қиындықтар сізді бәрінен көп алаңдатады?"
+
+#: apps/questionnaire/questions.py:139
+msgid "Какие навыки вы хотели бы развить в первую очередь?"
+msgstr "Қандай дағдыларды бірінші кезекте дамытқыңыз келеді?"
+
+#: apps/questionnaire/questions.py:140
+msgid "В каких ситуациях ребёнку особенно трудно?"
+msgstr "Қандай жағдайларда балаға әсіресе қиын?"
+
+#: apps/questionnaire/questions.py:141
+msgid "Что у ребёнка получается лучше всего? Какие у него сильные стороны?"
+msgstr "Бала нені бәрінен жақсы істейді? Оның күшті жақтары қандай?"
+
+#: apps/questionnaire/questions.py:142
+msgid "Какие занятия ребёнку нравятся больше всего?"
+msgstr "Балаға қандай сабақтар бәрінен көп ұнайды?"
+
+#: apps/questionnaire/questions.py:143
+msgid "Какой результат от коррекционных занятий вы хотели бы получить?"
+msgstr "Түзету сабақтарынан қандай нәтиже алғыңыз келеді?"
+
 #: apps/search/forms.py:74
 msgid "По релевантности"
 msgstr "Сәйкестігі бойынша"
@@ -156,14 +535,14 @@ msgstr "Өтілі бойынша"
 #: templates/catalog/specialist_detail.html:21
 #: templates/catalog/specialist_detail.html:81
 #: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:12
+#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:10
 msgid "бесплатно"
 msgstr "тегін"
 
 #: apps/search/templatetags/search_tags.py:29
 #: templates/catalog/specialist_detail.html:21
 #: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:12
+#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:10
 #, python-format
 msgid "от %(price)s ₸"
 msgstr "%(price)s ₸ бастап"
@@ -172,11 +551,11 @@ msgstr "%(price)s ₸ бастап"
 #: templates/catalog/specialist_detail.html:21
 #: templates/catalog/specialist_detail.html:81
 #: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:12
+#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:10
 msgid "цена по запросу"
 msgstr "бағасы сұраныс бойынша"
 
-#: apps/search/templatetags/search_tags.py:31 templates/search/_card.html:21
+#: apps/search/templatetags/search_tags.py:31 templates/search/_card.html:19
 msgid "Подробнее"
 msgstr "Толығырақ"
 
@@ -309,16 +688,11 @@ msgstr "Код алу"
 msgid "Перейти к содержанию"
 msgstr "Мазмұнға өту"
 
-#: templates/catalog/_badges.html:2 templates/catalog/_badges.html:9
+#: templates/catalog/_badges.html:2 templates/catalog/_badges.html:8
 msgid "Демо: проверка не проводилась"
 msgstr "Демо: тексеру жүргізілмеген"
 
-#: templates/catalog/_badges.html:4
-#, python-format
-msgid "Проверено: %(n)s из %(total)s"
-msgstr "Тексерілген: %(n)s / %(total)s"
-
-#: templates/catalog/_badges.html:10 templates/search/_filters.html:148
+#: templates/catalog/_badges.html:9 templates/search/_filters.html:148
 msgid "демо"
 msgstr "демо"
 
@@ -523,23 +897,27 @@ msgstr "Кез келген қала"
 msgid "Найти"
 msgstr "Іздеу"
 
-#: templates/core/home.html:35
+#: templates/core/home.html:32
+msgid "Пройти опросник для определения необходимых специалистов"
+msgstr "Қажетті мамандарды анықтау үшін сауалнамадан өту"
+
+#: templates/core/home.html:36
 msgid "Популярные специализации"
 msgstr "Танымал мамандықтар"
 
-#: templates/core/home.html:40
+#: templates/core/home.html:41
 msgid "Специалистов"
 msgstr "Мамандар саны"
 
-#: templates/core/home.html:47
+#: templates/core/home.html:48
 msgid "Города"
 msgstr "Қалалар"
 
-#: templates/core/home.html:56
+#: templates/core/home.html:57
 msgid "Что значит проверенный специалист"
 msgstr "Тексерілген маман дегеніміз не"
 
-#: templates/core/home.html:57
+#: templates/core/home.html:58
 msgid ""
 "Мы показываем не общую галочку, а то, что именно проверено. Сырые документы "
 "не публикуются: видны только уровни проверки."
@@ -547,15 +925,15 @@ msgstr ""
 "Біз жалпы белгіні емес, нақты нені тексергенімізді көрсетеміз. Құжаттардың "
 "түпнұсқасы жарияланбайды: тек тексеру деңгейлері көрінеді."
 
-#: templates/core/home.html:67
+#: templates/core/home.html:68
 msgid "Вы специалист?"
 msgstr "Сіз маманысыз ба?"
 
-#: templates/core/home.html:68
+#: templates/core/home.html:69
 msgid "Расскажите о себе и своих услугах родителям, которые ищут помощь."
 msgstr "Көмек іздеген ата-аналарға өзіңіз және қызметтеріңіз туралы айтыңыз."
 
-#: templates/core/home.html:69
+#: templates/core/home.html:70
 msgid "Разместить профиль"
 msgstr "Профиль орналастыру"
 
@@ -571,7 +949,111 @@ msgstr "Барлық құрылғылардан шығу"
 msgid "Язык интерфейса"
 msgstr "Интерфейс тілі"
 
-#: templates/search/_card.html:18
+#: templates/questionnaire/form.html:3 templates/questionnaire/form.html:7
+msgid "Опросник для родителей"
+msgstr "Ата-аналарға арналған сауалнама"
+
+#: templates/questionnaire/form.html:8
+msgid "Первичная оценка особенностей развития ребёнка"
+msgstr "Баланың даму ерекшеліктерін алғашқы бағалау"
+
+#: templates/questionnaire/form.html:10
+msgid "Это не медицинская диагностика, а рекомендация."
+msgstr "Бұл медициналық диагностика емес, ұсыным."
+
+#: templates/questionnaire/form.html:11
+msgid "Ответы не сохраняются. Баллы считаются только для показа результата."
+msgstr "Жауаптар сақталмайды. Ұпайлар тек нәтижені көрсету үшін есептеледі."
+
+#: templates/questionnaire/form.html:42
+msgid "Получить рекомендацию"
+msgstr "Ұсыным алу"
+
+#: templates/questionnaire/result.html:3 templates/questionnaire/result.html:6
+msgid "Рекомендация по результатам опросника"
+msgstr "Сауалнама нәтижелері бойынша ұсыным"
+
+#: templates/questionnaire/result.html:8
+msgid "Вы ещё не прошли опросник."
+msgstr "Сіз әлі сауалнамадан өтпедіңіз."
+
+#: templates/questionnaire/result.html:8
+msgid "Вы не ответили ни на одно утверждение со шкалой."
+msgstr "Сіз шкаласы бар бірде-бір тұжырымға жауап бермедіңіз."
+
+#: templates/questionnaire/result.html:10
+msgid "Пройти опросник"
+msgstr "Сауалнамадан өту"
+
+#: templates/questionnaire/result.html:11
+#: templates/questionnaire/result.html:55
+msgid "На главную"
+msgstr "Басты бетке"
+
+#: templates/questionnaire/result.html:16
+msgid "Наивысший балл"
+msgstr "Ең жоғары ұпай"
+
+#: templates/questionnaire/result.html:17
+#: templates/questionnaire/result.html:25
+msgid ""
+"Баллы показывают, как часто наблюдается описанное в утверждениях раздела. "
+"Это не оценка нормы и не диагноз."
+msgstr ""
+"Ұпайлар бөлімнің тұжырымдарында сипатталғанның қаншалықты жиі байқалатынын "
+"көрсетеді. Бұл норманы бағалау емес және диагноз емес."
+
+#: templates/questionnaire/result.html:20
+#: templates/questionnaire/result.html:35
+#, python-format
+msgid "баллов: %(total)s из %(max)s"
+msgstr "ұпай: %(total)s / %(max)s"
+
+#: templates/questionnaire/result.html:25
+msgid "Во всех разделах 0 баллов."
+msgstr "Барлық бөлімдерде 0 ұпай."
+
+#: templates/questionnaire/result.html:28
+msgid "Баллы по разделам"
+msgstr "Бөлімдер бойынша ұпайлар"
+
+#: templates/questionnaire/result.html:36
+#, python-format
+msgid "ответов: %(answered)s из %(n)s"
+msgstr "жауап: %(answered)s / %(n)s"
+
+#: templates/questionnaire/result.html:36
+msgid "нет ответов"
+msgstr "жауап жоқ"
+
+#: templates/questionnaire/result.html:43
+msgid ""
+"По результатам оценки особенностей развития ребёнка вам следует обратиться к "
+"следующим специалистам:"
+msgstr ""
+"Баланың даму ерекшеліктерін бағалау нәтижелері бойынша келесі мамандарға "
+"жүгінгеніңіз жөн:"
+
+#: templates/questionnaire/result.html:44
+msgid "Рекомендация примерная: специалисты пока подбираются без учёта баллов."
+msgstr "Ұсыным шамамен берілген: мамандар әзірге ұпайлар ескерілмей таңдалады."
+
+#: templates/questionnaire/result.html:49
+msgid "Список специалистов временно недоступен."
+msgstr "Мамандар тізімі уақытша қолжетімсіз."
+
+#: templates/questionnaire/result.html:52
+msgid ""
+"(Это не является медицинской диагностикой, а носит рекомендательный "
+"характер.)"
+msgstr ""
+"(Бұл медициналық диагностика болып табылмайды, ұсынымдық сипатта болады.)"
+
+#: templates/questionnaire/result.html:54
+msgid "Пройти опросник заново"
+msgstr "Сауалнамадан қайта өту"
+
+#: templates/search/_card.html:16
 #, python-format
 msgid "≈ %(distance)s км"
 msgstr "≈ %(distance)s км"

@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "apps.geo",
     "apps.catalog",
     "apps.search",
+    "apps.questionnaire",
     "apps.demo",
 ]
 

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load i18n l10n catalog_tags %}
+{% block title %}{% translate "Рекомендация по результатам опросника" %} - {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl space-y-6 px-4 py-6 sm:px-6 sm:py-10">
+  <h1 class="text-3xl font-bold leading-tight">{% translate "Рекомендация по результатам опросника" %}</h1>
+  {% if not answered_any %}
+  <p class="text-slate-700">{% if scores is None %}{% translate "Вы ещё не прошли опросник." %}{% else %}{% translate "Вы не ответили ни на одно утверждение со шкалой." %}{% endif %}</p>
+  <p class="flex flex-wrap gap-x-6 gap-y-2">
+    <a href="{% url 'questionnaire:questionnaire' %}" class="inline-flex min-h-11 items-center font-medium text-primary-800 underline">{% translate "Пройти опросник" %}</a>
+    <a href="{% url 'core:home' %}" class="inline-flex min-h-11 items-center font-medium text-primary-800 underline">{% translate "На главную" %}</a>
+  </p>
+  {% else %}
+  {% if top %}
+  <section id="top-sections" aria-labelledby="top-title" class="rounded border-l-4 border-primary-600 bg-brand-50 px-4 py-3">
+    <h2 id="top-title" class="text-xl font-semibold">{% translate "Наивысший балл" %}</h2>
+    <p class="mt-1 text-sm text-slate-700">{% translate "Баллы показывают, как часто наблюдается описанное в утверждениях раздела. Это не оценка нормы и не диагноз." %}</p>
+    <ul class="mt-2 space-y-1">
+      {% for s in top %}
+      <li class="text-slate-800"><span class="font-medium">{{ s.section.title }}</span> - {% blocktranslate with total=s.total max=s.max_total %}баллов: {{ total }} из {{ max }}{% endblocktranslate %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% else %}
+  <p class="rounded border-l-4 border-slate-400 bg-slate-50 px-4 py-3 text-slate-700">{% translate "Во всех разделах 0 баллов." %} {% translate "Баллы показывают, как часто наблюдается описанное в утверждениях раздела. Это не оценка нормы и не диагноз." %}</p>
+  {% endif %}
+  <section aria-labelledby="scores-title" class="space-y-2">
+    <h2 id="scores-title" class="text-xl font-semibold">{% translate "Баллы по разделам" %}</h2>
+    <table aria-labelledby="scores-title" class="w-full border-collapse text-left">
+      <tbody>
+        {% for s in scores %}
+        <tr class="border-b border-slate-200 align-top">
+          <th scope="row" class="py-2 pr-3 text-left font-medium">{{ s.section.title }}</th>
+          <td class="py-2 text-slate-800">
+            {% blocktranslate with total=s.total max=s.max_total %}баллов: {{ total }} из {{ max }}{% endblocktranslate %}
+            <span class="block text-sm text-slate-600">{% if s.answered %}{% blocktranslate with answered=s.answered n=s.section.questions|length %}ответов: {{ answered }} из {{ n }}{% endblocktranslate %}{% else %}{% translate "нет ответов" %}{% endif %}</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  <p class="text-slate-700">{% translate "По результатам оценки особенностей развития ребёнка вам следует обратиться к следующим специалистам:" %}</p>
+  <p class="rounded border-l-4 border-slate-400 bg-slate-50 px-4 py-3 text-slate-700">{% translate "Рекомендация примерная: специалисты пока подбираются без учёта баллов." %}</p>
+  <ul class="space-y-2">
+    {% for t in types %}
+    <li><a href="{% url 'search:results' %}?specialist_type_ids={{ t.id|unlocalize }}" class="flex min-h-12 items-center rounded-lg border border-slate-200 px-4 py-2 font-medium text-primary-800 hover:border-primary-700 hover:bg-primary-50">{{ t|tr:"name" }}</a></li>
+    {% empty %}
+    <li class="text-slate-700">{% translate "Список специалистов временно недоступен." %}</li>
+    {% endfor %}
+  </ul>
+  <p class="text-sm text-slate-600">{% translate "(Это не является медицинской диагностикой, а носит рекомендательный характер.)" %}</p>
+  <p class="flex flex-wrap gap-x-6 gap-y-2">
+    <a href="{% url 'questionnaire:questionnaire' %}" class="inline-flex min-h-11 items-center font-medium text-primary-800 underline">{% translate "Пройти опросник заново" %}</a>
+    <a href="{% url 'core:home' %}" class="inline-flex min-h-11 items-center font-medium text-primary-800 underline">{% translate "На главную" %}</a>
+  </p>
+  {% endif %}
+</div>
+{% endblock %}

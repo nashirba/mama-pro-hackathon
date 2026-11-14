@@ -50,7 +50,9 @@ def test_nanny_card_shows_prices_training_and_marks(client, nannies):
     html = client.get("/ru/nannies/").content.decode()
     assert "3\xa0000 ₸ в час" in html and "15\xa0000 ₸ за ночь" in html and "200\xa0000 ₸ в месяц" in html
     assert "112 часов" in html and "3 курса" in html
-    assert "Первая помощь" in html and "Справка о несудимости" in html
+    card = html.split('data-nanny="aigul-nanny"')[1].split("</article>")[0]
+    # Only fully checked nannies are listed, so a card carries one mark, not the list of checks.
+    assert "Проверено Мама Про" in card and "Справка о несудимости" not in card
     assert "Алмалинский район" in html
 
 

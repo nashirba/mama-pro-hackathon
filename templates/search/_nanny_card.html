@@ -1,17 +1,16 @@
 {% load i18n catalog_tags favorites_tags %}{% with s=card.specialist %}{% contact_links s as contacts %}
 <article data-nanny="{{ s.slug }}" class="card-lift relative flex h-full gap-3 rounded-lg border border-slate-200 p-4 hover:border-primary-300 hover:bg-slate-50 focus-within:border-primary-300 sm:gap-4">
   {% include "catalog/_photo.html" with profile=s size_class="h-12 w-12 sm:h-16 sm:w-16" %}
-  <div class="absolute right-2 top-2 z-10">{% favorite_button s %}</div>
-  <div class="flex min-w-0 flex-1 flex-col space-y-1.5 pr-10">
-    <h2 class="text-lg font-semibold"><a href="{% url 'catalog:nanny' s.slug %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{{ s.display_name }}</a></h2>
+  <div class="flex min-w-0 flex-1 flex-col space-y-1.5">
+    <div class="flex items-start gap-1">
+      <h2 class="min-w-0 flex-1 text-lg font-semibold"><a href="{% url 'catalog:nanny' s.slug %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{{ s.display_name }}</a></h2>
+      <div class="-mr-2 -mt-2 shrink-0">{% favorite_button s %}</div>
+    </div>
     <p>{% include "catalog/_rating.html" with rating=card.rating %}</p>
     <p class="text-base font-semibold text-slate-900">{% include "catalog/_nanny_prices.html" with price_hour=card.price_hour price_night=card.price_night price_month=card.price_month %}</p>
     <p class="text-sm text-slate-600">{% blocktranslate count n=s.experience_years %}Опыт {{ n }} год{% plural %}Опыт {{ n }} лет{% endblocktranslate %} · {% blocktranslate with min=s.age_min max=s.age_max %}дети {{ min }}–{{ max }} лет{% endblocktranslate %}{% if s.languages.all %} · {% for lang in s.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}</p>
     <p class="text-sm text-slate-800">{% include "catalog/_training_total.html" with profile=s %}</p>
-    <ul class="flex flex-wrap gap-1 text-xs font-medium text-primary-800">
-      <li class="inline-flex items-center gap-1 rounded-md bg-primary-50 px-2 py-0.5"><svg class="size-3.5 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>{% translate "Первая помощь" %}</li>
-      <li class="inline-flex items-center gap-1 rounded-md bg-primary-50 px-2 py-0.5"><svg class="size-3.5 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>{% translate "Справка о несудимости" %}</li>
-    </ul>
+    {% include "catalog/_badges.html" with profile=s compact=True %}
     {% with conditions=s.conditions.all %}{% if conditions %}
     <ul class="flex flex-wrap gap-1 text-xs text-slate-700" aria-label="{% translate 'Особенности развития' %}">
       {% for c in conditions|slice:":3" %}<li class="rounded-full bg-slate-100 px-2 py-0.5">{{ c.name }}</li>{% endfor %}

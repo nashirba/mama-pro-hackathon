@@ -1,13 +1,16 @@
 {% load i18n catalog_tags search_tags favorites_tags %}{% with s=card.specialist h=heading|default:'' %}{% contact_links s as contacts %}
 <article data-specialist="{{ s.slug }}" class="card-lift relative flex h-full gap-3 rounded-lg border border-slate-200 p-4 hover:border-primary-300 hover:bg-slate-50 focus-within:border-primary-300 sm:gap-4">
   {% include "catalog/_photo.html" with profile=s size_class="h-12 w-12 sm:h-16 sm:w-16" %}
-  <div class="absolute right-2 top-2 z-10">{% favorite_button s %}</div>
-  <div class="@container flex min-w-0 flex-1 flex-col space-y-1.5 pr-10">
-    <div class="flex flex-col gap-0.5 @xs:flex-row @xs:items-baseline @xs:justify-between @xs:gap-3">
-      <div class="min-w-0">
-        <h2 class="text-lg font-semibold"><a href="{% url 'catalog:specialist' s.slug %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{{ s.display_name }}</a></h2>
+  <div class="@container flex min-w-0 flex-1 flex-col space-y-1.5">
+    {# The heart sits in the header row, next to the price, so it never covers the name or the price. #}
+    <div class="flex items-start gap-1">
+      <div class="flex min-w-0 flex-1 flex-col gap-0.5 @xs:flex-row @xs:items-baseline @xs:justify-between @xs:gap-3">
+        <div class="min-w-0">
+          <h2 class="text-lg font-semibold"><a href="{% url 'catalog:specialist' s.slug %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{{ s.display_name }}</a></h2>
+        </div>
+        <p class="shrink-0 text-base font-semibold text-slate-900 @xs:text-right">{% if card.price_from == 0 %}{% translate "бесплатно" %}{% elif card.price_from %}{% blocktranslate with price=card.price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>
       </div>
-      <p class="shrink-0 text-base font-semibold text-slate-900 @xs:text-right">{% if card.price_from == 0 %}{% translate "бесплатно" %}{% elif card.price_from %}{% blocktranslate with price=card.price_from|floatformat:"0g" %}от {{ price }} ₸{% endblocktranslate %}{% else %}{% translate "цена по запросу" %}{% endif %}</p>
+      <div class="-mr-2 -mt-2 shrink-0">{% favorite_button s %}</div>
     </div>
     <p>{% include "catalog/_rating.html" with rating=card.rating %}</p>
     <p class="text-sm text-slate-600">{% for t in s.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>

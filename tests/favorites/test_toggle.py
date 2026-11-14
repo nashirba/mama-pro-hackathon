@@ -96,8 +96,10 @@ def test_card_heart_shows_state_and_sits_above_overlay(client, catalog_fixture):
     FavoriteFactory(user=user, profile=SpecialistProfile.objects.get(slug="ivanova-logoped"))
     html = client.get("/ru/specialists/").content.decode()
     assert html.count('aria-pressed="true"') == 1
-    wrapper = re.search(r'<div class="([^"]*)"><form[^>]*favorites/ivanova-logoped/toggle/', html)
-    assert wrapper and {"absolute", "right-2", "top-2", "z-10"} <= set(wrapper.group(1).split())
+    # The heart sits in the card's header row (not absolutely over the price) and its button stays above the card link.
+    wrapper = re.search(r'<div class="([^"]*)"><form[^>]*favorites/ivanova-logoped/toggle/.*?<button[^>]*class="([^"]*)"', html, re.S)
+    assert wrapper and "absolute" not in wrapper.group(1).split()
+    assert {"relative", "z-10"} <= set(wrapper.group(2).split())
 
 
 def test_card_form_has_csrf_token(client, catalog_fixture):

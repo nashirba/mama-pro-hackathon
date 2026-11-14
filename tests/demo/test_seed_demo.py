@@ -186,3 +186,9 @@ def test_seed_demo_criminal_records_are_in_the_past(db):
     today = timezone.localdate()
     dates = [n.criminal_record_issued_on for n in SpecialistProfile.objects.filter(category=ProfileCategory.NANNY)]
     assert any(dates) and all(d <= today - datetime.timedelta(days=30) for d in dates if d)
+
+
+def test_seed_demo_sets_specialist_user_names(db):
+    call_command("seed_demo", specialists=5, seed=1)
+    profile = SpecialistProfile.objects.filter(category=ProfileCategory.SPECIALIST).select_related("user").first()
+    assert (profile.user.last_name, profile.user.first_name) == tuple(profile.display_name.split(" ", 1))

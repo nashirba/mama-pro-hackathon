@@ -153,3 +153,9 @@ def test_demo_consent_does_not_claim_storage_in_kazakhstan(client, db, settings)
     settings.DEPLOY_PROFILE = "test"
     assert "на территории Республики Казахстан" in client.get("/ru/login/code/").content.decode()
     assert "Мы отправим код подтверждения" in client.get("/ru/login/").content.decode()
+
+
+def test_pd_consent_lists_names_and_children(client, db):
+    client.post("/ru/login/", {"phone": "+77011234567"})
+    html = client.get("/ru/login/code/").content.decode()
+    assert "фамилия, имя и дата рождения" in html and "пол детей" in html

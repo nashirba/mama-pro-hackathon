@@ -254,14 +254,14 @@ def test_card_mark_unmarked_outside_demo(client, catalog_fixture, settings):
 
 def test_specialists_intro_explains_verification(client, catalog_fixture):
     html = client.get("/ru/specialists/").content.decode()
-    assert "Что значит проверенный специалист" in html
+    assert "Все специалисты проверены Мама Про" in html
     assert "прошли все проверки Мама Про" in html
     for level in ("Личность подтверждена", "Образование подтверждено", "Квалификация подтверждена", "Проверка на безопасность пройдена"):
         assert level in html
 
 
 def test_specialists_intro_not_on_nannies_page(client, catalog_fixture):
-    assert "Что значит проверенный специалист" not in client.get("/ru/nannies/").content.decode()
+    assert "Все специалисты проверены Мама Про" not in client.get("/ru/nannies/").content.decode()
 
 
 def test_home_still_lists_verification_levels(client, catalog_fixture):

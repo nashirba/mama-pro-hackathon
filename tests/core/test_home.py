@@ -59,7 +59,7 @@ def test_robots_disallows_all(client):
 
 def test_home_has_questionnaire_button(client, catalog_fixture):
     html = client.get("/ru/").content.decode()
-    assert 'href="/ru/questionnaire/"' in html and "Пройти опросник для определения необходимых специалистов" in html
+    assert 'href="/ru/questionnaire/"' in html and "Не знаете, к кому идти? Пройдите опросник" in html
 
 
 def test_home_has_nannies_block_with_count_of_shown_nannies(client, nannies):

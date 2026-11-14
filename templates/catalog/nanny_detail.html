@@ -12,8 +12,8 @@
     {% include "catalog/_photo.html" with size_class="h-16 w-16 text-2xl sm:h-24 sm:w-24 sm:text-4xl" %}
     <div class="min-w-0 flex-1 space-y-2">
       <div class="flex items-start justify-between gap-2"><h1 class="text-2xl font-bold">{{ profile.display_name }}</h1>{% favorite_button profile %}</div>
+      <p class="font-medium text-slate-800">{% translate "Няня для ребёнка с особенностями развития" %}</p>
       <p>{% include "catalog/_rating.html" with href="#reviews" %}</p>
-      <p class="text-slate-600">{% translate "Няня для ребёнка с особенностями развития" %}</p>
       {% include "catalog/_badges.html" %}
       {% include "catalog/_detail_mobile_contacts.html" %}
     </div>

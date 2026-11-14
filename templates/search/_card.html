@@ -12,8 +12,8 @@
       </div>
       <div class="-mr-2 -mt-2 shrink-0">{% favorite_button s %}</div>
     </div>
+    <p class="text-sm font-medium text-slate-800">{% for t in s.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     <p>{% include "catalog/_rating.html" with rating=card.rating %}</p>
-    <p class="text-sm text-slate-600">{% for t in s.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     {% include "catalog/_badges.html" with profile=s compact=True %}
     <p class="text-sm text-slate-600">{% blocktranslate count n=s.experience_years %}Стаж {{ n }} год{% plural %}Стаж {{ n }} лет{% endblocktranslate %}{% with formats=card|card_formats %}{% if formats %} · {% for f in formats %}{{ f|format_label }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% endwith %}{% if s.languages.all %} · {% for lang in s.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}</p>
     {% if card.nearest_district_name or card.distance_m is not None %}<p class="flex items-start gap-2 text-sm text-slate-600">

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 00:40+0500\n"
+"POT-Creation-Date: 2026-11-15 00:59+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -397,6 +397,66 @@ msgstr ""
 msgid "Закрыта"
 msgstr ""
 
+#: apps/community/templatetags/community.py:11
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d year"
+msgid_plural "%(num)d years"
+msgstr[0] "%(num)d год"
+msgstr[1] "%(num)d года"
+msgstr[2] "%(num)d лет"
+msgstr[3] "%(num)d года"
+
+#: apps/community/templatetags/community.py:12
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d month"
+msgid_plural "%(num)d months"
+msgstr[0] "%(num)d месяц"
+msgstr[1] "%(num)d месяца"
+msgstr[2] "%(num)d месяцев"
+msgstr[3] "%(num)d месяца"
+
+#: apps/community/templatetags/community.py:13
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d week"
+msgid_plural "%(num)d weeks"
+msgstr[0] "%(num)d неделя"
+msgstr[1] "%(num)d недели"
+msgstr[2] "%(num)d недель"
+msgstr[3] "%(num)d недели"
+
+#: apps/community/templatetags/community.py:14
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] "%(num)d день"
+msgstr[1] "%(num)d дня"
+msgstr[2] "%(num)d дней"
+msgstr[3] "%(num)d дня"
+
+#: apps/community/templatetags/community.py:15
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d hour"
+msgid_plural "%(num)d hours"
+msgstr[0] "%(num)d час"
+msgstr[1] "%(num)d часа"
+msgstr[2] "%(num)d часов"
+msgstr[3] "%(num)d часа"
+
+#: apps/community/templatetags/community.py:16
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d minute"
+msgid_plural "%(num)d minutes"
+msgstr[0] "%(num)d минута"
+msgstr[1] "%(num)d минуты"
+msgstr[2] "%(num)d минут"
+msgstr[3] "%(num)d минуты"
+
 #: apps/community/views.py:60
 msgid "Все"
 msgstr ""
@@ -688,7 +748,7 @@ msgid "Сертификат курса"
 msgstr ""
 
 #: apps/onboarding/models.py:93 templates/catalog/nanny_detail.html:31
-#: templates/search/_nannies_intro.html:7
+#: templates/search/_nannies_intro.html:13
 msgid "Справка о несудимости"
 msgstr ""
 
@@ -717,7 +777,7 @@ msgstr ""
 msgid "Курс с номером сертификата"
 msgstr ""
 
-#: apps/onboarding/services.py:64 templates/search/_nannies_intro.html:6
+#: apps/onboarding/services.py:64 templates/search/_nannies_intro.html:12
 msgid "Курс первой помощи детям"
 msgstr ""
 
@@ -1339,21 +1399,25 @@ msgstr ""
 msgid "Вход по номеру телефона"
 msgstr ""
 
-#: templates/accounts/phone_form.html:7
+#: templates/accounts/phone_form.html:8
+msgid "Войдите, чтобы сохранять специалистов и нянь в избранное"
+msgstr ""
+
+#: templates/accounts/phone_form.html:9
 msgid ""
 "В демо-версии SMS не отправляются, код входа будет показан на следующей "
 "странице."
 msgstr ""
 
-#: templates/accounts/phone_form.html:7
+#: templates/accounts/phone_form.html:9
 msgid "Мы отправим код подтверждения в SMS. Пароль не нужен."
 msgstr ""
 
-#: templates/accounts/phone_form.html:16 templates/cabinet/phone_form.html:15
+#: templates/accounts/phone_form.html:18 templates/cabinet/phone_form.html:15
 msgid "Например: +7 701 123 45 67"
 msgstr ""
 
-#: templates/accounts/phone_form.html:20 templates/cabinet/phone_form.html:19
+#: templates/accounts/phone_form.html:22 templates/cabinet/phone_form.html:19
 msgid "Получить код"
 msgstr ""
 
@@ -1428,7 +1492,7 @@ msgid "Изменить"
 msgstr ""
 
 #: templates/cabinet/home.html:23 templates/favorites/list.html:3
-#: templates/favorites/list.html:6 templates/partials/bottom_nav.html:14
+#: templates/favorites/list.html:6
 msgid "Избранное"
 msgstr ""
 
@@ -1452,6 +1516,10 @@ msgstr ""
 
 #: templates/cabinet/home.html:48
 msgid "Вы ещё не добавили ребёнка"
+msgstr ""
+
+#: templates/cabinet/home.html:54 templates/partials/header.html:19
+msgid "Выйти"
 msgstr ""
 
 #: templates/cabinet/phone_code.html:26
@@ -1591,7 +1659,7 @@ msgstr[3] "Всего: %(n)s часа обучения"
 msgid "от %(price)s ₸ в час"
 msgstr ""
 
-#: templates/catalog/nanny_detail.html:16
+#: templates/catalog/nanny_detail.html:15
 msgid "Няня для ребёнка с особенностями развития"
 msgstr ""
 
@@ -1701,17 +1769,17 @@ msgstr ""
 msgid "Маршрут"
 msgstr ""
 
-#: templates/community/_comment.html:8 templates/community/_post_card.html:9
+#: templates/community/_comment.html:8 templates/community/_post_card.html:8
 #, python-format
 msgid "%(t)s назад"
 msgstr ""
 
-#: templates/community/_comment.html:10 templates/community/_post_card.html:15
+#: templates/community/_comment.html:10 templates/community/_post_card.html:14
 #: templates/community/post_form.html:16
 msgid "Скрыто модератором"
 msgstr ""
 
-#: templates/community/_comment.html:15 templates/community/_post_card.html:31
+#: templates/community/_comment.html:15 templates/community/_post_card.html:30
 #: templates/community/complaint_form.html:3
 #: templates/community/complaint_form.html:7
 msgid "Пожаловаться"
@@ -1796,7 +1864,7 @@ msgstr ""
 #: templates/community/post_detail.html:3
 #: templates/community/post_detail.html:10
 #: templates/community/post_form.html:10 templates/community/rules.html:10
-#: templates/partials/bottom_nav.html:10 templates/partials/header.html:13
+#: templates/partials/header.html:13
 msgid "Сообщество"
 msgstr ""
 
@@ -2004,8 +2072,8 @@ msgstr ""
 
 #: templates/core/home.html:12
 msgid ""
-"Специалисты для детей с особенностями развития в Казахстане: понятные цены, "
-"адреса на карте и прозрачные уровни проверки документов."
+"Специалисты и няни для детей с особенностями развития в Казахстане: понятные "
+"цены, адреса на карте, каждый проверен Мама Про."
 msgstr ""
 
 #: templates/core/home.html:16
@@ -2021,7 +2089,7 @@ msgid "Любой город"
 msgstr ""
 
 #: templates/core/home.html:32
-msgid "Пройти опросник для определения необходимых специалистов"
+msgid "Не знаете, к кому идти? Пройдите опросник"
 msgstr ""
 
 #: templates/core/home.html:36
@@ -2057,18 +2125,18 @@ msgid "Свежие посты"
 msgstr ""
 
 #: templates/core/home.html:64
-msgid "Перейти в сообщество"
+msgid "Все посты"
 msgstr ""
 
 #: templates/core/home.html:73
 msgid "Города"
 msgstr ""
 
-#: templates/core/home.html:82 templates/search/_specialists_intro.html:2
+#: templates/core/home.html:82
 msgid "Что значит проверенный специалист"
 msgstr ""
 
-#: templates/core/home.html:83 templates/search/_specialists_intro.html:3
+#: templates/core/home.html:83 templates/search/_specialists_intro.html:8
 msgid ""
 "В каталог попадают только специалисты и няни, которые прошли все проверки "
 "Мама Про. Сами документы (дипломы, справки) мы не публикуем."
@@ -2359,7 +2427,18 @@ msgid "Основное меню"
 msgstr ""
 
 #: templates/partials/bottom_nav.html:6
+msgctxt "bottom nav"
 msgid "Главная"
+msgstr ""
+
+#: templates/partials/bottom_nav.html:10
+msgctxt "bottom nav"
+msgid "Сообщество"
+msgstr ""
+
+#: templates/partials/bottom_nav.html:14
+msgctxt "bottom nav"
+msgid "Избранное"
 msgstr ""
 
 #: templates/partials/bottom_nav.html:18 templates/search/_filters.html:9
@@ -2368,10 +2447,6 @@ msgstr ""
 
 #: templates/partials/bottom_nav.html:22
 msgid "Кабинет"
-msgstr ""
-
-#: templates/partials/header.html:19
-msgid "Выйти"
 msgstr ""
 
 #: templates/partials/language_switcher.html:4
@@ -2635,7 +2710,11 @@ msgstr ""
 msgid "Список"
 msgstr ""
 
-#: templates/search/_nannies_intro.html:2
+#: templates/search/_nannies_intro.html:4
+msgid "Все няни проверены Мама Про — что это значит"
+msgstr ""
+
+#: templates/search/_nannies_intro.html:8
 msgid ""
 "Няня присматривает за ребёнком с особенностями развития у вас дома: "
 "несколько часов, ночью или постоянно. Она знает, как помочь ребёнку в быту и "
@@ -2643,11 +2722,11 @@ msgid ""
 "диагнозов. Оплата - напрямую няне."
 msgstr ""
 
-#: templates/search/_nannies_intro.html:3
+#: templates/search/_nannies_intro.html:9
 msgid "У каждой няни в разделе есть"
 msgstr ""
 
-#: templates/search/_nannies_intro.html:5
+#: templates/search/_nannies_intro.html:11
 msgid "Сертификат о курсе обучения"
 msgstr ""
 
@@ -2689,6 +2768,10 @@ msgstr ""
 
 #: templates/search/_results_partial.html:23
 msgid "Вперёд"
+msgstr ""
+
+#: templates/search/_specialists_intro.html:4
+msgid "Все специалисты проверены Мама Про — что это значит"
 msgstr ""
 
 #: templates/search/_suggest.html:1

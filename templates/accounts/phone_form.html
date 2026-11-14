@@ -4,6 +4,8 @@
 {% block content %}
 <div class="mx-auto max-w-md px-4 py-10">
   <h1 class="text-2xl font-bold">{% translate "Вход по номеру телефона" %}</h1>
+  {% url "favorites:list" as favorites_url %}
+  {% if next and favorites_url in next %}<p class="mt-3 text-slate-700">{% translate "Войдите, чтобы сохранять специалистов и нянь в избранное" %}</p>{% endif %}
   <p class="mt-2 text-sm text-slate-600">{% if IS_DEMO %}{% translate "В демо-версии SMS не отправляются, код входа будет показан на следующей странице." %}{% else %}{% translate "Мы отправим код подтверждения в SMS. Пароль не нужен." %}{% endif %}</p>
   <form method="post" class="mt-6 space-y-4" novalidate>
     {% csrf_token %}

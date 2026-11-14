@@ -5,15 +5,14 @@
     {% if a|is_specialist %}{% with sp=a.specialist_profile %}
     {% if post|author_badge_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="relative z-10 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800 hover:underline">{% translate "Специалист" %}</a>{% else %}<span class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800">{% translate "Специалист" %}</span>{% endif %}
     {% endwith %}{% endif %}
-    {% if post.city %}<span>· {{ post.city.name }}</span>{% endif %}
-    <span>· {% if detail %}{% blocktranslate with t=post.created_at|timesince %}{{ t }} назад{% endblocktranslate %}{% else %}<a href="{% url 'community:post' post.pk %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{% blocktranslate with t=post.created_at|timesince %}{{ t }} назад{% endblocktranslate %}</a>{% endif %}</span>
-    <span class="ml-auto flex flex-wrap gap-1.5">
+    <span class="whitespace-nowrap">{% if post.city %}{{ post.city.name }} · {% endif %}{% if detail %}{% blocktranslate with t=post.created_at|short_timesince %}{{ t }} назад{% endblocktranslate %}{% else %}<a href="{% url 'community:post' post.pk %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{% blocktranslate with t=post.created_at|short_timesince %}{{ t }} назад{% endblocktranslate %}</a>{% endif %}</span>
+    <span class="flex min-w-0 max-w-full basis-full flex-wrap gap-1.5 sm:ml-auto sm:basis-auto">
       <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700">{{ post.get_kind_display }}</span>
-      {% if post.condition %}<span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700">{{ post.condition.name }}</span>{% endif %}
+      {% if post.condition %}<span title="{{ post.condition.name }}" class="min-w-0 max-w-full truncate rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700">{{ post.condition.name }}</span>{% endif %}
     </span>
   </header>
   {% if post.is_hidden %}<p class="text-sm font-medium text-amber-800">{% translate "Скрыто модератором" %}</p>{% endif %}
-  {% if post.kind == "review" and post.specialist %}{% with sp=post.specialist %}
+  {% if post.kind == "review" and post.specialist and not hide_subject %}{% with sp=post.specialist %}
   <div class="relative z-10 flex items-center gap-3 rounded-lg bg-slate-50 p-3">
     {% include "catalog/_photo.html" with profile=sp size_class="h-10 w-10" %}
     <div class="min-w-0">
@@ -21,7 +20,7 @@
       {% if post.rating %}<div class="mt-0.5">{% include "community/_stars.html" with value=post.rating %}</div>{% endif %}
     </div>
   </div>
-  {% endwith %}{% endif %}
+  {% endwith %}{% elif post.kind == "review" and post.rating %}<div>{% include "community/_stars.html" with value=post.rating %}</div>{% endif %}
   <p class="whitespace-pre-line break-words text-slate-800">{% if detail %}{{ post.body }}{% else %}{{ post.body|truncatechars:400 }}{% endif %}</p>
   {% if post.has_image %}<img src="{% url 'community:image' post.pk %}" alt="" loading="lazy" class="max-h-96 w-full rounded-lg object-cover">{% endif %}
   <footer class="flex flex-wrap items-center gap-4 text-sm text-slate-600">

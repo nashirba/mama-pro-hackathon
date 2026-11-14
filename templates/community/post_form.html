@@ -78,7 +78,7 @@
 
     <div>
       <label for="post-image" class="block text-sm font-medium">{{ form.image.label }}</label>
-      <input id="post-image" type="file" name="image" accept="image/jpeg,image/png" class="mt-1 block w-full text-sm"{% if form.image.errors %} aria-invalid="true" aria-describedby="image-error"{% endif %}>
+      <input id="post-image" type="file" name="image" accept="image/jpeg,image/png" class="mt-1 block w-full text-sm text-slate-600 file:mr-3 file:min-h-11 file:cursor-pointer file:rounded-lg file:border file:border-slate-300 file:bg-white file:px-4 file:text-sm file:font-medium file:text-slate-800 hover:file:bg-slate-50"{% if form.image.errors %} aria-invalid="true" aria-describedby="image-error"{% endif %}>
       <p class="mt-1 text-xs text-slate-500">{% translate "JPEG или PNG, до 2 МБ" %}</p>
       {% if form.photo_lost %}<p class="mt-1 text-sm font-medium text-amber-800" role="status">{% translate "Прикрепите фото ещё раз" %}</p>{% endif %}
       {% if form.image.errors %}<p id="image-error" class="mt-1 text-sm text-red-700">{{ form.image.errors.0 }}</p>{% endif %}

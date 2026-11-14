@@ -9,7 +9,7 @@
     </div>
     <div class="relative max-w-3xl">
       <h1 class="text-3xl font-bold leading-tight sm:text-4xl">{% translate "Найдите специалиста для ребёнка" %}</h1>
-      <p class="mt-3 text-base text-slate-700 sm:text-lg">{% translate "Специалисты для детей с особенностями развития в Казахстане: понятные цены, адреса на карте и прозрачные уровни проверки документов." %}</p>
+      <p class="mt-3 text-base text-slate-700 sm:text-lg">{% translate "Специалисты и няни для детей с особенностями развития в Казахстане: понятные цены, адреса на карте, каждый проверен Мама Про." %}</p>
     </div>
     <form method="get" action="{% url 'search:results' %}" x-data="{ open: false, links() { return [...$refs.list.querySelectorAll('a')] }, move(e, step) { const l = this.links(); if (!l.length) return; e.preventDefault(); this.open = true; const i = l.indexOf(document.activeElement); l[(i + step + l.length) % l.length].focus() } }" @click.outside="open = false" @keydown.escape="$refs.input.focus(); open = false" class="relative mt-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_14rem_auto]">
       <div class="relative">
@@ -29,7 +29,7 @@
       </div>
       <button type="submit" @click="open = false" class="btn-press min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Найти" %}</button>
     </form>
-    <a href="{% url 'questionnaire:questionnaire' %}" class="relative mt-4 inline-flex min-h-12 items-center rounded border-2 border-primary-700 bg-white px-6 py-2 font-semibold text-primary-800 hover:bg-primary-50">{% translate "Пройти опросник для определения необходимых специалистов" %}</a>
+    <a href="{% url 'questionnaire:questionnaire' %}" class="relative mt-4 inline-flex min-h-12 items-center py-2 font-semibold text-primary-800 underline underline-offset-4 hover:text-primary-900 sm:rounded sm:border-2 sm:border-primary-700 sm:bg-white sm:px-6 sm:no-underline sm:hover:bg-primary-50">{% translate "Не знаете, к кому идти? Пройдите опросник" %}</a>
   </section>
 
   <section>
@@ -59,9 +59,9 @@
 
   {% if recent_posts %}
   <section>
-    <div class="flex items-baseline justify-between gap-3">
+    <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
       <h2 class="text-xl font-semibold">{% translate "Свежие посты" %}</h2>
-      <a href="{% url 'community:feed' %}" class="inline-flex min-h-11 items-center px-2 font-medium text-primary-700 hover:underline">{% translate "Перейти в сообщество" %}</a>
+      <a href="{% url 'community:feed' %}" class="inline-flex min-h-11 items-center px-2 font-medium text-primary-700 hover:underline">{% translate "Все посты" %}</a>
     </div>
     <div class="mt-4 grid gap-3 lg:grid-cols-3">
       {% for post in recent_posts %}{% include "community/_post_card.html" %}{% endfor %}

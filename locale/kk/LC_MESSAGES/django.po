@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 00:40+0500\n"
+"POT-Creation-Date: 2026-11-15 00:59+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -396,6 +396,54 @@ msgstr "Жаңа"
 msgid "Закрыта"
 msgstr "Жабылды"
 
+#: apps/community/templatetags/community.py:11
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d year"
+msgid_plural "%(num)d years"
+msgstr[0] "%(num)d жыл"
+msgstr[1] "%(num)d жыл"
+
+#: apps/community/templatetags/community.py:12
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d month"
+msgid_plural "%(num)d months"
+msgstr[0] "%(num)d ай"
+msgstr[1] "%(num)d ай"
+
+#: apps/community/templatetags/community.py:13
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d week"
+msgid_plural "%(num)d weeks"
+msgstr[0] "%(num)d апта"
+msgstr[1] "%(num)d апта"
+
+#: apps/community/templatetags/community.py:14
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] "%(num)d күн"
+msgstr[1] "%(num)d күн"
+
+#: apps/community/templatetags/community.py:15
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d hour"
+msgid_plural "%(num)d hours"
+msgstr[0] "%(num)d сағат"
+msgstr[1] "%(num)d сағат"
+
+#: apps/community/templatetags/community.py:16
+#, python-format
+msgctxt "timesince"
+msgid "%(num)d minute"
+msgid_plural "%(num)d minutes"
+msgstr[0] "%(num)d минут"
+msgstr[1] "%(num)d минут"
+
 #: apps/community/views.py:60
 msgid "Все"
 msgstr "Барлығы"
@@ -687,7 +735,7 @@ msgid "Сертификат курса"
 msgstr "Курс сертификаты"
 
 #: apps/onboarding/models.py:93 templates/catalog/nanny_detail.html:31
-#: templates/search/_nannies_intro.html:7
+#: templates/search/_nannies_intro.html:13
 msgid "Справка о несудимости"
 msgstr "Соттылығы жоқ екені туралы анықтама"
 
@@ -716,7 +764,7 @@ msgstr "Соттылығы жоқ туралы анықтаманың сканы
 msgid "Курс с номером сертификата"
 msgstr "Сертификат нөмірі бар курс"
 
-#: apps/onboarding/services.py:64 templates/search/_nannies_intro.html:6
+#: apps/onboarding/services.py:64 templates/search/_nannies_intro.html:12
 msgid "Курс первой помощи детям"
 msgstr "Балаларға алғашқы көмек курсы"
 
@@ -1352,21 +1400,25 @@ msgstr "Кіру"
 msgid "Вход по номеру телефона"
 msgstr "Телефон нөмірі арқылы кіру"
 
-#: templates/accounts/phone_form.html:7
+#: templates/accounts/phone_form.html:8
+msgid "Войдите, чтобы сохранять специалистов и нянь в избранное"
+msgstr "Мамандар мен бала күтушілерді таңдаулыларға сақтау үшін жүйеге кіріңіз"
+
+#: templates/accounts/phone_form.html:9
 msgid ""
 "В демо-версии SMS не отправляются, код входа будет показан на следующей "
 "странице."
 msgstr "Демо-нұсқада SMS жіберілмейді, кіру коды келесі бетте көрсетіледі."
 
-#: templates/accounts/phone_form.html:7
+#: templates/accounts/phone_form.html:9
 msgid "Мы отправим код подтверждения в SMS. Пароль не нужен."
 msgstr "Растау кодын SMS арқылы жібереміз. Құпиясөз қажет емес."
 
-#: templates/accounts/phone_form.html:16 templates/cabinet/phone_form.html:15
+#: templates/accounts/phone_form.html:18 templates/cabinet/phone_form.html:15
 msgid "Например: +7 701 123 45 67"
 msgstr "Мысалы: +7 701 123 45 67"
 
-#: templates/accounts/phone_form.html:20 templates/cabinet/phone_form.html:19
+#: templates/accounts/phone_form.html:22 templates/cabinet/phone_form.html:19
 msgid "Получить код"
 msgstr "Код алу"
 
@@ -1443,7 +1495,7 @@ msgid "Изменить"
 msgstr "Өзгерту"
 
 #: templates/cabinet/home.html:23 templates/favorites/list.html:3
-#: templates/favorites/list.html:6 templates/partials/bottom_nav.html:14
+#: templates/favorites/list.html:6
 msgid "Избранное"
 msgstr "Таңдаулылар"
 
@@ -1468,6 +1520,10 @@ msgstr "Жою"
 #: templates/cabinet/home.html:48
 msgid "Вы ещё не добавили ребёнка"
 msgstr "Сіз әлі бала қоспадыңыз"
+
+#: templates/cabinet/home.html:54 templates/partials/header.html:19
+msgid "Выйти"
+msgstr "Шығу"
 
 #: templates/cabinet/phone_code.html:26
 msgid "Подтвердить"
@@ -1598,7 +1654,7 @@ msgstr[1] "Барлығы: %(n)s сағат оқу"
 msgid "от %(price)s ₸ в час"
 msgstr "сағатына %(price)s ₸ бастап"
 
-#: templates/catalog/nanny_detail.html:16
+#: templates/catalog/nanny_detail.html:15
 msgid "Няня для ребёнка с особенностями развития"
 msgstr "Даму ерекшелігі бар балаға арналған бала күтуші"
 
@@ -1708,17 +1764,17 @@ msgstr "Қабылдау мекенжайлары"
 msgid "Маршрут"
 msgstr "Бағыт"
 
-#: templates/community/_comment.html:8 templates/community/_post_card.html:9
+#: templates/community/_comment.html:8 templates/community/_post_card.html:8
 #, python-format
 msgid "%(t)s назад"
 msgstr "%(t)s бұрын"
 
-#: templates/community/_comment.html:10 templates/community/_post_card.html:15
+#: templates/community/_comment.html:10 templates/community/_post_card.html:14
 #: templates/community/post_form.html:16
 msgid "Скрыто модератором"
 msgstr "Модератор жасырды"
 
-#: templates/community/_comment.html:15 templates/community/_post_card.html:31
+#: templates/community/_comment.html:15 templates/community/_post_card.html:30
 #: templates/community/complaint_form.html:3
 #: templates/community/complaint_form.html:7
 msgid "Пожаловаться"
@@ -1801,7 +1857,7 @@ msgstr "Шағым жіберу"
 #: templates/community/post_detail.html:3
 #: templates/community/post_detail.html:10
 #: templates/community/post_form.html:10 templates/community/rules.html:10
-#: templates/partials/bottom_nav.html:10 templates/partials/header.html:13
+#: templates/partials/header.html:13
 msgid "Сообщество"
 msgstr "Қауымдастық"
 
@@ -2039,12 +2095,12 @@ msgstr "Баланың маманын табыңыз"
 
 #: templates/core/home.html:12
 msgid ""
-"Специалисты для детей с особенностями развития в Казахстане: понятные цены, "
-"адреса на карте и прозрачные уровни проверки документов."
+"Специалисты и няни для детей с особенностями развития в Казахстане: понятные "
+"цены, адреса на карте, каждый проверен Мама Про."
 msgstr ""
-"Қазақстандағы дамуында ерекшеліктері бар балаларға арналған мамандар: "
-"түсінікті бағалар, картадағы мекенжайлар және құжаттарды тексерудің айқын "
-"деңгейлері."
+"Қазақстандағы дамуында ерекшелігі бар балаларға арналған мамандар мен "
+"күтушілер: түсінікті бағалар, картадағы мекенжайлар, әрқайсысын Мама Про "
+"тексерген."
 
 #: templates/core/home.html:16
 msgid "Кого вы ищете"
@@ -2059,8 +2115,8 @@ msgid "Любой город"
 msgstr "Кез келген қала"
 
 #: templates/core/home.html:32
-msgid "Пройти опросник для определения необходимых специалистов"
-msgstr "Қажетті мамандарды анықтау үшін сауалнамадан өту"
+msgid "Не знаете, к кому идти? Пройдите опросник"
+msgstr "Кімге баруды білмейсіз бе? Сауалнамадан өтіңіз"
 
 #: templates/core/home.html:36
 msgid "Популярные специализации"
@@ -2096,18 +2152,18 @@ msgid "Свежие посты"
 msgstr "Жаңа жазбалар"
 
 #: templates/core/home.html:64
-msgid "Перейти в сообщество"
-msgstr "Қауымдастыққа өту"
+msgid "Все посты"
+msgstr "Барлық жазбалар"
 
 #: templates/core/home.html:73
 msgid "Города"
 msgstr "Қалалар"
 
-#: templates/core/home.html:82 templates/search/_specialists_intro.html:2
+#: templates/core/home.html:82
 msgid "Что значит проверенный специалист"
 msgstr "Тексерілген маман дегеніміз не"
 
-#: templates/core/home.html:83 templates/search/_specialists_intro.html:3
+#: templates/core/home.html:83 templates/search/_specialists_intro.html:8
 msgid ""
 "В каталог попадают только специалисты и няни, которые прошли все проверки "
 "Мама Про. Сами документы (дипломы, справки) мы не публикуем."
@@ -2416,8 +2472,19 @@ msgid "Основное меню"
 msgstr "Негізгі мәзір"
 
 #: templates/partials/bottom_nav.html:6
+msgctxt "bottom nav"
 msgid "Главная"
-msgstr "Басты бет"
+msgstr "Басты"
+
+#: templates/partials/bottom_nav.html:10
+msgctxt "bottom nav"
+msgid "Сообщество"
+msgstr "Қауым"
+
+#: templates/partials/bottom_nav.html:14
+msgctxt "bottom nav"
+msgid "Избранное"
+msgstr "Таңдаулы"
 
 #: templates/partials/bottom_nav.html:18 templates/search/_filters.html:9
 msgid "Поиск"
@@ -2426,10 +2493,6 @@ msgstr "Іздеу"
 #: templates/partials/bottom_nav.html:22
 msgid "Кабинет"
 msgstr "Кабинет"
-
-#: templates/partials/header.html:19
-msgid "Выйти"
-msgstr "Шығу"
 
 #: templates/partials/language_switcher.html:4
 msgid "Язык интерфейса"
@@ -2695,7 +2758,11 @@ msgstr "Мамандар картасы"
 msgid "Список"
 msgstr "Тізім"
 
-#: templates/search/_nannies_intro.html:2
+#: templates/search/_nannies_intro.html:4
+msgid "Все няни проверены Мама Про — что это значит"
+msgstr "Барлық бала күтушілерді Мама Про тексерген — бұл нені білдіреді"
+
+#: templates/search/_nannies_intro.html:8
 msgid ""
 "Няня присматривает за ребёнком с особенностями развития у вас дома: "
 "несколько часов, ночью или постоянно. Она знает, как помочь ребёнку в быту и "
@@ -2707,11 +2774,11 @@ msgstr ""
 "қалай көмектесу керегін біледі, бірақ түзету сабақтарын өткізбейді және "
 "диагноз қоймайды. Төлем тікелей бала күтушіге жасалады."
 
-#: templates/search/_nannies_intro.html:3
+#: templates/search/_nannies_intro.html:9
 msgid "У каждой няни в разделе есть"
 msgstr "Бөлімдегі әр бала күтушіде бар"
 
-#: templates/search/_nannies_intro.html:5
+#: templates/search/_nannies_intro.html:11
 msgid "Сертификат о курсе обучения"
 msgstr "Оқу курсы туралы сертификат"
 
@@ -2752,6 +2819,10 @@ msgstr "Беттер"
 #: templates/search/_results_partial.html:23
 msgid "Вперёд"
 msgstr "Алға"
+
+#: templates/search/_specialists_intro.html:4
+msgid "Все специалисты проверены Мама Про — что это значит"
+msgstr "Барлық мамандарды Мама Про тексерген — бұл нені білдіреді"
 
 #: templates/search/_suggest.html:1
 msgid "Раздел"

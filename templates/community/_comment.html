@@ -5,7 +5,7 @@
     {% if a|is_specialist %}{% with sp=a.specialist_profile %}
     {% if comment|author_badge_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800 hover:underline">{% translate "Специалист" %}</a>{% else %}<span class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800">{% translate "Специалист" %}</span>{% endif %}
     {% endwith %}{% endif %}
-    <span>· {% blocktranslate with t=comment.created_at|timesince %}{{ t }} назад{% endblocktranslate %}</span>
+    <span>{% blocktranslate with t=comment.created_at|short_timesince %}{{ t }} назад{% endblocktranslate %}</span>
   </p>
   {% if comment.is_hidden %}<p class="text-sm font-medium text-amber-800">{% translate "Скрыто модератором" %}</p>{% endif %}
   <p class="whitespace-pre-line break-words text-slate-800">{{ comment.body }}</p>

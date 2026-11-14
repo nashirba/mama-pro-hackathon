@@ -246,5 +246,5 @@ def test_kk_result_translated(client):
 def test_kk_home_button(client, catalog_fixture):
     html = client.get("/kk/").content.decode()
     assert 'href="/kk/questionnaire/"' in html
-    assert "Пройти опросник для определения необходимых специалистов" not in html
-    assert "Қажетті мамандарды анықтау үшін сауалнамадан өту" in html
+    assert "Не знаете, к кому идти? Пройдите опросник" not in html
+    assert "Кімге баруды білмейсіз бе? Сауалнамадан өтіңіз" in html

@@ -306,7 +306,7 @@ def test_home_shows_recent_posts(client, catalog_fixture):
     PostFactory(body="Свежий пост на главной")
     html = _html(client.get("/ru/"))
     assert "Свежие посты" in html and "Свежий пост на главной" in html
-    assert "Перейти в сообщество" in html and 'href="/ru/community/"' in html
+    assert "Все посты" in html and 'href="/ru/community/"' in html
 
 
 def test_home_without_posts_has_no_section(client, catalog_fixture):
@@ -344,3 +344,14 @@ def test_specialist_page_query_count_does_not_grow_with_community_posts(client, 
         PostFactory(kind=Post.Kind.REVIEW, specialist=spec)
     assert _count_queries(client, url) <= base + 1
     assert _html(client.get(url)).count('id="post-') == 3
+
+
+def test_feed_time_unit_is_kazakh_under_kk(client):
+    from datetime import timedelta
+
+    from django.utils import timezone
+
+    PostFactory(created_at=timezone.now() - timedelta(hours=11, minutes=5))
+    html = _html(client.get("/kk/community/"))
+    assert re.search(r"11\s+сағат бұрын", html)
+    assert "час" not in html, [m for m in re.findall(r".{20}час.{20}", html)]

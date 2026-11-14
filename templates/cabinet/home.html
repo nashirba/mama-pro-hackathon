@@ -14,7 +14,7 @@
       <div class="flex justify-between gap-4 px-4 py-3"><dt class="text-slate-600">{% translate "Фамилия" %}</dt><dd>{{ user.last_name }}</dd></div>
       <div class="flex justify-between gap-4 px-4 py-3"><dt class="text-slate-600">{% translate "Имя" %}</dt><dd>{{ user.first_name }}</dd></div>
       <div class="flex justify-between gap-4 px-4 py-3"><dt class="text-slate-600">{% translate "Дата рождения" %}</dt><dd>{% if user.birth_date %}{{ user.birth_date|date:"j E Y" }}{% else %}{% translate "не указана" %}{% endif %}</dd></div>
-      <div class="flex justify-between gap-4 px-4 py-3"><dt class="text-slate-600">{% translate "Телефон" %}</dt><dd>{{ user.phone }}</dd></div>
+      <div class="flex justify-between gap-4 px-4 py-3"><dt class="text-slate-600">{% translate "Телефон" %}</dt><dd class="flex items-center gap-3">{{ user.phone }} <a href="{% url 'cabinet:phone_change' %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Изменить" %}</a></dd></div>
     </dl>
   </section>
 

@@ -1,4 +1,4 @@
-from apps.catalog.models import DevelopmentalCondition
+from apps.catalog.models import DevelopmentalCondition, SpecialistType
 from apps.geo.models import KatoNode
 from apps.search.query import SearchParams, search
 from apps.search.suggest import suggest
@@ -131,3 +131,26 @@ def test_adding_training_shows_nanny_in_section(client, nannies, django_capture_
     with django_capture_on_commit_callbacks(execute=True):
         TrainingFactory(profile=nannies["no-first-aid-nanny"], hours=16, is_first_aid=True)
     assert "no-first-aid-nanny" in _slugs(client.get("/ru/nannies/"))
+
+
+def test_deleting_first_aid_training_removes_nanny_from_section(client, nannies, django_capture_on_commit_callbacks):
+    assert "aigul-nanny" in _slugs(client.get("/ru/nannies/"))
+    with django_capture_on_commit_callbacks(execute=True):
+        nannies["aigul-nanny"].trainings.get(is_first_aid=True).delete()
+    assert "aigul-nanny" not in _slugs(client.get("/ru/nannies/"))
+
+
+def test_clearing_criminal_record_removes_nanny_from_section(client, nannies, django_capture_on_commit_callbacks):
+    assert "aigul-nanny" in _slugs(client.get("/ru/nannies/"))
+    nanny = nannies["aigul-nanny"]
+    with django_capture_on_commit_callbacks(execute=True):
+        nanny.criminal_record_issued_on = None
+        nanny.save()
+    assert "aigul-nanny" not in _slugs(client.get("/ru/nannies/"))
+
+
+def test_specialist_only_filters_are_ignored_in_nannies_section(client, nannies):
+    for query in ("formats=online", "price_max=1", "free_only=1", "verification_levels=education", "near=76.9,43.25&sort=distance"):
+        assert _slugs(client.get(f"/ru/nannies/?{query}")) == VISIBLE, query
+    ids = [str(i) for i in SpecialistType.objects.values_list("pk", flat=True)] or ["1"]
+    assert _slugs(client.get(f"/ru/nannies/?specialist_type_ids={ids[0]}&method_ids=1")) == VISIBLE

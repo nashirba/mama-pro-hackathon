@@ -21,6 +21,18 @@
              class="mt-1 min-h-12 w-full rounded border border-field px-3 py-2">
       {% for error in form.first_name.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
     </div>
+    <fieldset>
+      <legend class="block text-sm font-medium">{{ form.role.label }}</legend>
+      <div class="mt-2 space-y-2">
+        {% for radio in form.role %}
+        <label class="flex min-h-12 cursor-pointer items-center gap-3 rounded border border-field px-3 py-2 has-[:checked]:border-primary-700 has-[:checked]:bg-primary-50">
+          {{ radio.tag }}<span>{{ radio.choice_label }}</span>
+        </label>
+        {% endfor %}
+      </div>
+      <p class="mt-2 text-sm text-slate-600">{% translate "Специалист и няня заполняют анкету. После проверки профиль появится в каталоге." %}</p>
+      {% for error in form.role.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
+    </fieldset>
     <button type="submit" class="btn-press min-h-12 w-full rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Создать" %}</button>
   </form>
 </div>

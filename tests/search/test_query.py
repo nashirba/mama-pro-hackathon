@@ -71,15 +71,6 @@ def test_filter_format_language_experience(catalog_fixture):
     assert slugs(search(SearchParams(experience_min=10))) == ["ivanova-logoped", "nurlan-online"]
 
 
-def test_filter_verification_levels_and(catalog_fixture):
-    assert slugs(search(SearchParams(verification_levels=["education"]))) == ["ivanova-logoped", "serikov-aba", "nurlan-online", "bekova-karaganda", "omarova-home", "sergeev-free"]
-    assert slugs(search(SearchParams(verification_levels=["education", "safety"]))) == ["serikov-aba", "nurlan-online", "sergeev-free"]   # AND, not OR
-
-
-def test_identity_level_is_badge_only_not_filter(catalog_fixture):
-    assert search(SearchParams(verification_levels=["identity"])).total == 7        # ignored
-
-
 def test_text_search_kk_without_special_letters(catalog_fixture):
     assert slugs(search(SearchParams(q="караганды")))[0] == "bekova-karaganda"
 

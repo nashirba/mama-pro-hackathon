@@ -1,14 +1,4 @@
-{% load i18n catalog_tags %}{% if compact %}{% with levels=profile.demo_verification_levels %}{% if levels %}
-{% with first=levels|first extra=levels|length|add:"-1" %}
-<p class="inline-flex max-w-full self-start items-start gap-1 rounded-md bg-primary-50 px-2 py-0.5 text-left text-xs text-balance font-medium leading-snug text-primary-800" title="{% for level in levels %}{{ level|verification_label }}{% if not forloop.last %}, {% endif %}{% endfor %}{% if IS_DEMO %} ({% translate 'Демо: проверка не проводилась' %}){% endif %}">
+{% load i18n %}{# Only fully verified profiles reach the catalog, so every card carries the same mark instead of a list of levels. #}<p class="inline-flex max-w-full self-start items-start gap-1 rounded-md bg-primary-50 px-2 py-0.5 text-left {% if compact %}text-xs{% else %}text-sm{% endif %} font-medium leading-snug text-primary-800"{% if IS_DEMO %} title="{% translate 'Демо: проверка не проводилась' %}"{% endif %} data-verified>
   <svg class="mt-px size-3.5 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>
-  <span>{{ first|verification_label }}</span>{% if extra > 0 %}<span class="shrink-0" aria-hidden="true">+{{ extra }}</span><span class="sr-only">: {% for level in levels %}{{ level|verification_label }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>{% endif %}
+  <span>{% translate "Проверено Мама Про" %}</span>
 </p>
-{% endwith %}
-{% endif %}{% endwith %}{% else %}<ul class="flex flex-wrap gap-1 text-xs">
-  {% for level in profile.demo_verification_levels %}
-  <li class="rounded bg-primary-50 px-2 py-0.5 text-primary-800"{% if IS_DEMO %} title="{% translate 'Демо: проверка не проводилась' %}"{% endif %}>
-    {{ level|verification_label }}{% if IS_DEMO %} <span class="text-slate-600">({% translate "демо" %})</span>{% endif %}
-  </li>
-  {% endfor %}
-</ul>{% endif %}

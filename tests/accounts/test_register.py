@@ -22,7 +22,7 @@ def test_register_keeps_safe_next(client, db):
     r = _register_new(client, "/ru/specialists/")
     assert r.headers["Location"] == "/ru/register/?next=%2Fru%2Fspecialists%2F"
     r = client.post(
-        "/ru/register/", {"last_name": "Иванова", "first_name": "Айгуль", "next": "/ru/specialists/"}
+        "/ru/register/", {"last_name": "Иванова", "first_name": "Айгуль", "role": "parent", "next": "/ru/specialists/"}
     )
     assert r.headers["Location"] == "/ru/specialists/"
 
@@ -39,14 +39,14 @@ def test_register_next_in_user_language(client, db):
 def test_register_drops_external_next(client, db):
     _register_new(client)
     r = client.post(
-        "/ru/register/", {"last_name": "Иванова", "first_name": "Айгуль", "next": "https://evil.example/"}
+        "/ru/register/", {"last_name": "Иванова", "first_name": "Айгуль", "role": "parent", "next": "https://evil.example/"}
     )
     assert r.headers["Location"] == "/ru/cabinet/"
 
 
 def test_register_requires_both_names(client, db):
     _register_new(client)
-    r = client.post("/ru/register/", {"last_name": "  ", "first_name": "Айгуль"})
+    r = client.post("/ru/register/", {"last_name": "  ", "first_name": "Айгуль", "role": "parent"})
     assert r.status_code == 200 and "Обязательное поле" in r.content.decode()
     assert not User.objects.get().has_full_name
 
@@ -59,7 +59,7 @@ def test_register_page_copy(client, db):
 
 def test_register_saves_names_stripped(client, db):
     _register_new(client)
-    client.post("/ru/register/", {"last_name": " Иванова ", "first_name": "Айгуль"})
+    client.post("/ru/register/", {"last_name": " Иванова ", "first_name": "Айгуль", "role": "parent"})
     user = User.objects.get()
     assert (user.last_name, user.first_name) == ("Иванова", "Айгуль")
 

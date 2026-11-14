@@ -3,8 +3,17 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.crypto import salted_hmac
+from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
+
+
+class Role(models.TextChoices):
+    """Chosen once at registration. A specialist or a nanny is never a parent with children in the cabinet."""
+
+    PARENT = "parent", _("Мама")
+    SPECIALIST = "specialist", _("Специалист")
+    NANNY = "nanny", _("Няня")
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -20,6 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     preferred_language = models.CharField(
         max_length=2, choices=LANGUAGE_CHOICES, default="ru"
     )
+    role = models.CharField(max_length=20, choices=Role.choices, default=Role.PARENT)
     # "Log out everywhere" increments it; it is part of the session auth hash.
     session_epoch = models.PositiveIntegerField(default=0)
     is_staff = models.BooleanField(default=False)
@@ -33,6 +43,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.phone
+
+    @property
+    def is_parent(self) -> bool:
+        return self.role == Role.PARENT
 
     @property
     def has_full_name(self) -> bool:

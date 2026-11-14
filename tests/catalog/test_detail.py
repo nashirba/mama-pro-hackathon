@@ -61,10 +61,10 @@ def test_hidden_context_detail_404(client, catalog_fixture):
     assert client.get("/ru/specialist/no-such-slug/").status_code == 404
 
 
-def test_detail_demo_badges_are_marked_as_demo(client, catalog_fixture, settings):
+def test_detail_verified_mark_is_marked_as_demo(client, catalog_fixture, settings):
     settings.DEPLOY_PROFILE = "demo"
     html = client.get("/ru/specialist/ivanova-logoped/").content.decode()
-    assert html.count("(демо)") >= 1 and "Демо: проверка не проводилась" in html
+    assert "Проверено Мама Про" in html and "Демо: проверка не проводилась" in html
     settings.DEPLOY_PROFILE = "test"
     html = client.get("/ru/specialist/ivanova-logoped/").content.decode()
     assert "(демо)" not in html and "Демо: проверка не проводилась" not in html

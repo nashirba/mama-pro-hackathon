@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Личный кабинет" %} — {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+{% with app=application editable=application.is_editable %}
+<div class="mx-auto max-w-2xl px-4 py-10">
+  <h1 class="text-2xl font-bold">{% translate "Личный кабинет" %}</h1>
+
+  <section class="mt-6 rounded border px-4 py-4 {% if app.status == 'rejected' %}border-red-200 bg-red-50{% elif app.status == 'approved' %}border-emerald-200 bg-emerald-50{% else %}border-primary-200 bg-primary-50{% endif %}" aria-live="polite">
+    <p class="font-semibold">{% translate "Статус анкеты" %}: {{ app.get_status_display }}</p>
+    {% if app.status == "draft" %}
+    <p class="mt-1 text-sm">{% translate "Заполните анкету, загрузите документы и отправьте на проверку." %}</p>
+    {% elif app.status == "submitted" %}
+    <p class="mt-1 text-sm">{% translate "Анкета на проверке. С вами свяжутся, ожидайте звонка." %}</p>
+    {% elif app.status == "needs_changes" %}
+    <p class="mt-1 text-sm">{% translate "Модератор просит доработать анкету и отправить её снова." %}</p>
+    {% elif app.status == "approved" %}
+    <p class="mt-1 text-sm">{% translate "Анкета одобрена, ваш профиль в каталоге:" %}
+      {% if app.profile %}<a href="{% if app.is_nanny %}{% url 'catalog:nanny' app.profile.slug %}{% else %}{% url 'catalog:specialist' app.profile.slug %}{% endif %}" class="font-medium text-primary-700 hover:underline">{{ app.profile.display_name }}</a>{% endif %}
+    </p>
+    {% elif app.status == "rejected" %}
+    <p class="mt-1 text-sm">{% translate "Анкета отклонена. Подать новую анкету с этого номера нельзя." %}</p>
+    {% endif %}
+    {% if app.moderator_comment and app.status != "approved" %}
+    <p class="mt-2 text-sm"><span class="font-medium">{% translate "Комментарий модератора" %}:</span> {{ app.moderator_comment|linebreaksbr }}</p>
+    {% endif %}
+  </section>
+
+  <section class="mt-8">
+    <div class="flex items-center justify-between gap-4">
+      <h2 class="text-lg font-semibold">{% translate "Мои данные" %}</h2>
+      <a href="{% url 'cabinet:profile_edit' %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Редактировать" %}</a>
+    </div>
+    <dl class="mt-3 divide-y divide-slate-200 rounded border border-slate-200 bg-white">
+      <div class="flex justify-between gap-4 px-4 py-3"><dt class="text-slate-600">{% translate "Фамилия и имя" %}</dt><dd>{{ user.last_name }} {{ user.first_name }}</dd></div>
+      <div class="flex justify-between gap-4 px-4 py-3"><dt class="text-slate-600">{% translate "Телефон" %}</dt><dd class="flex items-center gap-3">{{ user.phone }} <a href="{% url 'cabinet:phone_change' %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Изменить" %}</a></dd></div>
+      <div class="flex justify-between gap-4 px-4 py-3"><dt class="text-slate-600">{% translate "Анкета" %}</dt><dd>{{ app.get_category_display }}</dd></div>
+    </dl>
+    {% if editable %}
+    <a href="{% url 'onboarding:edit' %}" class="mt-3 inline-flex min-h-11 items-center rounded border-2 border-primary-700 px-4 font-semibold text-primary-800 hover:bg-primary-50">{% translate "Заполнить анкету" %}</a>
+    {% endif %}
+  </section>
+
+  <section class="mt-8">
+    <h2 class="text-lg font-semibold">{% translate "Документы" %}</h2>
+    <p class="mt-1 text-sm text-slate-600">{% if app.is_nanny %}{% translate "Справка о несудимости и сертификаты курсов. Документы видит только модератор." %}{% else %}{% translate "Диплом, сертификаты и удостоверения. Документы видит только модератор." %}{% endif %}</p>
+    {% for doc in app.documents.all %}
+    <div class="mt-2 flex items-center justify-between gap-4 rounded border border-slate-200 bg-white px-4 py-2">
+      <div><a href="{% url 'onboarding:document_file' doc.pk %}" target="_blank" class="font-medium text-primary-700 hover:underline">{{ doc.filename }}</a> <span class="text-sm text-slate-600">· {{ doc.get_kind_display }}</span></div>
+      {% if editable %}
+      <form method="post" action="{% url 'onboarding:document_delete' doc.pk %}">{% csrf_token %}<button type="submit" class="inline-flex min-h-11 items-center text-sm font-medium text-red-700 hover:underline">{% translate "Удалить" %}</button></form>
+      {% endif %}
+    </div>
+    {% empty %}
+    <p class="mt-2 text-slate-600">{% translate "Документы ещё не загружены" %}</p>
+    {% endfor %}
+    {% if editable %}
+    <form method="post" action="{% url 'onboarding:document_add' %}" enctype="multipart/form-data" class="mt-4 space-y-3 rounded border border-slate-200 bg-white p-4" novalidate>
+      {% csrf_token %}
+      {% for field in document_form %}{% include "onboarding/_field.html" %}{% endfor %}
+      <button type="submit" class="btn-press min-h-11 rounded bg-primary-700 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-800">{% translate "Загрузить" %}</button>
+    </form>
+    {% endif %}
+  </section>
+
+  {% if app.is_nanny %}
+  <section class="mt-8">
+    <h2 class="text-lg font-semibold">{% translate "Курсы" %}</h2>
+    <p class="mt-1 text-sm text-slate-600">{% translate "Нужен хотя бы один курс с сертификатом и курс первой помощи детям." %}</p>
+    {% for course in app.courses.all %}
+    <div class="mt-2 flex items-center justify-between gap-4 rounded border border-slate-200 bg-white px-4 py-2">
+      <div><p class="font-medium">{{ course.title }}</p><p class="text-sm text-slate-600">{{ course.issuer }} · {{ course.year }} · {% blocktranslate count hours=course.hours %}{{ hours }} час{% plural %}{{ hours }} часов{% endblocktranslate %} · № {{ course.certificate_number }}{% if course.is_first_aid %} · {% translate "первая помощь" %}{% endif %}</p></div>
+      {% if editable %}
+      <form method="post" action="{% url 'onboarding:course_delete' course.pk %}">{% csrf_token %}<button type="submit" class="inline-flex min-h-11 items-center text-sm font-medium text-red-700 hover:underline">{% translate "Удалить" %}</button></form>
+      {% endif %}
+    </div>
+    {% empty %}
+    <p class="mt-2 text-slate-600">{% translate "Курсы ещё не добавлены" %}</p>
+    {% endfor %}
+    {% if editable %}
+    <form method="post" action="{% url 'onboarding:course_add' %}" class="mt-4 space-y-3 rounded border border-slate-200 bg-white p-4" novalidate>
+      {% csrf_token %}
+      {% for field in course_form %}{% include "onboarding/_field.html" %}{% endfor %}
+      <button type="submit" class="btn-press min-h-11 rounded bg-primary-700 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-800">{% translate "Добавить курс" %}</button>
+    </form>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  {% if editable %}
+  <section class="mt-8">
+    {% if missing %}
+    <p class="font-medium">{% translate "Чтобы отправить анкету, заполните:" %}</p>
+    <ul class="mt-2 list-disc pl-5 text-sm text-slate-700">{% for item in missing %}<li>{{ item }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% for error in submit_errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
+    <form method="post" action="{% url 'onboarding:submit' %}" class="mt-4">
+      {% csrf_token %}
+      <button type="submit" class="btn-press min-h-12 w-full rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800 disabled:cursor-not-allowed disabled:opacity-50"{% if missing %} disabled{% endif %}>{% translate "Отправить на проверку" %}</button>
+    </form>
+  </section>
+  {% endif %}
+</div>
+{% endwith %}
+{% endblock %}

@@ -10,14 +10,12 @@ from apps.catalog.models import (
     Format,
     Method,
     SpecialistType,
-    VerificationLevel,
 )
 from apps.geo.models import KatoNode
 
 from .query import PAY_UNIT_COLUMNS
 
 AGE_GROUPS = [(0, 3), (3, 7), (7, 12), (12, 18)]
-FILTERABLE_LEVELS = (VerificationLevel.EDUCATION, VerificationLevel.CREDENTIAL, VerificationLevel.SAFETY)
 
 
 def _name(obj) -> str:
@@ -33,7 +31,6 @@ class FilterChoices:
     methods: list[Method]
     languages: list[CommunicationLanguage]
     formats: list[tuple[str, str]]
-    verification_levels: list[tuple[str, str]]
     sorts: list[tuple[str, str]]
     pay_units: list[tuple[str, str]]
 
@@ -82,7 +79,6 @@ def build_filter_choices(section: str = "specialists") -> FilterChoices:
         methods=sorted(Method.objects.prefetch_related("translations"), key=_name),
         languages=sorted(CommunicationLanguage.objects.prefetch_related("translations"), key=_name),
         formats=list(Format.choices),
-        verification_levels=[(level.value, level.label) for level in FILTERABLE_LEVELS],
         sorts=_sorts(section),
         pay_units=PAY_UNITS,
     )

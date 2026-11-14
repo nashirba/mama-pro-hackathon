@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "parler",
     "apps.core",
     "apps.accounts",
+    "apps.cabinet",
     "apps.consents",
     "apps.geo",
     "apps.catalog",

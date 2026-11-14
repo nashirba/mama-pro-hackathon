@@ -12,9 +12,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     phone = models.CharField(max_length=16, unique=True)
     email = models.EmailField(blank=True)
+    last_name = models.CharField(max_length=150, blank=True)
+    first_name = models.CharField(max_length=150, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
     # Community nickname; empty is stored as NULL so several users without one do not break `unique`.
     display_name = models.CharField(max_length=40, null=True, blank=True, unique=True)
-    preferred_language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default="ru")
+    preferred_language = models.CharField(
+        max_length=2, choices=LANGUAGE_CHOICES, default="ru"
+    )
     # "Log out everywhere" increments it; it is part of the session auth hash.
     session_epoch = models.PositiveIntegerField(default=0)
     is_staff = models.BooleanField(default=False)
@@ -28,6 +33,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.phone
+
+    @property
+    def has_full_name(self) -> bool:
+        return bool(self.last_name.strip() and self.first_name.strip())
 
     def save(self, *args, **kwargs):
         self.display_name = (self.display_name or "").strip() or None

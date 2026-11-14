@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from apps.search.geojson import specialist_feature_collection
 
 from .models import ProfileCategory, Service, SpecialistProfile
+from .pricing import lowest
 from .visibility import is_catalog_visible, nanny_eligible
 
 PROFILE_PREFETCH = (
@@ -62,11 +63,6 @@ def specialist_detail(request, slug):
     )
 
 
-def _lowest(services: list[Service], field: str) -> int | None:
-    values = [getattr(s, field) for s in services if getattr(s, field) is not None]
-    return min(values) if values else None
-
-
 def nanny_detail(request, slug):
     profile, services = _load_profile(slug, ProfileCategory.NANNY, ("trainings__translations",))
     if not nanny_eligible(profile):
@@ -83,8 +79,8 @@ def nanny_detail(request, slug):
             "services": services,
             "trainings": list(profile.trainings.all()),
             "areas": list(areas.values()),
-            "price_hour": _lowest(services, "price_hour"),
-            "price_night": _lowest(services, "price_night"),
-            "price_month": _lowest(services, "price_month"),
+            "price_hour": lowest(services, "price_hour"),
+            "price_night": lowest(services, "price_night"),
+            "price_month": lowest(services, "price_month"),
         },
     )

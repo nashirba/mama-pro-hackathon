@@ -14,6 +14,8 @@ from apps.catalog.models import (
 )
 from apps.geo.models import KatoNode
 
+from .query import PAY_UNIT_COLUMNS
+
 AGE_GROUPS = [(0, 3), (3, 7), (7, 12), (12, 18)]
 FILTERABLE_LEVELS = (VerificationLevel.EDUCATION, VerificationLevel.CREDENTIAL, VerificationLevel.SAFETY)
 
@@ -51,7 +53,8 @@ def _condition_rows(conditions: list[DevelopmentalCondition]) -> list[tuple[Deve
     return rows
 
 
-PAY_UNITS = [("hour", _("По часам")), ("night", _("Ночью")), ("month", _("Помесячно"))]
+_PAY_UNIT_LABELS = {"hour": _("По часам"), "night": _("Ночью"), "month": _("Помесячно")}
+PAY_UNITS = [(unit, _PAY_UNIT_LABELS[unit]) for unit in PAY_UNIT_COLUMNS]
 
 
 def _sorts(section: str) -> list[tuple[str, str]]:

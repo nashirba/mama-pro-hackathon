@@ -1,4 +1,5 @@
 import re
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 from django.db import connection
@@ -12,12 +13,13 @@ def _choose(client, kato_id, next_url="/ru/"):
 def _button_text(client) -> str:
     html = client.get("/ru/").content.decode()
     match = re.search(r"<button[^>]*data-city-button[^>]*>(.*?)</button>", html, re.DOTALL)
-    return re.sub(r"<svg.*?</svg>|<[^>]+>", "", match.group(1), flags=re.DOTALL).strip()
+    visible = re.sub(r'<span class="sr-only">.*?</span>', "", match.group(1), flags=re.DOTALL)
+    return re.sub(r"<svg.*?</svg>|<[^>]+>", "", visible, flags=re.DOTALL).strip()
 
 
 def test_choose_city_sets_cookie_and_returns(client, kato_demo):
-    r = _choose(client, kato_demo["almaty"].id, "/ru/nannies/")
-    assert r.headers["Location"] == "/ru/nannies/" and r.cookies["city"].value == str(
+    r = _choose(client, kato_demo["almaty"].id, "/ru/mamapro/")
+    assert r.headers["Location"] == "/ru/mamapro/" and r.cookies["city"].value == str(
         kato_demo["almaty"].id
     )
 
@@ -123,6 +125,28 @@ def test_valid_cookie_costs_no_extra_queries(client, kato_demo):
             assert client.get("/ru/").status_code == 200
         return len(ctx)
 
+    count()  # warm up: the first request fills per-process caches
     without_cookie = count()
     _choose(client, kato_demo["almaty"].id)
-    assert count() <= without_cookie
+    assert count() == without_cookie
+
+
+@pytest.mark.parametrize("path", ["/ru/specialists/", "/ru/nannies/"])
+def test_city_on_catalog_replaces_catalog_city(client, kato_demo, path):
+    old, new, district = kato_demo["astana"].id, kato_demo["almaty"].id, kato_demo["almalinskiy"].id
+    location = _choose(client, new, f"{path}?kato_id={old}&district_id={district}&q=x").headers["Location"]
+    parts = urlsplit(location)
+    assert parts.path == path and parse_qs(parts.query) == {"kato_id": [str(new)], "q": ["x"]}
+
+
+def test_city_on_other_page_keeps_next(client, kato_demo):
+    assert _choose(client, kato_demo["almaty"].id, "/ru/mamapro/?a=1").headers["Location"] == "/ru/mamapro/?a=1"
+
+
+def test_city_picker_is_a_disclosure(client, kato_demo):
+    _choose(client, kato_demo["almaty"].id)
+    html = client.get("/ru/").content.decode()
+    button = re.search(r"<button[^>]*data-city-button[^>]*>.*?</button>", html, re.DOTALL).group(0)
+    assert 'aria-controls="city-panel"' in button and "aria-haspopup" not in button
+    assert '<span class="sr-only">Город:</span>' in button and 'x-ref="btn"' in button
+    assert 'id="city-panel"' in html

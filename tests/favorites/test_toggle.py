@@ -27,6 +27,37 @@ def test_toggle_requires_login(client, catalog_fixture):
     assert client.post("/ru/favorites/ivanova-logoped/toggle/").headers["Location"].startswith("/ru/login/")
 
 
+def test_toggle_htmx_keeps_button_id_for_focus(client, catalog_fixture):
+    client.force_login(UserFactory())
+    profile = SpecialistProfile.objects.get(slug="ivanova-logoped")
+    html = client.post("/ru/favorites/ivanova-logoped/toggle/", HTTP_HX_REQUEST="true").content.decode()
+    assert f'id="fav-{profile.pk}"' in html
+
+
+@pytest.mark.parametrize(
+    "current, expected_next",
+    [
+        ("http://testserver/ru/specialists/?q=x", "/ru/specialists/%3Fq%3Dx"),
+        ("https://evil.example/ru/specialists/", "/ru/specialist/ivanova-logoped/"),
+        (None, "/ru/specialist/ivanova-logoped/"),
+    ],
+)
+def test_toggle_htmx_anonymous_redirects_page_to_login(client, catalog_fixture, current, expected_next):
+    headers = {"HTTP_HX_REQUEST": "true"}
+    if current:
+        headers["HTTP_HX_CURRENT_URL"] = current
+    response = client.post("/ru/favorites/ivanova-logoped/toggle/", **headers)
+    assert response.status_code == 204 and not response.content
+    assert response.headers["HX-Redirect"] == f"/ru/login/?next={expected_next}"
+
+
+def test_toggle_htmx_response_runs_no_city_query(client, catalog_fixture):
+    client.force_login(UserFactory())
+    with CaptureQueriesContext(connection) as ctx:
+        client.post("/ru/favorites/ivanova-logoped/toggle/", HTTP_HX_REQUEST="true")
+    assert not [q for q in ctx.captured_queries if "geo_katonode" in q["sql"]]
+
+
 def test_toggle_get_not_allowed(client, catalog_fixture):
     client.force_login(UserFactory())
     assert client.get("/ru/favorites/ivanova-logoped/toggle/").status_code == 405

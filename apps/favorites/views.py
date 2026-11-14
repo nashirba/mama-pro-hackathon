@@ -1,6 +1,9 @@
+from urllib.parse import urlsplit
+
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import redirect_to_login
 from django.db.models import prefetch_related_objects
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -21,10 +24,31 @@ def _safe_next(request) -> str:
     return ""
 
 
+def _profile_url(profile: SpecialistProfile) -> str:
+    name = "catalog:nanny" if profile.is_nanny else "catalog:specialist"
+    return reverse(name, args=[profile.slug])
+
+
+def _login_for_htmx(request, profile: SpecialistProfile) -> HttpResponse:
+    """An expired session: send the whole page to login instead of swapping the login page into the card."""
+    current = request.headers.get("HX-Current-URL", "")
+    if current and url_has_allowed_host_and_scheme(current, allowed_hosts={request.get_host()}):
+        parts = urlsplit(current)
+        back = parts.path + (f"?{parts.query}" if parts.query else "")
+    else:
+        back = _profile_url(profile)
+    response = HttpResponse(status=204)
+    response["HX-Redirect"] = redirect_to_login(back).url
+    return response
+
+
 @require_POST
-@login_required
 def toggle(request, slug):
     profile = get_object_or_404(SpecialistProfile, slug=slug)
+    if not request.user.is_authenticated:
+        if request.headers.get("HX-Request"):
+            return _login_for_htmx(request, profile)
+        return redirect_to_login(request.get_full_path())
     favorite = Favorite.objects.filter(user=request.user, profile=profile).first()
     if favorite:
         favorite.delete()
@@ -44,8 +68,7 @@ def toggle(request, slug):
         )
     if next_url:
         return redirect(next_url)
-    name = "catalog:nanny" if profile.is_nanny else "catalog:specialist"
-    return redirect(reverse(name, args=[profile.slug]))
+    return redirect(_profile_url(profile))
 
 
 @login_required

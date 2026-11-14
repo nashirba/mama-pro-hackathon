@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 22:43+0500\n"
+"POT-Creation-Date: 2026-11-14 22:53+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -397,23 +397,23 @@ msgstr ""
 msgid "Жалоба отправлена"
 msgstr ""
 
-#: apps/core/views.py:103
+#: apps/core/views.py:121
 msgid "Астана"
 msgstr ""
 
-#: apps/core/views.py:104
+#: apps/core/views.py:122
 msgid "Алматы"
 msgstr ""
 
-#: apps/core/views.py:105
+#: apps/core/views.py:123
 msgid "Усть-Каменогорск"
 msgstr ""
 
-#: apps/core/views.py:106
+#: apps/core/views.py:124
 msgid "Шымкент"
 msgstr ""
 
-#: apps/core/views.py:107
+#: apps/core/views.py:125
 msgid "Костанай"
 msgstr ""
 
@@ -1697,7 +1697,7 @@ msgstr ""
 msgid "Логопед, РАС, не говорит..."
 msgstr ""
 
-#: templates/core/home.html:26 templates/partials/_city_picker.html:11
+#: templates/core/home.html:26 templates/partials/_city_picker.html:12
 msgid "Любой город"
 msgstr ""
 
@@ -1891,6 +1891,10 @@ msgstr ""
 
 #: templates/favorites/list.html:27
 msgid "Найти специалиста"
+msgstr ""
+
+#: templates/partials/_city_picker.html:5
+msgid "Город:"
 msgstr ""
 
 #: templates/partials/_verification_levels.html:2

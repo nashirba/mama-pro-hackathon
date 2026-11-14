@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import connection
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
+from django.urls import Resolver404, resolve
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy
 from django.views.decorators.http import require_POST
@@ -68,6 +69,22 @@ def _without_city_params(url: str) -> str:
     return urlunsplit(parts._replace(query=urlencode(query)))
 
 
+CATALOG_VIEWS = {"search:results", "search:nannies"}
+
+
+def _with_catalog_city(url: str, kato_id: str) -> str:
+    """On a catalog page the header city replaces the catalog city and its district; other pages are unchanged."""
+    try:
+        view_name = resolve(urlsplit(url).path).view_name
+    except Resolver404:
+        return url
+    if view_name not in CATALOG_VIEWS:
+        return url
+    parts = urlsplit(_without_city_params(url))
+    query = [("kato_id", kato_id), *parse_qsl(parts.query, keep_blank_values=True)]
+    return urlunsplit(parts._replace(query=urlencode(query)))
+
+
 @require_POST
 def set_city(request) -> HttpResponse:
     next_url = request.POST.get("next", "")
@@ -79,9 +96,10 @@ def set_city(request) -> HttpResponse:
         response = redirect(_without_city_params(next_url) if next_url else "core:home")
         response.delete_cookie(COOKIE, path="/", samesite="Lax")
         return response
-    response = redirect(next_url or "core:home")
-    if kato_id in {str(c.pk) for c in cities(request)}:
-        response.set_cookie(COOKIE, kato_id, max_age=COOKIE_MAX_AGE, samesite="Lax", path="/")
+    if kato_id not in {str(c.pk) for c in cities(request)}:
+        return redirect(next_url or "core:home")
+    response = redirect(_with_catalog_city(next_url, kato_id) if next_url else "core:home")
+    response.set_cookie(COOKIE, kato_id, max_age=COOKIE_MAX_AGE, samesite="Lax", path="/")
     return response
 
 

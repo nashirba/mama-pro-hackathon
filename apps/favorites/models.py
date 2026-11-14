@@ -17,4 +17,4 @@ class Favorite(models.Model):
         constraints = [models.UniqueConstraint(fields=["user", "profile"], name="favorite_user_profile_unique")]
 
     def __str__(self) -> str:
-        return f"{self.user_id} -> {self.profile_id}"
+        return f"{self.user} → {self.profile}"

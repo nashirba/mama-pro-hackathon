@@ -38,6 +38,7 @@ def test_body_has_bottom_padding_on_mobile(client, db):
         ("/ru/community/", "Сообщество"),
         ("/ru/specialists/", "Поиск"),
         ("/ru/almaty/logoped/", "Поиск"),
+        ("/ru/nannies/", "Поиск"),
     ],
 )
 def test_active_item(client, catalog_fixture, path, label):
@@ -46,7 +47,7 @@ def test_active_item(client, catalog_fixture, path, label):
     assert label in current and nav.count('aria-current="page"') == 1
 
 
-@pytest.mark.parametrize("path", ["/ru/nannies/", "/ru/mamapro/"])
+@pytest.mark.parametrize("path", ["/ru/mamapro/"])
 def test_no_active_item_on_other_pages(client, db, path):
     assert 'aria-current="page"' not in _nav(client.get(path).content.decode())
 

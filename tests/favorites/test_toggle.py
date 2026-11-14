@@ -153,3 +153,23 @@ def test_favorite_unique_per_user_profile(db):
     favorite = FavoriteFactory()
     with pytest.raises(IntegrityError):
         FavoriteFactory(user=favorite.user, profile=favorite.profile)
+
+
+def test_admin_can_delete_user_with_favorites(client, catalog_fixture):
+    from django.contrib.admin.sites import site
+    from django.contrib.admin.utils import get_deleted_objects
+    from django.test import RequestFactory
+
+    from apps.accounts.models import User
+
+    owner = UserFactory()
+    FavoriteFactory(user=owner, profile=SpecialistProfile.objects.get(slug="ivanova-logoped"))
+    admin_user = User.objects.create_superuser(phone="+77019998877", password="x")
+    request = RequestFactory().post("/")
+    request.user = admin_user
+    _, _, perms_needed, _ = get_deleted_objects([owner], request, site)
+    assert not perms_needed
+
+
+def test_anonymous_toggle_of_unknown_slug_redirects_to_login(client, db):
+    assert client.post("/ru/favorites/nope/toggle/").headers["Location"].startswith("/ru/login/")

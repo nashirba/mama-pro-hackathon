@@ -14,5 +14,4 @@ class FavoriteAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
+    # Delete stays allowed: Django checks it on cascades, so denying it would block deleting a user or a profile.

@@ -44,11 +44,11 @@ def _login_for_htmx(request, profile: SpecialistProfile) -> HttpResponse:
 
 @require_POST
 def toggle(request, slug):
+    if not request.user.is_authenticated and not request.headers.get("HX-Request"):
+        return redirect_to_login(request.get_full_path())
     profile = get_object_or_404(SpecialistProfile, slug=slug)
     if not request.user.is_authenticated:
-        if request.headers.get("HX-Request"):
-            return _login_for_htmx(request, profile)
-        return redirect_to_login(request.get_full_path())
+        return _login_for_htmx(request, profile)
     favorite = Favorite.objects.filter(user=request.user, profile=profile).first()
     if favorite:
         favorite.delete()

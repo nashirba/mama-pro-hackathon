@@ -171,8 +171,10 @@ def test_kk_cards_show_specialist_names(client, catalog_fixture):
 def test_demo_contact_button_disabled_without_phone(client, catalog_fixture, settings):
     settings.DEPLOY_PROFILE = "demo"
     html = client.get("/ru/specialists/").content.decode()
-    # the dead buttons are not repeated on every card: the contact block lives on the specialist page
-    assert "в демо-версии не работает" not in html and 'aria-disabled="true"' not in html
+    # every card offers WhatsApp and a call; without a demo number they look the same and do nothing
+    card = card_html(html, "ivanova-logoped")
+    assert card.count("data-demo-contact") == 2 and "в демо-версии не работает" not in card
+    assert "data-contact-number" not in card
     assert "wa.me/77011234567" not in html and "tel:+77011234567" not in html
 
 
@@ -181,6 +183,7 @@ def test_demo_contact_buttons_lead_only_to_demo_phone(client, catalog_fixture, s
     settings.DEMO_CONTACT_PHONE = "+77000000000"
     html = client.get("/ru/specialists/").content.decode()
     assert "https://wa.me/77000000000?text=" in html and "tel:+77000000000" in html
+    assert "+7 700 000 00 00" in card_html(html, "ivanova-logoped")
     assert "77011234567" not in html and "в демо-версии не работает" not in html
 
 
@@ -194,7 +197,8 @@ def test_contact_button_hidden_without_phone_outside_demo(client, catalog_fixtur
     assert "в демо-версии не работает" not in html
     free = card_html(html, "sergeev-free")  # no whatsapp_phone and no public_phone
     assert "wa.me" not in free and "tel:" not in free and "aria-disabled" not in free
-    assert "https://wa.me/77011234567" in card_html(html, "ivanova-logoped")
+    card = card_html(html, "ivanova-logoped")
+    assert "https://wa.me/77011234567" in card and "tel:+77011234567" in card and "+7 701 123 45 67" in card
 
 
 def test_htmx_history_restore_returns_full_page(client, catalog_fixture):

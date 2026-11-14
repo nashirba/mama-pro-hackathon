@@ -1,10 +1,7 @@
-{% load i18n %}{# The sticky contact block of a profile page (lg and up). Without demo contacts it links to sections of the page. #}<aside class="mt-8 hidden lg:mt-0 lg:block">
+{# The sticky contact block of a profile page (lg and up). #}<aside class="mt-8 hidden lg:mt-0 lg:block">
   <div class="sticky top-6 space-y-3 rounded-lg border border-slate-200 p-4">
     <p class="text-2xl font-semibold">{{ price_label }}</p>
-    {% if contacts.disabled_in_demo %}<p class="text-sm text-slate-500">{% translate "Контакты в демо-версии недоступны" %}</p>
-    {% if primary_href %}<a href="{{ primary_href }}" class="btn-press inline-flex min-h-11 w-full items-center justify-center rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800">{{ primary_label }}</a>{% endif %}
-    <a href="{{ secondary_href }}" class="inline-flex min-h-11 w-full items-center justify-center rounded border border-primary-700 px-4 py-2 font-semibold text-primary-700 hover:bg-primary-50">{{ secondary_label }}</a>
-    {% else %}{% include "catalog/_contact_buttons.html" with profile=profile %}{% endif %}
+    {% include "catalog/_contact_buttons.html" with profile=profile with_number=True %}
     {% if aside_note %}<p class="text-sm text-slate-600">{{ aside_note }}</p>{% endif %}
   </div>
 </aside>

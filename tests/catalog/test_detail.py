@@ -16,7 +16,16 @@ def test_detail_has_whatsapp_button(client, catalog_fixture):
 def test_detail_demo_contact_button_disabled_without_demo_phone(client, catalog_fixture, settings):
     settings.DEPLOY_PROFILE = "demo"
     html = client.get("/ru/specialist/ivanova-logoped/").content.decode()
-    assert "wa.me/77011234567" not in html and "Контакты в демо-версии недоступны" in html and 'aria-disabled="true"' not in html
+    # The page offers WhatsApp and a call that look real but do nothing; no "unavailable" notes.
+    assert "wa.me/77011234567" not in html and "tel:" not in html
+    assert "data-demo-contact" in html and "Контакты в демо-версии недоступны" not in html and "в демо-версии не работает" not in html
+
+
+def test_detail_call_button_shows_number_on_computers(client, catalog_fixture, settings):
+    settings.DEPLOY_PROFILE = "test"
+    html = client.get("/ru/specialist/ivanova-logoped/").content.decode()
+    assert 'href="tel:+77011234567"' in html and "data-call-number" in html and "+7 701 123 45 67" in html
+    assert "pointer-fine:hidden" in html
 
 
 def test_detail_methods_show_evidence_label(client, catalog_fixture):

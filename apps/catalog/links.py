@@ -19,11 +19,20 @@ def wa_me_url(phone_e164: str, text: str) -> str:
     return f"https://wa.me/{digits}?text={quote(text, safe='')}"
 
 
+def display_phone(phone_e164: str) -> str:
+    """+77011234567 -> +7 701 123 45 67; anything else is shown as stored."""
+    digits = re.sub(r"\D", "", phone_e164)
+    if len(digits) == 11 and digits.startswith("7"):
+        return f"+7 {digits[1:4]} {digits[4:7]} {digits[7:9]} {digits[9:11]}"
+    return phone_e164
+
+
 @dataclass(frozen=True)
 class ContactLinks:
     whatsapp: str | None
     phone: str | None
     disabled_in_demo: bool = False
+    number: str = ""  # the number to show, formatted
 
     @property
     def visible(self) -> bool:
@@ -37,8 +46,12 @@ def contact_links(profile) -> ContactLinks:
         demo_phone = settings.DEMO_CONTACT_PHONE
         if not demo_phone:
             return ContactLinks(whatsapp=None, phone=None, disabled_in_demo=True)
-        return ContactLinks(whatsapp=wa_me_url(demo_phone, text), phone=f"tel:{demo_phone}")
+        return ContactLinks(
+            whatsapp=wa_me_url(demo_phone, text), phone=f"tel:{demo_phone}", number=display_phone(demo_phone)
+        )
+    shown = profile.public_phone or profile.whatsapp_phone
     return ContactLinks(
         whatsapp=wa_me_url(profile.whatsapp_phone, text) if profile.whatsapp_phone else None,
         phone=f"tel:{profile.public_phone}" if profile.public_phone else None,
+        number=display_phone(shown) if shown else "",
     )

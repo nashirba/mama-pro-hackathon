@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 23:50+0500\n"
+"POT-Creation-Date: 2026-11-15 00:40+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -537,7 +537,7 @@ msgid "Город или район"
 msgstr "Қала немесе аудан"
 
 #: apps/onboarding/forms.py:43 apps/onboarding/services.py:56
-#: templates/catalog/nanny_detail.html:50
+#: templates/catalog/nanny_detail.html:47
 #: templates/catalog/specialist_detail.html:32
 msgid "О себе"
 msgstr "Өзі туралы"
@@ -686,9 +686,8 @@ msgstr "Сертификат немесе куәлік"
 msgid "Сертификат курса"
 msgstr "Курс сертификаты"
 
-#: apps/onboarding/models.py:93 templates/catalog/nanny_detail.html:19
-#: templates/catalog/nanny_detail.html:34
-#: templates/search/_nannies_intro.html:7 templates/search/_nanny_card.html:13
+#: apps/onboarding/models.py:93 templates/catalog/nanny_detail.html:31
+#: templates/search/_nannies_intro.html:7
 msgid "Справка о несудимости"
 msgstr "Соттылығы жоқ екені туралы анықтама"
 
@@ -700,7 +699,7 @@ msgstr "Бұғатталған нөмір"
 msgid "Заблокированные номера"
 msgstr "Бұғатталған нөмірлер"
 
-#: apps/onboarding/services.py:53 templates/catalog/nanny_detail.html:25
+#: apps/onboarding/services.py:53 templates/catalog/nanny_detail.html:22
 #: templates/catalog/specialist_detail.html:23
 msgid "Возраст детей"
 msgstr "Балалардың жасы"
@@ -1130,12 +1129,12 @@ msgstr "Оқытылған бала күтушілер"
 
 #: apps/search/templatetags/search_tags.py:28
 #: templates/catalog/specialist_detail.html:7
-#: templates/catalog/specialist_detail.html:76 templates/search/_card.html:10
+#: templates/catalog/specialist_detail.html:76 templates/search/_card.html:11
 msgid "бесплатно"
 msgstr "тегін"
 
 #: apps/search/templatetags/search_tags.py:29
-#: templates/catalog/specialist_detail.html:7 templates/search/_card.html:10
+#: templates/catalog/specialist_detail.html:7 templates/search/_card.html:11
 #, python-format
 msgid "от %(price)s ₸"
 msgstr "%(price)s ₸ бастап"
@@ -1143,7 +1142,7 @@ msgstr "%(price)s ₸ бастап"
 #: apps/search/templatetags/search_tags.py:30
 #: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
 #: templates/catalog/specialist_detail.html:7
-#: templates/catalog/specialist_detail.html:76 templates/search/_card.html:10
+#: templates/catalog/specialist_detail.html:76 templates/search/_card.html:11
 msgid "цена по запросу"
 msgstr "бағасы сұраныс бойынша"
 
@@ -1341,7 +1340,7 @@ msgstr "Демо-нұсқада SMS жіберілмейді, код ашық: %
 msgid "Зарегистрироваться"
 msgstr "Тіркелу"
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:21
+#: templates/accounts/code_form.html:28 templates/partials/header.html:22
 msgid "Войти"
 msgstr "Кіру"
 
@@ -1420,7 +1419,7 @@ msgstr "Бас тарту"
 #: templates/cabinet/home.html:3 templates/cabinet/home.html:6
 #: templates/onboarding/profile_only.html:3
 #: templates/onboarding/profile_only.html:6 templates/onboarding/status.html:3
-#: templates/onboarding/status.html:7 templates/partials/header.html:15
+#: templates/onboarding/status.html:7 templates/partials/header.html:16
 msgid "Личный кабинет"
 msgstr "Жеке кабинет"
 
@@ -1495,20 +1494,10 @@ msgstr "Демо: тексеру жүргізілмеген"
 msgid "Проверено Мама Про"
 msgstr "Мама Про тексерген"
 
-#: templates/catalog/_contact_buttons.html:9
-#: templates/catalog/_contact_buttons.html:15
+#: templates/catalog/_contact_buttons.html:8
+#: templates/catalog/_contact_buttons.html:16
 msgid "Позвонить"
 msgstr "Қоңырау шалу"
-
-#: templates/catalog/_contact_buttons.html:16
-msgid "в демо-версии не работает"
-msgstr "демо-нұсқада жұмыс істемейді"
-
-#: templates/catalog/_detail_action_bar.html:5
-#: templates/catalog/_detail_aside.html:4
-#: templates/catalog/_detail_mobile_contacts.html:3
-msgid "Контакты в демо-версии недоступны"
-msgstr "Демо-нұсқада байланыс қолжетімсіз"
 
 #: templates/catalog/_detail_back.html:1 templates/community/post_detail.html:7
 #: templates/community/post_form.html:7 templates/community/rules.html:7
@@ -1560,12 +1549,12 @@ msgid ""
 msgstr "Әзірге пікір жоқ. Пікірді сайтта тіркелген ана қалдыра алады."
 
 #: templates/catalog/_training_total.html:1
-#: templates/catalog/nanny_detail.html:27
+#: templates/catalog/nanny_detail.html:24
 msgid "Обучение"
 msgstr "Оқу"
 
 #: templates/catalog/_training_total.html:1
-#: templates/catalog/_trainings.html:13 templates/catalog/nanny_detail.html:27
+#: templates/catalog/_trainings.html:13 templates/catalog/nanny_detail.html:24
 #, python-format
 msgid "%(n)s час"
 msgid_plural "%(n)s часов"
@@ -1583,8 +1572,7 @@ msgstr[1] "%(n)s курс"
 msgid "Обучение и сертификаты"
 msgstr "Оқу және сертификаттар"
 
-#: templates/catalog/_trainings.html:8 templates/catalog/nanny_detail.html:18
-#: templates/search/_nanny_card.html:12
+#: templates/catalog/_trainings.html:8
 msgid "Первая помощь"
 msgstr "Алғашқы көмек"
 
@@ -1614,11 +1602,11 @@ msgstr "сағатына %(price)s ₸ бастап"
 msgid "Няня для ребёнка с особенностями развития"
 msgstr "Даму ерекшелігі бар балаға арналған бала күтуші"
 
-#: templates/catalog/nanny_detail.html:24
+#: templates/catalog/nanny_detail.html:21
 msgid "Опыт"
 msgstr "Тәжірибесі"
 
-#: templates/catalog/nanny_detail.html:24
+#: templates/catalog/nanny_detail.html:21
 #: templates/catalog/specialist_detail.html:22
 #, python-format
 msgid "%(n)s год"
@@ -1626,55 +1614,54 @@ msgid_plural "%(n)s лет"
 msgstr[0] "%(n)s жыл"
 msgstr[1] "%(n)s жыл"
 
-#: templates/catalog/nanny_detail.html:25
+#: templates/catalog/nanny_detail.html:22
 #: templates/catalog/specialist_detail.html:23
 #, python-format
 msgid "%(min)s–%(max)s лет"
 msgstr "%(min)s–%(max)s жас"
 
-#: templates/catalog/nanny_detail.html:26
+#: templates/catalog/nanny_detail.html:23
 msgid "Языки"
 msgstr "Тілдер"
 
-#: templates/catalog/nanny_detail.html:35
+#: templates/catalog/nanny_detail.html:32
 #, python-format
 msgid "Есть, выдана %(date)s"
 msgstr "Бар, берілген күні: %(date)s"
 
-#: templates/catalog/nanny_detail.html:40
+#: templates/catalog/nanny_detail.html:37
 msgid "С какими особенностями развития есть опыт"
 msgstr "Қандай даму ерекшеліктерімен тәжірибесі бар"
 
-#: templates/catalog/nanny_detail.html:57
+#: templates/catalog/nanny_detail.html:54
 msgid "Как работаю"
 msgstr "Қалай жұмыс істеймін"
 
-#: templates/catalog/nanny_detail.html:64
+#: templates/catalog/nanny_detail.html:61
 msgid "Когда может работать"
 msgstr "Қашан жұмыс істей алады"
 
-#: templates/catalog/nanny_detail.html:71
-#: templates/catalog/nanny_detail.html:84
+#: templates/catalog/nanny_detail.html:68
 msgid "Цены"
 msgstr "Бағалар"
 
-#: templates/catalog/nanny_detail.html:73
+#: templates/catalog/nanny_detail.html:70
 msgid "За час"
 msgstr "Сағатына"
 
-#: templates/catalog/nanny_detail.html:74
+#: templates/catalog/nanny_detail.html:71
 msgid "За ночь"
 msgstr "Түнге"
 
-#: templates/catalog/nanny_detail.html:75
+#: templates/catalog/nanny_detail.html:72
 msgid "За месяц"
 msgstr "Айына"
 
-#: templates/catalog/nanny_detail.html:76
+#: templates/catalog/nanny_detail.html:73
 msgid "Район выезда"
 msgstr "Баратын аудан"
 
-#: templates/catalog/nanny_detail.html:82
+#: templates/catalog/nanny_detail.html:79
 msgid ""
 "Няня не проводит коррекционных занятий и не ставит диагнозов. Оплата - "
 "напрямую няне."
@@ -1700,7 +1687,6 @@ msgid "С какими особенностями развития работа�
 msgstr "Даму ерекшеліктерінің қайсысымен жұмыс істейді"
 
 #: templates/catalog/specialist_detail.html:66
-#: templates/catalog/specialist_detail.html:105
 msgid "Услуги и цены"
 msgstr "Қызметтер мен бағалар"
 
@@ -1721,10 +1707,6 @@ msgstr "Қабылдау мекенжайлары"
 #: templates/catalog/specialist_detail.html:97
 msgid "Маршрут"
 msgstr "Бағыт"
-
-#: templates/catalog/specialist_detail.html:105
-msgid "Адреса и маршрут"
-msgstr "Мекенжайлар және бағыт"
 
 #: templates/community/_comment.html:8 templates/community/_post_card.html:9
 #, python-format
@@ -1819,7 +1801,7 @@ msgstr "Шағым жіберу"
 #: templates/community/post_detail.html:3
 #: templates/community/post_detail.html:10
 #: templates/community/post_form.html:10 templates/community/rules.html:10
-#: templates/partials/bottom_nav.html:10 templates/partials/header.html:12
+#: templates/partials/bottom_nav.html:10 templates/partials/header.html:13
 msgid "Сообщество"
 msgstr "Қауымдастық"
 
@@ -2154,7 +2136,7 @@ msgstr ""
 "жүктеңіз. Тексерістен кейін профиль каталогта пайда болады."
 
 #: templates/core/mamapro.html:3 templates/core/mamapro.html:7
-#: templates/partials/header.html:13
+#: templates/partials/header.html:14
 msgid "Мама Про"
 msgstr "Мама Про"
 
@@ -2270,11 +2252,11 @@ msgstr "Таңдаулыларға қосу"
 msgid "В избранном"
 msgstr "Таңдаулыларда"
 
-#: templates/favorites/list.html:9 templates/partials/header.html:10
+#: templates/favorites/list.html:9 templates/partials/header.html:11
 msgid "Специалисты"
 msgstr "Мамандар"
 
-#: templates/favorites/list.html:17 templates/partials/header.html:11
+#: templates/favorites/list.html:17 templates/partials/header.html:12
 msgid "Няни"
 msgstr "Бала күтушілер"
 
@@ -2445,7 +2427,7 @@ msgstr "Іздеу"
 msgid "Кабинет"
 msgstr "Кабинет"
 
-#: templates/partials/header.html:18
+#: templates/partials/header.html:19
 msgid "Выйти"
 msgstr "Шығу"
 
@@ -2571,14 +2553,14 @@ msgstr ""
 msgid "Пройти опросник заново"
 msgstr "Сауалнамадан қайта өту"
 
-#: templates/search/_card.html:15
+#: templates/search/_card.html:18
 #, python-format
 msgid "Стаж %(n)s год"
 msgid_plural "Стаж %(n)s лет"
 msgstr[0] "%(n)s жыл тәжірибе"
 msgstr[1] "%(n)s жыл тәжірибе"
 
-#: templates/search/_card.html:18
+#: templates/search/_card.html:21
 #, python-format
 msgid "≈ %(distance)s км"
 msgstr "≈ %(distance)s км"
@@ -2657,7 +2639,7 @@ msgstr "Барлығын көрсету"
 msgid "Свернуть"
 msgstr "Жасыру"
 
-#: templates/search/_filters.html:107 templates/search/_nanny_card.html:16
+#: templates/search/_filters.html:107 templates/search/_nanny_card.html:15
 msgid "Особенности развития"
 msgstr "Даму ерекшеліктері"
 
@@ -2733,19 +2715,19 @@ msgstr "Бөлімдегі әр бала күтушіде бар"
 msgid "Сертификат о курсе обучения"
 msgstr "Оқу курсы туралы сертификат"
 
-#: templates/search/_nanny_card.html:9
+#: templates/search/_nanny_card.html:11
 #, python-format
 msgid "Опыт %(n)s год"
 msgid_plural "Опыт %(n)s лет"
 msgstr[0] "Тәжірибесі %(n)s жыл"
 msgstr[1] "Тәжірибесі %(n)s жыл"
 
-#: templates/search/_nanny_card.html:9
+#: templates/search/_nanny_card.html:11
 #, python-format
 msgid "дети %(min)s–%(max)s лет"
 msgstr "%(min)s–%(max)s жастағы балалар"
 
-#: templates/search/_nanny_card.html:23
+#: templates/search/_nanny_card.html:22
 #, python-format
 msgid "Выезд: %(area)s"
 msgstr "Барады: %(area)s"

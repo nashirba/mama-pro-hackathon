@@ -102,11 +102,10 @@
   </section>
   {% endif %}
  </div>
-{% translate "Адреса и маршрут" as addresses_label %}{% translate "Услуги и цены" as services_label %}
-{% include "catalog/_detail_aside.html" with primary_href=addresses|yesno:"#addresses," primary_label=addresses_label secondary_href="#services" secondary_label=services_label aside_note=first_address_city %}
+{% include "catalog/_detail_aside.html" with aside_note=first_address_city %}
 </div>
 
-{% contact_links profile as contacts %}{% if contacts.visible and not contacts.disabled_in_demo or contacts.disabled_in_demo and addresses %}
-{% include "catalog/_detail_action_bar.html" with demo_href="#addresses" demo_label=addresses_label %}
+{% contact_links profile as contacts %}{% if contacts.visible %}
+{% include "catalog/_detail_action_bar.html" %}
 {% endif %}
 {% endblock %}

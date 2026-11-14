@@ -78,11 +78,10 @@
 
   <p data-nanny-disclaimer class="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">{% translate "Няня не проводит коррекционных занятий и не ставит диагнозов. Оплата - напрямую няне." %}</p>
  </div>
-{% translate "Цены" as prices_label %}
-{% include "catalog/_detail_aside.html" with primary_href="" secondary_href="#prices" secondary_label=prices_label aside_note="" %}
+{% include "catalog/_detail_aside.html" with aside_note="" %}
 </div>
 
 {% if contacts.visible %}
-{% include "catalog/_detail_action_bar.html" with demo_href="#prices" demo_label=prices_label %}
+{% include "catalog/_detail_action_bar.html" %}
 {% endif %}
 {% endblock %}

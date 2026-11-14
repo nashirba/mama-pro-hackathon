@@ -21,8 +21,9 @@
       <svg class="mt-0.5 size-4 shrink-0 text-slate-500" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 18s6-5.2 6-9.5a6 6 0 10-12 0C4 12.8 10 18 10 18z"/><circle cx="10" cy="8.5" r="2"/></svg>
       <span class="min-w-0">{% blocktranslate with area=card.home_visit_area_name %}Выезд: {{ area }}{% endblocktranslate %}</span>
     </p>{% endif %}
-    <div class="relative z-10 mt-auto flex flex-wrap items-center gap-2 pt-1{% if not contacts.visible or contacts.disabled_in_demo %} hidden{% endif %}">
-      {% if not contacts.disabled_in_demo %}{% include "catalog/_contact_buttons.html" with profile=s %}{% endif %}
+    {# Two ways to reach the person: WhatsApp or a call; the number is shown too. #}
+    <div class="relative z-10 mt-auto pt-1"{% if not contacts.visible %} hidden{% endif %} data-card-contacts>
+      {% include "catalog/_contact_buttons.html" with profile=s with_number=True %}
     </div>
   </div>
 </article>

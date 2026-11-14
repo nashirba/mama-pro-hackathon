@@ -540,11 +540,9 @@ msgid "Первая помощь"
 msgstr ""
 
 #: templates/catalog/_trainings.html:12
-#, fuzzy, python-format
-#| msgid "Стаж %(n)s год"
-#| msgid_plural "Стаж %(n)s лет"
+#, python-format
 msgid "%(year)s год"
-msgstr "Стаж %(n)s год"
+msgstr "%(year)s год"
 
 #: templates/catalog/_trainings.html:15
 #, python-format
@@ -581,15 +579,13 @@ msgstr ""
 
 #: templates/catalog/nanny_detail.html:23
 #: templates/catalog/specialist_detail.html:21
-#, fuzzy, python-format
-#| msgid "Стаж %(n)s год"
-#| msgid_plural "Стаж %(n)s лет"
+#, python-format
 msgid "%(n)s год"
 msgid_plural "%(n)s лет"
-msgstr[0] "Стаж %(n)s год"
-msgstr[1] "Стаж %(n)s года"
-msgstr[2] "Стаж %(n)s лет"
-msgstr[3] "Стаж %(n)s года"
+msgstr[0] "%(n)s год"
+msgstr[1] "%(n)s года"
+msgstr[2] "%(n)s лет"
+msgstr[3] "%(n)s года"
 
 #: templates/catalog/nanny_detail.html:24
 #: templates/catalog/specialist_detail.html:22
@@ -634,11 +630,8 @@ msgid "Цены"
 msgstr ""
 
 #: templates/catalog/nanny_detail.html:72
-#, fuzzy
-#| msgid "%(n)s час"
-#| msgid_plural "%(n)s часов"
 msgid "За час"
-msgstr "%(n)s час"
+msgstr "За час"
 
 #: templates/catalog/nanny_detail.html:73
 msgid "За ночь"

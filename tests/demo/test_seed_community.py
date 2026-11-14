@@ -3,9 +3,11 @@ import json
 import pytest
 from django.core.management import call_command
 
-from apps.catalog.models import DevelopmentalCondition
+from apps.accounts.models import User
+from apps.catalog.models import DevelopmentalCondition, SpecialistProfile
 from apps.catalog.visibility import catalog_visible_specialists
 from apps.community.models import Comment, Like, Post
+from apps.community.services import add_comment, save_post, toggle_like
 from apps.community.pii import looks_sensitive
 from apps.demo.generators import DATA_DIR, load_json
 from apps.geo.models import KatoNode
@@ -61,8 +63,40 @@ def test_community_json_uses_existing_slugs_and_no_stop_phrases(db):
         assert post["condition"] in conditions and post["city"] in cities
         texts.append(post["body"])
         for comment in post["comments"]:
+            assert comment.get("by", "parent") in {"parent", "specialist"}
             texts += [comment["body"], *comment["replies"]]
     assert all(not looks_sensitive(t) for t in texts)
     text = (DATA_DIR / "community_ru.json").read_text(encoding="utf-8").lower()
     assert not [p for p in STOP_PHRASES if p in text]
     assert json.loads(text)
+
+
+def test_specialist_comments_come_only_from_marked_json_entries(seeded):
+    data = load_json("community_ru.json")
+    marked = sum(c.get("by") == "specialist" for p in data["posts"] for c in p["comments"])
+    assert marked >= 3
+    assert Comment.objects.filter(author__specialist_profile__isnull=False, parent__isnull=True).count() == marked
+
+
+def test_seed_does_not_touch_real_users_data(db):
+    call_command("seed_demo", specialists=10, seed=1)
+    user = User.objects.create_user("+77015556677", preferred_language="ru")
+    user.display_name = "Реальная_мама"
+    user.save()
+    specialist = SpecialistProfile.objects.order_by("pk").first()
+    post = save_post(Post(author=user, kind="story", body="Моя настоящая история."))
+    review = save_post(Post(author=user, kind="review", body="Мой настоящий отзыв.", specialist=specialist))
+    comment = add_comment(post, user, "Мой комментарий.")
+    toggle_like(user, post=post)
+    ids = lambda: (
+        set(Post.objects.filter(author=user).values_list("pk", flat=True)),
+        set(Comment.objects.filter(author=user).values_list("pk", flat=True)),
+        set(Like.objects.filter(user=user).values_list("pk", flat=True)),
+    )
+    before = ids()
+    call_command("seed_demo", specialists=10, seed=1)
+    call_command("seed_demo", specialists=10, seed=1)
+    assert ids() == before
+    assert before[0] == {post.pk, review.pk} and before[1] == {comment.pk} and len(before[2]) == 1
+    user.refresh_from_db()
+    assert user.display_name == "Реальная_мама"

@@ -103,9 +103,13 @@ def seed_community(rng: Random) -> int:
 def _seed_comments(rng, post: Post, comments: list[dict], index: int, parents: list[User], specialists) -> None:
     others = [p for p in parents if p.pk != post.author_id]
     for j, item in enumerate(comments):
-        # Deterministic share of specialist answers, so the demo always shows some.
-        by_specialist = bool(specialists) and (index + j) % 3 == 0
-        commenter = specialists[(index + j) % len(specialists)].user if by_specialist else rng.choice(others)
+        # Only comments written in a professional voice ("by": "specialist") belong to specialist accounts.
+        if item.get("by") == "specialist":
+            if not specialists:
+                continue
+            commenter = specialists[(index + j) % len(specialists)].user
+        else:
+            commenter = rng.choice(others)
         comment = add_comment(post, commenter, item["body"])
         for k, reply in enumerate(item["replies"]):
             # Replies alternate: the post author answers first, then the commenter again.

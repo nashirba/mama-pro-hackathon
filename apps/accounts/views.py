@@ -129,13 +129,13 @@ def register_view(request):
     if not request.user.is_authenticated:
         return redirect_to_login(request.get_full_path(), reverse("accounts:login"))
     if request.user.has_full_name:
-        return redirect("core:home")  # Task 5: cabinet:home
+        return redirect("cabinet:home")
     next_url = _safe_next(request)
     if request.method == "POST":
         form = FullNameForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(next_url or "core:home")  # Task 5: cabinet:home
+            return redirect(next_url or "cabinet:home")
     else:
         form = FullNameForm(instance=request.user)
     return render(request, "accounts/register.html", {"form": form, "next": next_url})

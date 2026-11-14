@@ -32,7 +32,7 @@ def test_register_drops_external_next(client, db):
     r = client.post(
         "/ru/register/", {"last_name": "Иванова", "first_name": "Айгуль", "next": "https://evil.example/"}
     )
-    assert r.headers["Location"] == "/ru/"  # "/ru/cabinet/" after Task 5
+    assert r.headers["Location"] == "/ru/cabinet/"
 
 
 def test_register_requires_both_names(client, db):
@@ -57,7 +57,7 @@ def test_register_saves_names_stripped(client, db):
 
 def test_register_with_full_name_redirects_to_cabinet(client, db):
     client.force_login(UserFactory())
-    assert client.get("/ru/register/").headers["Location"] == "/ru/"  # "/ru/cabinet/" after Task 5
+    assert client.get("/ru/register/").headers["Location"] == "/ru/cabinet/"
 
 
 def test_register_anonymous_redirects_to_login(client, db):

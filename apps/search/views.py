@@ -72,6 +72,28 @@ def _search_params(qd: QueryDict) -> SearchParams:
     return SearchParams.from_querydict(search_qd)
 
 
+def _active_filter_count(params: SearchParams) -> int:
+    """Selected filters for the badge of the "Filters" button: every checked value, and one per range or scalar."""
+    lists = (
+        params.specialist_type_ids,
+        params.condition_ids,
+        params.formats,
+        params.language_codes,
+        params.verification_levels,
+        params.method_ids,
+    )
+    flags = (
+        params.kato_id is not None,
+        params.child_age_min is not None or params.child_age_max is not None,
+        params.price_min is not None or params.price_max is not None,
+        params.price_month_min is not None or params.price_month_max is not None,
+        params.free_only,
+        params.experience_min is not None,
+        params.near is not None,
+    )
+    return sum(len(values) for values in lists) + sum(flags)
+
+
 def _render_results(request, qd: QueryDict, heading: str | None = None, extra: dict | None = None):
     """`qd` is the filter state shown in the form."""
     district_id = _int_or_none(qd.get("district_id"))
@@ -106,6 +128,7 @@ def _render_results(request, qd: QueryDict, heading: str | None = None, extra: d
         "near_value": params.to_querydict().get("near", ""),
         "age_groups": age_groups,
         "map_config": map_config(params.kato_id, page_query),
+        "active_filter_count": _active_filter_count(params),
         "reset_url": results_path,
         "online_url": online_url,
         "prev_url": f"{request.path}?{page_query}{sep}page={result.page - 1}" if result.page > 1 else None,

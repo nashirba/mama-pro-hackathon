@@ -11,7 +11,7 @@ def test_detail_has_whatsapp_button(client, catalog_fixture):
 def test_detail_demo_contact_button_disabled_without_demo_phone(client, catalog_fixture, settings):
     settings.DEPLOY_PROFILE = "demo"
     html = client.get("/ru/specialist/ivanova-logoped/").content.decode()
-    assert "wa.me/77011234567" not in html and 'aria-disabled="true"' in html and "в демо-версии не работает" in html
+    assert "wa.me/77011234567" not in html and "Контакты в демо-версии недоступны" in html and 'aria-disabled="true"' not in html
 
 
 def test_detail_methods_show_evidence_label(client, catalog_fixture):

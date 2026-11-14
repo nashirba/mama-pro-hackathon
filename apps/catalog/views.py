@@ -34,10 +34,12 @@ def specialist_detail(request, slug):
     for service in services:
         for address in service.addresses.all():
             addresses.setdefault(address.pk, address)
+    prices = [0 if s.is_free else s.price_session for s in services if s.is_free or s.price_session is not None]
     return render(
         request,
         "catalog/specialist_detail.html",
         {
+            "price_from": min(prices) if prices else None,
             "profile": profile,
             "services": services,
             "addresses": list(addresses.values()),

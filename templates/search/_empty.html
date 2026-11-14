@@ -3,9 +3,9 @@
   <h2 class="text-lg font-semibold">{% translate "Ничего не нашлось" %}</h2>
   <p class="mt-2 text-sm text-slate-600">{% translate "Попробуйте изменить условия поиска." %}</p>
   <ul class="mt-4 space-y-2 text-sm">
-    <li><a href="{{ reset_url }}" class="font-medium text-teal-700 hover:underline">{% translate "расширить фильтры" %}</a></li>
+    <li><a href="{{ reset_url }}" class="font-medium text-primary-700 hover:underline">{% translate "расширить фильтры" %}</a></li>
     {% if online_url %}
-    <li><a href="{{ online_url }}" class="font-medium text-teal-700 hover:underline">{% translate "включить онлайн-формат" %}</a></li>
+    <li><a href="{{ online_url }}" class="font-medium text-primary-700 hover:underline">{% translate "включить онлайн-формат" %}</a></li>
     {% endif %}
   </ul>
 </div>

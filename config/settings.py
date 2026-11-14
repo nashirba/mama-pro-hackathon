@@ -110,6 +110,7 @@ LANGUAGE_CODE = "ru"
 LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = "Asia/Almaty"
 USE_I18N = True
+FORMAT_MODULE_PATH = ["config.formats"]
 USE_TZ = True
 
 PARLER_LANGUAGES = {

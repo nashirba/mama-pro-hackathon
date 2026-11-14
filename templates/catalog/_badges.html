@@ -1,7 +1,13 @@
-{% load i18n catalog_tags %}<ul class="flex flex-wrap gap-1 text-xs">
+{% load i18n catalog_tags %}{% if compact %}{% with levels=profile.demo_verification_levels %}{% if levels %}
+<p class="flex items-center gap-1.5 text-xs text-primary-800"{% if IS_DEMO %} title="{% translate 'Демо: проверка не проводилась' %}"{% endif %}>
+  <svg class="size-4 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>
+  <span>{% blocktranslate with n=levels|length total=4 %}Проверено: {{ n }} из {{ total }}{% endblocktranslate %}</span>
+  <span class="sr-only">: {% for level in levels %}{{ level|verification_label }}{% if not forloop.last %}; {% endif %}{% endfor %}</span>
+</p>
+{% endif %}{% endwith %}{% else %}<ul class="flex flex-wrap gap-1 text-xs">
   {% for level in profile.demo_verification_levels %}
-  <li class="rounded bg-teal-50 px-2 py-0.5 text-teal-800"{% if IS_DEMO %} title="{% translate 'Демо: проверка не проводилась' %}"{% endif %}>
+  <li class="rounded bg-primary-50 px-2 py-0.5 text-primary-800"{% if IS_DEMO %} title="{% translate 'Демо: проверка не проводилась' %}"{% endif %}>
     {{ level|verification_label }}{% if IS_DEMO %} <span class="text-slate-500">({% translate "демо" %})</span>{% endif %}
   </li>
   {% endfor %}
-</ul>
+</ul>{% endif %}

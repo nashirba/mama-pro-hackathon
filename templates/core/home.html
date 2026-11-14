@@ -1,36 +1,40 @@
 {% extends "base.html" %}
-{% load i18n l10n catalog_tags %}
+{% load i18n l10n static catalog_tags %}
 {% block title %}{{ BRAND_NAME }} - {% translate "каталог специалистов для детей" %}{% endblock %}
 {% block content %}
-<div class="mx-auto max-w-6xl space-y-12 px-4 py-10">
-  <section>
-    <h1 class="text-3xl font-bold">{% translate "Найдите специалиста для ребёнка" %}</h1>
-    <form method="get" action="{% url 'search:results' %}" class="mt-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_14rem_auto]">
+<div class="mx-auto max-w-7xl space-y-12 px-4 py-6 sm:px-6 sm:py-10">
+  <section class="relative overflow-hidden rounded-2xl bg-brand-50 px-5 py-8 sm:px-8 sm:py-12">
+    <img src="{% static 'img/brand/mamapro-mark.png' %}" alt="" width="235" height="235" class="pointer-events-none absolute -right-10 -top-10 h-56 w-56 -rotate-12 opacity-[0.12] sm:-right-6 sm:-top-6 sm:h-72 sm:w-72" aria-hidden="true">
+    <div class="relative max-w-3xl">
+      <h1 class="text-3xl font-bold leading-tight sm:text-4xl">{% translate "Найдите специалиста для ребёнка" %}</h1>
+      <p class="mt-3 text-base text-slate-700 sm:text-lg">{% translate "Специалисты для детей с особенностями развития в Казахстане: понятные цены, адреса на карте и прозрачные уровни проверки документов." %}</p>
+    </div>
+    <form method="get" action="{% url 'search:results' %}" class="relative mt-6 grid gap-3 sm:grid-cols-[minmax(0,1fr)_14rem_auto]">
       <div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false">
         <label for="home-q" class="sr-only">{% translate "Кого вы ищете" %}</label>
         <input type="search" id="home-q" name="q" autocomplete="off" placeholder="{% translate 'Логопед, РАС, не говорит...' %}"
                hx-get="{% url 'search:suggest' %}" hx-include="#home-city" @input="open = true" @focus="open = true" hx-trigger="input changed delay:250ms" hx-target="#home-suggest" hx-swap="innerHTML"
-               class="w-full rounded border border-slate-300 px-3 py-2">
+               class="min-h-12 w-full rounded border border-slate-300 bg-white px-3 py-2">
         <div id="home-suggest" x-show="open" class="absolute inset-x-0 top-full z-10 mt-1" aria-live="polite"></div>
       </div>
       <div>
         <label for="home-city" class="sr-only">{% translate "Город" %}</label>
-        <select id="home-city" name="kato_id" class="w-full rounded border border-slate-300 px-3 py-2">
+        <select id="home-city" name="kato_id" class="min-h-12 w-full rounded border border-slate-300 bg-white px-3 py-2">
           <option value="">{% translate "Любой город" %}</option>
           {% for city in cities %}<option value="{{ city.id|unlocalize }}">{{ city|tr:"name" }}</option>{% endfor %}
         </select>
       </div>
-      <button type="submit" class="rounded bg-teal-700 px-5 py-2 font-semibold text-white hover:bg-teal-800">{% translate "Найти" %}</button>
+      <button type="submit" class="min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Найти" %}</button>
     </form>
   </section>
 
   <section>
     <h2 class="text-xl font-semibold">{% translate "Популярные специализации" %}</h2>
-    <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <ul class="mt-4 divide-y divide-slate-200 overflow-hidden rounded-lg border border-slate-200 sm:grid sm:grid-cols-2 sm:gap-3 sm:divide-y-0 sm:overflow-visible sm:border-0 lg:grid-cols-4">
       {% for t in popular_types %}
-      <li><a href="{% url 'search:results' %}?specialist_type_ids={{ t.id|unlocalize }}" class="block rounded-lg border border-slate-200 p-4 hover:border-teal-700">
+      <li><a href="{% url 'search:results' %}?specialist_type_ids={{ t.id|unlocalize }}" class="flex min-h-12 items-center justify-between gap-3 px-4 py-2 hover:bg-primary-50 sm:block sm:rounded-lg sm:border sm:border-slate-200 sm:p-4 sm:hover:border-primary-700">
         <span class="font-medium">{{ t|tr:"name" }}</span>
-        <span class="block text-sm text-slate-600">{% translate "Специалистов" %}: {{ t.specialists_count }}</span>
+        <span class="shrink-0 text-sm text-slate-500 sm:block sm:text-slate-600"><span class="sr-only sm:not-sr-only">{% translate "Специалистов" %}: </span>{{ t.specialists_count }}</span>
       </a></li>
       {% endfor %}
     </ul>
@@ -40,26 +44,26 @@
     <h2 class="text-xl font-semibold">{% translate "Города" %}</h2>
     <ul class="mt-4 flex flex-wrap gap-2">
       {% for city in cities %}
-      <li><a href="{% url 'search:results' %}?kato_id={{ city.id|unlocalize }}" class="inline-block rounded-full border border-slate-300 px-4 py-1.5 text-sm hover:border-teal-700">{{ city|tr:"name" }}</a></li>
+      <li><a href="{% url 'search:results' %}?kato_id={{ city.id|unlocalize }}" class="inline-flex min-h-11 items-center rounded-full border border-slate-300 px-4 text-sm hover:border-primary-700">{{ city|tr:"name" }}</a></li>
       {% endfor %}
     </ul>
   </section>
 
-  <section class="rounded-lg bg-teal-50 p-6">
+  <section class="max-w-3xl border-l-4 border-primary-600 pl-5">
     <h2 class="text-xl font-semibold">{% translate "Что значит проверенный специалист" %}</h2>
     <p class="mt-2 text-slate-700">{% translate "Мы показываем не общую галочку, а то, что именно проверено. Сырые документы не публикуются: видны только уровни проверки." %}</p>
-    <ul class="mt-3 list-disc space-y-1 pl-5 text-slate-700">
-      <li>{% translate "Личность подтверждена" %}</li>
-      <li>{% translate "Образование подтверждено" %}</li>
-      <li>{% translate "Квалификация подтверждена" %}</li>
-      <li>{% translate "Проверка на безопасность пройдена" %}</li>
+    <ul class="mt-3 space-y-1.5 text-slate-700">
+      <li class="flex items-start gap-2"><svg class="mt-0.5 size-5 shrink-0 text-primary-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg><span>{% translate "Личность подтверждена" %}</span></li>
+      <li class="flex items-start gap-2"><svg class="mt-0.5 size-5 shrink-0 text-primary-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg><span>{% translate "Образование подтверждено" %}</span></li>
+      <li class="flex items-start gap-2"><svg class="mt-0.5 size-5 shrink-0 text-primary-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg><span>{% translate "Квалификация подтверждена" %}</span></li>
+      <li class="flex items-start gap-2"><svg class="mt-0.5 size-5 shrink-0 text-primary-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg><span>{% translate "Проверка на безопасность пройдена" %}</span></li>
     </ul>
   </section>
 
-  <section class="rounded-lg border border-slate-200 p-6">
+  <section class="rounded-2xl bg-primary-800 px-5 py-8 text-white sm:px-8">
     <h2 class="text-xl font-semibold">{% translate "Вы специалист?" %}</h2>
-    <p class="mt-2 text-slate-700">{% translate "Расскажите о себе и своих услугах родителям, которые ищут помощь." %}</p>
-    <a href="{% url 'accounts:login' %}?next={% url 'core:home' as home_url %}{{ home_url|urlencode }}" class="mt-4 inline-block rounded bg-teal-700 px-5 py-2 font-semibold text-white hover:bg-teal-800">{% translate "Разместить профиль" %}</a>
+    <p class="mt-2 max-w-2xl text-primary-100">{% translate "Расскажите о себе и своих услугах родителям, которые ищут помощь." %}</p>
+    <a href="{% url 'accounts:login' %}?next={% url 'core:home' as home_url %}{{ home_url|urlencode }}" class="mt-5 inline-flex min-h-12 items-center rounded bg-white px-6 py-2 font-semibold text-primary-800 hover:bg-primary-50">{% translate "Разместить профиль" %}</a>
   </section>
 </div>
 {% endblock %}

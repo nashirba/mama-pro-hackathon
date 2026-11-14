@@ -1,21 +1,16 @@
 {% extends "base.html" %}
 {% load i18n static %}
 {% block title %}{% if heading %}{{ heading }}{% else %}{% translate "Каталог специалистов" %}{% endif %} - {{ BRAND_NAME }}{% endblock %}
-{% block extra_head %}{% include "partials/map_assets.html" %}<script src="{% static 'js/map/results.js' %}" defer></script>{% endblock %}
+{% block extra_head %}{% include "partials/map_assets.html" %}<script src="{% static 'js/map/results.js' %}" defer></script><noscript><style>[data-panel-cloak]{display:block!important}</style></noscript>{% endblock %}
 {% block content %}
-<div class="mx-auto max-w-7xl px-4 py-6">
+<div class="mx-auto max-w-7xl px-4 py-6 sm:px-6">
   {% include "search/_heading.html" %}
-  <div class="mt-6 grid gap-6 lg:grid-cols-[16rem_minmax(0,1fr)]">
-    <aside>{% include "search/_filters.html" %}</aside>
-    <div x-data="{ view: 'list' }" class="min-w-0">
-      <div class="mb-4 flex gap-2 text-sm xl:hidden">
-        <button type="button" @click="view = 'list'" :aria-pressed="view === 'list'"
-                class="rounded-full border border-slate-300 px-4 py-1.5 font-medium aria-pressed:border-teal-700 aria-pressed:bg-teal-700 aria-pressed:text-white">{% translate "Список" %}</button>
-        <button type="button" @click="view = 'map'" :aria-pressed="view === 'map'"
-                class="rounded-full border border-slate-300 px-4 py-1.5 font-medium aria-pressed:border-teal-700 aria-pressed:bg-teal-700 aria-pressed:text-white">{% translate "Карта" %}</button>
-      </div>
+  <div x-data="{ view: 'list' }" @kamqor-show-list.window="view = 'list'" data-view-root class="mt-4 grid gap-4 lg:mt-6 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-6">
+    <aside class="min-w-0">{% include "search/_filters.html" %}</aside>
+    <div class="min-w-0">
+      <div class="mb-4 hidden lg:flex xl:hidden">{% include "search/_view_toggle.html" %}</div>
       <div class="grid items-start gap-6 xl:grid-cols-2">
-        <section id="results" aria-live="polite" :class="view === 'map' ? 'max-xl:hidden' : ''">{% include "search/_results_partial.html" %}</section>
+        <section id="results" :class="view === 'map' ? 'max-xl:hidden' : ''">{% include "search/_results_partial.html" %}</section>
         {% include "search/_map.html" %}
       </div>
     </div>
@@ -29,6 +24,42 @@
       ageMin: init.ageMin,
       ageMax: init.ageMax,
       failed: false,
+      // below lg everything but the search box is a sheet opened by the "Filters" button
+      open: false,
+      desktop: true,
+      init() {
+        const mq = window.matchMedia("(min-width: 1024px)");
+        this.desktop = mq.matches;
+        mq.addEventListener("change", (e) => {
+          this.desktop = e.matches;
+          if (e.matches) this.open = false;
+        });
+        // a long checkbox list must not push the sheet content down, the selected values stay in the summary line
+        if (!this.desktop) this.$el.querySelectorAll("details[open]").forEach((d) => d.removeAttribute("open"));
+        this.$el.querySelector("#filters-panel").removeAttribute("data-panel-cloak");
+        this.$watch("open", (value) => document.body.classList.toggle("overflow-hidden", value && !this.desktop));
+      },
+      openSheet() {
+        this.open = true;
+        this.$nextTick(() => this.$refs.close.focus());
+      },
+      closeSheet() {
+        const wasOpen = this.open;
+        this.open = false;
+        if (wasOpen) this.$nextTick(() => this.$refs.opener.focus());
+      },
+      onEscape() {
+        if (this.open && !this.desktop) this.closeSheet();
+      },
+      trap(event) {
+        if (!this.open || this.desktop) return;
+        const items = [...this.$refs.panel.querySelectorAll("a[href], button, input, select, textarea, summary")]
+          .filter((el) => !el.disabled && el.type !== "hidden" && el.offsetParent !== null);
+        if (!items.length) return;
+        const first = items[0], last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      },
       isAge(lo, hi) {
         return this.ageMin === String(lo) && this.ageMax === String(hi);
       },

@@ -1,4 +1,4 @@
-{% load i18n search_tags %}<div id="specialist-map" class="mt-3 h-64 w-full rounded-lg border border-slate-200" role="region" aria-label="{% translate 'Адреса на карте' %}"></div>
+{% load i18n search_tags %}<div id="specialist-map" class="relative mt-3 h-64 w-full overflow-hidden rounded-lg border border-slate-200 bg-slate-100" role="region" aria-label="{% translate 'Адреса на карте' %}"><p data-map-status class="absolute inset-0 z-10 flex items-center justify-center px-4 text-center text-slate-600">{% translate "Загружаем карту…" %}</p></div>
 {{ geojson|json_script:"specialist-geojson" }}
 {% map_labels_script %}
 <script>

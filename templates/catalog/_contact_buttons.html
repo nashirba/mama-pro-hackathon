@@ -2,11 +2,11 @@
 <div class="flex flex-wrap items-center gap-2">
   {% if contacts.whatsapp %}
   <a href="{{ contacts.whatsapp }}" target="_blank" rel="noopener"
-     class="rounded bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-700">WhatsApp</a>
+     class="inline-flex min-h-11 items-center rounded bg-green-600 px-3 py-2 text-sm font-semibold text-white hover:bg-green-700">WhatsApp</a>
   {% endif %}
   {% if contacts.phone %}
   <a href="{{ contacts.phone }}"
-     class="rounded border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100">{% translate "Позвонить" %}</a>
+     class="inline-flex min-h-11 items-center rounded border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100">{% translate "Позвонить" %}</a>
   {% endif %}
   {% if contacts.disabled_in_demo %}
   <button type="button" aria-disabled="true"

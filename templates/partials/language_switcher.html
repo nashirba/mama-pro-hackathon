@@ -6,7 +6,8 @@
   <input type="hidden" name="next" value="{{ request.get_full_path }}">
   {% for code, name in AVAILABLE_LANGUAGES %}
     <button type="submit" name="language" value="{{ code }}"
-            class="rounded px-2 py-1 text-sm {% if code == CURRENT_LANGUAGE %}bg-teal-700 font-semibold text-white{% else %}text-slate-700 hover:bg-slate-100{% endif %}"
-            {% if code == CURRENT_LANGUAGE %}aria-current="true"{% endif %}>{{ name }}</button>
+            aria-label="{{ name }}" lang="{{ code }}"
+            class="inline-flex min-h-11 min-w-11 items-center justify-center rounded px-2 text-sm lg:min-h-9 {% if code == CURRENT_LANGUAGE %}bg-primary-700 font-semibold text-white{% else %}text-slate-700 hover:bg-slate-100{% endif %}"
+            {% if code == CURRENT_LANGUAGE %}aria-current="true"{% endif %}>{% if code == "ru" %}РУ{% elif code == "kk" %}ҚАЗ{% else %}{{ name }}{% endif %}</button>
   {% endfor %}
 </form>

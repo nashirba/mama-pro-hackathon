@@ -7,11 +7,11 @@
       {% blocktranslate trimmed with brand=BRAND_NAME %}Пользовательское соглашение: вы используете «{{ brand }}» как справочник специалистов, сами отвечаете за выбор специалиста и не вносите реальные данные о детях в демо-версии.{% endblocktranslate %}
     </p>
     <details class="mt-1 text-sm">
-      <summary class="cursor-pointer text-teal-700">{% translate "Полный текст соглашения" %}</summary>
+      <summary class="flex min-h-11 cursor-pointer items-center text-primary-700">{% translate "Полный текст соглашения" %}</summary>
       <div class="mt-2 rounded bg-slate-50 p-3">{% include "consents/user_agreement_v1.html" %}</div>
     </details>
-    <label class="mt-2 flex items-start gap-2 text-sm">
-      <input type="checkbox" name="user_agreement" class="mt-1"{% if form.user_agreement.value %} checked{% endif %}>
+    <label class="mt-2 flex min-h-11 items-start gap-3 text-sm">
+      <input type="checkbox" name="user_agreement" class="mt-0.5 size-5 shrink-0 accent-primary-700"{% if form.user_agreement.value %} checked{% endif %}>
       <span>{% translate "Я принимаю пользовательское соглашение" %}</span>
     </label>
     {% for error in form.user_agreement.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
@@ -22,11 +22,11 @@
       {% translate "Обработка персональных данных: мы храним ваш номер телефона и язык интерфейса, чтобы вы могли входить в аккаунт. Согласие можно отозвать." %}
     </p>
     <details class="mt-1 text-sm">
-      <summary class="cursor-pointer text-teal-700">{% translate "Полный текст согласия" %}</summary>
+      <summary class="flex min-h-11 cursor-pointer items-center text-primary-700">{% translate "Полный текст согласия" %}</summary>
       <div class="mt-2 rounded bg-slate-50 p-3">{% include "consents/pd_processing_v1.html" %}</div>
     </details>
-    <label class="mt-2 flex items-start gap-2 text-sm">
-      <input type="checkbox" name="pd_processing" class="mt-1"{% if form.pd_processing.value %} checked{% endif %}>
+    <label class="mt-2 flex min-h-11 items-start gap-3 text-sm">
+      <input type="checkbox" name="pd_processing" class="mt-0.5 size-5 shrink-0 accent-primary-700"{% if form.pd_processing.value %} checked{% endif %}>
       <span>{% translate "Я даю согласие на обработку персональных данных" %}</span>
     </label>
     {% for error in form.pd_processing.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}

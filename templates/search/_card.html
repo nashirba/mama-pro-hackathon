@@ -1,12 +1,12 @@
-{% load i18n catalog_tags search_tags %}{% with s=card.specialist %}
-<article data-specialist="{{ s.slug }}" class="flex gap-4 rounded-lg border border-slate-200 p-4">
+{% load i18n catalog_tags search_tags %}{% with s=card.specialist h=heading|default:'' %}{% contact_links s as contacts %}
+<article data-specialist="{{ s.slug }}" class="relative flex h-full gap-4 rounded-lg border border-slate-200 p-4 transition-colors hover:border-primary-300 hover:bg-slate-50 focus-within:border-primary-300 motion-reduce:transition-none">
   {% include "catalog/_photo.html" with profile=s size_class="h-16 w-16" %}
   <div class="min-w-0 flex-1 space-y-2">
     <div>
-      <h2 class="text-lg font-semibold"><a href="{% url 'catalog:specialist' s.slug %}" class="hover:underline">{{ s.display_name }}</a></h2>
+      <h2 class="text-lg font-semibold"><a href="{% url 'catalog:specialist' s.slug %}" class="after:absolute after:inset-0 hover:underline focus-visible:outline-offset-4">{{ s.display_name }}</a></h2>
       <p class="text-sm text-slate-600">{% for t in s.specialist_types.all %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     </div>
-    {% include "catalog/_badges.html" with profile=s %}
+    {% include "catalog/_badges.html" with profile=s compact=True %}
     <p class="text-sm text-slate-700">
       {% translate "Стаж, лет" %}: {{ s.experience_years }}
       <span class="mx-1 text-slate-300">|</span>
@@ -18,13 +18,12 @@
       {% for lang in s.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
     </p>
     <p class="flex flex-wrap items-center gap-2 text-sm text-slate-600">
-      {% if card.nearest_district_name %}<span>{{ card.nearest_district_name }}</span>{% endif %}
-      {% if card.has_online %}<span data-badge="online" class="rounded bg-sky-100 px-2 py-0.5 text-xs font-medium text-sky-800">{% translate "Онлайн" %}</span>{% endif %}
+      {% if card.nearest_district_name %}<span>{% if card.nearest_city_name and card.nearest_city_name not in h %}{{ card.nearest_city_name }}, {% endif %}{{ card.nearest_district_name }}</span>{% endif %}
       {% if card.distance_m is not None %}<span>{% blocktranslate with distance=card.distance_m|km %}≈ {{ distance }} км{% endblocktranslate %}</span>{% endif %}
     </p>
-    <div class="flex flex-wrap items-center gap-2 pt-1">
-      <a href="{% url 'catalog:specialist' s.slug %}" class="rounded bg-teal-700 px-3 py-2 text-sm font-semibold text-white hover:bg-teal-800">{% translate "Подробнее" %}</a>
-      {% include "catalog/_contact_buttons.html" with profile=s %}
+    <div class="relative z-10 flex flex-wrap items-center gap-2 pt-1{% if not contacts.visible or contacts.disabled_in_demo %} max-sm:hidden{% endif %}">
+      <a href="{% url 'catalog:specialist' s.slug %}" class="inline-flex min-h-11 items-center rounded border border-primary-700 bg-white px-4 py-2 text-sm font-semibold text-primary-700 hover:bg-primary-50 max-sm:hidden">{% translate "Подробнее" %}</a>
+      {% if not contacts.disabled_in_demo %}{% include "catalog/_contact_buttons.html" with profile=s %}{% endif %}
     </div>
   </div>
 </article>

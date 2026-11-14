@@ -5,7 +5,7 @@ window.kamqorMap = (function () {
 
   var STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
   var EMPTY = { type: "FeatureCollection", features: [] };
-  var COLOR = "#0f766e";
+  var COLOR = "#195452";
   var SOURCE = "specialists";
 
   function formatPrice(value) {
@@ -58,19 +58,60 @@ window.kamqorMap = (function () {
     return root;
   }
 
+  var STATUS_CLASS = "absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-slate-100 px-4 text-center text-slate-600";
+
+  // The container shows a message until the map is drawn, and again when it cannot be (no WebGL, style or tiles unreachable).
+  function showStatus(el, text, listLabel) {
+    clearStatus(el);
+    var box = document.createElement("div");
+    box.setAttribute("data-map-status", "");
+    box.className = STATUS_CLASS;
+    var p = document.createElement("p");
+    p.textContent = text;
+    box.appendChild(p);
+    if (listLabel) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.textContent = listLabel;
+      button.className = "inline-flex min-h-11 items-center rounded border border-primary-700 bg-white px-4 font-semibold text-primary-700 hover:bg-primary-50 xl:hidden";
+      button.addEventListener("click", function () {
+        window.dispatchEvent(new CustomEvent("kamqor-show-list"));
+        window.scrollTo({ top: 0 });
+      });
+      box.appendChild(button);
+    }
+    el.appendChild(box);
+  }
+
+  function clearStatus(el) {
+    el.querySelectorAll("[data-map-status]").forEach(function (node) { node.remove(); });
+  }
+
   function create(el, opts) {
     if ((opts.geojsonUrl == null) === (opts.geojson == null)) {
       throw new Error("kamqorMap.create: pass exactly one of geojsonUrl and geojson");
     }
     var clustered = opts.geojsonUrl != null;
-    var labels = Object.assign({ free: "", from: "__PRICE__", onRequest: "", details: "", twoGis: "" }, opts.labels);
-    var map = new maplibregl.Map({
-      container: el,
-      style: STYLE_URL,
-      center: opts.center,
-      zoom: opts.zoom,
-      attributionControl: { compact: false },
-    });
+    var labels = Object.assign(
+      { free: "", from: "__PRICE__", onRequest: "", details: "", twoGis: "", loading: "", unavailable: "", toList: "" },
+      opts.labels
+    );
+    var listLabel = opts.listButton ? labels.toList : "";
+    showStatus(el, labels.loading);
+    var map;
+    try {
+      map = new maplibregl.Map({
+        container: el,
+        style: STYLE_URL,
+        center: opts.center,
+        zoom: opts.zoom,
+        attributionControl: { compact: false },
+      });
+    } catch (error) {
+      console.error(error);
+      showStatus(el, labels.unavailable, listLabel);
+      return { setData: function () {}, load: function () {}, setView: function () {}, destroy: function () {} };
+    }
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
 
     var ready = false;
@@ -174,7 +215,17 @@ window.kamqorMap = (function () {
       });
     }
 
+    var loadTimer = setTimeout(function () {
+      if (!ready && !destroyed) showStatus(el, labels.unavailable, listLabel);
+    }, 15000);
+    // errors of single tiles after the style is up are not fatal; before that the map has nothing to show
+    map.on("error", function () {
+      if (!ready && !destroyed) showStatus(el, labels.unavailable, listLabel);
+    });
+
     map.on("load", function () {
+      clearTimeout(loadTimer);
+      clearStatus(el);
       addLayers();
       ready = true;
       if (pending) { setData(pending); pending = null; }
@@ -192,6 +243,7 @@ window.kamqorMap = (function () {
       setView: function (center, zoom) { map.jumpTo({ center: center, zoom: zoom }); },
       destroy: function () {
         destroyed = true;
+        clearTimeout(loadTimer);
         if (controller) controller.abort();
         observer.disconnect();
         map.remove();

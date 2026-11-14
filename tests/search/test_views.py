@@ -116,7 +116,7 @@ def test_landing_preselects_filters(client, catalog_fixture):
 
 
 def checked_values(html: str, name: str) -> list[str]:
-    return re.findall(rf'<input type="checkbox" name="{name}" value="([^"]+)" checked>', html)
+    return re.findall(rf'<input type="checkbox" name="{name}" value="([^"]+)"[^>]*? checked>', html)
 
 
 def test_landing_form_shows_preselected_city_and_type(client, catalog_fixture):
@@ -138,9 +138,9 @@ def test_unknown_landing_404(client, catalog_fixture):
     assert client.get("/ru/almaty/nonexistent/").status_code == 404
 
 
-def test_card_shows_online_badge_for_online_only(client, catalog_fixture):
+def test_card_has_no_separate_online_chip(client, catalog_fixture):
     html = client.get("/ru/specialists/").content.decode()
-    assert html.count('data-badge="online"') == 2  # nurlan-online и serikov-aba
+    assert 'data-badge="online"' not in html
 
 
 def test_card_price_labels(client, catalog_fixture):
@@ -162,7 +162,8 @@ def test_kk_cards_show_specialist_names(client, catalog_fixture):
 def test_demo_contact_button_disabled_without_phone(client, catalog_fixture, settings):
     settings.DEPLOY_PROFILE = "demo"
     html = client.get("/ru/specialists/").content.decode()
-    assert "в демо-версии не работает" in html and 'aria-disabled="true"' in html
+    # the dead buttons are not repeated on every card: the contact block lives on the specialist page
+    assert "в демо-версии не работает" not in html and 'aria-disabled="true"' not in html
     assert "wa.me/77011234567" not in html and "tel:+77011234567" not in html
 
 
@@ -227,8 +228,10 @@ def test_demo_card_badges_and_filter_legend_marked_as_demo(client, catalog_fixtu
     settings.DEPLOY_PROFILE = "demo"
     html = client.get("/ru/specialists/").content.decode()
     card = card_html(html, "ivanova-logoped")
-    badges = re.findall(r'<li class="rounded bg-teal-50[^>]*>.*?</li>', card, re.S)
-    assert badges and all("(демо)" in b and "Демо: проверка не проводилась" in b for b in badges)
+    badges = re.findall(r'<p class="flex items-center gap-1.5 text-xs text-primary-800"[^>]*>.*?</p>', card, re.S)
+    # the demo mark is stated once above the list, the one-line badge summary keeps only the tooltip
+    assert badges and all("(демо)" not in b and "Демо: проверка не проводилась" in b and "Проверено:" in b for b in badges)
+    assert html.count("data-demo-notice") == 1
     assert "Подтверждённые документы (демо)" in html
 
 

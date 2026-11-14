@@ -38,6 +38,47 @@
 
 @theme {
   --font-sans: "Noto Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* calm deep teal: the working accent (buttons, links, selected states) */
+  --color-primary-50: #eef7f6;
+  --color-primary-100: #d5ebe8;
+  --color-primary-200: #acd6d1;
+  --color-primary-300: #7dbab4;
+  --color-primary-400: #4f9a94;
+  --color-primary-500: #2f7f7a;
+  --color-primary-600: #1f6764;
+  --color-primary-700: #195452;
+  --color-primary-800: #144341;
+  --color-primary-900: #0f3332;
+  --color-primary-950: #082120;
+
+  /* the Mama Pro heart red: used sparingly, as a brand accent only */
+  --color-brand: #e72f49;
+  --color-brand-50: #fdf1f3;
+  --color-brand-100: #fbe0e4;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-primary-600);
+    outline-offset: 2px;
+  }
+}
+
+/* iOS Safari zooms the page on focus of any field under 16px; unlayered so it beats the text-sm utilities */
+@media (max-width: 1023.98px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* the filter panel is a sheet below lg: keep it closed before Alpine starts (shown as is without JS, see <noscript> in results.html) */
+@media (max-width: 1023.98px) {
+  [data-panel-cloak] {
+    display: none;
+  }
 }
 
 [x-cloak] {

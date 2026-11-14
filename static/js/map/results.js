@@ -24,9 +24,11 @@
     var el = document.getElementById("map");
     var cfg = readJson("map-config");
     if (!el || !cfg || !window.kamqorMap) return;
-    el.replaceChildren(); // a history snapshot may bring back stale maplibre DOM
+    // a history snapshot may bring back stale maplibre DOM; keep the server-rendered "Список" pill and status
+    el.querySelectorAll(".maplibregl-canvas-container, .maplibregl-control-container").forEach(function (n) { n.remove(); });
+    el.classList.remove("maplibregl-map");
     current = window.kamqorMap.create(el, {
-      center: cfg.center, zoom: cfg.zoom, geojsonUrl: cfg.geojsonUrl, labels: readJson("map-labels"),
+      center: cfg.center, zoom: cfg.zoom, geojsonUrl: cfg.geojsonUrl, labels: readJson("map-labels"), listButton: true,
     });
     current.config = cfg;
   }

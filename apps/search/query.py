@@ -127,6 +127,7 @@ class SpecialistCard:
     matching_offers: list[SearchOffer]
     price_from: int | None
     nearest_district_name: str | None
+    nearest_city_name: str | None
     has_online: bool
     distance_m: float | None
 
@@ -230,11 +231,17 @@ def _build_card(specialist: SpecialistProfile, offers: list[SearchOffer], distan
     nearest = None
     if with_address:
         nearest = min(with_address, key=lambda o: o.dist) if near and all(o.dist is not None for o in with_address) else with_address[0]
+    city_name = None
+    if nearest:
+        city = nearest.address.kato.city()
+        if city is not None and city.pk != nearest.address.kato.pk:
+            city_name = city.safe_translation_getter("name", any_language=True)
     return SpecialistCard(
         specialist=specialist,
         matching_offers=offers,
         price_from=min(prices) if prices else None,
         nearest_district_name=nearest.address.kato.safe_translation_getter("name", any_language=True) if nearest else None,
+        nearest_city_name=city_name,
         has_online=any(o.is_online for o in offers),
         distance_m=distance_m,
     )
@@ -262,8 +269,14 @@ def search(params: SearchParams) -> SearchResult:
     by_specialist: dict[int, list[SearchOffer]] = {i: [] for i in ids}
     page_offers = (
         offers.filter(specialist_id__in=ids)
-        .select_related("specialist", "address__kato", "service")
-        .prefetch_related("specialist__translations", "address__kato__translations", "service__translations")
+        .select_related("specialist", "address__kato__parent__parent", "service")
+        .prefetch_related(
+            "specialist__translations",
+            "address__kato__translations",
+            "address__kato__parent__translations",
+            "address__kato__parent__parent__translations",
+            "service__translations",
+        )
         .order_by("pk")
     )
     for offer in page_offers:

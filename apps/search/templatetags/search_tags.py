@@ -30,6 +30,9 @@ def map_labels_script():
             "onRequest": gettext("цена по запросу"),
             "details": gettext("Подробнее"),
             "twoGis": gettext("Открыть в 2ГИС"),
+            "loading": gettext("Загружаем карту…"),
+            "unavailable": gettext("Карта недоступна"),
+            "toList": gettext("К списку"),
         },
         "map-labels",
     )

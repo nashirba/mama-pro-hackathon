@@ -29,3 +29,4 @@ static/css/
 /.agents/
 /.claude/
 /skills-lock.json
+.gstack/

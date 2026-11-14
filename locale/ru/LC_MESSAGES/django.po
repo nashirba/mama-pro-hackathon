@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:00+0500\n"
+"POT-Creation-Date: 2026-11-14 14:09+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,19 +68,19 @@ msgstr ""
 msgid "Онлайн"
 msgstr ""
 
-#: apps/catalog/models/profile.py:27 templates/core/home.html:60
+#: apps/catalog/models/profile.py:27 templates/core/home.html:62
 msgid "Личность подтверждена"
 msgstr ""
 
-#: apps/catalog/models/profile.py:28 templates/core/home.html:61
+#: apps/catalog/models/profile.py:28 templates/core/home.html:63
 msgid "Образование подтверждено"
 msgstr ""
 
-#: apps/catalog/models/profile.py:29 templates/core/home.html:62
+#: apps/catalog/models/profile.py:29 templates/core/home.html:64
 msgid "Квалификация подтверждена"
 msgstr ""
 
-#: apps/catalog/models/profile.py:30 templates/core/home.html:63
+#: apps/catalog/models/profile.py:30 templates/core/home.html:65
 msgid "Проверка на безопасность пройдена"
 msgstr ""
 
@@ -528,14 +528,14 @@ msgstr ""
 #: templates/catalog/specialist_detail.html:21
 #: templates/catalog/specialist_detail.html:81
 #: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:10
+#: templates/catalog/specialist_detail.html:124 templates/search/_card.html:9
 msgid "бесплатно"
 msgstr ""
 
 #: apps/search/templatetags/search_tags.py:29
 #: templates/catalog/specialist_detail.html:21
 #: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:10
+#: templates/catalog/specialist_detail.html:124 templates/search/_card.html:9
 #, python-format
 msgid "от %(price)s ₸"
 msgstr ""
@@ -544,11 +544,11 @@ msgstr ""
 #: templates/catalog/specialist_detail.html:21
 #: templates/catalog/specialist_detail.html:81
 #: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:120 templates/search/_card.html:10
+#: templates/catalog/specialist_detail.html:124 templates/search/_card.html:9
 msgid "цена по запросу"
 msgstr ""
 
-#: apps/search/templatetags/search_tags.py:31 templates/search/_card.html:19
+#: apps/search/templatetags/search_tags.py:31
 msgid "Подробнее"
 msgstr ""
 
@@ -570,16 +570,73 @@ msgstr ""
 msgid "К списку"
 msgstr ""
 
-#: apps/search/views.py:46
+#: apps/search/views.py:48
 #, python-format
 msgctxt "landing title without locative"
 msgid "%(name)s: %(city)s"
 msgstr ""
 
-#: apps/search/views.py:47
+#: apps/search/views.py:49
 #, python-format
 msgctxt "landing title"
 msgid "%(name)s %(locative)s"
+msgstr ""
+
+#: apps/search/views.py:160
+#, python-format
+msgid "Возраст: %(lo)s–%(hi)s лет"
+msgstr ""
+
+#: apps/search/views.py:161
+#, python-format
+msgid "Возраст: от %(lo)s лет"
+msgstr ""
+
+#: apps/search/views.py:162
+#, python-format
+msgid "Возраст: до %(hi)s лет"
+msgstr ""
+
+#: apps/search/views.py:171
+#, python-format
+msgid "Цена за занятие: %(lo)s–%(hi)s ₸"
+msgstr ""
+
+#: apps/search/views.py:172
+#, python-format
+msgid "Цена за занятие: от %(lo)s ₸"
+msgstr ""
+
+#: apps/search/views.py:173
+#, python-format
+msgid "Цена за занятие: до %(hi)s ₸"
+msgstr ""
+
+#: apps/search/views.py:182
+#, python-format
+msgid "Цена в месяц: %(lo)s–%(hi)s ₸"
+msgstr ""
+
+#: apps/search/views.py:183
+#, python-format
+msgid "Цена в месяц: от %(lo)s ₸"
+msgstr ""
+
+#: apps/search/views.py:184
+#, python-format
+msgid "Цена в месяц: до %(hi)s ₸"
+msgstr ""
+
+#: apps/search/views.py:189 templates/search/_filters.html:128
+msgid "Только бесплатные"
+msgstr ""
+
+#: apps/search/views.py:191 templates/search/_filters.html:149
+msgid "Стаж от, лет"
+msgstr ""
+
+#: apps/search/views.py:193 templates/search/_filters.html:39
+msgid "Рядом со мной"
 msgstr ""
 
 #: templates/accounts/_consent_fields.html:3
@@ -676,11 +733,11 @@ msgstr ""
 msgid "Перейти к содержанию"
 msgstr ""
 
-#: templates/catalog/_badges.html:2 templates/catalog/_badges.html:8
+#: templates/catalog/_badges.html:3 templates/catalog/_badges.html:10
 msgid "Демо: проверка не проводилась"
 msgstr ""
 
-#: templates/catalog/_badges.html:9 templates/search/_filters.html:148
+#: templates/catalog/_badges.html:11 templates/search/_filters.html:154
 msgid "демо"
 msgstr ""
 
@@ -707,40 +764,42 @@ msgid "Каталог специалистов"
 msgstr ""
 
 #: templates/catalog/specialist_detail.html:23
+#: templates/catalog/specialist_detail.html:111
+#: templates/catalog/specialist_detail.html:124
+msgid "Контакты в демо-версии недоступны"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:27
 msgid "Стаж"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:23 templates/search/_card.html:11
-#, python-format
-msgid "Стаж %(n)s год"
-msgid_plural "Стаж %(n)s лет"
+#: templates/catalog/specialist_detail.html:27
+#, fuzzy, python-format
+#| msgid "Стаж %(n)s год"
+#| msgid_plural "Стаж %(n)s лет"
+msgid "%(n)s год"
+msgid_plural "%(n)s лет"
 msgstr[0] "Стаж %(n)s год"
 msgstr[1] "Стаж %(n)s года"
 msgstr[2] "Стаж %(n)s лет"
 msgstr[3] "Стаж %(n)s года"
 
-#: templates/catalog/specialist_detail.html:24
+#: templates/catalog/specialist_detail.html:28
 msgid "Возраст детей"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:24
+#: templates/catalog/specialist_detail.html:28
 #, python-format
-msgid "Дети %(min)s–%(max)s лет"
-msgstr ""
-
-#: templates/catalog/specialist_detail.html:25
-msgid "Языки"
-msgstr ""
-
-#: templates/catalog/specialist_detail.html:26
-#: templates/search/_filters.html:125
-msgid "Формат"
+msgid "%(min)s–%(max)s лет"
 msgstr ""
 
 #: templates/catalog/specialist_detail.html:29
-#: templates/catalog/specialist_detail.html:111
-#: templates/catalog/specialist_detail.html:122
-msgid "Контакты в демо-версии недоступны"
+msgid "Язык занятий"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:30
+#: templates/search/_filters.html:131
+msgid "Формат"
 msgstr ""
 
 #: templates/catalog/specialist_detail.html:37
@@ -760,6 +819,7 @@ msgid "Методы"
 msgstr ""
 
 #: templates/catalog/specialist_detail.html:71
+#: templates/catalog/specialist_detail.html:113
 msgid "Услуги и цены"
 msgstr ""
 
@@ -786,6 +846,11 @@ msgstr ""
 msgid "Маршрут"
 msgstr ""
 
+#: templates/catalog/specialist_detail.html:112
+#: templates/catalog/specialist_detail.html:126
+msgid "Адреса и маршрут"
+msgstr ""
+
 #: templates/consents/pd_processing_v1.html:3
 #: templates/consents/user_agreement_v1.html:3
 msgid "Черновик: текст утверждает юрист."
@@ -799,14 +864,14 @@ msgstr ""
 
 #: templates/consents/pd_processing_v1.html:8
 msgid ""
-"2. Цель обработки - вход в демо-версию. Демо-версия размещена на серверах за "
+"2. Цель обработки — вход в демо-версию. Демо-версия размещена на серверах за "
 "пределами Республики Казахстан (Render и Neon, Германия) и не предназначена "
 "для реальных данных."
 msgstr ""
 
 #: templates/consents/pd_processing_v1.html:12
 msgid ""
-"2. Цель обработки - создание аккаунта, вход в него и работа сервиса. Данные "
+"2. Цель обработки — создание аккаунта, вход в него и работа сервиса. Данные "
 "хранятся на территории Республики Казахстан и не передаются третьим лицам "
 "без вашего отдельного согласия."
 msgstr ""
@@ -820,7 +885,7 @@ msgstr ""
 #: templates/consents/user_agreement_v1.html:4
 #, python-format
 msgid ""
-"1. «%(brand)s» - каталог специалистов для детей. Сервис помогает найти "
+"1. «%(brand)s» — каталог специалистов для детей. Сервис помогает найти "
 "специалиста и связаться с ним, но не оказывает медицинских, педагогических "
 "или психологических услуг."
 msgstr ""
@@ -875,34 +940,54 @@ msgstr ""
 msgid "Популярные специализации"
 msgstr ""
 
-#: templates/core/home.html:41
+#: templates/core/home.html:42
 msgid "Специалистов"
 msgstr ""
 
-#: templates/core/home.html:48
+#: templates/core/home.html:50
 msgid "Города"
 msgstr ""
 
-#: templates/core/home.html:57
+#: templates/core/home.html:59
 msgid "Что значит проверенный специалист"
 msgstr ""
 
-#: templates/core/home.html:58
+#: templates/core/home.html:60
 msgid ""
-"Мы показываем не общую галочку, а то, что именно проверено. Сырые документы "
-"не публикуются: видны только уровни проверки."
+"Мы показываем не общую галочку, а то, что именно проверено. Сами документы "
+"(паспорт, дипломы) мы не публикуем, видны только уровни проверки."
 msgstr ""
 
-#: templates/core/home.html:68
-msgid "Вы специалист?"
+#: templates/core/home.html:62
+msgid "Сверили паспорт или удостоверение с фото"
 msgstr ""
 
-#: templates/core/home.html:69
-msgid "Расскажите о себе и своих услугах родителям, которые ищут помощь."
+#: templates/core/home.html:63
+msgid "Видели диплом по специальности"
+msgstr ""
+
+#: templates/core/home.html:64
+msgid "Видели сертификаты курсов и повышения квалификации"
+msgstr ""
+
+#: templates/core/home.html:65
+msgid "Есть справка об отсутствии судимости"
 msgstr ""
 
 #: templates/core/home.html:70
+msgid "Вы специалист?"
+msgstr ""
+
+#: templates/core/home.html:71
+msgid "Расскажите о себе и своих услугах родителям, которые ищут помощь."
+msgstr ""
+
+#: templates/core/home.html:72
 msgid "Разместить профиль"
+msgstr ""
+
+#: templates/core/home.html:73
+msgid "В демо-версии анкеты специалистов заполняет команда Mama Pro."
 msgstr ""
 
 #: templates/partials/header.html:12
@@ -1016,6 +1101,15 @@ msgstr ""
 msgid "Пройти опросник заново"
 msgstr ""
 
+#: templates/search/_card.html:13
+#, python-format
+msgid "Стаж %(n)s год"
+msgid_plural "Стаж %(n)s лет"
+msgstr[0] "Стаж %(n)s год"
+msgstr[1] "Стаж %(n)s года"
+msgstr[2] "Стаж %(n)s лет"
+msgstr[3] "Стаж %(n)s года"
+
 #: templates/search/_card.html:16
 #, python-format
 msgid "≈ %(distance)s км"
@@ -1049,10 +1143,6 @@ msgstr ""
 msgid "Закрыть"
 msgstr ""
 
-#: templates/search/_filters.html:39
-msgid "Рядом со мной"
-msgstr ""
-
 #: templates/search/_filters.html:40
 msgid "Не удалось определить местоположение"
 msgstr ""
@@ -1081,8 +1171,8 @@ msgstr ""
 msgid "Возраст от"
 msgstr ""
 
-#: templates/search/_filters.html:75 templates/search/_filters.html:111
-#: templates/search/_filters.html:118
+#: templates/search/_filters.html:75 templates/search/_filters.html:117
+#: templates/search/_filters.html:124
 msgid "от"
 msgstr ""
 
@@ -1090,8 +1180,8 @@ msgstr ""
 msgid "Возраст до"
 msgstr ""
 
-#: templates/search/_filters.html:77 templates/search/_filters.html:112
-#: templates/search/_filters.html:119
+#: templates/search/_filters.html:77 templates/search/_filters.html:118
+#: templates/search/_filters.html:125
 msgid "до"
 msgstr ""
 
@@ -1099,59 +1189,59 @@ msgstr ""
 msgid "Специализация"
 msgstr ""
 
-#: templates/search/_filters.html:100
+#: templates/search/_filters.html:98 templates/search/_filters.html:110
+msgid "Показать все"
+msgstr ""
+
+#: templates/search/_filters.html:98 templates/search/_filters.html:110
+msgid "Свернуть"
+msgstr ""
+
+#: templates/search/_filters.html:103
 msgid "Особенности развития"
 msgstr ""
 
-#: templates/search/_filters.html:109
+#: templates/search/_filters.html:115
 msgid "Цена за занятие, ₸"
 msgstr ""
 
-#: templates/search/_filters.html:111
+#: templates/search/_filters.html:117
 msgid "Цена от"
 msgstr ""
 
-#: templates/search/_filters.html:112
+#: templates/search/_filters.html:118
 msgid "Цена до"
 msgstr ""
 
-#: templates/search/_filters.html:116
+#: templates/search/_filters.html:122
 msgid "Цена в месяц, ₸"
 msgstr ""
 
-#: templates/search/_filters.html:118
+#: templates/search/_filters.html:124
 msgid "Цена в месяц от"
 msgstr ""
 
-#: templates/search/_filters.html:119
+#: templates/search/_filters.html:125
 msgid "Цена в месяц до"
 msgstr ""
 
-#: templates/search/_filters.html:122
-msgid "Только бесплатные"
-msgstr ""
-
-#: templates/search/_filters.html:134
+#: templates/search/_filters.html:140
 msgid "Язык общения"
 msgstr ""
 
-#: templates/search/_filters.html:143
-msgid "Стаж от, лет"
-msgstr ""
-
-#: templates/search/_filters.html:148
+#: templates/search/_filters.html:154
 msgid "Подтверждённые документы"
 msgstr ""
 
-#: templates/search/_filters.html:157 templates/search/_suggest.html:1
+#: templates/search/_filters.html:163 templates/search/_suggest.html:1
 msgid "Метод"
 msgstr ""
 
-#: templates/search/_filters.html:167
+#: templates/search/_filters.html:173
 msgid "Показать"
 msgstr ""
 
-#: templates/search/_filters.html:168
+#: templates/search/_filters.html:174 templates/search/_results_partial.html:11
 msgid "Сбросить"
 msgstr ""
 
@@ -1164,22 +1254,31 @@ msgid "Список"
 msgstr ""
 
 #: templates/search/_results_partial.html:6
-msgid "Демо-версия: данные учебные, проверка документов не проводилась."
+msgid "Активные фильтры"
 msgstr ""
 
-#: templates/search/_results_partial.html:7
-msgid "Найдено"
-msgstr ""
-
-#: templates/search/_results_partial.html:12
-msgid "Страницы"
-msgstr ""
-
-#: templates/search/_results_partial.html:13
-msgid "Назад"
+#: templates/search/_results_partial.html:9
+#, python-format
+msgid "Убрать фильтр: %(label)s"
 msgstr ""
 
 #: templates/search/_results_partial.html:15
+msgid "Демо-версия: данные учебные, проверка документов не проводилась."
+msgstr ""
+
+#: templates/search/_results_partial.html:16
+msgid "Найдено"
+msgstr ""
+
+#: templates/search/_results_partial.html:21
+msgid "Страницы"
+msgstr ""
+
+#: templates/search/_results_partial.html:22
+msgid "Назад"
+msgstr ""
+
+#: templates/search/_results_partial.html:24
 msgid "Вперёд"
 msgstr ""
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% translate "Код подтверждения" %} - {{ BRAND_NAME }}{% endblock %}
+{% block title %}{% translate "Код подтверждения" %} — {{ BRAND_NAME }}{% endblock %}
 {% block content %}
 <div class="mx-auto max-w-md px-4 py-10">
   <h1 class="text-2xl font-bold">{% translate "Введите код из SMS" %}</h1>
@@ -24,7 +24,7 @@
       {% for error in form.code.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
     </div>
     {% if is_new %}{% include "accounts/_consent_fields.html" %}{% endif %}
-    <button type="submit" class="min-h-12 w-full rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800">
+    <button type="submit" class="btn-press min-h-12 w-full rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800">
       {% if is_new %}{% translate "Зарегистрироваться" %}{% else %}{% translate "Войти" %}{% endif %}
     </button>
   </form>

@@ -4,7 +4,7 @@
   <p class="mt-2 text-sm text-slate-600">{% translate "Попробуйте изменить условия поиска." %}</p>
   <div class="mt-5 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
     {% if online_url %}
-    <a href="{{ online_url }}" class="inline-flex min-h-11 items-center justify-center rounded bg-primary-700 px-4 py-2 text-center leading-snug font-semibold text-white hover:bg-primary-800">{% translate "Показать онлайн-специалистов" %}</a>
+    <a href="{{ online_url }}" class="btn-press inline-flex min-h-11 items-center justify-center rounded bg-primary-700 px-4 py-2 text-center leading-snug font-semibold text-white hover:bg-primary-800">{% translate "Показать онлайн-специалистов" %}</a>
     {% endif %}
     <a href="{{ reset_url }}" class="inline-flex min-h-11 items-center justify-center rounded px-4 py-2 text-center leading-snug font-semibold {% if online_url %}border border-primary-700 text-primary-700 hover:bg-primary-50{% else %}bg-primary-700 text-white hover:bg-primary-800{% endif %}">{% translate "Сбросить все фильтры" %}</a>
   </div>

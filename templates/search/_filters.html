@@ -6,7 +6,7 @@
       hx-on::after-request="document.getElementById('results').removeAttribute('aria-busy')"
       x-data="filters({ ageMin: '{{ params.child_age_min|default_if_none:'' }}', ageMax: '{{ params.child_age_max|default_if_none:'' }}' })" class="space-y-3 text-sm lg:space-y-4">
   <div>
-    <label for="f-q" class="block font-medium">{% translate "Поиск" %}</label>
+    <div class="flex items-baseline justify-between gap-2"><label for="f-q" class="block font-medium">{% translate "Поиск" %}</label></div>
     <input type="search" enterkeyhint="search" id="f-q" name="q" value="{{ params.q }}" placeholder="{% translate 'Логопед, РАС, не говорит...' %}"
            class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
   </div>
@@ -82,27 +82,33 @@
       <li><a href="{{ g.url }}"{% if g.current %} aria-current="true"{% endif %}
              @click.prevent="setAge($el.closest('form'), {{ g.min }}, {{ g.max }})"
              :aria-current="isAge({{ g.min }}, {{ g.max }}) ? 'true' : null"
-             class="inline-flex min-h-11 items-center rounded-full border border-field px-4 text-slate-700 lg:min-h-0 lg:px-3 lg:py-1 hover:bg-slate-100 aria-[current=true]:border-primary-700 aria-[current=true]:bg-primary-700 aria-[current=true]:text-white">{{ g.min }}-{{ g.max }}</a></li>
+             class="inline-flex min-h-11 items-center rounded-full border border-field px-4 text-slate-700 lg:min-h-0 lg:px-3 lg:py-1 hover:bg-slate-100 aria-[current=true]:border-primary-700 aria-[current=true]:bg-primary-700 aria-[current=true]:text-white">{{ g.min }}–{{ g.max }}</a></li>
       {% endfor %}
     </ul>
   </fieldset>
 
   <details class="group" {% if params.specialist_type_ids %}open{% endif %}>
     <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-medium lg:min-h-8 [&::-webkit-details-marker]:hidden"><span class="min-w-0"><span class="block">{% translate "Специализация" %}</span><span class="block truncate text-slate-500 group-open:hidden [&>span+span]:before:content-[',_']">{% for t in choices.specialist_types %}{% if t.id in params.specialist_type_ids %}<span>{{ t.name }}</span>{% endif %}{% endfor %}</span></span><svg class="size-4 shrink-0 transition group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></summary>
+    <div x-data="{ all: false }">
     <ul class="mt-2 space-y-1">
       {% for t in choices.specialist_types %}
-      <li>{% include "search/_check.html" with name="specialist_type_ids" value=t.id selected=params.specialist_type_ids label=t.name %}</li>
+      <li{% if forloop.counter > 8 and t.id not in params.specialist_type_ids %} x-show="all"{% endif %}>{% include "search/_check.html" with name="specialist_type_ids" value=t.id selected=params.specialist_type_ids label=t.name %}</li>
       {% endfor %}
     </ul>
+    {% if choices.specialist_types|length > 8 %}<button type="button" x-cloak @click="all = !all" :aria-expanded="all" class="mt-1 inline-flex min-h-11 items-center font-medium text-primary-700 hover:underline lg:min-h-8"><span x-show="!all">{% translate "Показать все" %} ({{ choices.specialist_types|length }})</span><span x-show="all">{% translate "Свернуть" %}</span></button>{% endif %}
+    </div>
   </details>
 
   <details class="group" {% if params.condition_ids %}open{% endif %}>
     <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-medium lg:min-h-8 [&::-webkit-details-marker]:hidden"><span class="min-w-0"><span class="block">{% translate "Особенности развития" %}</span><span class="block truncate text-slate-500 group-open:hidden [&>span+span]:before:content-[',_']">{% for c, depth in choices.conditions %}{% if c.id in params.condition_ids %}<span>{{ c.name }}</span>{% endif %}{% endfor %}</span></span><svg class="size-4 shrink-0 transition group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></summary>
+    <div x-data="{ all: false }">
     <ul class="mt-2 space-y-1">
       {% for c, depth in choices.conditions %}
-      <li class="{% if depth %}ml-5{% endif %}">{% include "search/_check.html" with name="condition_ids" value=c.id selected=params.condition_ids label=c.name %}</li>
+      <li class="{% if depth %}ml-5{% endif %}"{% if forloop.counter > 8 and c.id not in params.condition_ids %} x-show="all"{% endif %}>{% include "search/_check.html" with name="condition_ids" value=c.id selected=params.condition_ids label=c.name %}</li>
       {% endfor %}
     </ul>
+    {% if choices.conditions|length > 8 %}<button type="button" x-cloak @click="all = !all" :aria-expanded="all" class="mt-1 inline-flex min-h-11 items-center font-medium text-primary-700 hover:underline lg:min-h-8"><span x-show="!all">{% translate "Показать все" %} ({{ choices.conditions|length }})</span><span x-show="all">{% translate "Свернуть" %}</span></button>{% endif %}
+    </div>
   </details>
 
   <fieldset>
@@ -163,8 +169,8 @@
   </details>
 
   </div>
-  <div class="sticky bottom-0 -mx-4 mt-4 flex items-center gap-3 border-t border-slate-200 bg-white px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:static lg:mx-0 lg:mt-4 lg:border-0 lg:p-0">
-    <button type="submit" @click="closeSheet()" class="min-h-11 flex-1 rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800 lg:min-h-0 lg:flex-none">{% translate "Показать" %} {% include "search/_filter_total.html" %}</button>
+  <div class="sticky bottom-0 -mx-4 mt-4 flex items-center gap-3 border-t border-slate-200 bg-white px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
+    <button type="submit" @click="closeSheet()" class="btn-press min-h-11 flex-1 rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800 lg:min-h-0 lg:flex-none">{% translate "Показать" %} {% include "search/_filter_total.html" %}</button>
     <a href="{{ reset_url }}" class="inline-flex min-h-11 items-center px-3 text-slate-600 hover:underline lg:min-h-0 lg:px-0">{% translate "Сбросить" %}</a>
   </div>
   </div>

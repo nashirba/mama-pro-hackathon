@@ -1,6 +1,8 @@
 import re
 
 import pytest
+from django.db import connection
+from django.test.utils import CaptureQueriesContext
 
 
 def _choose(client, kato_id, next_url="/ru/"):
@@ -102,3 +104,25 @@ def test_home_city_select_preselected(client, kato_demo):
 def test_search_input_autofocus(client, kato_demo):
     html = client.get("/ru/specialists/?focus=q").content.decode()
     assert re.search(r'id="f-q"[^>]*autofocus', html)
+
+
+def test_any_city_drops_city_params_from_next(client, kato_demo):
+    next_url = f"/ru/specialists/?q=x&kato_id={kato_demo['almaty'].id}&district_id={kato_demo['almalinskiy'].id}"
+    assert _choose(client, "", next_url).headers["Location"] == "/ru/specialists/?q=x"
+
+
+@pytest.mark.parametrize("value", ["garbage", "999999", "almalinskiy"])
+def test_choose_invalid_city_sets_no_cookie(client, kato_demo, value):
+    kato_id = kato_demo["almalinskiy"].id if value == "almalinskiy" else value  # a district
+    assert "city" not in _choose(client, kato_id).cookies
+
+
+def test_valid_cookie_costs_no_extra_queries(client, kato_demo):
+    def count() -> int:
+        with CaptureQueriesContext(connection) as ctx:
+            assert client.get("/ru/").status_code == 200
+        return len(ctx)
+
+    without_cookie = count()
+    _choose(client, kato_demo["almaty"].id)
+    assert count() <= without_cookie

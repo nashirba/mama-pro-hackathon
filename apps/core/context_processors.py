@@ -12,4 +12,4 @@ def site(request):
 
 
 def city(request):
-    return {"CITIES": cities(), "SELECTED_CITY": selected_city(request)}
+    return {"CITIES": cities(request), "SELECTED_CITY": selected_city(request)}

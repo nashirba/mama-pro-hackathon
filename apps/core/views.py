@@ -1,3 +1,5 @@
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+
 from django.conf import settings
 from django.db import connection
 from django.http import HttpResponse, JsonResponse
@@ -9,7 +11,7 @@ from django.views.i18n import set_language as django_set_language
 
 from apps.catalog.models import ProfileCategory, SpecialistType
 from apps.community.query import latest_posts
-from apps.core.city import COOKIE, cities
+from apps.core.city import COOKIE, COOKIE_MAX_AGE, cities
 from apps.search.models import SearchOffer
 
 
@@ -53,14 +55,17 @@ def home(request):
         "core/home.html",
         {
             "popular_types": popular_types,
-            "cities": cities(),
+            "cities": cities(request),
             "nannies_count": _nannies_count(),
             "recent_posts": latest_posts(request.user),
         },
     )
 
 
-CITY_COOKIE_MAX_AGE = 365 * 24 * 60 * 60
+def _without_city_params(url: str) -> str:
+    parts = urlsplit(url)
+    query = [(k, v) for k, v in parse_qsl(parts.query, keep_blank_values=True) if k not in ("kato_id", "district_id")]
+    return urlunsplit(parts._replace(query=urlencode(query)))
 
 
 @require_POST
@@ -68,12 +73,15 @@ def set_city(request) -> HttpResponse:
     next_url = request.POST.get("next", "")
     if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}, require_https=request.is_secure()):
         next_url = ""
-    response = redirect(next_url or "core:home")
     kato_id = request.POST.get("kato_id", "")
-    if kato_id.isdecimal() and any(str(c.pk) == kato_id for c in cities()):
-        response.set_cookie(COOKIE, kato_id, max_age=CITY_COOKIE_MAX_AGE, samesite="Lax", path="/")
-    else:
+    if not kato_id:
+        # "Any city": the page we return to must not keep filtering by the old one.
+        response = redirect(_without_city_params(next_url) if next_url else "core:home")
         response.delete_cookie(COOKIE, path="/", samesite="Lax")
+        return response
+    response = redirect(next_url or "core:home")
+    if kato_id in {str(c.pk) for c in cities(request)}:
+        response.set_cookie(COOKIE, kato_id, max_age=COOKIE_MAX_AGE, samesite="Lax", path="/")
     return response
 
 

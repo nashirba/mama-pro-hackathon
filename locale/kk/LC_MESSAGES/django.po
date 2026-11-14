@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:09+0500\n"
+"POT-Creation-Date: 2026-11-14 14:12+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,6 +46,10 @@ msgstr "Код қате немесе мерзімі өтіп кеткен"
 #: apps/accounts/views.py:90
 msgid "Слишком много неверных попыток. Запросите новый код."
 msgstr "Қате әрекет тым көп. Жаңа код сұратыңыз."
+
+#: apps/catalog/admin.py:62
+msgid "У няни нет типов специалиста"
+msgstr "Бала күтушінің маман түрлері болмайды"
 
 #: apps/catalog/links.py:11
 #, python-format
@@ -103,15 +107,11 @@ msgstr "Қауіпсіздік тексерісінен өтті"
 msgid "Максимальный возраст не может быть меньше минимального"
 msgstr "Ең жоғары жас ең төмен жастан кіші болмауы керек"
 
-#: apps/catalog/models/profile.py:119
-msgid "У няни нет типов специалиста"
-msgstr "Бала күтушінің маман түрлері болмайды"
-
-#: apps/catalog/models/profile.py:126
+#: apps/catalog/models/profile.py:124
 msgid "Частная практика"
 msgstr "Жеке практика"
 
-#: apps/catalog/models/profile.py:127
+#: apps/catalog/models/profile.py:125
 msgid "Организация"
 msgstr "Ұйым"
 
@@ -184,35 +184,35 @@ msgstr "Ауылдық округ"
 msgid "Ссылка должна начинаться с %(prefix)s"
 msgstr "Сілтеме %(prefix)s деп басталуы керек"
 
-#: apps/search/forms.py:54
+#: apps/search/forms.py:56
 msgid "По часам"
 msgstr "Сағатпен"
 
-#: apps/search/forms.py:54
+#: apps/search/forms.py:56
 msgid "Ночью"
 msgstr "Түнде"
 
-#: apps/search/forms.py:54
+#: apps/search/forms.py:56
 msgid "Помесячно"
 msgstr "Айлап"
 
-#: apps/search/forms.py:59 apps/search/forms.py:60
+#: apps/search/forms.py:62 apps/search/forms.py:63
 msgid "По релевантности"
 msgstr "Сәйкестігі бойынша"
 
-#: apps/search/forms.py:59
+#: apps/search/forms.py:62
 msgid "По цене за час"
 msgstr "Сағаттық бағасы бойынша"
 
-#: apps/search/forms.py:59
+#: apps/search/forms.py:62
 msgid "По опыту"
 msgstr "Тәжірибесі бойынша"
 
-#: apps/search/forms.py:60
+#: apps/search/forms.py:63
 msgid "По цене"
 msgstr "Бағасы бойынша"
 
-#: apps/search/forms.py:60
+#: apps/search/forms.py:63
 msgid "По стажу"
 msgstr "Өтілі бойынша"
 

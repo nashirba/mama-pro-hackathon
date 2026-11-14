@@ -1,5 +1,8 @@
+from django import forms
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from parler.admin import TranslatableAdmin, TranslatableTabularInline
+from parler.forms import TranslatableModelForm
 
 from .models import (
     CommunicationLanguage,
@@ -7,6 +10,7 @@ from .models import (
     Method,
     PracticeContext,
     Service,
+    ProfileCategory,
     ServiceKind,
     SpecialistProfile,
     SpecialistType,
@@ -49,8 +53,23 @@ class TrainingInline(TranslatableTabularInline):
     fields = ("title", "issuer", "year", "hours", "certificate_number", "is_first_aid")
 
 
+class SpecialistProfileForm(TranslatableModelForm):
+    """The model `clean()` cannot see the many-to-many field of the form, so the nanny rule lives here."""
+
+    class Meta:
+        model = SpecialistProfile
+        fields = "__all__"
+
+    def clean(self):
+        cleaned = super().clean()
+        if cleaned.get("category") == ProfileCategory.NANNY and cleaned.get("specialist_types"):
+            self.add_error("specialist_types", _("У няни нет типов специалиста"))
+        return cleaned
+
+
 @admin.register(SpecialistProfile)
 class SpecialistProfileAdmin(TranslatableAdmin):
+    form = SpecialistProfileForm
     list_display = ("display_name", "slug", "category", "practice_start_year")
     list_filter = ("category",)
     search_fields = ("display_name", "slug")

@@ -115,8 +115,6 @@ class SpecialistProfile(TranslatableModel):
             validate_age_range(self.age_min, self.age_max)
         except ValidationError as exc:
             errors.update(exc.message_dict)
-        if self.is_nanny and self.pk and self.specialist_types.exists():
-            errors["specialist_types"] = _("У няни нет типов специалиста")
         if errors:
             raise ValidationError(errors)
 

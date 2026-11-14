@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:09+0500\n"
+"POT-Creation-Date: 2026-11-14 14:12+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,6 +47,10 @@ msgstr ""
 
 #: apps/accounts/views.py:90
 msgid "Слишком много неверных попыток. Запросите новый код."
+msgstr ""
+
+#: apps/catalog/admin.py:62
+msgid "У няни нет типов специалиста"
 msgstr ""
 
 #: apps/catalog/links.py:11
@@ -102,15 +106,11 @@ msgstr ""
 msgid "Максимальный возраст не может быть меньше минимального"
 msgstr ""
 
-#: apps/catalog/models/profile.py:119
-msgid "У няни нет типов специалиста"
-msgstr ""
-
-#: apps/catalog/models/profile.py:126
+#: apps/catalog/models/profile.py:124
 msgid "Частная практика"
 msgstr ""
 
-#: apps/catalog/models/profile.py:127
+#: apps/catalog/models/profile.py:125
 msgid "Организация"
 msgstr ""
 
@@ -183,35 +183,35 @@ msgstr ""
 msgid "Ссылка должна начинаться с %(prefix)s"
 msgstr ""
 
-#: apps/search/forms.py:54
+#: apps/search/forms.py:56
 msgid "По часам"
 msgstr ""
 
-#: apps/search/forms.py:54
+#: apps/search/forms.py:56
 msgid "Ночью"
 msgstr ""
 
-#: apps/search/forms.py:54
+#: apps/search/forms.py:56
 msgid "Помесячно"
 msgstr ""
 
-#: apps/search/forms.py:59 apps/search/forms.py:60
+#: apps/search/forms.py:62 apps/search/forms.py:63
 msgid "По релевантности"
 msgstr ""
 
-#: apps/search/forms.py:59
+#: apps/search/forms.py:62
 msgid "По цене за час"
 msgstr ""
 
-#: apps/search/forms.py:59
+#: apps/search/forms.py:62
 msgid "По опыту"
 msgstr ""
 
-#: apps/search/forms.py:60
+#: apps/search/forms.py:63
 msgid "По цене"
 msgstr ""
 
-#: apps/search/forms.py:60
+#: apps/search/forms.py:63
 msgid "По стажу"
 msgstr ""
 

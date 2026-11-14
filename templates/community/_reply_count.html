@@ -1,0 +1,1 @@
+{% load i18n %}<span{% if detail or oob %} id="reply-count"{% endif %}{% if oob %} hx-swap-oob="true"{% endif %}>{% blocktranslate count n=count %}{{ n }} ответ{% plural %}{{ n }} ответов{% endblocktranslate %}</span>

@@ -1,0 +1,12 @@
+{% load i18n %}<div id="comments" class="space-y-5">
+  {% for node in nodes %}
+  <div class="space-y-3">
+    {% if node.comment %}{% include "community/_comment.html" with comment=node.comment %}{% else %}<p class="text-sm italic text-slate-500">{% translate "Комментарий удалён" %}</p>{% endif %}
+    {% if node.replies %}<div class="ml-4 space-y-3 border-l-2 border-slate-200 pl-4">
+      {% for reply in node.replies %}{% include "community/_comment.html" with comment=reply %}{% endfor %}
+    </div>{% endif %}
+  </div>
+  {% empty %}
+  <p class="text-sm text-slate-600">{% translate "Комментариев пока нет" %}</p>
+  {% endfor %}
+</div>{% if with_reply_count %}{% include "community/_reply_count.html" with count=post.reply_count oob=True %}{% include "community/_comment_form.html" with parent="" oob=True %}{% endif %}

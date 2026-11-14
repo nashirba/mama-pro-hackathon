@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:32+0500\n"
+"POT-Creation-Date: 2026-11-14 15:22+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -79,7 +79,9 @@ msgstr "Үйге шығу"
 msgid "Онлайн"
 msgstr "Онлайн"
 
-#: apps/catalog/models/profile.py:29 templates/search/_suggest.html:1
+#: apps/catalog/models/profile.py:29 apps/community/forms.py:119
+#: templates/community/_comment.html:6 templates/community/_post_card.html:6
+#: templates/search/_suggest.html:1
 msgid "Специалист"
 msgstr "Маман"
 
@@ -87,19 +89,19 @@ msgstr "Маман"
 msgid "Няня"
 msgstr "Бала күтуші"
 
-#: apps/catalog/models/profile.py:34 templates/core/home.html:73
+#: apps/catalog/models/profile.py:34 templates/core/home.html:85
 msgid "Личность подтверждена"
 msgstr "Жеке басы расталған"
 
-#: apps/catalog/models/profile.py:35 templates/core/home.html:74
+#: apps/catalog/models/profile.py:35 templates/core/home.html:86
 msgid "Образование подтверждено"
 msgstr "Білімі расталған"
 
-#: apps/catalog/models/profile.py:36 templates/core/home.html:75
+#: apps/catalog/models/profile.py:36 templates/core/home.html:87
 msgid "Квалификация подтверждена"
 msgstr "Біліктілігі расталған"
 
-#: apps/catalog/models/profile.py:37 templates/core/home.html:76
+#: apps/catalog/models/profile.py:37 templates/core/home.html:88
 msgid "Проверка на безопасность пройдена"
 msgstr "Қауіпсіздік тексерісінен өтті"
 
@@ -163,13 +165,169 @@ msgstr "Бала күтуші қызметі тек бала күтушіде б
 msgid "Цена за час и за ночь есть только у няни"
 msgstr "Сағаттық және түнгі баға тек бала күтушіде болады"
 
+#: apps/community/admin.py:11
+msgid "Скрыть"
+msgstr "Жасыру"
+
+#: apps/community/admin.py:15 templates/search/_filters.html:199
+msgid "Показать"
+msgstr "Көрсету"
+
+#: apps/community/admin.py:29 apps/community/admin.py:46
+msgid "Автор"
+msgstr "Автор"
+
+#: apps/community/admin.py:33 apps/community/admin.py:50
+#: apps/community/forms.py:73
+msgid "Текст"
+msgstr "Мәтін"
+
+#: apps/community/admin.py:62
+msgid "Объект"
+msgstr "Объект"
+
+#: apps/community/admin.py:68
+msgid "Скрыть контент и закрыть жалобу"
+msgstr "Мазмұнды жасырып, шағымды жабу"
+
+#: apps/community/admin.py:76
+msgid "Закрыть жалобу"
+msgstr "Шағымды жабу"
+
+#: apps/community/forms.py:24
+msgid "Псевдоним"
+msgstr "Бүркеншік ат"
+
+#: apps/community/forms.py:33
+msgid "Только буквы, цифры, пробел и _"
+msgstr "Тек әріптер, сандар, бос орын және _"
+
+#: apps/community/forms.py:35 apps/community/forms.py:47
+msgid "Этот псевдоним уже занят"
+msgstr "Бұл бүркеншік ат бос емес"
+
+#: apps/community/forms.py:54
+msgid "Похоже, в тексте есть ИИН или телефон. Не публикуйте данные ребёнка."
+msgstr ""
+"Мәтінде ЖСН немесе телефон нөмірі бар сияқты. Баланың деректерін "
+"жарияламаңыз."
+
+#: apps/community/forms.py:60
+msgid "Фото"
+msgstr "Сурет"
+
+#: apps/community/forms.py:63 templates/search/_suggest.html:1
+msgid "Особенность развития"
+msgstr "Даму ерекшелігі"
+
+#: apps/community/forms.py:66 apps/geo/models.py:20
+#: templates/community/feed.html:30 templates/core/home.html:24
+msgid "Город"
+msgstr "Қала"
+
+#: apps/community/forms.py:94
+msgid "Фото больше 2 МБ"
+msgstr "Сурет 2 МБ-тан үлкен"
+
+#: apps/community/forms.py:105
+msgid "Загрузите фото в формате JPEG или PNG"
+msgstr "Суретті JPEG немесе PNG форматында жүктеңіз"
+
+#: apps/community/forms.py:128
+msgid "Тип"
+msgstr "Түрі"
+
+#: apps/community/forms.py:151
+msgid "Выберите специалиста"
+msgstr "Маманды таңдаңыз"
+
+#: apps/community/forms.py:158
+msgid "Удалить фото"
+msgstr "Суретті жою"
+
+#: apps/community/forms.py:168 templates/community/_comment_form_body.html:5
+msgid "Комментарий"
+msgstr "Түсініктеме"
+
+#: apps/community/forms.py:179
+msgid "С упоминанием имени ответ длиннее 1000 символов. Сократите текст."
+msgstr "Есімді қосқанда жауап 1000 таңбадан ұзын. Мәтінді қысқартыңыз."
+
+#: apps/community/forms.py:192
+msgid "Причина"
+msgstr "Себебі"
+
+#: apps/community/forms.py:193
+msgid "Пояснение"
+msgstr "Түсініктеме"
+
+#: apps/community/models.py:26
+msgid "Вопрос"
+msgstr "Сұрақ"
+
+#: apps/community/models.py:27
+msgid "История"
+msgstr "Оқиға"
+
+#: apps/community/models.py:28
+msgid "Отзыв о специалисте"
+msgstr "Маман туралы пікір"
+
+#: apps/community/models.py:135
+msgid "Реклама"
+msgstr "Жарнама"
+
+#: apps/community/models.py:136
+msgid "Данные ребёнка"
+msgstr "Баланың деректері"
+
+#: apps/community/models.py:137
+msgid "Оскорбление"
+msgstr "Қорлау"
+
+#: apps/community/models.py:138
+msgid "Опасный медицинский совет"
+msgstr "Қауіпті медициналық кеңес"
+
+#: apps/community/models.py:139
+msgid "Другое"
+msgstr "Басқа"
+
+#: apps/community/models.py:142
+msgid "Новая"
+msgstr "Жаңа"
+
+#: apps/community/models.py:143
+msgid "Закрыта"
+msgstr "Жабылды"
+
+#: apps/community/views.py:60 templates/catalog/specialist_detail.html:88
+msgid "Все"
+msgstr "Барлығы"
+
+#: apps/community/views.py:61
+msgid "Вопросы"
+msgstr "Сұрақтар"
+
+#: apps/community/views.py:62
+msgid "Истории"
+msgstr "Оқиғалар"
+
+#: apps/community/views.py:63
+msgid "Отзывы"
+msgstr "Пікірлер"
+
+#: apps/community/views.py:147
+msgid "Вы уже писали отзыв об этом специалисте - его можно изменить"
+msgstr "Сіз бұл маман туралы пікір жазғансыз - оны өзгертуге болады"
+
+#: apps/community/views.py:312
+msgid "Жалоба отправлена"
+msgstr "Шағым жіберілді"
+
 #: apps/geo/models.py:19
 msgid "Область"
 msgstr "Облыс"
-
-#: apps/geo/models.py:20 templates/core/home.html:24
-msgid "Город"
-msgstr "Қала"
 
 #: apps/geo/models.py:21 templates/search/_filters.html:62
 msgid "Район"
@@ -575,7 +733,7 @@ msgid "Подробнее"
 msgstr "Толығырақ"
 
 #: apps/search/templatetags/search_tags.py:32
-#: templates/catalog/specialist_detail.html:93
+#: templates/catalog/specialist_detail.html:105
 msgid "Открыть в 2ГИС"
 msgstr "2ГИС-те ашу"
 
@@ -708,8 +866,8 @@ msgid ""
 "данные о детях в демо-версии."
 msgstr ""
 "Пайдаланушы келісімі: сіз «%(brand)s» сервисін мамандар анықтамалығы ретінде "
-"пайдаланасыз, маманды таңдауға өзіңіз жауап бересіз және демо-нұсқада балалар"
-" туралы нақты деректерді енгізбейсіз."
+"пайдаланасыз, маманды таңдауға өзіңіз жауап бересіз және демо-нұсқада "
+"балалар туралы нақты деректерді енгізбейсіз."
 
 #: templates/accounts/_consent_fields.html:10
 msgid "Полный текст соглашения"
@@ -761,7 +919,7 @@ msgstr "Демо-нұсқада SMS жіберілмейді, код ашық: %
 msgid "Зарегистрироваться"
 msgstr "Тіркелу"
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:20
+#: templates/accounts/code_form.html:28 templates/partials/header.html:21
 msgid "Войти"
 msgstr "Кіру"
 
@@ -818,7 +976,8 @@ msgstr "демо-нұсқада жұмыс істемейді"
 msgid "Контакты в демо-версии недоступны"
 msgstr "Демо-нұсқада байланыс қолжетімсіз"
 
-#: templates/catalog/_detail_back.html:1
+#: templates/catalog/_detail_back.html:1 templates/community/post_detail.html:7
+#: templates/community/post_form.html:7 templates/community/rules.html:7
 msgid "Навигация"
 msgstr "Навигация"
 
@@ -978,8 +1137,8 @@ msgid ""
 "Няня не проводит коррекционных занятий и не ставит диагнозов. Оплата - "
 "напрямую няне."
 msgstr ""
-"Бала күтуші түзету сабақтарын өткізбейді және диагноз қоймайды. Төлем тікелей"
-" бала күтушіге жасалады."
+"Бала күтуші түзету сабақтарын өткізбейді және диагноз қоймайды. Төлем "
+"тікелей бала күтушіге жасалады."
 
 #: templates/catalog/specialist_detail.html:21
 msgid "Стаж"
@@ -1007,7 +1166,7 @@ msgid "Методы"
 msgstr "Әдістер"
 
 #: templates/catalog/specialist_detail.html:65
-#: templates/catalog/specialist_detail.html:102
+#: templates/catalog/specialist_detail.html:114
 msgid "Услуги и цены"
 msgstr "Қызметтер мен бағалар"
 
@@ -1021,17 +1180,284 @@ msgstr "%(n)s мин"
 msgid "%(price)s ₸ за занятие"
 msgstr "сабақ үшін %(price)s ₸"
 
-#: templates/catalog/specialist_detail.html:86
+#: templates/catalog/specialist_detail.html:87
+msgid "Отзывы в сообществе"
+msgstr "Қауымдастықтағы пікірлер"
+
+#: templates/catalog/specialist_detail.html:98
 msgid "Адреса приёма"
 msgstr "Қабылдау мекенжайлары"
 
-#: templates/catalog/specialist_detail.html:94
+#: templates/catalog/specialist_detail.html:106
 msgid "Маршрут"
 msgstr "Бағыт"
 
-#: templates/catalog/specialist_detail.html:102
+#: templates/catalog/specialist_detail.html:114
 msgid "Адреса и маршрут"
 msgstr "Мекенжайлар және бағыт"
+
+#: templates/community/_comment.html:8 templates/community/_post_card.html:9
+#, python-format
+msgid "%(t)s назад"
+msgstr "%(t)s бұрын"
+
+#: templates/community/_comment.html:10 templates/community/_post_card.html:15
+#: templates/community/post_form.html:16
+msgid "Скрыто модератором"
+msgstr "Модератор жасырды"
+
+#: templates/community/_comment.html:15 templates/community/_post_card.html:28
+#: templates/community/complaint_form.html:3
+#: templates/community/complaint_form.html:7
+msgid "Пожаловаться"
+msgstr "Шағымдану"
+
+#: templates/community/_comment.html:17 templates/community/post_detail.html:16
+msgid "Изменить"
+msgstr "Өзгерту"
+
+#: templates/community/_comment.html:18
+msgid "Удалить комментарий?"
+msgstr "Түсініктемені жою керек пе?"
+
+#: templates/community/_comment.html:21 templates/community/post_detail.html:20
+msgid "Удалить"
+msgstr "Жою"
+
+#: templates/community/_comment.html:26
+#: templates/community/_comment_form_body.html:14
+msgid "Ответить"
+msgstr "Жауап беру"
+
+#: templates/community/_comment_form_body.html:6
+msgid "Ваш ответ"
+msgstr "Сіздің жауабыңыз"
+
+#: templates/community/_comment_form_body.html:6
+msgid "Ваш комментарий"
+msgstr "Сіздің түсініктемеңіз"
+
+#: templates/community/_comment_form_body.html:11
+#: templates/community/comment_form.html:16
+#: templates/community/post_form.html:58
+msgid "Всё равно опубликовать"
+msgstr "Бәрібір жариялау"
+
+#: templates/community/_comment_form_body.html:14
+msgid "Отправить"
+msgstr "Жіберу"
+
+#: templates/community/_comments.html:4
+msgid "Комментарий удалён"
+msgstr "Түсініктеме жойылды"
+
+#: templates/community/_comments.html:10
+msgid "Комментариев пока нет"
+msgstr "Әзірге түсініктеме жоқ"
+
+#: templates/community/_feed_page.html:2
+msgid "Загрузка..."
+msgstr "Жүктелуде..."
+
+#: templates/community/_like_button.html:6
+#, python-format
+msgid "Полезно %(n)s"
+msgstr "Пайдалы %(n)s"
+
+#: templates/community/_reply_count.html:1
+#, python-format
+msgid "%(n)s ответ"
+msgid_plural "%(n)s ответов"
+msgstr[0] "%(n)s жауап"
+msgstr[1] "%(n)s жауап"
+
+#: templates/community/_specialist_options.html:14
+msgid "Специалист не найден"
+msgstr "Маман табылмады"
+
+#: templates/community/_specialist_options.html:16
+msgid "Введите имя специалиста"
+msgstr "Маманның атын енгізіңіз"
+
+#: templates/community/comment_form.html:3
+#: templates/community/comment_form.html:7
+msgid "Изменить комментарий"
+msgstr "Түсініктемені өзгерту"
+
+#: templates/community/comment_form.html:20
+#: templates/community/nickname_form.html:18
+#: templates/community/post_form.html:88
+msgid "Сохранить"
+msgstr "Сақтау"
+
+#: templates/community/comment_form.html:21
+#: templates/community/complaint_form.html:25
+msgid "Отмена"
+msgstr "Бас тарту"
+
+#: templates/community/complaint_form.html:24
+msgid "Отправить жалобу"
+msgstr "Шағым жіберу"
+
+#: templates/community/feed.html:3 templates/community/feed.html:8
+#: templates/community/post_detail.html:3
+#: templates/community/post_detail.html:10
+#: templates/community/post_form.html:10 templates/community/rules.html:10
+#: templates/partials/header.html:10
+msgid "Сообщество"
+msgstr "Қауымдастық"
+
+#: templates/community/feed.html:10 templates/community/rules.html:3
+#: templates/community/rules.html:13
+msgid "Правила сообщества"
+msgstr "Қауымдастық ережелері"
+
+#: templates/community/feed.html:11
+msgid "Написать"
+msgstr "Жазу"
+
+#: templates/community/feed.html:19 templates/community/feed.html:20
+msgid "Поиск по постам"
+msgstr "Жазбалардан іздеу"
+
+#: templates/community/feed.html:21 templates/core/home.html:30
+msgid "Найти"
+msgstr "Іздеу"
+
+#: templates/community/feed.html:24
+msgid "Особенность"
+msgstr "Даму ерекшелігі"
+
+#: templates/community/feed.html:26
+msgid "Любая"
+msgstr "Кез келген"
+
+#: templates/community/feed.html:32 templates/search/_filters.html:57
+#: templates/search/_filters.html:64
+msgid "Любой"
+msgstr "Кез келген"
+
+#: templates/community/feed.html:39
+msgid "Тип поста"
+msgstr "Жазба түрі"
+
+#: templates/community/feed.html:44
+#, python-format
+msgid "Отзывы о %(name)s"
+msgstr "%(name)s туралы пікірлер"
+
+#: templates/community/feed.html:44
+msgid "Снять фильтр"
+msgstr "Сүзгіні алып тастау"
+
+#: templates/community/feed.html:49
+msgid "Пока здесь нет постов"
+msgstr "Мұнда әзірге жазба жоқ"
+
+#: templates/community/nickname_form.html:3
+#: templates/community/nickname_form.html:7
+msgid "Ваш псевдоним"
+msgstr "Сіздің бүркеншік атыңыз"
+
+#: templates/community/nickname_form.html:8
+msgid ""
+"Это имя увидят другие участники сообщества. Телефон нигде не показывается."
+msgstr ""
+"Бұл атты қауымдастықтың басқа мүшелері көреді. Телефон еш жерде "
+"көрсетілмейді."
+
+#: templates/community/nickname_form.html:16
+msgid "3-40 символов: буквы, цифры, пробел и _"
+msgstr "3-40 таңба: әріптер, сандар, бос орын және _"
+
+#: templates/community/post_detail.html:17
+msgid "Удалить пост?"
+msgstr "Жазбаны жою керек пе?"
+
+#: templates/community/post_detail.html:25
+msgid "Комментарии"
+msgstr "Түсініктемелер"
+
+#: templates/community/post_form.html:3 templates/community/post_form.html:13
+msgid "Изменить пост"
+msgstr "Жазбаны өзгерту"
+
+#: templates/community/post_form.html:3 templates/community/post_form.html:13
+msgid "Новый пост"
+msgstr "Жаңа жазба"
+
+#: templates/community/post_form.html:10
+msgid "К посту"
+msgstr "Жазбаға"
+
+#: templates/community/post_form.html:14
+msgid "Перед публикацией прочитайте"
+msgstr "Жарияламас бұрын оқыңыз:"
+
+#: templates/community/post_form.html:14
+msgid "правила сообщества"
+msgstr "қауымдастық ережелері"
+
+#: templates/community/post_form.html:40
+msgid "Имя специалиста"
+msgstr "Маманның аты"
+
+#: templates/community/post_form.html:65 templates/community/post_form.html:71
+msgid "Не указывать"
+msgstr "Көрсетпеу"
+
+#: templates/community/post_form.html:80
+msgid "JPEG или PNG, до 2 МБ"
+msgstr "JPEG немесе PNG, 2 МБ-қа дейін"
+
+#: templates/community/post_form.html:81
+msgid "Прикрепите фото ещё раз"
+msgstr "Суретті қайта тіркеңіз"
+
+#: templates/community/post_form.html:88
+msgid "Опубликовать"
+msgstr "Жариялау"
+
+#: templates/community/rules.html:14
+msgid ""
+"Сообщество - место, где родители и специалисты делятся опытом. Чтобы здесь "
+"было безопасно и полезно, соблюдайте простые правила."
+msgstr ""
+"Қауымдастық - ата-аналар мен мамандар тәжірибе бөлісетін орын. Мұнда "
+"қауіпсіз әрі пайдалы болу үшін қарапайым ережелерді сақтаңыз."
+
+#: templates/community/rules.html:16
+msgid "Без рекламы: не продвигайте услуги, товары и сторонние ресурсы."
+msgstr ""
+"Жарнамасыз: қызметтерді, тауарларды және сыртқы ресурстарды жарнамаламаңыз."
+
+#: templates/community/rules.html:17
+msgid ""
+"Без медицинских назначений: делитесь опытом, но не назначайте лечение и "
+"препараты. За назначениями обращайтесь к врачу."
+msgstr ""
+"Медициналық тағайындаусыз: тәжірибемен бөлісіңіз, бірақ емдеу мен дәрі-"
+"дәрмекті тағайындамаңыз. Тағайындау үшін дәрігерге жүгініңіз."
+
+#: templates/community/rules.html:18
+msgid ""
+"Без данных о чужих детях: не публикуйте имена, ИИН, телефоны, адреса и фото "
+"чужих детей."
+msgstr ""
+"Бөтен балалар туралы деректерсіз: бөтен балалардың аттарын, ЖСН, "
+"телефондарын, мекенжайларын және фотосуреттерін жарияламаңыз."
+
+#: templates/community/rules.html:19
+msgid "Уважайте других участников: оскорбления и травля недопустимы."
+msgstr "Басқа мүшелерді құрметтеңіз: қорлау мен қудалауға жол берілмейді."
+
+#: templates/community/rules.html:21
+msgid ""
+"Модератор скрывает записи, нарушающие правила. Пожаловаться на запись можно "
+"кнопкой «Пожаловаться»."
+msgstr ""
+"Модератор ережені бұзатын жазбаларды жасырады. Жазбаға «Шағымдану» түймесі "
+"арқылы шағымдануға болады."
 
 #: templates/consents/pd_processing_v1.html:3
 #: templates/consents/user_agreement_v1.html:3
@@ -1040,8 +1466,8 @@ msgstr "Жоба: мәтінді заңгер бекітеді."
 
 #: templates/consents/pd_processing_v1.html:4
 msgid ""
-"1. Вы даёте согласие на сбор и обработку следующих персональных данных: номер"
-" телефона, язык интерфейса, дата и IP-адрес принятия согласий."
+"1. Вы даёте согласие на сбор и обработку следующих персональных данных: "
+"номер телефона, язык интерфейса, дата и IP-адрес принятия согласий."
 msgstr ""
 "1. Сіз келесі жеке деректерді жинауға және өңдеуге келісім бересіз: телефон "
 "нөмірі, интерфейс тілі, келісімдерді қабылдаған күн және IP-мекенжай."
@@ -1059,8 +1485,8 @@ msgstr ""
 #: templates/consents/pd_processing_v1.html:12
 msgid ""
 "2. Цель обработки — создание аккаунта, вход в него и работа сервиса. Данные "
-"хранятся на территории Республики Казахстан и не передаются третьим лицам без"
-" вашего отдельного согласия."
+"хранятся на территории Республики Казахстан и не передаются третьим лицам "
+"без вашего отдельного согласия."
 msgstr ""
 "2. Өңдеу мақсаты — аккаунт жасау, оған кіру және сервистің жұмыс істеуі. "
 "Деректер Қазақстан Республикасының аумағында сақталады және сіздің жеке "
@@ -1068,8 +1494,8 @@ msgstr ""
 
 #: templates/consents/pd_processing_v1.html:16
 msgid ""
-"3. Согласие действует, пока существует ваш аккаунт. Вы можете отозвать его, и"
-" обработка будет прекращена в установленный законом срок."
+"3. Согласие действует, пока существует ваш аккаунт. Вы можете отозвать его, "
+"и обработка будет прекращена в установленный законом срок."
 msgstr ""
 "3. Келісім сіздің аккаунтыңыз бар кезде әрекет етеді. Сіз оны кері қайтарып "
 "ала аласыз, сонда өңдеу заңда белгіленген мерзімде тоқтатылады."
@@ -1130,10 +1556,6 @@ msgstr "Логопед, РАС, сөйлемейді..."
 msgid "Любой город"
 msgstr "Кез келген қала"
 
-#: templates/core/home.html:30
-msgid "Найти"
-msgstr "Іздеу"
-
 #: templates/core/home.html:32
 msgid "Пройти опросник для определения необходимых специалистов"
 msgstr "Қажетті мамандарды анықтау үшін сауалнамадан өту"
@@ -1167,15 +1589,23 @@ msgstr[1] "Бөлімде %(n)s бала күтуші"
 msgid "Найти няню"
 msgstr "Бала күтушіні табу"
 
-#: templates/core/home.html:61
+#: templates/core/home.html:63
+msgid "Свежие посты"
+msgstr "Жаңа жазбалар"
+
+#: templates/core/home.html:64
+msgid "Перейти в сообщество"
+msgstr "Қауымдастыққа өту"
+
+#: templates/core/home.html:73
 msgid "Города"
 msgstr "Қалалар"
 
-#: templates/core/home.html:70
+#: templates/core/home.html:82
 msgid "Что значит проверенный специалист"
 msgstr "Тексерілген маман дегеніміз не"
 
-#: templates/core/home.html:71
+#: templates/core/home.html:83
 msgid ""
 "Мы показываем не общую галочку, а то, что именно проверено. Сами документы "
 "(паспорт, дипломы) мы не публикуем, видны только уровни проверки."
@@ -1183,35 +1613,35 @@ msgstr ""
 "Біз жалпы белгіні емес, нақты нені тексергенімізді көрсетеміз. Құжаттарды "
 "(төлқұжат, дипломдар) жарияламаймыз, тек тексеру деңгейлері көрінеді."
 
-#: templates/core/home.html:73
+#: templates/core/home.html:85
 msgid "Сверили паспорт или удостоверение с фото"
 msgstr "Төлқұжатты немесе жеке куәлікті фотосымен салыстырып тексердік"
 
-#: templates/core/home.html:74
+#: templates/core/home.html:86
 msgid "Видели диплом по специальности"
 msgstr "Мамандығы бойынша дипломды көрдік"
 
-#: templates/core/home.html:75
+#: templates/core/home.html:87
 msgid "Видели сертификаты курсов и повышения квалификации"
 msgstr "Курстар мен біліктілікті арттыру сертификаттарын көрдік"
 
-#: templates/core/home.html:76
+#: templates/core/home.html:88
 msgid "Есть справка об отсутствии судимости"
 msgstr "Сотталмағаны туралы анықтама бар"
 
-#: templates/core/home.html:81
+#: templates/core/home.html:93
 msgid "Вы специалист?"
 msgstr "Сіз маманысыз ба?"
 
-#: templates/core/home.html:82
+#: templates/core/home.html:94
 msgid "Расскажите о себе и своих услугах родителям, которые ищут помощь."
 msgstr "Көмек іздеген ата-аналарға өзіңіз және қызметтеріңіз туралы айтыңыз."
 
-#: templates/core/home.html:83
+#: templates/core/home.html:95
 msgid "Разместить профиль"
 msgstr "Профиль орналастыру"
 
-#: templates/core/home.html:84
+#: templates/core/home.html:96
 msgid "В демо-версии анкеты специалистов заполняет команда Mama Pro."
 msgstr "Демо-нұсқада мамандардың анкетасын Mama Pro командасы толтырады."
 
@@ -1219,11 +1649,11 @@ msgstr "Демо-нұсқада мамандардың анкетасын Mama P
 msgid "Няни"
 msgstr "Бала күтушілер"
 
-#: templates/partials/header.html:13
+#: templates/partials/header.html:14
 msgid "Выйти"
 msgstr "Шығу"
 
-#: templates/partials/header.html:17
+#: templates/partials/header.html:18
 msgid "Выйти со всех устройств"
 msgstr "Барлық құрылғылардан шығу"
 
@@ -1293,8 +1723,8 @@ msgstr "Ең жоғары ұпай"
 #: templates/questionnaire/result.html:17
 #: templates/questionnaire/result.html:25
 msgid ""
-"Баллы показывают, как часто наблюдается описанное в утверждениях раздела. Это"
-" не оценка нормы и не диагноз."
+"Баллы показывают, как часто наблюдается описанное в утверждениях раздела. "
+"Это не оценка нормы и не диагноз."
 msgstr ""
 "Ұпайлар бөлімнің тұжырымдарында сипатталғанның қаншалықты жиі байқалатынын "
 "көрсетеді. Бұл норманы бағалау емес және диагноз емес."
@@ -1409,10 +1839,6 @@ msgstr "Қашықтығы бойынша"
 msgid "Город или область"
 msgstr "Қала немесе облыс"
 
-#: templates/search/_filters.html:57 templates/search/_filters.html:64
-msgid "Любой"
-msgstr "Кез келген"
-
 #: templates/search/_filters.html:74
 msgid "Возраст ребёнка"
 msgstr "Баланың жасы"
@@ -1503,10 +1929,6 @@ msgstr "Расталған құжаттар"
 msgid "Метод"
 msgstr "Әдіс"
 
-#: templates/search/_filters.html:199
-msgid "Показать"
-msgstr "Көрсету"
-
 #: templates/search/_filters.html:200 templates/search/_results_partial.html:11
 msgid "Сбросить"
 msgstr "Тазалау"
@@ -1521,15 +1943,15 @@ msgstr "Тізім"
 
 #: templates/search/_nannies_intro.html:2
 msgid ""
-"Няня присматривает за ребёнком с особенностями развития у вас дома: несколько"
-" часов, ночью или постоянно. Она знает, как помочь ребёнку в быту и в трудной"
-" ситуации, но не проводит коррекционных занятий и не ставит диагнозов. Оплата"
-" - напрямую няне."
+"Няня присматривает за ребёнком с особенностями развития у вас дома: "
+"несколько часов, ночью или постоянно. Она знает, как помочь ребёнку в быту и "
+"в трудной ситуации, но не проводит коррекционных занятий и не ставит "
+"диагнозов. Оплата - напрямую няне."
 msgstr ""
-"Бала күтуші даму ерекшелігі бар баланы үйіңізде қарайды: бірнеше сағат, түнде"
-" немесе тұрақты түрде. Ол балаға күнделікті тұрмыста және қиын жағдайда қалай"
-" көмектесу керегін біледі, бірақ түзету сабақтарын өткізбейді және диагноз "
-"қоймайды. Төлем тікелей бала күтушіге жасалады."
+"Бала күтуші даму ерекшелігі бар баланы үйіңізде қарайды: бірнеше сағат, "
+"түнде немесе тұрақты түрде. Ол балаға күнделікті тұрмыста және қиын жағдайда "
+"қалай көмектесу керегін біледі, бірақ түзету сабақтарын өткізбейді және "
+"диагноз қоймайды. Төлем тікелей бала күтушіге жасалады."
 
 #: templates/search/_nannies_intro.html:3
 msgid "У каждой няни в разделе есть"
@@ -1584,10 +2006,6 @@ msgstr "Алға"
 #: templates/search/_suggest.html:1
 msgid "Раздел"
 msgstr "Бөлім"
-
-#: templates/search/_suggest.html:1
-msgid "Особенность развития"
-msgstr "Даму ерекшелігі"
 
 #: templates/search/_view_toggle.html:1
 msgid "Вид результатов"

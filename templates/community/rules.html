@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Правила сообщества" %} - {{ BRAND_NAME }}{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl space-y-4 px-4 py-6 sm:px-6">
+  <nav aria-label="{% translate 'Навигация' %}">
+    <a href="{% url 'community:feed' %}" class="-ml-2 inline-flex min-h-11 items-center gap-1 rounded px-2 text-sm font-medium text-primary-700 hover:underline">
+      <svg class="size-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5l-5 5 5 5"/></svg>
+      {% translate "Сообщество" %}
+    </a>
+  </nav>
+  <h1 class="text-2xl font-bold">{% translate "Правила сообщества" %}</h1>
+  <p class="text-slate-700">{% translate "Сообщество - место, где родители и специалисты делятся опытом. Чтобы здесь было безопасно и полезно, соблюдайте простые правила." %}</p>
+  <ul class="list-disc space-y-2 pl-5 text-slate-800">
+    <li>{% translate "Без рекламы: не продвигайте услуги, товары и сторонние ресурсы." %}</li>
+    <li>{% translate "Без медицинских назначений: делитесь опытом, но не назначайте лечение и препараты. За назначениями обращайтесь к врачу." %}</li>
+    <li>{% translate "Без данных о чужих детях: не публикуйте имена, ИИН, телефоны, адреса и фото чужих детей." %}</li>
+    <li>{% translate "Уважайте других участников: оскорбления и травля недопустимы." %}</li>
+  </ul>
+  <p class="text-slate-700">{% translate "Модератор скрывает записи, нарушающие правила. Пожаловаться на запись можно кнопкой «Пожаловаться»." %}</p>
+</div>
+{% endblock %}

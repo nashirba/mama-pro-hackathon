@@ -1,0 +1,30 @@
+{% load i18n community %}{% with a=comment.author %}
+<div id="comment-{{ comment.pk }}" class="space-y-1">
+  <p class="flex flex-wrap items-center gap-x-2 text-sm text-slate-600">
+    <span class="font-semibold text-slate-900">{{ a|author_name }}</span>
+    {% if a|is_specialist %}{% with sp=a.specialist_profile %}
+    {% if comment|author_badge_visible %}<a href="{% url 'catalog:specialist' sp.slug %}" class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800 hover:underline">{% translate "Специалист" %}</a>{% else %}<span class="rounded-full bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800">{% translate "Специалист" %}</span>{% endif %}
+    {% endwith %}{% endif %}
+    <span>· {% blocktranslate with t=comment.created_at|timesince %}{{ t }} назад{% endblocktranslate %}</span>
+  </p>
+  {% if comment.is_hidden %}<p class="text-sm font-medium text-amber-800">{% translate "Скрыто модератором" %}</p>{% endif %}
+  <p class="whitespace-pre-line break-words text-slate-800">{{ comment.body }}</p>
+  <div class="flex flex-wrap items-center gap-2">
+    {% url 'community:post' comment.post_id as post_url %}{% with anchor=comment.pk|stringformat:"s" %}
+    {% include "community/_like_button.html" with target="comment" pk=comment.pk liked=comment.viewer_liked count=comment.like_count next=post_url|add:"#comment-"|add:anchor %}{% endwith %}
+    <a href="{% url 'community:complain' 'comment' comment.pk %}" class="inline-flex min-h-11 items-center rounded px-2 text-sm text-slate-600 hover:underline">{% translate "Пожаловаться" %}</a>
+    {% if user.is_authenticated and user.pk == comment.author_id %}
+    <a href="{% url 'community:comment_edit' comment.pk %}" class="inline-flex min-h-11 items-center rounded px-2 text-sm text-slate-600 hover:underline">{% translate "Изменить" %}</a>
+    {% translate "Удалить комментарий?" as msg %}
+    <form method="post" action="{% url 'community:comment_delete' comment.pk %}" onsubmit="return confirm('{{ msg|escapejs }}')">
+      {% csrf_token %}
+      <button type="submit" class="inline-flex min-h-11 items-center rounded px-2 text-sm text-red-700 hover:underline">{% translate "Удалить" %}</button>
+    </form>
+    {% endif %}
+  </div>
+  <details class="text-sm"{% if comment_form_key == comment.pk|stringformat:"s" %} open{% endif %}>
+    <summary class="inline-flex min-h-11 cursor-pointer items-center rounded px-2 font-medium text-primary-700 hover:underline">{% translate "Ответить" %}</summary>
+    {% include "community/_comment_form.html" with parent=comment.pk %}
+  </details>
+</div>
+{% endwith %}

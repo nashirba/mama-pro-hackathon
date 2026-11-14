@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:32+0500\n"
+"POT-Creation-Date: 2026-11-14 15:22+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,9 @@ msgstr ""
 msgid "Онлайн"
 msgstr ""
 
-#: apps/catalog/models/profile.py:29 templates/search/_suggest.html:1
+#: apps/catalog/models/profile.py:29 apps/community/forms.py:119
+#: templates/community/_comment.html:6 templates/community/_post_card.html:6
+#: templates/search/_suggest.html:1
 msgid "Специалист"
 msgstr ""
 
@@ -86,19 +88,19 @@ msgstr ""
 msgid "Няня"
 msgstr ""
 
-#: apps/catalog/models/profile.py:34 templates/core/home.html:73
+#: apps/catalog/models/profile.py:34 templates/core/home.html:85
 msgid "Личность подтверждена"
 msgstr ""
 
-#: apps/catalog/models/profile.py:35 templates/core/home.html:74
+#: apps/catalog/models/profile.py:35 templates/core/home.html:86
 msgid "Образование подтверждено"
 msgstr ""
 
-#: apps/catalog/models/profile.py:36 templates/core/home.html:75
+#: apps/catalog/models/profile.py:36 templates/core/home.html:87
 msgid "Квалификация подтверждена"
 msgstr ""
 
-#: apps/catalog/models/profile.py:37 templates/core/home.html:76
+#: apps/catalog/models/profile.py:37 templates/core/home.html:88
 msgid "Проверка на безопасность пройдена"
 msgstr ""
 
@@ -162,12 +164,166 @@ msgstr ""
 msgid "Цена за час и за ночь есть только у няни"
 msgstr ""
 
-#: apps/geo/models.py:19
-msgid "Область"
+#: apps/community/admin.py:11
+msgid "Скрыть"
 msgstr ""
 
-#: apps/geo/models.py:20 templates/core/home.html:24
+#: apps/community/admin.py:15 templates/search/_filters.html:199
+msgid "Показать"
+msgstr ""
+
+#: apps/community/admin.py:29 apps/community/admin.py:46
+msgid "Автор"
+msgstr ""
+
+#: apps/community/admin.py:33 apps/community/admin.py:50
+#: apps/community/forms.py:73
+msgid "Текст"
+msgstr ""
+
+#: apps/community/admin.py:62
+msgid "Объект"
+msgstr ""
+
+#: apps/community/admin.py:68
+msgid "Скрыть контент и закрыть жалобу"
+msgstr ""
+
+#: apps/community/admin.py:76
+msgid "Закрыть жалобу"
+msgstr ""
+
+#: apps/community/forms.py:24
+msgid "Псевдоним"
+msgstr ""
+
+#: apps/community/forms.py:33
+msgid "Только буквы, цифры, пробел и _"
+msgstr ""
+
+#: apps/community/forms.py:35 apps/community/forms.py:47
+msgid "Этот псевдоним уже занят"
+msgstr ""
+
+#: apps/community/forms.py:54
+msgid "Похоже, в тексте есть ИИН или телефон. Не публикуйте данные ребёнка."
+msgstr ""
+
+#: apps/community/forms.py:60
+msgid "Фото"
+msgstr ""
+
+#: apps/community/forms.py:63 templates/search/_suggest.html:1
+msgid "Особенность развития"
+msgstr ""
+
+#: apps/community/forms.py:66 apps/geo/models.py:20
+#: templates/community/feed.html:30 templates/core/home.html:24
 msgid "Город"
+msgstr ""
+
+#: apps/community/forms.py:94
+msgid "Фото больше 2 МБ"
+msgstr ""
+
+#: apps/community/forms.py:105
+msgid "Загрузите фото в формате JPEG или PNG"
+msgstr ""
+
+#: apps/community/forms.py:128
+msgid "Тип"
+msgstr ""
+
+#: apps/community/forms.py:151
+msgid "Выберите специалиста"
+msgstr ""
+
+#: apps/community/forms.py:158
+msgid "Удалить фото"
+msgstr ""
+
+#: apps/community/forms.py:168 templates/community/_comment_form_body.html:5
+msgid "Комментарий"
+msgstr ""
+
+#: apps/community/forms.py:179
+msgid "С упоминанием имени ответ длиннее 1000 символов. Сократите текст."
+msgstr ""
+
+#: apps/community/forms.py:192
+msgid "Причина"
+msgstr ""
+
+#: apps/community/forms.py:193
+msgid "Пояснение"
+msgstr ""
+
+#: apps/community/models.py:26
+msgid "Вопрос"
+msgstr ""
+
+#: apps/community/models.py:27
+msgid "История"
+msgstr ""
+
+#: apps/community/models.py:28
+msgid "Отзыв о специалисте"
+msgstr ""
+
+#: apps/community/models.py:135
+msgid "Реклама"
+msgstr ""
+
+#: apps/community/models.py:136
+msgid "Данные ребёнка"
+msgstr ""
+
+#: apps/community/models.py:137
+msgid "Оскорбление"
+msgstr ""
+
+#: apps/community/models.py:138
+msgid "Опасный медицинский совет"
+msgstr ""
+
+#: apps/community/models.py:139
+msgid "Другое"
+msgstr ""
+
+#: apps/community/models.py:142
+msgid "Новая"
+msgstr ""
+
+#: apps/community/models.py:143
+msgid "Закрыта"
+msgstr ""
+
+#: apps/community/views.py:60 templates/catalog/specialist_detail.html:88
+msgid "Все"
+msgstr ""
+
+#: apps/community/views.py:61
+msgid "Вопросы"
+msgstr ""
+
+#: apps/community/views.py:62
+msgid "Истории"
+msgstr ""
+
+#: apps/community/views.py:63
+msgid "Отзывы"
+msgstr ""
+
+#: apps/community/views.py:147
+msgid "Вы уже писали отзыв об этом специалисте - его можно изменить"
+msgstr ""
+
+#: apps/community/views.py:312
+msgid "Жалоба отправлена"
+msgstr ""
+
+#: apps/geo/models.py:19
+msgid "Область"
 msgstr ""
 
 #: apps/geo/models.py:21 templates/search/_filters.html:62
@@ -567,7 +723,7 @@ msgid "Подробнее"
 msgstr ""
 
 #: apps/search/templatetags/search_tags.py:32
-#: templates/catalog/specialist_detail.html:93
+#: templates/catalog/specialist_detail.html:105
 msgid "Открыть в 2ГИС"
 msgstr ""
 
@@ -748,7 +904,7 @@ msgstr ""
 msgid "Зарегистрироваться"
 msgstr ""
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:20
+#: templates/accounts/code_form.html:28 templates/partials/header.html:21
 msgid "Войти"
 msgstr ""
 
@@ -805,7 +961,8 @@ msgstr ""
 msgid "Контакты в демо-версии недоступны"
 msgstr ""
 
-#: templates/catalog/_detail_back.html:1
+#: templates/catalog/_detail_back.html:1 templates/community/post_detail.html:7
+#: templates/community/post_form.html:7 templates/community/rules.html:7
 msgid "Навигация"
 msgstr ""
 
@@ -1000,7 +1157,7 @@ msgid "Методы"
 msgstr ""
 
 #: templates/catalog/specialist_detail.html:65
-#: templates/catalog/specialist_detail.html:102
+#: templates/catalog/specialist_detail.html:114
 msgid "Услуги и цены"
 msgstr ""
 
@@ -1014,16 +1171,274 @@ msgstr ""
 msgid "%(price)s ₸ за занятие"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:86
+#: templates/catalog/specialist_detail.html:87
+msgid "Отзывы в сообществе"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:98
 msgid "Адреса приёма"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:94
+#: templates/catalog/specialist_detail.html:106
 msgid "Маршрут"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:102
+#: templates/catalog/specialist_detail.html:114
 msgid "Адреса и маршрут"
+msgstr ""
+
+#: templates/community/_comment.html:8 templates/community/_post_card.html:9
+#, python-format
+msgid "%(t)s назад"
+msgstr ""
+
+#: templates/community/_comment.html:10 templates/community/_post_card.html:15
+#: templates/community/post_form.html:16
+msgid "Скрыто модератором"
+msgstr ""
+
+#: templates/community/_comment.html:15 templates/community/_post_card.html:28
+#: templates/community/complaint_form.html:3
+#: templates/community/complaint_form.html:7
+msgid "Пожаловаться"
+msgstr ""
+
+#: templates/community/_comment.html:17 templates/community/post_detail.html:16
+msgid "Изменить"
+msgstr ""
+
+#: templates/community/_comment.html:18
+msgid "Удалить комментарий?"
+msgstr ""
+
+#: templates/community/_comment.html:21 templates/community/post_detail.html:20
+msgid "Удалить"
+msgstr ""
+
+#: templates/community/_comment.html:26
+#: templates/community/_comment_form_body.html:14
+msgid "Ответить"
+msgstr ""
+
+#: templates/community/_comment_form_body.html:6
+msgid "Ваш ответ"
+msgstr ""
+
+#: templates/community/_comment_form_body.html:6
+msgid "Ваш комментарий"
+msgstr ""
+
+#: templates/community/_comment_form_body.html:11
+#: templates/community/comment_form.html:16
+#: templates/community/post_form.html:58
+msgid "Всё равно опубликовать"
+msgstr ""
+
+#: templates/community/_comment_form_body.html:14
+msgid "Отправить"
+msgstr ""
+
+#: templates/community/_comments.html:4
+msgid "Комментарий удалён"
+msgstr ""
+
+#: templates/community/_comments.html:10
+msgid "Комментариев пока нет"
+msgstr ""
+
+#: templates/community/_feed_page.html:2
+msgid "Загрузка..."
+msgstr ""
+
+#: templates/community/_like_button.html:6
+#, python-format
+msgid "Полезно %(n)s"
+msgstr ""
+
+#: templates/community/_reply_count.html:1
+#, python-format
+msgid "%(n)s ответ"
+msgid_plural "%(n)s ответов"
+msgstr[0] "%(n)s ответ"
+msgstr[1] "%(n)s ответа"
+msgstr[2] "%(n)s ответов"
+msgstr[3] "%(n)s ответа"
+
+#: templates/community/_specialist_options.html:14
+msgid "Специалист не найден"
+msgstr ""
+
+#: templates/community/_specialist_options.html:16
+msgid "Введите имя специалиста"
+msgstr ""
+
+#: templates/community/comment_form.html:3
+#: templates/community/comment_form.html:7
+msgid "Изменить комментарий"
+msgstr ""
+
+#: templates/community/comment_form.html:20
+#: templates/community/nickname_form.html:18
+#: templates/community/post_form.html:88
+msgid "Сохранить"
+msgstr ""
+
+#: templates/community/comment_form.html:21
+#: templates/community/complaint_form.html:25
+msgid "Отмена"
+msgstr ""
+
+#: templates/community/complaint_form.html:24
+msgid "Отправить жалобу"
+msgstr ""
+
+#: templates/community/feed.html:3 templates/community/feed.html:8
+#: templates/community/post_detail.html:3
+#: templates/community/post_detail.html:10
+#: templates/community/post_form.html:10 templates/community/rules.html:10
+#: templates/partials/header.html:10
+msgid "Сообщество"
+msgstr ""
+
+#: templates/community/feed.html:10 templates/community/rules.html:3
+#: templates/community/rules.html:13
+msgid "Правила сообщества"
+msgstr ""
+
+#: templates/community/feed.html:11
+msgid "Написать"
+msgstr ""
+
+#: templates/community/feed.html:19 templates/community/feed.html:20
+msgid "Поиск по постам"
+msgstr ""
+
+#: templates/community/feed.html:21 templates/core/home.html:30
+msgid "Найти"
+msgstr ""
+
+#: templates/community/feed.html:24
+msgid "Особенность"
+msgstr ""
+
+#: templates/community/feed.html:26
+msgid "Любая"
+msgstr ""
+
+#: templates/community/feed.html:32 templates/search/_filters.html:57
+#: templates/search/_filters.html:64
+msgid "Любой"
+msgstr ""
+
+#: templates/community/feed.html:39
+msgid "Тип поста"
+msgstr ""
+
+#: templates/community/feed.html:44
+#, python-format
+msgid "Отзывы о %(name)s"
+msgstr ""
+
+#: templates/community/feed.html:44
+msgid "Снять фильтр"
+msgstr ""
+
+#: templates/community/feed.html:49
+msgid "Пока здесь нет постов"
+msgstr ""
+
+#: templates/community/nickname_form.html:3
+#: templates/community/nickname_form.html:7
+msgid "Ваш псевдоним"
+msgstr ""
+
+#: templates/community/nickname_form.html:8
+msgid ""
+"Это имя увидят другие участники сообщества. Телефон нигде не показывается."
+msgstr ""
+
+#: templates/community/nickname_form.html:16
+msgid "3-40 символов: буквы, цифры, пробел и _"
+msgstr ""
+
+#: templates/community/post_detail.html:17
+msgid "Удалить пост?"
+msgstr ""
+
+#: templates/community/post_detail.html:25
+msgid "Комментарии"
+msgstr ""
+
+#: templates/community/post_form.html:3 templates/community/post_form.html:13
+msgid "Изменить пост"
+msgstr ""
+
+#: templates/community/post_form.html:3 templates/community/post_form.html:13
+msgid "Новый пост"
+msgstr ""
+
+#: templates/community/post_form.html:10
+msgid "К посту"
+msgstr ""
+
+#: templates/community/post_form.html:14
+msgid "Перед публикацией прочитайте"
+msgstr ""
+
+#: templates/community/post_form.html:14
+msgid "правила сообщества"
+msgstr ""
+
+#: templates/community/post_form.html:40
+msgid "Имя специалиста"
+msgstr ""
+
+#: templates/community/post_form.html:65 templates/community/post_form.html:71
+msgid "Не указывать"
+msgstr ""
+
+#: templates/community/post_form.html:80
+msgid "JPEG или PNG, до 2 МБ"
+msgstr ""
+
+#: templates/community/post_form.html:81
+msgid "Прикрепите фото ещё раз"
+msgstr ""
+
+#: templates/community/post_form.html:88
+msgid "Опубликовать"
+msgstr ""
+
+#: templates/community/rules.html:14
+msgid ""
+"Сообщество - место, где родители и специалисты делятся опытом. Чтобы здесь "
+"было безопасно и полезно, соблюдайте простые правила."
+msgstr ""
+
+#: templates/community/rules.html:16
+msgid "Без рекламы: не продвигайте услуги, товары и сторонние ресурсы."
+msgstr ""
+
+#: templates/community/rules.html:17
+msgid ""
+"Без медицинских назначений: делитесь опытом, но не назначайте лечение и "
+"препараты. За назначениями обращайтесь к врачу."
+msgstr ""
+
+#: templates/community/rules.html:18
+msgid ""
+"Без данных о чужих детях: не публикуйте имена, ИИН, телефоны, адреса и фото "
+"чужих детей."
+msgstr ""
+
+#: templates/community/rules.html:19
+msgid "Уважайте других участников: оскорбления и травля недопустимы."
+msgstr ""
+
+#: templates/community/rules.html:21
+msgid ""
+"Модератор скрывает записи, нарушающие правила. Пожаловаться на запись можно "
+"кнопкой «Пожаловаться»."
 msgstr ""
 
 #: templates/consents/pd_processing_v1.html:3
@@ -1103,10 +1518,6 @@ msgstr ""
 msgid "Любой город"
 msgstr ""
 
-#: templates/core/home.html:30
-msgid "Найти"
-msgstr ""
-
 #: templates/core/home.html:32
 msgid "Пройти опросник для определения необходимых специалистов"
 msgstr ""
@@ -1139,49 +1550,57 @@ msgstr[3] "%(n)s няни в разделе"
 msgid "Найти няню"
 msgstr ""
 
-#: templates/core/home.html:61
+#: templates/core/home.html:63
+msgid "Свежие посты"
+msgstr ""
+
+#: templates/core/home.html:64
+msgid "Перейти в сообщество"
+msgstr ""
+
+#: templates/core/home.html:73
 msgid "Города"
 msgstr ""
 
-#: templates/core/home.html:70
+#: templates/core/home.html:82
 msgid "Что значит проверенный специалист"
 msgstr ""
 
-#: templates/core/home.html:71
+#: templates/core/home.html:83
 msgid ""
 "Мы показываем не общую галочку, а то, что именно проверено. Сами документы "
 "(паспорт, дипломы) мы не публикуем, видны только уровни проверки."
 msgstr ""
 
-#: templates/core/home.html:73
+#: templates/core/home.html:85
 msgid "Сверили паспорт или удостоверение с фото"
 msgstr ""
 
-#: templates/core/home.html:74
+#: templates/core/home.html:86
 msgid "Видели диплом по специальности"
 msgstr ""
 
-#: templates/core/home.html:75
+#: templates/core/home.html:87
 msgid "Видели сертификаты курсов и повышения квалификации"
 msgstr ""
 
-#: templates/core/home.html:76
+#: templates/core/home.html:88
 msgid "Есть справка об отсутствии судимости"
 msgstr ""
 
-#: templates/core/home.html:81
+#: templates/core/home.html:93
 msgid "Вы специалист?"
 msgstr ""
 
-#: templates/core/home.html:82
+#: templates/core/home.html:94
 msgid "Расскажите о себе и своих услугах родителям, которые ищут помощь."
 msgstr ""
 
-#: templates/core/home.html:83
+#: templates/core/home.html:95
 msgid "Разместить профиль"
 msgstr ""
 
-#: templates/core/home.html:84
+#: templates/core/home.html:96
 msgid "В демо-версии анкеты специалистов заполняет команда Mama Pro."
 msgstr ""
 
@@ -1189,11 +1608,11 @@ msgstr ""
 msgid "Няни"
 msgstr ""
 
-#: templates/partials/header.html:13
+#: templates/partials/header.html:14
 msgid "Выйти"
 msgstr ""
 
-#: templates/partials/header.html:17
+#: templates/partials/header.html:18
 msgid "Выйти со всех устройств"
 msgstr ""
 
@@ -1376,10 +1795,6 @@ msgstr ""
 msgid "Город или область"
 msgstr ""
 
-#: templates/search/_filters.html:57 templates/search/_filters.html:64
-msgid "Любой"
-msgstr ""
-
 #: templates/search/_filters.html:74
 msgid "Возраст ребёнка"
 msgstr ""
@@ -1470,10 +1885,6 @@ msgstr ""
 msgid "Метод"
 msgstr ""
 
-#: templates/search/_filters.html:199
-msgid "Показать"
-msgstr ""
-
 #: templates/search/_filters.html:200 templates/search/_results_partial.html:11
 msgid "Сбросить"
 msgstr ""
@@ -1548,10 +1959,6 @@ msgstr ""
 
 #: templates/search/_suggest.html:1
 msgid "Раздел"
-msgstr ""
-
-#: templates/search/_suggest.html:1
-msgid "Особенность развития"
 msgstr ""
 
 #: templates/search/_view_toggle.html:1

@@ -1,0 +1,1 @@
+{% load i18n %}{% with key=parent|default:'new'|stringformat:'s' %}{% if comment_form_key == key %}{% with f=comment_form %}{% include "community/_comment_form_body.html" %}{% endwith %}{% else %}{% include "community/_comment_form_body.html" %}{% endif %}{% endwith %}

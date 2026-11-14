@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% if post %}{% translate "Изменить пост" %}{% else %}{% translate "Новый пост" %}{% endif %} - {{ BRAND_NAME }}{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl space-y-4 px-4 py-6 sm:px-6">
+  <nav aria-label="{% translate 'Навигация' %}">
+    <a href="{% if post %}{% url 'community:post' post.pk %}{% else %}{% url 'community:feed' %}{% endif %}" class="-ml-2 inline-flex min-h-11 items-center gap-1 rounded px-2 text-sm font-medium text-primary-700 hover:underline">
+      <svg class="size-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5l-5 5 5 5"/></svg>
+      {% if post %}{% translate "К посту" %}{% else %}{% translate "Сообщество" %}{% endif %}
+    </a>
+  </nav>
+  <h1 class="text-2xl font-bold">{% if post %}{% translate "Изменить пост" %}{% else %}{% translate "Новый пост" %}{% endif %}</h1>
+  <p class="text-sm text-slate-600">{% translate "Перед публикацией прочитайте" %} <a href="{% url 'community:rules' %}" class="font-medium text-primary-700 hover:underline">{% translate "правила сообщества" %}</a>.</p>
+
+  {% if post and post.is_hidden %}<p class="rounded-lg bg-amber-50 p-3 text-sm font-medium text-amber-800">{% translate "Скрыто модератором" %}</p>{% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="space-y-5" novalidate x-data="{ kind: '{{ form.current_kind|escapejs }}' }">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{% if post %}{% url 'community:post' post.pk %}{% else %}{% url 'community:new' %}{% endif %}">
+
+    {% if post %}
+    <p class="text-sm text-slate-600">{{ post.get_kind_display }}{% if post.specialist %}: {{ post.specialist.display_name }}{% endif %}</p>
+    {% else %}
+    <fieldset class="space-y-2">
+      <legend class="text-sm font-medium">{{ form.kind.label }}</legend>
+      <div class="flex flex-wrap gap-2">
+        {% for radio in form.kind %}
+        <label class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-slate-300 px-4 text-sm font-medium has-[:checked]:border-primary-700 has-[:checked]:bg-primary-700 has-[:checked]:text-white">
+          <input type="radio" name="kind" value="{{ radio.data.value }}" class="sr-only" x-model="kind"{% if radio.data.selected %} checked{% endif %}>
+          {{ radio.choice_label }}
+        </label>
+        {% endfor %}
+      </div>
+      {% if form.kind.errors %}<p class="text-sm text-red-700">{{ form.kind.errors.0 }}</p>{% endif %}
+    </fieldset>
+
+    <div x-show="kind === 'review'" x-cloak class="space-y-2">
+      <label for="specialist-q" class="block text-sm font-medium">{{ form.specialist.label }}</label>
+      <input id="specialist-q" type="search" placeholder="{% translate 'Имя специалиста' %}" autocomplete="off"
+             hx-get="{% url 'community:specialist_options' %}" hx-trigger="input changed delay:300ms, search"
+             hx-target="#specialist-options" name="q" hx-include="[name=specialist]:checked"
+             class="min-h-11 w-full rounded-lg border border-slate-300 px-3">
+      <div id="specialist-options" aria-live="polite">{% include "community/_specialist_options.html" with specialists=initial_specialists selected_id=selected_specialist.pk %}</div>
+      {% if form.specialist.errors %}<p class="text-sm text-red-700">{{ form.specialist.errors.0 }}</p>{% endif %}
+    </div>
+    {% endif %}
+
+    <div>
+      <label for="{{ form.body.id_for_label }}" class="block text-sm font-medium">{{ form.body.label }}</label>
+      <textarea id="{{ form.body.id_for_label }}" name="body" rows="8" maxlength="3000" required class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2"{% if form.body.errors %} aria-invalid="true" aria-describedby="body-error"{% endif %}>{{ form.body.value|default:'' }}</textarea>
+      {% if form.body.errors %}<p id="body-error" class="mt-1 text-sm text-red-700">{{ form.body.errors.0 }}</p>{% endif %}
+    </div>
+
+    {% if form.sensitive_warning %}
+    <label class="flex min-h-11 items-center gap-3 rounded-lg bg-amber-50 p-3 text-sm font-medium text-amber-900">
+      <input type="checkbox" name="confirm_sensitive" value="1" class="size-4">
+      {% translate "Всё равно опубликовать" %}
+    </label>
+    {% endif %}
+
+    <div class="grid gap-3 sm:grid-cols-2">
+      <label class="block text-sm font-medium">{{ form.condition.label }}
+        <select name="condition" class="mt-1 min-h-11 w-full rounded-lg border border-slate-300 bg-white px-2 font-normal">
+          <option value="">{% translate "Не указывать" %}</option>
+          {% for c in form.condition_choices %}<option value="{{ c.pk }}"{% if c.pk|stringformat:"s" == form.condition.value|stringformat:"s" %} selected{% endif %}>{{ c.name }}</option>{% endfor %}
+        </select>
+      </label>
+      <label class="block text-sm font-medium">{{ form.city.label }}
+        <select name="city" class="mt-1 min-h-11 w-full rounded-lg border border-slate-300 bg-white px-2 font-normal">
+          <option value="">{% translate "Не указывать" %}</option>
+          {% for c in form.city_choices %}<option value="{{ c.pk }}"{% if c.pk|stringformat:"s" == form.city.value|stringformat:"s" %} selected{% endif %}>{{ c.name }}</option>{% endfor %}
+        </select>
+      </label>
+    </div>
+
+    <div>
+      <label for="post-image" class="block text-sm font-medium">{{ form.image.label }}</label>
+      <input id="post-image" type="file" name="image" accept="image/jpeg,image/png" class="mt-1 block w-full text-sm"{% if form.image.errors %} aria-invalid="true" aria-describedby="image-error"{% endif %}>
+      <p class="mt-1 text-xs text-slate-500">{% translate "JPEG или PNG, до 2 МБ" %}</p>
+      {% if form.photo_lost %}<p class="mt-1 text-sm font-medium text-amber-800" role="status">{% translate "Прикрепите фото ещё раз" %}</p>{% endif %}
+      {% if form.image.errors %}<p id="image-error" class="mt-1 text-sm text-red-700">{{ form.image.errors.0 }}</p>{% endif %}
+      {% if post and has_image %}
+      <label class="mt-2 flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" name="remove_image" value="1" class="size-4"> {{ form.remove_image.label }}</label>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="inline-flex min-h-11 items-center rounded-lg bg-primary-700 px-5 font-medium text-white hover:bg-primary-800">{% if post %}{% translate "Сохранить" %}{% else %}{% translate "Опубликовать" %}{% endif %}</button>
+  </form>
+</div>
+{% endblock %}

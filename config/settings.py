@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "apps.catalog",
     "apps.search",
     "apps.questionnaire",
+    "apps.community",
     "apps.demo",
 ]
 
@@ -131,6 +132,9 @@ STORAGES = {
 
 SEARCH_TRIGRAM_MIN = 0.3
 SEARCH_PAGE_SIZE = 20
+COMMUNITY_PAGE_SIZE = 20
+COMMUNITY_IMAGE_MAX_BYTES = 2 * 1024 * 1024
+LOGIN_URL = "accounts:login"
 GEOJSON_MAX_FEATURES = 2000
 OTP_TTL_MIN = 5
 OTP_MAX_ATTEMPTS = 5

@@ -68,3 +68,8 @@ def test_cabinet_and_favorites_active_for_user(client, db):
     for path, label in (("/ru/cabinet/", "Кабинет"), ("/ru/favorites/", "Избранное")):
         nav = _nav(client.get(path).content.decode())
         assert label in nav.split('aria-current="page"')[1].split("</a>")[0]
+
+
+def test_nav_in_kazakh(client, db):
+    nav = _nav(client.get("/kk/").content.decode())
+    assert "Басты бет" in nav and "Таңдаулылар" in nav

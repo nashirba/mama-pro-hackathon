@@ -83,3 +83,9 @@ def test_cards_for_profiles_drops_profiles_without_offers(catalog_fixture):
     cards = cards_for_profiles(profiles)
     assert [c.specialist.slug for c in cards] == ["serikov-aba", "ivanova-logoped"]
     assert isinstance(cards[0].specialist, SpecialistProfile)
+
+
+def test_heading_in_kazakh(client, db):
+    client.force_login(UserFactory())
+    html = client.get("/kk/favorites/").content.decode()
+    assert '<h1 class="text-2xl font-bold">Таңдаулылар</h1>' in html

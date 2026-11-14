@@ -16,6 +16,9 @@ This is a demo MVP: it contains what the demo needs. Production hardening comes 
 - Mama Pro foundation page `/ru/mamapro/` (header link «Мама Про»): links to the upcoming course announcements and the foundation's courses on its own site, a «coming soon» stub for online courses, the five branches with their Instagram pages, and the Kaspi QR page for donations.
 - Login by phone and one-time code. In the demo no SMS is sent: the code is `0000` and is shown on the page.
 - Parent cabinet `/ru/cabinet/`: after the code a new user enters last and first name (`/ru/register/`). In the cabinet the parent edits their data (last name, first name, birth date), changes the phone number with an SMS code and adds, edits and deletes child profiles (first name, last name, birth date, sex; age is computed).
+- City in the header: the parent picks a city once (cookie `city`, one year), and `/ru/specialists/` and `/ru/nannies/` without query parameters open filtered by it; the home page city field is preselected. «Любой город» clears the choice.
+- Mobile bottom navigation (hidden on desktop): Home, Community, Favorites, Search (catalog with the search field focused), Cabinet; the current section is highlighted.
+- Favorites: a heart on catalog cards and on specialist and nanny pages adds the profile to favorites (HTMX, plain POST without JS; guests go to login). `/ru/favorites/` lists specialists, then nannies, newest first, and is linked from the cabinet. Profiles that stopped passing the visibility rules are not shown.
 - Synthetic demo data: 80 specialists and 24 nannies in Almaty, Astana, Shymkent, Karaganda and Aktobe (3 nannies break the visibility rule on purpose and are not shown). Profiles, courses, certificates and verification badges are fictional.
 
 ## Stack
@@ -52,7 +55,8 @@ Tests use `config/settings_test.py` and the PostGIS container. `compilemessages`
 
 ## Structure
 
-- `apps/core`: home page, language switching, healthz
+- `apps/core`: home page, language switching, city in the header, healthz
+- `apps/favorites`: favorites (model, heart toggle, favorites page)
 - `apps/accounts`: phone + OTP login, registration step (last and first name), logout from all devices
 - `apps/cabinet`: parent cabinet, child profiles, phone change
 - `apps/consents`: consents at registration

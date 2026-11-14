@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Ваш псевдоним" %} - {{ BRAND_NAME }}{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-md space-y-4 px-4 py-8 sm:px-6">
+  <h1 class="text-2xl font-bold">{% translate "Ваш псевдоним" %}</h1>
+  <p class="text-slate-600">{% translate "Это имя увидят другие участники сообщества. Телефон нигде не показывается." %}</p>
+  <form method="post" class="space-y-3" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <div>
+      <label for="{{ form.display_name.id_for_label }}" class="block text-sm font-medium">{{ form.display_name.label }}</label>
+      <input id="{{ form.display_name.id_for_label }}" type="text" name="display_name" value="{{ form.display_name.value|default:'' }}" minlength="3" maxlength="40" required autocomplete="nickname" class="mt-1 min-h-11 w-full rounded-lg border border-slate-300 px-3"{% if form.display_name.errors %} aria-invalid="true" aria-describedby="nickname-error"{% endif %}>
+      {% if form.display_name.errors %}<p id="nickname-error" class="mt-1 text-sm text-red-700">{{ form.display_name.errors.0 }}</p>{% endif %}
+      <p class="mt-1 text-xs text-slate-500">{% translate "3-40 символов: буквы, цифры, пробел и _" %}</p>
+    </div>
+    <button type="submit" class="inline-flex min-h-11 items-center rounded-lg bg-primary-700 px-5 font-medium text-white hover:bg-primary-800">{% translate "Сохранить" %}</button>
+  </form>
+</div>
+{% endblock %}

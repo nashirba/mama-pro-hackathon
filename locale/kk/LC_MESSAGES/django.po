@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:11+0500\n"
+"POT-Creation-Date: 2026-11-14 14:18+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,6 +147,18 @@ msgstr "Мазмұнды жасырып, шағымды жабу"
 msgid "Закрыть жалобу"
 msgstr "Шағымды жабу"
 
+#: apps/community/forms.py:13
+msgid "Псевдоним"
+msgstr "Бүркеншік ат"
+
+#: apps/community/forms.py:22
+msgid "Только буквы, цифры, пробел и _"
+msgstr "Тек әріптер, сандар, бос орын және _"
+
+#: apps/community/forms.py:24 apps/community/forms.py:34
+msgid "Этот псевдоним уже занят"
+msgstr "Бұл бүркеншік ат бос емес"
+
 #: apps/community/models.py:26
 msgid "Вопрос"
 msgstr "Сұрақ"
@@ -187,11 +199,28 @@ msgstr "Жаңа"
 msgid "Закрыта"
 msgstr "Жабылды"
 
+#: apps/community/views.py:38
+msgid "Все"
+msgstr "Барлығы"
+
+#: apps/community/views.py:39
+msgid "Вопросы"
+msgstr "Сұрақтар"
+
+#: apps/community/views.py:40
+msgid "Истории"
+msgstr "Оқиғалар"
+
+#: apps/community/views.py:41
+msgid "Отзывы"
+msgstr "Пікірлер"
+
 #: apps/geo/models.py:19
 msgid "Область"
 msgstr "Облыс"
 
-#: apps/geo/models.py:20 templates/core/home.html:24
+#: apps/geo/models.py:20 templates/community/feed.html:27
+#: templates/core/home.html:24
 msgid "Город"
 msgstr "Қала"
 
@@ -400,7 +429,7 @@ msgstr "Демо-нұсқада SMS жіберілмейді, код ашық: %
 msgid "Зарегистрироваться"
 msgstr "Тіркелу"
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:19
+#: templates/accounts/code_form.html:28 templates/partials/header.html:20
 msgid "Войти"
 msgstr "Кіру"
 
@@ -456,6 +485,7 @@ msgid "Адреса на карте"
 msgstr "Мекенжайлар картада"
 
 #: templates/catalog/specialist_detail.html:9
+#: templates/community/post_detail.html:7 templates/community/rules.html:7
 msgid "Навигация"
 msgstr "Навигация"
 
@@ -547,6 +577,159 @@ msgstr "Бағыт"
 #: templates/catalog/specialist_detail.html:126
 msgid "Адреса и маршрут"
 msgstr "Мекенжайлар және бағыт"
+
+#: templates/community/_comment.html:6 templates/community/_post_card.html:6
+#: templates/search/_suggest.html:1
+msgid "Специалист"
+msgstr "Маман"
+
+#: templates/community/_comment.html:8 templates/community/_post_card.html:9
+#, python-format
+msgid "%(t)s назад"
+msgstr "%(t)s бұрын"
+
+#: templates/community/_comment.html:10 templates/community/_post_card.html:15
+msgid "Скрыто модератором"
+msgstr "Модератор жасырды"
+
+#: templates/community/_comment.html:12 templates/community/_post_card.html:25
+#, python-format
+msgid "Полезно %(n)s"
+msgstr "Пайдалы %(n)s"
+
+#: templates/community/_comments.html:4
+msgid "Комментарий удалён"
+msgstr "Пікір жойылды"
+
+#: templates/community/_comments.html:10
+msgid "Комментариев пока нет"
+msgstr "Әзірге пікір жоқ"
+
+#: templates/community/_feed_page.html:2
+msgid "Загрузка..."
+msgstr "Жүктелуде..."
+
+#: templates/community/_post_card.html:26
+#, python-format
+msgid "%(n)s ответ"
+msgid_plural "%(n)s ответов"
+msgstr[0] "%(n)s жауап"
+msgstr[1] "%(n)s жауап"
+
+#: templates/community/feed.html:3 templates/community/feed.html:8
+#: templates/community/post_detail.html:3
+#: templates/community/post_detail.html:10 templates/community/rules.html:10
+#: templates/partials/header.html:9
+msgid "Сообщество"
+msgstr "Қауымдастық"
+
+#: templates/community/feed.html:9 templates/community/rules.html:3
+#: templates/community/rules.html:13
+msgid "Правила сообщества"
+msgstr "Қауымдастық ережелері"
+
+#: templates/community/feed.html:16 templates/community/feed.html:17
+msgid "Поиск по постам"
+msgstr "Жазбалардан іздеу"
+
+#: templates/community/feed.html:18 templates/core/home.html:30
+msgid "Найти"
+msgstr "Іздеу"
+
+#: templates/community/feed.html:21
+msgid "Особенность"
+msgstr "Даму ерекшелігі"
+
+#: templates/community/feed.html:23
+msgid "Любая"
+msgstr "Кез келген"
+
+#: templates/community/feed.html:29 templates/search/_filters.html:55
+#: templates/search/_filters.html:62
+msgid "Любой"
+msgstr "Кез келген"
+
+#: templates/community/feed.html:36
+msgid "Тип поста"
+msgstr "Жазба түрі"
+
+#: templates/community/feed.html:41
+#, python-format
+msgid "Отзывы о %(name)s"
+msgstr "%(name)s туралы пікірлер"
+
+#: templates/community/feed.html:41
+msgid "Снять фильтр"
+msgstr "Сүзгіні алып тастау"
+
+#: templates/community/feed.html:46
+msgid "Пока здесь нет постов"
+msgstr "Мұнда әзірге жазба жоқ"
+
+#: templates/community/nickname_form.html:3
+#: templates/community/nickname_form.html:7
+msgid "Ваш псевдоним"
+msgstr "Сіздің бүркеншік атыңыз"
+
+#: templates/community/nickname_form.html:8
+msgid ""
+"Это имя увидят другие участники сообщества. Телефон нигде не показывается."
+msgstr ""
+"Бұл атты қауымдастықтың басқа мүшелері көреді. Телефон еш жерде "
+"көрсетілмейді."
+
+#: templates/community/nickname_form.html:16
+msgid "3-40 символов: буквы, цифры, пробел и _"
+msgstr "3-40 таңба: әріптер, сандар, бос орын және _"
+
+#: templates/community/nickname_form.html:18
+msgid "Сохранить"
+msgstr "Сақтау"
+
+#: templates/community/post_detail.html:15
+msgid "Комментарии"
+msgstr "Пікірлер"
+
+#: templates/community/rules.html:14
+msgid ""
+"Сообщество - место, где родители и специалисты делятся опытом. Чтобы здесь "
+"было безопасно и полезно, соблюдайте простые правила."
+msgstr ""
+"Қауымдастық - ата-аналар мен мамандар тәжірибе бөлісетін орын. Мұнда "
+"қауіпсіз әрі пайдалы болу үшін қарапайым ережелерді сақтаңыз."
+
+#: templates/community/rules.html:16
+msgid "Без рекламы: не продвигайте услуги, товары и сторонние ресурсы."
+msgstr ""
+"Жарнамасыз: қызметтерді, тауарларды және сыртқы ресурстарды жарнамаламаңыз."
+
+#: templates/community/rules.html:17
+msgid ""
+"Без медицинских назначений: делитесь опытом, но не назначайте лечение и "
+"препараты. За назначениями обращайтесь к врачу."
+msgstr ""
+"Медициналық тағайындаусыз: тәжірибемен бөлісіңіз, бірақ емдеу мен дәрі-"
+"дәрмекті тағайындамаңыз. Тағайындау үшін дәрігерге жүгініңіз."
+
+#: templates/community/rules.html:18
+msgid ""
+"Без данных о чужих детях: не публикуйте имена, ИИН, телефоны, адреса и фото "
+"чужих детей."
+msgstr ""
+"Бөтен балалар туралы деректерсіз: бөтен балалардың аттарын, ЖСН, "
+"телефондарын, мекенжайларын және фотосуреттерін жарияламаңыз."
+
+#: templates/community/rules.html:19
+msgid "Уважайте других участников: оскорбления и травля недопустимы."
+msgstr "Басқа мүшелерді құрметтеңіз: қорлау мен қудалауға жол берілмейді."
+
+#: templates/community/rules.html:21
+msgid ""
+"Модератор скрывает записи, нарушающие правила. Пожаловаться на запись можно "
+"кнопкой «Пожаловаться»."
+msgstr ""
+"Модератор ережені бұзатын жазбаларды жасырады. Жазбаға «Шағымдану» түймесі "
+"арқылы шағымдануға болады."
 
 #: templates/consents/pd_processing_v1.html:3
 #: templates/consents/user_agreement_v1.html:3
@@ -645,10 +828,6 @@ msgstr "Логопед, РАС, сөйлемейді..."
 msgid "Любой город"
 msgstr "Кез келген қала"
 
-#: templates/core/home.html:30
-msgid "Найти"
-msgstr "Іздеу"
-
 #: templates/core/home.html:35
 msgid "Популярные специализации"
 msgstr "Танымал мамандықтар"
@@ -705,11 +884,11 @@ msgstr "Профиль орналастыру"
 msgid "В демо-версии анкеты специалистов заполняет команда Mama Pro."
 msgstr "Демо-нұсқада мамандардың анкетасын Mama Pro командасы толтырады."
 
-#: templates/partials/header.html:12
+#: templates/partials/header.html:13
 msgid "Выйти"
 msgstr "Шығу"
 
-#: templates/partials/header.html:16
+#: templates/partials/header.html:17
 msgid "Выйти со всех устройств"
 msgstr "Барлық құрылғылардан шығу"
 
@@ -772,10 +951,6 @@ msgstr "Қашықтығы бойынша"
 #: templates/search/_filters.html:53
 msgid "Город или область"
 msgstr "Қала немесе облыс"
-
-#: templates/search/_filters.html:55 templates/search/_filters.html:62
-msgid "Любой"
-msgstr "Кез келген"
 
 #: templates/search/_filters.html:72
 msgid "Возраст ребёнка"
@@ -891,10 +1066,6 @@ msgstr "Артқа"
 #: templates/search/_results_partial.html:24
 msgid "Вперёд"
 msgstr "Алға"
-
-#: templates/search/_suggest.html:1
-msgid "Специалист"
-msgstr "Маман"
 
 #: templates/search/_suggest.html:1
 msgid "Особенность развития"

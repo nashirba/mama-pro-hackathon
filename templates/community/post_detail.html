@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Сообщество" %} - {{ BRAND_NAME }}{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl space-y-6 px-4 py-6 sm:px-6">
+  <nav aria-label="{% translate 'Навигация' %}">
+    <a href="{% url 'community:feed' %}" class="-ml-2 inline-flex min-h-11 items-center gap-1 rounded px-2 text-sm font-medium text-primary-700 hover:underline">
+      <svg class="size-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5l-5 5 5 5"/></svg>
+      {% translate "Сообщество" %}
+    </a>
+  </nav>
+  {% include "community/_post_card.html" with detail=True %}
+  <section aria-labelledby="comments-title" class="space-y-3">
+    <h2 id="comments-title" class="text-lg font-semibold">{% translate "Комментарии" %}</h2>
+    {% include "community/_comments.html" %}
+  </section>
+</div>
+{% endblock %}

@@ -16,7 +16,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: apps/accounts/forms.py:13
 msgid "Номер телефона"
@@ -854,8 +856,7 @@ msgid "Ребёнок может удерживать внимание на од
 msgstr ""
 
 #: apps/questionnaire/questions.py:69
-msgid ""
-"Может самостоятельно выполнять задания без постоянной помощи взрослого."
+msgid "Может самостоятельно выполнять задания без постоянной помощи взрослого."
 msgstr ""
 
 #: apps/questionnaire/questions.py:70
@@ -1040,8 +1041,8 @@ msgstr ""
 
 #: apps/questionnaire/questions.py:118
 msgid ""
-"Испытывает трудности с мелкой моторикой (застёгивание пуговиц, использование"
-" ножниц, рисование)."
+"Испытывает трудности с мелкой моторикой (застёгивание пуговиц, использование "
+"ножниц, рисование)."
 msgstr ""
 
 #: apps/questionnaire/questions.py:119
@@ -1134,8 +1135,7 @@ msgid "от %(price)s ₸"
 msgstr ""
 
 #: apps/search/templatetags/search_tags.py:30
-#: templates/catalog/_nanny_prices.html:1
-#: templates/catalog/nanny_detail.html:6
+#: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
 #: templates/catalog/specialist_detail.html:7
 #: templates/catalog/specialist_detail.html:76 templates/search/_card.html:10
 msgid "цена по запросу"
@@ -1150,8 +1150,8 @@ msgstr ""
 msgid "Открыть в 2ГИС"
 msgstr ""
 
-#: apps/search/templatetags/search_tags.py:33
-#: templates/catalog/_minimap.html:1 templates/search/_map.html:2
+#: apps/search/templatetags/search_tags.py:33 templates/catalog/_minimap.html:1
+#: templates/search/_map.html:2
 msgid "Загружаем карту…"
 msgstr ""
 
@@ -1290,8 +1290,8 @@ msgstr ""
 #: templates/accounts/_consent_fields.html:22
 msgid ""
 "Обработка персональных данных: мы храним ваш номер телефона, фамилию, имя, "
-"дату рождения, язык интерфейса и данные детей, которых вы добавите, чтобы вы"
-" могли пользоваться личным кабинетом. Согласие можно отозвать."
+"дату рождения, язык интерфейса и данные детей, которых вы добавите, чтобы вы "
+"могли пользоваться личным кабинетом. Согласие можно отозвать."
 msgstr ""
 
 #: templates/accounts/_consent_fields.html:25
@@ -1398,8 +1398,7 @@ msgstr ""
 
 #: templates/cabinet/child_form.html:21 templates/cabinet/profile_form.html:18
 #: templates/community/comment_form.html:21
-#: templates/community/complaint_form.html:25
-#: templates/onboarding/form.html:17
+#: templates/community/complaint_form.html:25 templates/onboarding/form.html:17
 msgid "Отмена"
 msgstr ""
 
@@ -1496,9 +1495,8 @@ msgstr ""
 msgid "Контакты в демо-версии недоступны"
 msgstr ""
 
-#: templates/catalog/_detail_back.html:1
-#: templates/community/post_detail.html:7 templates/community/post_form.html:7
-#: templates/community/rules.html:7
+#: templates/catalog/_detail_back.html:1 templates/community/post_detail.html:7
+#: templates/community/post_form.html:7 templates/community/rules.html:7
 msgid "Навигация"
 msgstr ""
 
@@ -1511,14 +1509,12 @@ msgstr ""
 msgid "%(price)s ₸ в час"
 msgstr ""
 
-#: templates/catalog/_nanny_prices.html:1
-#: templates/catalog/nanny_detail.html:6
+#: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
 #, python-format
 msgid "%(price)s ₸ за ночь"
 msgstr ""
 
-#: templates/catalog/_nanny_prices.html:1
-#: templates/catalog/nanny_detail.html:6
+#: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
 #: templates/catalog/specialist_detail.html:77
 #, python-format
 msgid "%(price)s ₸ в месяц"
@@ -1978,9 +1974,9 @@ msgstr ""
 
 #: templates/consents/pd_processing_v1.html:8
 msgid ""
-"2. Цель обработки — вход в демо-версию. Демо-версия размещена на серверах за"
-" пределами Республики Казахстан (Render и Neon, Германия) и не предназначена"
-" для реальных данных."
+"2. Цель обработки — вход в демо-версию. Демо-версия размещена на серверах за "
+"пределами Республики Казахстан (Render и Neon, Германия) и не предназначена "
+"для реальных данных."
 msgstr ""
 
 #: templates/consents/pd_processing_v1.html:12
@@ -2012,8 +2008,8 @@ msgstr ""
 
 #: templates/consents/user_agreement_v1.html:10
 msgid ""
-"3. Вы обязуетесь указывать достоверный номер телефона и не передавать доступ"
-" к аккаунту третьим лицам."
+"3. Вы обязуетесь указывать достоверный номер телефона и не передавать доступ "
+"к аккаунту третьим лицам."
 msgstr ""
 
 #: templates/core/home.html:3 templates/partials/footer.html:4
@@ -2057,8 +2053,8 @@ msgstr ""
 #: templates/core/home.html:53
 msgid ""
 "Няня для ребёнка с особенностями развития на несколько часов, на ночь или "
-"помесячно. У каждой няни есть сертификаты курсов, курс первой помощи детям и"
-" справка о несудимости."
+"помесячно. У каждой няни есть сертификаты курсов, курс первой помощи детям и "
+"справка о несудимости."
 msgstr ""
 
 #: templates/core/home.html:54
@@ -2304,8 +2300,7 @@ msgstr ""
 
 #: templates/onboarding/status.html:46
 msgid ""
-"Справка о несудимости и сертификаты курсов. Документы видит только "
-"модератор."
+"Справка о несудимости и сертификаты курсов. Документы видит только модератор."
 msgstr ""
 
 #: templates/onboarding/status.html:46
@@ -2492,8 +2487,8 @@ msgstr ""
 
 #: templates/questionnaire/result.html:43
 msgid ""
-"По результатам оценки особенностей развития ребёнка вам следует обратиться к"
-" следующим специалистам:"
+"По результатам оценки особенностей развития ребёнка вам следует обратиться к "
+"следующим специалистам:"
 msgstr ""
 
 #: templates/questionnaire/result.html:44
@@ -2646,8 +2641,7 @@ msgstr ""
 msgid "Метод"
 msgstr ""
 
-#: templates/search/_filters.html:192
-#: templates/search/_results_partial.html:11
+#: templates/search/_filters.html:192 templates/search/_results_partial.html:11
 msgid "Сбросить"
 msgstr ""
 
@@ -2662,8 +2656,8 @@ msgstr ""
 #: templates/search/_nannies_intro.html:2
 msgid ""
 "Няня присматривает за ребёнком с особенностями развития у вас дома: "
-"несколько часов, ночью или постоянно. Она знает, как помочь ребёнку в быту и"
-" в трудной ситуации, но не проводит коррекционных занятий и не ставит "
+"несколько часов, ночью или постоянно. Она знает, как помочь ребёнку в быту и "
+"в трудной ситуации, но не проводит коррекционных занятий и не ставит "
 "диагнозов. Оплата - напрямую няне."
 msgstr ""
 

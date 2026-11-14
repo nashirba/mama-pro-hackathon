@@ -176,3 +176,8 @@ def test_seed_skips_visible_non_seed_specialists(db):
     call_command("seed_demo", specialists=10, seed=1)
     assert not Post.objects.filter(specialist=outsider).exists()
     assert not Comment.objects.filter(author=outsider.user).exists()
+
+
+def test_seed_parents_have_full_name(seeded):
+    parent = User.objects.filter(phone__startswith=PARENT_PHONE_PREFIX).first()
+    assert parent.has_full_name

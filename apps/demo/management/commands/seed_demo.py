@@ -127,6 +127,8 @@ class Command(BaseCommand):
         user = User.objects.filter(phone=spec.login_phone).first() or User.objects.create_user(
             spec.login_phone, preferred_language=spec.preferred_language
         )
+        user.last_name, user.first_name = spec.display_name.split(" ", 1)
+        user.save()
         profile = SpecialistProfile.objects.filter(user=user).first() or SpecialistProfile(user=user, slug=spec.slug)
         profile.display_name = spec.display_name
         profile.practice_start_year = spec.practice_start_year
@@ -170,6 +172,8 @@ class Command(BaseCommand):
         user = User.objects.filter(phone=spec.login_phone).first() or User.objects.create_user(
             spec.login_phone, preferred_language=spec.preferred_language
         )
+        user.last_name, user.first_name = spec.display_name.split(" ", 1)
+        user.save()
         profile = SpecialistProfile.objects.filter(user=user).first() or SpecialistProfile(user=user, slug=spec.slug)
         profile.category = ProfileCategory.NANNY
         profile.display_name = spec.display_name

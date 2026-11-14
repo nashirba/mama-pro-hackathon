@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 15:22+0500\n"
+"POT-Creation-Date: 2026-11-14 21:16+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,34 +18,100 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: apps/accounts/forms.py:12
+#: apps/accounts/forms.py:13
 msgid "Номер телефона"
 msgstr "Телефон нөмірі"
 
-#: apps/accounts/forms.py:19 apps/catalog/models/profile.py:41
+#: apps/accounts/forms.py:20 apps/catalog/models/profile.py:41
 msgid "Введите казахстанский мобильный номер, например +7 701 123 45 67"
 msgstr "Қазақстандық ұялы телефон нөмірін енгізіңіз, мысалы +7 701 123 45 67"
 
-#: apps/accounts/forms.py:24
+#: apps/accounts/forms.py:25
 msgid "Код из SMS"
 msgstr "SMS-тегі код"
 
-#: apps/accounts/forms.py:33
+#: apps/accounts/forms.py:34
 msgid "Необходимо ваше согласие, чтобы продолжить"
 msgstr "Жалғастыру үшін сіздің келісіміңіз қажет"
+
+#: apps/accounts/forms.py:49 apps/cabinet/forms.py:46
+#: templates/cabinet/home.html:14
+msgid "Фамилия"
+msgstr "Тегі"
+
+#: apps/accounts/forms.py:49 apps/cabinet/forms.py:45
+#: templates/cabinet/home.html:15
+msgid "Имя"
+msgstr "Аты"
 
 #: apps/accounts/otp.py:24
 #, python-format
 msgid "Код входа в «%(brand)s»: %(code)s"
 msgstr "«%(brand)s» жүйесіне кіру коды: %(code)s"
 
-#: apps/accounts/views.py:85 apps/accounts/views.py:101
+#: apps/accounts/views.py:90 apps/accounts/views.py:113
+#: apps/cabinet/views.py:110
 msgid "Неверный или просроченный код"
 msgstr "Код қате немесе мерзімі өтіп кеткен"
 
-#: apps/accounts/views.py:90
+#: apps/accounts/views.py:95 apps/cabinet/views.py:91
 msgid "Слишком много неверных попыток. Запросите новый код."
 msgstr "Қате әрекет тым көп. Жаңа код сұратыңыз."
+
+#: apps/cabinet/ages.py:16
+#, python-format
+msgid "%(n)d год"
+msgid_plural "%(n)d лет"
+msgstr[0] "%(n)d жас"
+msgstr[1] "%(n)d жас"
+
+#: apps/cabinet/ages.py:18
+#, python-format
+msgid "%(n)d мес."
+msgid_plural "%(n)d мес."
+msgstr[0] "%(n)d ай"
+msgstr[1] "%(n)d ай"
+
+#: apps/cabinet/forms.py:15
+msgid "Дата рождения не может быть в будущем"
+msgstr "Туған күні болашақта бола алмайды"
+
+#: apps/cabinet/forms.py:21 apps/cabinet/forms.py:47
+#: templates/cabinet/home.html:16
+msgid "Дата рождения"
+msgstr "Туған күні"
+
+#: apps/cabinet/forms.py:48
+msgid "Пол"
+msgstr "Жынысы"
+
+#: apps/cabinet/forms.py:56
+msgid "Не указан"
+msgstr "Көрсетілмеген"
+
+#: apps/cabinet/models.py:10
+msgid "Мальчик"
+msgstr "Ұл"
+
+#: apps/cabinet/models.py:11
+msgid "Девочка"
+msgstr "Қыз"
+
+#: apps/cabinet/views.py:66
+msgid "Новый номер телефона"
+msgstr "Жаңа телефон нөмірі"
+
+#: apps/cabinet/views.py:70
+msgid "Это ваш текущий номер"
+msgstr "Бұл сіздің қазіргі нөміріңіз"
+
+#: apps/cabinet/views.py:72 apps/cabinet/views.py:104
+msgid "Этот номер уже используется"
+msgstr "Бұл нөмір басқа аккаунтта қолданылады"
+
+#: apps/cabinet/views.py:107
+msgid "Номер телефона изменён"
+msgstr "Телефон нөмірі өзгертілді"
 
 #: apps/catalog/admin.py:65
 msgid "У няни нет типов специалиста"
@@ -251,7 +317,7 @@ msgstr "Түсініктеме"
 
 #: apps/community/forms.py:179
 msgid "С упоминанием имени ответ длиннее 1000 символов. Сократите текст."
-msgstr "Есімді қосқанда жауап 1000 таңбадан ұзын. Мәтінді қысқартыңыз."
+msgstr "Атын атағанда жауап 1000 таңбадан ұзын болады. Мәтінді қысқартыңыз."
 
 #: apps/community/forms.py:192
 msgid "Причина"
@@ -317,11 +383,11 @@ msgstr "Оқиғалар"
 msgid "Отзывы"
 msgstr "Пікірлер"
 
-#: apps/community/views.py:147
+#: apps/community/views.py:148
 msgid "Вы уже писали отзыв об этом специалисте - его можно изменить"
 msgstr "Сіз бұл маман туралы пікір жазғансыз - оны өзгертуге болады"
 
-#: apps/community/views.py:312
+#: apps/community/views.py:313
 msgid "Жалоба отправлена"
 msgstr "Шағым жіберілді"
 
@@ -879,11 +945,14 @@ msgstr "Мен пайдаланушы келісімін қабылдаймын"
 
 #: templates/accounts/_consent_fields.html:22
 msgid ""
-"Обработка персональных данных: мы храним ваш номер телефона и язык "
-"интерфейса, чтобы вы могли входить в аккаунт. Согласие можно отозвать."
+"Обработка персональных данных: мы храним ваш номер телефона, фамилию, имя, "
+"дату рождения, язык интерфейса и данные детей, которых вы добавите, чтобы вы "
+"могли пользоваться личным кабинетом. Согласие можно отозвать."
 msgstr ""
-"Жеке деректерді өңдеу: аккаунтқа кіре алуыңыз үшін телефон нөміріңізді және "
-"интерфейс тілін сақтаймыз. Келісімді кері қайтарып алуға болады."
+"Жеке деректерді өңдеу: жеке кабинетті пайдалана алуыңыз үшін телефон "
+"нөміріңізді, тегіңізді, атыңызды, туған күніңізді, интерфейс тілін және сіз "
+"қосатын балалардың деректерін сақтаймыз. Келісімді кері қайтарып алуға "
+"болады."
 
 #: templates/accounts/_consent_fields.html:25
 msgid "Полный текст согласия"
@@ -893,24 +962,24 @@ msgstr "Келісімнің толық мәтіні"
 msgid "Я даю согласие на обработку персональных данных"
 msgstr "Мен жеке деректерімді өңдеуге келісім беремін"
 
-#: templates/accounts/code_form.html:3
+#: templates/accounts/code_form.html:3 templates/cabinet/phone_code.html:3
 msgid "Код подтверждения"
 msgstr "Растау коды"
 
-#: templates/accounts/code_form.html:6
+#: templates/accounts/code_form.html:6 templates/cabinet/phone_code.html:6
 msgid "Введите код из SMS"
 msgstr "SMS-тегі кодты енгізіңіз"
 
-#: templates/accounts/code_form.html:8
+#: templates/accounts/code_form.html:8 templates/cabinet/phone_code.html:8
 #, python-format
 msgid "Код отправлен на номер %(phone)s."
 msgstr "Код %(phone)s нөміріне жіберілді."
 
-#: templates/accounts/code_form.html:9
+#: templates/accounts/code_form.html:9 templates/cabinet/phone_code.html:9
 msgid "Изменить номер или отправить код заново"
 msgstr "Нөмірді өзгерту немесе кодты қайта жіберу"
 
-#: templates/accounts/code_form.html:13
+#: templates/accounts/code_form.html:13 templates/cabinet/phone_code.html:13
 #, python-format
 msgid "В демо-версии SMS не отправляются, код публичный: %(code)s"
 msgstr "Демо-нұсқада SMS жіберілмейді, код ашық: %(code)s"
@@ -919,7 +988,7 @@ msgstr "Демо-нұсқада SMS жіберілмейді, код ашық: %
 msgid "Зарегистрироваться"
 msgstr "Тіркелу"
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:21
+#: templates/accounts/code_form.html:28 templates/partials/header.html:22
 msgid "Войти"
 msgstr "Кіру"
 
@@ -941,17 +1010,112 @@ msgstr "Демо-нұсқада SMS жіберілмейді, кіру коды 
 msgid "Мы отправим код подтверждения в SMS. Пароль не нужен."
 msgstr "Растау кодын SMS арқылы жібереміз. Құпиясөз қажет емес."
 
-#: templates/accounts/phone_form.html:16
+#: templates/accounts/phone_form.html:16 templates/cabinet/phone_form.html:15
 msgid "Например: +7 701 123 45 67"
 msgstr "Мысалы: +7 701 123 45 67"
 
-#: templates/accounts/phone_form.html:20
+#: templates/accounts/phone_form.html:20 templates/cabinet/phone_form.html:19
 msgid "Получить код"
 msgstr "Код алу"
+
+#: templates/accounts/register.html:3 templates/accounts/register.html:6
+msgid "Создать личный кабинет"
+msgstr "Жеке кабинет құру"
+
+#: templates/accounts/register.html:24
+msgid "Создать"
+msgstr "Құру"
 
 #: templates/base.html:14
 msgid "Перейти к содержанию"
 msgstr "Мазмұнға өту"
+
+#: templates/cabinet/child_form.html:3 templates/cabinet/child_form.html:6
+msgid "Редактировать профиль ребёнка"
+msgstr "Баланың профилін өңдеу"
+
+#: templates/cabinet/child_form.html:3 templates/cabinet/child_form.html:6
+#: templates/cabinet/home.html:24
+msgid "Добавить ребёнка"
+msgstr "Бала қосу"
+
+#: templates/cabinet/child_form.html:8
+msgid "Демо-версия: не вводите реальные данные ребёнка"
+msgstr "Демо-нұсқа: баланың нақты деректерін енгізбеңіз"
+
+#: templates/cabinet/child_form.html:20 templates/cabinet/profile_form.html:17
+#: templates/community/comment_form.html:20
+#: templates/community/nickname_form.html:18
+#: templates/community/post_form.html:88
+msgid "Сохранить"
+msgstr "Сақтау"
+
+#: templates/cabinet/child_form.html:21 templates/cabinet/profile_form.html:18
+#: templates/community/comment_form.html:21
+#: templates/community/complaint_form.html:25
+msgid "Отмена"
+msgstr "Бас тарту"
+
+#: templates/cabinet/home.html:3 templates/cabinet/home.html:6
+#: templates/partials/header.html:12
+msgid "Личный кабинет"
+msgstr "Жеке кабинет"
+
+#: templates/cabinet/home.html:10 templates/cabinet/profile_form.html:6
+msgid "Мои данные"
+msgstr "Менің деректерім"
+
+#: templates/cabinet/home.html:11 templates/cabinet/home.html:33
+#: templates/cabinet/profile_form.html:3
+msgid "Редактировать"
+msgstr "Өңдеу"
+
+#: templates/cabinet/home.html:16
+msgid "не указана"
+msgstr "көрсетілмеген"
+
+#: templates/cabinet/home.html:17
+msgid "Телефон"
+msgstr "Телефон"
+
+#: templates/cabinet/home.html:17 templates/community/_comment.html:17
+#: templates/community/post_detail.html:16
+msgid "Изменить"
+msgstr "Өзгерту"
+
+#: templates/cabinet/home.html:23
+msgid "Дети"
+msgstr "Балалар"
+
+#: templates/cabinet/home.html:34
+msgid "Удалить профиль ребёнка?"
+msgstr "Баланың профилін жою керек пе?"
+
+#: templates/cabinet/home.html:36 templates/community/_comment.html:21
+#: templates/community/post_detail.html:20
+msgid "Удалить"
+msgstr "Жою"
+
+#: templates/cabinet/home.html:41
+msgid "Вы ещё не добавили ребёнка"
+msgstr "Сіз әлі бала қоспадыңыз"
+
+#: templates/cabinet/phone_code.html:26
+msgid "Подтвердить"
+msgstr "Растау"
+
+#: templates/cabinet/phone_form.html:3 templates/cabinet/phone_form.html:6
+msgid "Изменить номер телефона"
+msgstr "Телефон нөмірін өзгерту"
+
+#: templates/cabinet/phone_form.html:7
+msgid ""
+"В демо-версии SMS не отправляются, код будет показан на следующей странице."
+msgstr "Демо-нұсқада SMS жіберілмейді, код келесі бетте көрсетіледі."
+
+#: templates/cabinet/phone_form.html:7
+msgid "Мы отправим код подтверждения в SMS на новый номер."
+msgstr "Растау кодын жаңа нөмірге SMS арқылы жібереміз."
 
 #: templates/catalog/_badges.html:3 templates/catalog/_badges.html:10
 msgid "Демо: проверка не проводилась"
@@ -1212,17 +1376,9 @@ msgstr "Модератор жасырды"
 msgid "Пожаловаться"
 msgstr "Шағымдану"
 
-#: templates/community/_comment.html:17 templates/community/post_detail.html:16
-msgid "Изменить"
-msgstr "Өзгерту"
-
 #: templates/community/_comment.html:18
 msgid "Удалить комментарий?"
 msgstr "Түсініктемені жою керек пе?"
-
-#: templates/community/_comment.html:21 templates/community/post_detail.html:20
-msgid "Удалить"
-msgstr "Жою"
 
 #: templates/community/_comment.html:26
 #: templates/community/_comment_form_body.html:14
@@ -1283,17 +1439,6 @@ msgstr "Маманның атын енгізіңіз"
 #: templates/community/comment_form.html:7
 msgid "Изменить комментарий"
 msgstr "Түсініктемені өзгерту"
-
-#: templates/community/comment_form.html:20
-#: templates/community/nickname_form.html:18
-#: templates/community/post_form.html:88
-msgid "Сохранить"
-msgstr "Сақтау"
-
-#: templates/community/comment_form.html:21
-#: templates/community/complaint_form.html:25
-msgid "Отмена"
-msgstr "Бас тарту"
 
 #: templates/community/complaint_form.html:24
 msgid "Отправить жалобу"
@@ -1412,7 +1557,7 @@ msgstr "JPEG немесе PNG, 2 МБ-қа дейін"
 
 #: templates/community/post_form.html:81
 msgid "Прикрепите фото ещё раз"
-msgstr "Суретті қайта тіркеңіз"
+msgstr "Фотоны қайта тіркеңіз"
 
 #: templates/community/post_form.html:88
 msgid "Опубликовать"
@@ -1467,10 +1612,14 @@ msgstr "Жоба: мәтінді заңгер бекітеді."
 #: templates/consents/pd_processing_v1.html:4
 msgid ""
 "1. Вы даёте согласие на сбор и обработку следующих персональных данных: "
-"номер телефона, язык интерфейса, дата и IP-адрес принятия согласий."
+"номер телефона, фамилия, имя и дата рождения, язык интерфейса, дата и IP-"
+"адрес принятия согласий, а также фамилия, имя, дата рождения и пол детей, "
+"которых вы добавите в личный кабинет."
 msgstr ""
 "1. Сіз келесі жеке деректерді жинауға және өңдеуге келісім бересіз: телефон "
-"нөмірі, интерфейс тілі, келісімдерді қабылдаған күн және IP-мекенжай."
+"нөмірі, тегі, аты және туған күні, интерфейс тілі, келісімдерді қабылдаған "
+"күн және IP-мекенжай, сондай-ақ жеке кабинетке қосатын балаларыңыздың тегі, "
+"аты, туған күні және жынысы."
 
 #: templates/consents/pd_processing_v1.html:8
 msgid ""
@@ -1649,11 +1798,11 @@ msgstr "Демо-нұсқада мамандардың анкетасын Mama P
 msgid "Няни"
 msgstr "Бала күтушілер"
 
-#: templates/partials/header.html:14
+#: templates/partials/header.html:15
 msgid "Выйти"
 msgstr "Шығу"
 
-#: templates/partials/header.html:18
+#: templates/partials/header.html:19
 msgid "Выйти со всех устройств"
 msgstr "Барлық құрылғылардан шығу"
 
@@ -1682,16 +1831,16 @@ msgstr "Жауаптар сақталмайды. Ұпайлар тек нәти�
 msgid "Раздел %(n)s из %(total)s"
 msgstr "Бөлім %(n)s / %(total)s"
 
-#: templates/questionnaire/form.html:38
+#: templates/questionnaire/form.html:42
 #: templates/search/_results_partial.html:21
 msgid "Назад"
 msgstr "Артқа"
 
-#: templates/questionnaire/form.html:39
+#: templates/questionnaire/form.html:43
 msgid "Далее"
 msgstr "Келесі"
 
-#: templates/questionnaire/form.html:40
+#: templates/questionnaire/form.html:44
 msgid "Получить рекомендацию"
 msgstr "Ұсыным алу"
 

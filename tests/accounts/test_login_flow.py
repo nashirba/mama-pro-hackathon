@@ -54,6 +54,8 @@ def test_new_user_registered_with_consents(client, db):
         REMOTE_ADDR="10.0.0.5",
     )
     assert r.status_code == 302
+    assert r.headers["Location"] == "/kk/register/"
+    assert r.cookies["django_language"].value == "kk"
     user = User.objects.get(phone="+77011234567")
     assert user.preferred_language == "kk"
     consents = Consent.objects.filter(user=user)
@@ -151,3 +153,9 @@ def test_demo_consent_does_not_claim_storage_in_kazakhstan(client, db, settings)
     settings.DEPLOY_PROFILE = "test"
     assert "на территории Республики Казахстан" in client.get("/ru/login/code/").content.decode()
     assert "Мы отправим код подтверждения" in client.get("/ru/login/").content.decode()
+
+
+def test_pd_consent_lists_names_and_children(client, db):
+    client.post("/ru/login/", {"phone": "+77011234567"})
+    html = client.get("/ru/login/code/").content.decode()
+    assert "фамилия, имя и дата рождения" in html and "пол детей" in html

@@ -3,6 +3,7 @@ from django.contrib.gis.geos import Point
 from django.utils import timezone
 
 from apps.accounts.models import User
+from apps.cabinet.models import Child
 from apps.catalog.models import (
     CommunicationLanguage,
     DevelopmentalCondition,
@@ -40,6 +41,8 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = User
 
     phone = factory.Sequence(lambda n: f"+7700{n:07d}")
+    last_name = "Иванова"
+    first_name = "Айгуль"
 
 
 class NicknamedUserFactory(UserFactory):
@@ -176,3 +179,11 @@ class CommentFactory(factory.django.DjangoModelFactory):
     post = factory.SubFactory(PostFactory)
     author = factory.SubFactory(NicknamedUserFactory)
     body = "Текст комментария"
+
+
+class ChildFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Child
+
+    parent = factory.SubFactory(UserFactory)
+    first_name = "Арман"

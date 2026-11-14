@@ -39,6 +39,7 @@ def _parents(nicknames: list[str]) -> list[User]:
         phone = f"{PARENT_PHONE_PREFIX}{i:04d}"
         user = User.objects.filter(phone=phone).first() or User.objects.create_user(phone, preferred_language="ru")
         user.display_name = nickname
+        user.last_name, user.first_name = "Демо", nickname
         user.save()
         parents.append(user)
     return parents

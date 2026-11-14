@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "parler",
     "apps.core",
     "apps.accounts",
+    "apps.cabinet",
     "apps.consents",
     "apps.geo",
     "apps.catalog",
@@ -75,6 +76,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "apps.accounts.middleware.RequireFullNameMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]

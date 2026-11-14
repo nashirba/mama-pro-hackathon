@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 15:22+0500\n"
+"POT-Creation-Date: 2026-11-14 21:16+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,20 +20,30 @@ msgstr ""
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: apps/accounts/forms.py:12
+#: apps/accounts/forms.py:13
 msgid "Номер телефона"
 msgstr ""
 
-#: apps/accounts/forms.py:19 apps/catalog/models/profile.py:41
+#: apps/accounts/forms.py:20 apps/catalog/models/profile.py:41
 msgid "Введите казахстанский мобильный номер, например +7 701 123 45 67"
 msgstr ""
 
-#: apps/accounts/forms.py:24
+#: apps/accounts/forms.py:25
 msgid "Код из SMS"
 msgstr ""
 
-#: apps/accounts/forms.py:33
+#: apps/accounts/forms.py:34
 msgid "Необходимо ваше согласие, чтобы продолжить"
+msgstr ""
+
+#: apps/accounts/forms.py:49 apps/cabinet/forms.py:46
+#: templates/cabinet/home.html:14
+msgid "Фамилия"
+msgstr ""
+
+#: apps/accounts/forms.py:49 apps/cabinet/forms.py:45
+#: templates/cabinet/home.html:15
+msgid "Имя"
 msgstr ""
 
 #: apps/accounts/otp.py:24
@@ -41,12 +51,72 @@ msgstr ""
 msgid "Код входа в «%(brand)s»: %(code)s"
 msgstr ""
 
-#: apps/accounts/views.py:85 apps/accounts/views.py:101
+#: apps/accounts/views.py:90 apps/accounts/views.py:113
+#: apps/cabinet/views.py:110
 msgid "Неверный или просроченный код"
 msgstr ""
 
-#: apps/accounts/views.py:90
+#: apps/accounts/views.py:95 apps/cabinet/views.py:91
 msgid "Слишком много неверных попыток. Запросите новый код."
+msgstr ""
+
+#: apps/cabinet/ages.py:16
+#, python-format
+msgid "%(n)d год"
+msgid_plural "%(n)d лет"
+msgstr[0] "%(n)d год"
+msgstr[1] "%(n)d года"
+msgstr[2] "%(n)d лет"
+msgstr[3] "%(n)d года"
+
+#: apps/cabinet/ages.py:18
+#, python-format
+msgid "%(n)d мес."
+msgid_plural "%(n)d мес."
+msgstr[0] "%(n)d мес."
+msgstr[1] "%(n)d мес."
+msgstr[2] "%(n)d мес."
+msgstr[3] "%(n)d мес."
+
+#: apps/cabinet/forms.py:15
+msgid "Дата рождения не может быть в будущем"
+msgstr ""
+
+#: apps/cabinet/forms.py:21 apps/cabinet/forms.py:47
+#: templates/cabinet/home.html:16
+msgid "Дата рождения"
+msgstr ""
+
+#: apps/cabinet/forms.py:48
+msgid "Пол"
+msgstr ""
+
+#: apps/cabinet/forms.py:56
+msgid "Не указан"
+msgstr ""
+
+#: apps/cabinet/models.py:10
+msgid "Мальчик"
+msgstr ""
+
+#: apps/cabinet/models.py:11
+msgid "Девочка"
+msgstr ""
+
+#: apps/cabinet/views.py:66
+msgid "Новый номер телефона"
+msgstr ""
+
+#: apps/cabinet/views.py:70
+msgid "Это ваш текущий номер"
+msgstr ""
+
+#: apps/cabinet/views.py:72 apps/cabinet/views.py:104
+msgid "Этот номер уже используется"
+msgstr ""
+
+#: apps/cabinet/views.py:107
+msgid "Номер телефона изменён"
 msgstr ""
 
 #: apps/catalog/admin.py:65
@@ -314,11 +384,11 @@ msgstr ""
 msgid "Отзывы"
 msgstr ""
 
-#: apps/community/views.py:147
+#: apps/community/views.py:148
 msgid "Вы уже писали отзыв об этом специалисте - его можно изменить"
 msgstr ""
 
-#: apps/community/views.py:312
+#: apps/community/views.py:313
 msgid "Жалоба отправлена"
 msgstr ""
 
@@ -866,8 +936,9 @@ msgstr ""
 
 #: templates/accounts/_consent_fields.html:22
 msgid ""
-"Обработка персональных данных: мы храним ваш номер телефона и язык "
-"интерфейса, чтобы вы могли входить в аккаунт. Согласие можно отозвать."
+"Обработка персональных данных: мы храним ваш номер телефона, фамилию, имя, "
+"дату рождения, язык интерфейса и данные детей, которых вы добавите, чтобы вы "
+"могли пользоваться личным кабинетом. Согласие можно отозвать."
 msgstr ""
 
 #: templates/accounts/_consent_fields.html:25
@@ -878,24 +949,24 @@ msgstr ""
 msgid "Я даю согласие на обработку персональных данных"
 msgstr ""
 
-#: templates/accounts/code_form.html:3
+#: templates/accounts/code_form.html:3 templates/cabinet/phone_code.html:3
 msgid "Код подтверждения"
 msgstr ""
 
-#: templates/accounts/code_form.html:6
+#: templates/accounts/code_form.html:6 templates/cabinet/phone_code.html:6
 msgid "Введите код из SMS"
 msgstr ""
 
-#: templates/accounts/code_form.html:8
+#: templates/accounts/code_form.html:8 templates/cabinet/phone_code.html:8
 #, python-format
 msgid "Код отправлен на номер %(phone)s."
 msgstr ""
 
-#: templates/accounts/code_form.html:9
+#: templates/accounts/code_form.html:9 templates/cabinet/phone_code.html:9
 msgid "Изменить номер или отправить код заново"
 msgstr ""
 
-#: templates/accounts/code_form.html:13
+#: templates/accounts/code_form.html:13 templates/cabinet/phone_code.html:13
 #, python-format
 msgid "В демо-версии SMS не отправляются, код публичный: %(code)s"
 msgstr ""
@@ -904,7 +975,7 @@ msgstr ""
 msgid "Зарегистрироваться"
 msgstr ""
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:21
+#: templates/accounts/code_form.html:28 templates/partials/header.html:22
 msgid "Войти"
 msgstr ""
 
@@ -926,16 +997,111 @@ msgstr ""
 msgid "Мы отправим код подтверждения в SMS. Пароль не нужен."
 msgstr ""
 
-#: templates/accounts/phone_form.html:16
+#: templates/accounts/phone_form.html:16 templates/cabinet/phone_form.html:15
 msgid "Например: +7 701 123 45 67"
 msgstr ""
 
-#: templates/accounts/phone_form.html:20
+#: templates/accounts/phone_form.html:20 templates/cabinet/phone_form.html:19
 msgid "Получить код"
+msgstr ""
+
+#: templates/accounts/register.html:3 templates/accounts/register.html:6
+msgid "Создать личный кабинет"
+msgstr ""
+
+#: templates/accounts/register.html:24
+msgid "Создать"
 msgstr ""
 
 #: templates/base.html:14
 msgid "Перейти к содержанию"
+msgstr ""
+
+#: templates/cabinet/child_form.html:3 templates/cabinet/child_form.html:6
+msgid "Редактировать профиль ребёнка"
+msgstr ""
+
+#: templates/cabinet/child_form.html:3 templates/cabinet/child_form.html:6
+#: templates/cabinet/home.html:24
+msgid "Добавить ребёнка"
+msgstr ""
+
+#: templates/cabinet/child_form.html:8
+msgid "Демо-версия: не вводите реальные данные ребёнка"
+msgstr ""
+
+#: templates/cabinet/child_form.html:20 templates/cabinet/profile_form.html:17
+#: templates/community/comment_form.html:20
+#: templates/community/nickname_form.html:18
+#: templates/community/post_form.html:88
+msgid "Сохранить"
+msgstr ""
+
+#: templates/cabinet/child_form.html:21 templates/cabinet/profile_form.html:18
+#: templates/community/comment_form.html:21
+#: templates/community/complaint_form.html:25
+msgid "Отмена"
+msgstr ""
+
+#: templates/cabinet/home.html:3 templates/cabinet/home.html:6
+#: templates/partials/header.html:12
+msgid "Личный кабинет"
+msgstr ""
+
+#: templates/cabinet/home.html:10 templates/cabinet/profile_form.html:6
+msgid "Мои данные"
+msgstr ""
+
+#: templates/cabinet/home.html:11 templates/cabinet/home.html:33
+#: templates/cabinet/profile_form.html:3
+msgid "Редактировать"
+msgstr ""
+
+#: templates/cabinet/home.html:16
+msgid "не указана"
+msgstr ""
+
+#: templates/cabinet/home.html:17
+msgid "Телефон"
+msgstr ""
+
+#: templates/cabinet/home.html:17 templates/community/_comment.html:17
+#: templates/community/post_detail.html:16
+msgid "Изменить"
+msgstr ""
+
+#: templates/cabinet/home.html:23
+msgid "Дети"
+msgstr ""
+
+#: templates/cabinet/home.html:34
+msgid "Удалить профиль ребёнка?"
+msgstr ""
+
+#: templates/cabinet/home.html:36 templates/community/_comment.html:21
+#: templates/community/post_detail.html:20
+msgid "Удалить"
+msgstr ""
+
+#: templates/cabinet/home.html:41
+msgid "Вы ещё не добавили ребёнка"
+msgstr ""
+
+#: templates/cabinet/phone_code.html:26
+msgid "Подтвердить"
+msgstr ""
+
+#: templates/cabinet/phone_form.html:3 templates/cabinet/phone_form.html:6
+msgid "Изменить номер телефона"
+msgstr ""
+
+#: templates/cabinet/phone_form.html:7
+msgid ""
+"В демо-версии SMS не отправляются, код будет показан на следующей странице."
+msgstr ""
+
+#: templates/cabinet/phone_form.html:7
+msgid "Мы отправим код подтверждения в SMS на новый номер."
 msgstr ""
 
 #: templates/catalog/_badges.html:3 templates/catalog/_badges.html:10
@@ -1203,16 +1369,8 @@ msgstr ""
 msgid "Пожаловаться"
 msgstr ""
 
-#: templates/community/_comment.html:17 templates/community/post_detail.html:16
-msgid "Изменить"
-msgstr ""
-
 #: templates/community/_comment.html:18
 msgid "Удалить комментарий?"
-msgstr ""
-
-#: templates/community/_comment.html:21 templates/community/post_detail.html:20
-msgid "Удалить"
 msgstr ""
 
 #: templates/community/_comment.html:26
@@ -1275,17 +1433,6 @@ msgstr ""
 #: templates/community/comment_form.html:3
 #: templates/community/comment_form.html:7
 msgid "Изменить комментарий"
-msgstr ""
-
-#: templates/community/comment_form.html:20
-#: templates/community/nickname_form.html:18
-#: templates/community/post_form.html:88
-msgid "Сохранить"
-msgstr ""
-
-#: templates/community/comment_form.html:21
-#: templates/community/complaint_form.html:25
-msgid "Отмена"
 msgstr ""
 
 #: templates/community/complaint_form.html:24
@@ -1449,7 +1596,9 @@ msgstr ""
 #: templates/consents/pd_processing_v1.html:4
 msgid ""
 "1. Вы даёте согласие на сбор и обработку следующих персональных данных: "
-"номер телефона, язык интерфейса, дата и IP-адрес принятия согласий."
+"номер телефона, фамилия, имя и дата рождения, язык интерфейса, дата и IP-"
+"адрес принятия согласий, а также фамилия, имя, дата рождения и пол детей, "
+"которых вы добавите в личный кабинет."
 msgstr ""
 
 #: templates/consents/pd_processing_v1.html:8
@@ -1608,11 +1757,11 @@ msgstr ""
 msgid "Няни"
 msgstr ""
 
-#: templates/partials/header.html:14
+#: templates/partials/header.html:15
 msgid "Выйти"
 msgstr ""
 
-#: templates/partials/header.html:18
+#: templates/partials/header.html:19
 msgid "Выйти со всех устройств"
 msgstr ""
 
@@ -1641,16 +1790,16 @@ msgstr ""
 msgid "Раздел %(n)s из %(total)s"
 msgstr ""
 
-#: templates/questionnaire/form.html:38
+#: templates/questionnaire/form.html:42
 #: templates/search/_results_partial.html:21
 msgid "Назад"
 msgstr ""
 
-#: templates/questionnaire/form.html:39
+#: templates/questionnaire/form.html:43
 msgid "Далее"
 msgstr ""
 
-#: templates/questionnaire/form.html:40
+#: templates/questionnaire/form.html:44
 msgid "Получить рекомендацию"
 msgstr ""
 

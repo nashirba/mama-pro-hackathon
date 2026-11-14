@@ -2,7 +2,14 @@ from collections import Counter
 
 from apps.search.builder import rebuild_all, rebuild_for_context
 from apps.search.models import SearchOffer
-from tests.factories import AddressFactory, PrivateContextFactory, ServiceFactory
+from tests.factories import (
+    AddressFactory,
+    NannyFactory,
+    NannyServiceFactory,
+    PrivateContextFactory,
+    ServiceFactory,
+    TrainingFactory,
+)
 
 
 def test_offer_per_address_plus_online(db, kato_demo):
@@ -56,3 +63,55 @@ def test_roster_row_counts(db, catalog_fixture):
 def test_search_norm_has_kk_kato_name_without_special_letters(db, catalog_fixture):
     o = SearchOffer.objects.get(specialist__slug="bekova-karaganda")
     assert "караганды" in o.search_norm and "караганда" in o.search_norm
+
+
+def _eligible_nanny_service(**service):
+    nanny = NannyFactory()
+    TrainingFactory(profile=nanny, hours=16, is_first_aid=True)
+    TrainingFactory(profile=nanny, hours=72)
+    return NannyServiceFactory(context__specialist=nanny, **service)
+
+
+def test_nanny_offer_carries_category_prices_and_training_hours(db, reference, kato_demo):
+    svc = _eligible_nanny_service(price_hour=3000, price_night=15000, price_month=200000)
+    rebuild_for_context(svc.context_id)
+    o = SearchOffer.objects.get(service=svc)
+    assert (o.category, o.price_hour, o.price_night, o.price_month, o.training_hours) == ("nanny", 3000, 15000, 200000, 88)
+    assert o.formats == ["home_visit"] and o.specialist_type_ids == []
+
+
+def test_specialist_offer_has_specialist_category(db, kato_demo):
+    svc = ServiceFactory(formats=["online"])
+    rebuild_for_context(svc.context_id)
+    o = SearchOffer.objects.get(service=svc)
+    assert (o.category, o.price_hour, o.price_night, o.training_hours) == ("specialist", None, None, 0)
+
+
+def test_ineligible_nanny_has_no_offers(db, reference, kato_demo):
+    svc = NannyServiceFactory()
+    TrainingFactory(profile=svc.context.specialist, hours=72)  # no first aid course
+    assert rebuild_for_context(svc.context_id) == 0
+
+
+def test_training_save_and_delete_rebuild_offers(db, reference, kato_demo, django_capture_on_commit_callbacks):
+    with django_capture_on_commit_callbacks(execute=True):
+        svc = NannyServiceFactory()
+        nanny = svc.context.specialist
+    assert not SearchOffer.objects.filter(service=svc).exists()
+    with django_capture_on_commit_callbacks(execute=True):
+        first_aid = TrainingFactory(profile=nanny, hours=16, is_first_aid=True)
+    assert SearchOffer.objects.get(service=svc).training_hours == 16
+    with django_capture_on_commit_callbacks(execute=True):
+        first_aid.delete()
+    assert not SearchOffer.objects.filter(service=svc).exists()
+
+
+def test_criminal_record_change_rebuilds_offers(db, reference, kato_demo, django_capture_on_commit_callbacks):
+    with django_capture_on_commit_callbacks(execute=True):
+        svc = _eligible_nanny_service()
+    assert SearchOffer.objects.filter(service=svc).exists()
+    nanny = svc.context.specialist
+    with django_capture_on_commit_callbacks(execute=True):
+        nanny.criminal_record_issued_on = None
+        nanny.save()
+    assert not SearchOffer.objects.filter(service=svc).exists()

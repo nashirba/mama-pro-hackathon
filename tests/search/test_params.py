@@ -23,3 +23,15 @@ def test_params_distance_sort_requires_valid_near():
 def test_params_roundtrip_querydict():
     p = SearchParams(kato_id=5, formats=["online", "in_person"], near=(76.9, 43.25), sort="distance", child_age_min=3, child_age_max=7)
     assert SearchParams.from_querydict(p.to_querydict()) == p
+
+
+def test_params_section_is_not_a_query_parameter():
+    p = SearchParams.from_querydict(QueryDict("section=nannies&pay_units=night&pay_units=hour&price_hour_min=2000&price_hour_max=x"))
+    assert (p.section, p.pay_units, p.price_hour_min, p.price_hour_max) == ("specialists", ["night", "hour"], 2000, None)
+    nannies = SearchParams.from_querydict(QueryDict("pay_units=month"), section="nannies")
+    assert nannies.section == "nannies" and "section" not in nannies.to_querydict()
+    assert SearchParams.from_querydict(nannies.to_querydict(), section="nannies") == nannies
+
+
+def test_params_unknown_section_falls_back_to_specialists():
+    assert SearchParams.from_querydict(QueryDict(""), section="bogus").section == "specialists"

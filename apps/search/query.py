@@ -26,6 +26,7 @@ from django.http import QueryDict
 from apps.catalog.models import (
     DevelopmentalCondition,
     Format,
+    ProfileCategory,
     SpecialistProfile,
     VerificationLevel,
 )
@@ -34,14 +35,19 @@ from .models import SearchOffer
 from .normalize import normalize_kk
 
 SORTS = ("relevance", "price", "distance", "experience")
+SECTIONS = ("specialists", "nannies")
+SECTION_CATEGORY = {"specialists": ProfileCategory.SPECIALIST, "nannies": ProfileCategory.NANNY}
+# a nanny's pay unit -> the price column that must be set
+PAY_UNIT_COLUMNS = {"hour": "price_hour", "night": "price_night", "month": "price_month"}
 # `identity` is a badge only, never a filter
 FILTERABLE_LEVELS = (VerificationLevel.EDUCATION, VerificationLevel.CREDENTIAL, VerificationLevel.SAFETY)
 
 INT_FIELDS = (
     "kato_id", "child_age_min", "child_age_max", "price_min", "price_max", "price_month_min", "price_month_max", "experience_min",
+    "price_hour_min", "price_hour_max",
 )
 INT_LIST_FIELDS = ("specialist_type_ids", "condition_ids", "method_ids")
-STR_LIST_FIELDS = ("formats", "language_codes", "verification_levels")
+STR_LIST_FIELDS = ("formats", "language_codes", "verification_levels", "pay_units")
 
 
 def _int(value) -> int | None:
@@ -82,11 +88,15 @@ class SearchParams:
     sort: str = "relevance"
     near: tuple[float, float] | None = None  # (lon, lat)
     page: int = 1
+    pay_units: list[str] = field(default_factory=list)  # nannies: "hour", "night", "month"
+    price_hour_min: int | None = None
+    price_hour_max: int | None = None
+    section: str = "specialists"  # set by the view from the URL, never read from the query string
 
     @classmethod
-    def from_querydict(cls, qd: QueryDict) -> "SearchParams":
+    def from_querydict(cls, qd: QueryDict, section: str = "specialists") -> "SearchParams":
         """Lenient parsing: whatever cannot be parsed falls back to the default."""
-        kwargs: dict = {"q": qd.get("q", "").strip()}
+        kwargs: dict = {"q": qd.get("q", "").strip(), "section": section if section in SECTIONS else "specialists"}
         for name in INT_FIELDS:
             kwargs[name] = _int(qd.get(name))
         for name in INT_LIST_FIELDS:
@@ -108,7 +118,7 @@ class SearchParams:
         defaults = SearchParams()
         for f in fields(self):
             value = getattr(self, f.name)
-            if value == getattr(defaults, f.name):
+            if value == getattr(defaults, f.name) or f.name == "section":
                 continue
             if f.name in INT_LIST_FIELDS or f.name in STR_LIST_FIELDS:
                 qd.setlist(f.name, [str(v) for v in value])
@@ -125,11 +135,15 @@ class SearchParams:
 class SpecialistCard:
     specialist: SpecialistProfile
     matching_offers: list[SearchOffer]
-    price_from: int | None
+    price_from: int | None  # per session for a specialist, per hour for a nanny
     nearest_district_name: str | None
     nearest_city_name: str | None
     has_online: bool
     distance_m: float | None
+    # a nanny's lowest price of each pay unit among the matching offers
+    price_hour: int | None = None
+    price_night: int | None = None
+    price_month: int | None = None
 
 
 @dataclass
@@ -150,13 +164,18 @@ def expand_conditions(ids: list[int]) -> list[int]:
     return sorted(result)
 
 
-def _effective_price():
+def _effective_price(section: str):
+    """The price the section sorts by: per session for specialists, per hour for nannies."""
+    if section == "nannies":
+        return F("price_hour")
     return Case(When(is_free=True, then=Value(0)), default=F("price_session"), output_field=IntegerField())
 
 
 def search_offers_queryset(params: SearchParams) -> QuerySet[SearchOffer]:
-    """Offers matching all filters, annotated with eff_price, text_rank (only with q) and dist (only with near)."""
-    qs = SearchOffer.objects.annotate(eff_price=_effective_price())
+    """Offers of the section matching all filters, annotated with eff_price, text_rank (only with q) and dist (only with near)."""
+    qs = SearchOffer.objects.filter(category=SECTION_CATEGORY[params.section]).annotate(
+        eff_price=_effective_price(params.section)
+    )
 
     if params.kato_id is not None:
         where = Q(kato_ids__contains=[params.kato_id])
@@ -175,6 +194,8 @@ def search_offers_queryset(params: SearchParams) -> QuerySet[SearchOffer]:
         (params.price_max, "price_session__lte"),
         (params.price_month_min, "price_month__gte"),
         (params.price_month_max, "price_month__lte"),
+        (params.price_hour_min, "price_hour__gte"),
+        (params.price_hour_max, "price_hour__lte"),
         (params.experience_min, "experience_years__gte"),
     ):
         if param is not None:
@@ -191,6 +212,13 @@ def search_offers_queryset(params: SearchParams) -> QuerySet[SearchOffer]:
     ):
         if values:
             qs = qs.filter(**{column: values})
+
+    pay_columns = [PAY_UNIT_COLUMNS[u] for u in params.pay_units if u in PAY_UNIT_COLUMNS]
+    if pay_columns:  # any of the chosen pay units, like the other checkbox groups
+        where = Q()
+        for column in pay_columns:
+            where |= Q(**{f"{column}__isnull": False})
+        qs = qs.filter(where)
 
     levels = [v for v in params.verification_levels if v in FILTERABLE_LEVELS]
     if levels:
@@ -222,7 +250,14 @@ def _order_by(params: SearchParams) -> list:
 
 
 def _offer_price(offer: SearchOffer) -> int | None:
+    if offer.category == ProfileCategory.NANNY:
+        return offer.price_hour
     return 0 if offer.is_free else offer.price_session
+
+
+def _lowest(offers: list[SearchOffer], column: str) -> int | None:
+    values = [getattr(o, column) for o in offers if getattr(o, column) is not None]
+    return min(values) if values else None
 
 
 def _build_card(specialist: SpecialistProfile, offers: list[SearchOffer], distance_m: float | None, near) -> SpecialistCard:
@@ -244,6 +279,9 @@ def _build_card(specialist: SpecialistProfile, offers: list[SearchOffer], distan
         nearest_city_name=city_name,
         has_online=any(o.is_online for o in offers),
         distance_m=distance_m,
+        price_hour=_lowest(offers, "price_hour"),
+        price_night=_lowest(offers, "price_night"),
+        price_month=_lowest(offers, "price_month"),
     )
 
 

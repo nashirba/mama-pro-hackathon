@@ -55,7 +55,7 @@ class SpecialistProfileAdmin(TranslatableAdmin):
     list_filter = ("category",)
     search_fields = ("display_name", "slug")
     filter_horizontal = ("specialist_types", "conditions", "methods", "languages")
-    inlines = [TrainingInline]
+    inlines = (TrainingInline,)
 
 
 @admin.register(PracticeContext)

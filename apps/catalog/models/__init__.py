@@ -1,4 +1,10 @@
-from .profile import Format, PracticeContext, ProfileCategory, SpecialistProfile, VerificationLevel
+from .profile import (
+    Format,
+    PracticeContext,
+    ProfileCategory,
+    SpecialistProfile,
+    VerificationLevel,
+)
 from .reference import (
     CommunicationLanguage,
     DevelopmentalCondition,

@@ -1,9 +1,9 @@
 """Keep SearchOffer in sync: every relevant save schedules a rebuild of the affected contexts after commit."""
 
 from django.db import transaction
-from django.db.models.signals import m2m_changed, post_save
+from django.db.models.signals import m2m_changed, post_delete, post_save
 
-from apps.catalog.models import PracticeContext, Service, SpecialistProfile
+from apps.catalog.models import PracticeContext, Service, SpecialistProfile, Training
 from apps.geo.models import Address
 
 from .builder import rebuild_for_context
@@ -24,6 +24,11 @@ def _on_profile_saved(sender, instance, **kwargs):
 
 def _on_profile_translation_saved(sender, instance, **kwargs):
     schedule_rebuild(PracticeContext.objects.filter(specialist_id=instance.master_id).values_list("pk", flat=True))
+
+
+def _on_training_changed(sender, instance, **kwargs):
+    """A course decides whether a nanny is shown and her training hours, so both a save and a delete rebuild."""
+    schedule_rebuild(PracticeContext.objects.filter(specialist_id=instance.profile_id).values_list("pk", flat=True))
 
 
 def _on_service_saved(sender, instance, **kwargs):
@@ -77,5 +82,7 @@ post_save.connect(
     _on_service_translation_saved, sender=Service._parler_meta.root_model, dispatch_uid="search_service_tr_saved"
 )
 post_save.connect(_on_address_saved, sender=Address, dispatch_uid="search_address_saved")
+post_save.connect(_on_training_changed, sender=Training, dispatch_uid="search_training_saved")
+post_delete.connect(_on_training_changed, sender=Training, dispatch_uid="search_training_deleted")
 for _through in PROFILE_M2M_THROUGH | SERVICE_M2M_THROUGH:
     m2m_changed.connect(_on_m2m_changed, sender=_through, dispatch_uid=f"search_m2m_{_through.__name__}")

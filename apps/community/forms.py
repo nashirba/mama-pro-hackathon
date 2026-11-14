@@ -14,7 +14,7 @@ from apps.catalog.models import DevelopmentalCondition
 from apps.catalog.visibility import catalog_visible_specialists
 from apps.geo.models import KatoNode
 
-from .models import Post
+from .models import COMMENT_BODY_MAX, Complaint, Post
 from .names import is_specialist
 from .pii import looks_sensitive
 
@@ -154,3 +154,12 @@ class PostEditForm(_PostFieldsForm):
     class Meta:
         model = Post
         fields = ["body", "condition", "city"]
+
+
+class CommentForm(forms.Form):
+    body = forms.CharField(label=_("Комментарий"), max_length=COMMENT_BODY_MAX, strip=True, widget=forms.Textarea)
+
+
+class ComplaintForm(forms.Form):
+    reason = forms.ChoiceField(label=_("Причина"), choices=Complaint.Reason.choices, widget=forms.RadioSelect)
+    text = forms.CharField(label=_("Пояснение"), max_length=1000, required=False, strip=True, widget=forms.Textarea)

@@ -23,6 +23,7 @@
   <section aria-labelledby="comments-title" class="space-y-3">
     <h2 id="comments-title" class="text-lg font-semibold">{% translate "Комментарии" %}</h2>
     {% include "community/_comments.html" %}
+    {% include "community/_comment_form.html" with parent="" %}
   </section>
 </div>
 {% endblock %}

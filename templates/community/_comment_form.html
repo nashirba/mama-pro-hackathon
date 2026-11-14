@@ -1,0 +1,8 @@
+{% load i18n %}<form method="post" action="{% url 'community:comment' post.pk %}" hx-post="{% url 'community:comment' post.pk %}" hx-target="#comments" hx-swap="outerHTML" hx-on::after-request="if (event.detail.successful) this.reset()" class="mt-2 space-y-2">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{% url 'community:post' post.pk %}">
+  {% if parent %}<input type="hidden" name="parent" value="{{ parent }}">{% endif %}
+  <label for="comment-body-{{ parent|default:'new' }}" class="sr-only">{% translate "Комментарий" %}</label>
+  <textarea id="comment-body-{{ parent|default:'new' }}" name="body" rows="3" maxlength="1000" required placeholder="{% if parent %}{% translate 'Ваш ответ' %}{% else %}{% translate 'Ваш комментарий' %}{% endif %}" class="w-full rounded-lg border border-slate-300 px-3 py-2"></textarea>
+  <button type="submit" class="inline-flex min-h-11 items-center rounded-lg bg-primary-700 px-5 text-sm font-medium text-white hover:bg-primary-800">{% if parent %}{% translate "Ответить" %}{% else %}{% translate "Отправить" %}{% endif %}</button>
+</form>

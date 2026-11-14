@@ -1,4 +1,5 @@
 {% load i18n %}<div id="comments" class="space-y-5">
+  {% if comment_error %}<p class="text-sm text-red-700" role="alert">{{ comment_error }}</p>{% endif %}
   {% for node in nodes %}
   <div class="space-y-3">
     {% if node.comment %}{% include "community/_comment.html" with comment=node.comment %}{% else %}<p class="text-sm italic text-slate-500">{% translate "Комментарий удалён" %}</p>{% endif %}

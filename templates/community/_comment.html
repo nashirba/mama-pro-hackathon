@@ -9,6 +9,20 @@
   </p>
   {% if comment.is_hidden %}<p class="text-sm font-medium text-amber-800">{% translate "Скрыто модератором" %}</p>{% endif %}
   <p class="whitespace-pre-line break-words text-slate-800">{{ comment.body }}</p>
-  <p class="text-sm text-slate-600">{% blocktranslate with n=comment.like_count %}Полезно {{ n }}{% endblocktranslate %}</p>
+  <div class="flex flex-wrap items-center gap-2">
+    {% include "community/_like_button.html" with target="comment" pk=comment.pk liked=comment.viewer_liked count=comment.like_count %}
+    <a href="{% url 'community:complain' 'comment' comment.pk %}" class="inline-flex min-h-11 items-center rounded px-2 text-sm text-slate-600 hover:underline">{% translate "Пожаловаться" %}</a>
+    {% if user.is_authenticated and user.pk == comment.author_id %}
+    <a href="{% url 'community:comment_edit' comment.pk %}" class="inline-flex min-h-11 items-center rounded px-2 text-sm text-slate-600 hover:underline">{% translate "Изменить" %}</a>
+    <form method="post" action="{% url 'community:comment_delete' comment.pk %}" onsubmit="return confirm('{% translate 'Удалить комментарий?' %}')">
+      {% csrf_token %}
+      <button type="submit" class="inline-flex min-h-11 items-center rounded px-2 text-sm text-red-700 hover:underline">{% translate "Удалить" %}</button>
+    </form>
+    {% endif %}
+  </div>
+  <details class="text-sm">
+    <summary class="inline-flex min-h-11 cursor-pointer items-center rounded px-2 font-medium text-primary-700 hover:underline">{% translate "Ответить" %}</summary>
+    {% include "community/_comment_form.html" with parent=comment.pk %}
+  </details>
 </div>
 {% endwith %}

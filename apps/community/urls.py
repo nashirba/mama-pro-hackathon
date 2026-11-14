@@ -14,4 +14,9 @@ urlpatterns = [
     path("community/<int:pk>/edit/", views.edit, name="edit"),
     path("community/<int:pk>/delete/", views.delete, name="delete"),
     path("community/<int:pk>/image/", views.image, name="image"),
+    path("community/<int:pk>/comment/", views.comment, name="comment"),
+    path("community/comment/<int:pk>/edit/", views.comment_edit, name="comment_edit"),
+    path("community/comment/<int:pk>/delete/", views.comment_delete, name="comment_delete"),
+    path("community/like/<str:target>/<int:pk>/", views.like, name="like"),
+    path("community/complain/<str:target>/<int:pk>/", views.complain, name="complain"),
 ]

@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 from django.conf import settings
 from django.contrib import messages
 from django.db import IntegrityError
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -14,11 +14,19 @@ from apps.catalog.visibility import catalog_visible_specialists
 from apps.geo.models import KatoNode
 
 from .access import is_safe_url, member_required
-from .forms import NicknameForm, PostEditForm, PostForm
+from .forms import CommentForm, ComplaintForm, NicknameForm, PostEditForm, PostForm
 from .models import Post, PostImage
 from .names import needs_nickname
-from .query import FeedParams, comment_tree, feed, feed_params, post_for_viewer, visible_posts
-from .services import save_post, soft_delete_post
+from .query import (
+    FeedParams,
+    comment_for_viewer,
+    comment_tree,
+    feed,
+    feed_params,
+    post_for_viewer,
+    visible_posts,
+)
+from .services import add_comment, file_complaint, save_post, soft_delete_comment, soft_delete_post, toggle_like
 
 
 def _feed_qs(params: FeedParams, **override) -> str:
@@ -177,6 +185,110 @@ def edit(request, pk: int):
 def delete(request, pk: int):
     soft_delete_post(_own_post(request, pk))
     return redirect("community:feed")
+
+
+def _post_url(post_id: int, comment_id: int | None = None) -> str:
+    url = reverse("community:post", kwargs={"pk": post_id})
+    return f"{url}#comment-{comment_id}" if comment_id else url
+
+
+def _back(request, fallback: str) -> str:
+    candidate = request.POST.get("next", "")
+    return candidate if is_safe_url(request, candidate) else fallback
+
+
+def _comments_fragment(request, post, **extra):
+    return render(request, "community/_comments.html", {"post": post, "nodes": comment_tree(post, request.user), **extra})
+
+
+@member_required
+@require_POST
+def comment(request, pk: int):
+    post = post_for_viewer(pk, request.user)
+    parent = None
+    parent_id = request.POST.get("parent", "")
+    if parent_id:
+        if not parent_id.isdigit():
+            raise Http404
+        parent = comment_for_viewer(int(parent_id), request.user)
+        if parent.post_id != post.pk:
+            raise Http404
+    form = CommentForm(request.POST)
+    if not form.is_valid():
+        if request.headers.get("HX-Request"):
+            return _comments_fragment(request, post, comment_error=form.errors["body"][0])
+        messages.error(request, form.errors["body"][0])
+        return redirect(_post_url(post.pk))
+    created = add_comment(post, request.user, form.cleaned_data["body"], parent)
+    if request.headers.get("HX-Request"):
+        return _comments_fragment(request, post)
+    return redirect(_post_url(post.pk, created.pk))
+
+
+def _own_comment(request, pk: int):
+    found = comment_for_viewer(pk, request.user)
+    if found.author_id != request.user.pk:
+        raise Http404
+    return found
+
+
+@member_required
+def comment_edit(request, pk: int):
+    target = _own_comment(request, pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            target.body = form.cleaned_data["body"]
+            target.save(update_fields=["body"])
+            return redirect(_post_url(target.post_id, target.pk))
+    else:
+        form = CommentForm(initial={"body": target.body})
+    return render(request, "community/comment_form.html", {"form": form, "comment": target})
+
+
+@member_required
+@require_POST
+def comment_delete(request, pk: int):
+    target = _own_comment(request, pk)
+    soft_delete_comment(target)
+    return redirect(_post_url(target.post_id))
+
+
+def _target(request, target: str, pk: int):
+    """(post, comment) the viewer may act on; exactly one is set."""
+    if target == "post":
+        return post_for_viewer(pk, request.user), None
+    if target == "comment":
+        return None, comment_for_viewer(pk, request.user)
+    raise Http404
+
+
+@member_required(nickname=False)
+@require_POST
+def like(request, target: str, pk: int):
+    post, found = _target(request, target, pk)
+    liked, count = toggle_like(request.user, post=post, comment=found)
+    if request.headers.get("HX-Request"):
+        fallback = _post_url(post.pk) if post else _post_url(found.post_id, found.pk)
+        context = {"target": target, "pk": pk, "liked": liked, "count": count, "next": _back(request, fallback)}
+        return render(request, "community/_like_button.html", context)
+    fallback = _post_url(post.pk) if post else _post_url(found.post_id, found.pk)
+    return redirect(_back(request, fallback))
+
+
+@member_required(nickname=False)
+def complain(request, target: str, pk: int):
+    post, found = _target(request, target, pk)
+    post_id = post.pk if post else found.post_id
+    if request.method == "POST":
+        form = ComplaintForm(request.POST)
+        if form.is_valid():
+            file_complaint(request.user, post=post, comment=found, **form.cleaned_data)
+            messages.success(request, _("Жалоба отправлена"))
+            return redirect(_post_url(post_id))
+    else:
+        form = ComplaintForm()
+    return render(request, "community/complaint_form.html", {"form": form, "post_id": post_id, "target": found or post})
 
 
 def specialist_options(request):

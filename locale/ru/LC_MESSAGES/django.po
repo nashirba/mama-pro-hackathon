@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:26+0500\n"
+"POT-Creation-Date: 2026-11-14 14:33+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,7 +133,7 @@ msgid "Автор"
 msgstr ""
 
 #: apps/community/admin.py:33 apps/community/admin.py:50
-#: apps/community/forms.py:70
+#: apps/community/forms.py:72
 msgid "Текст"
 msgstr ""
 
@@ -149,58 +149,70 @@ msgstr ""
 msgid "Закрыть жалобу"
 msgstr ""
 
-#: apps/community/forms.py:24
+#: apps/community/forms.py:25
 msgid "Псевдоним"
 msgstr ""
 
-#: apps/community/forms.py:33
+#: apps/community/forms.py:34
 msgid "Только буквы, цифры, пробел и _"
 msgstr ""
 
-#: apps/community/forms.py:35 apps/community/forms.py:45
+#: apps/community/forms.py:36 apps/community/forms.py:46
 msgid "Этот псевдоним уже занят"
 msgstr ""
 
-#: apps/community/forms.py:51
+#: apps/community/forms.py:53
 msgid "Похоже, в тексте есть ИИН или телефон. Не публикуйте данные ребёнка."
 msgstr ""
 
-#: apps/community/forms.py:57
+#: apps/community/forms.py:59
 msgid "Фото"
 msgstr ""
 
-#: apps/community/forms.py:60 templates/search/_suggest.html:1
+#: apps/community/forms.py:62 templates/search/_suggest.html:1
 msgid "Особенность развития"
 msgstr ""
 
-#: apps/community/forms.py:63 apps/geo/models.py:20
+#: apps/community/forms.py:65 apps/geo/models.py:20
 #: templates/community/feed.html:30 templates/core/home.html:24
 msgid "Город"
 msgstr ""
 
-#: apps/community/forms.py:86
+#: apps/community/forms.py:88
 msgid "Фото больше 2 МБ"
 msgstr ""
 
-#: apps/community/forms.py:95
+#: apps/community/forms.py:99
 msgid "Загрузите фото в формате JPEG или PNG"
 msgstr ""
 
-#: apps/community/forms.py:109 templates/community/_comment.html:6
+#: apps/community/forms.py:113 templates/community/_comment.html:6
 #: templates/community/_post_card.html:6 templates/search/_suggest.html:1
 msgid "Специалист"
 msgstr ""
 
-#: apps/community/forms.py:118
+#: apps/community/forms.py:122
 msgid "Тип"
 msgstr ""
 
-#: apps/community/forms.py:127
+#: apps/community/forms.py:145
 msgid "Выберите специалиста"
 msgstr ""
 
-#: apps/community/forms.py:134
+#: apps/community/forms.py:152
 msgid "Удалить фото"
+msgstr ""
+
+#: apps/community/forms.py:160 templates/community/_comment_form.html:5
+msgid "Комментарий"
+msgstr ""
+
+#: apps/community/forms.py:164
+msgid "Причина"
+msgstr ""
+
+#: apps/community/forms.py:165
+msgid "Пояснение"
 msgstr ""
 
 #: apps/community/models.py:26
@@ -243,24 +255,28 @@ msgstr ""
 msgid "Закрыта"
 msgstr ""
 
-#: apps/community/views.py:43
+#: apps/community/views.py:51
 msgid "Все"
 msgstr ""
 
-#: apps/community/views.py:44
+#: apps/community/views.py:52
 msgid "Вопросы"
 msgstr ""
 
-#: apps/community/views.py:45
+#: apps/community/views.py:53
 msgid "Истории"
 msgstr ""
 
-#: apps/community/views.py:46
+#: apps/community/views.py:54
 msgid "Отзывы"
 msgstr ""
 
-#: apps/community/views.py:129
+#: apps/community/views.py:137
 msgid "Вы уже писали отзыв об этом специалисте - его можно изменить"
+msgstr ""
+
+#: apps/community/views.py:287
+msgid "Жалоба отправлена"
 msgstr ""
 
 #: apps/geo/models.py:19
@@ -631,21 +647,59 @@ msgstr ""
 msgid "Скрыто модератором"
 msgstr ""
 
-#: templates/community/_comment.html:12 templates/community/_post_card.html:25
-#, python-format
-msgid "Полезно %(n)s"
+#: templates/community/_comment.html:14 templates/community/_post_card.html:27
+#: templates/community/complaint_form.html:3
+#: templates/community/complaint_form.html:7
+msgid "Пожаловаться"
 msgstr ""
 
-#: templates/community/_comments.html:4
+#: templates/community/_comment.html:16 templates/community/post_detail.html:16
+msgid "Изменить"
+msgstr ""
+
+#: templates/community/_comment.html:17
+msgid "Удалить комментарий?"
+msgstr ""
+
+#: templates/community/_comment.html:19 templates/community/post_detail.html:19
+msgid "Удалить"
+msgstr ""
+
+#: templates/community/_comment.html:24
+#: templates/community/_comment_form.html:7
+msgid "Ответить"
+msgstr ""
+
+#: templates/community/_comment_form.html:6
+#, fuzzy
+#| msgid "Стаж %(n)s год"
+#| msgid_plural "Стаж %(n)s лет"
+msgid "Ваш ответ"
+msgstr "Стаж %(n)s год"
+
+#: templates/community/_comment_form.html:6
+msgid "Ваш комментарий"
+msgstr ""
+
+#: templates/community/_comment_form.html:7
+msgid "Отправить"
+msgstr ""
+
+#: templates/community/_comments.html:5
 msgid "Комментарий удалён"
 msgstr ""
 
-#: templates/community/_comments.html:10
+#: templates/community/_comments.html:11
 msgid "Комментариев пока нет"
 msgstr ""
 
 #: templates/community/_feed_page.html:2
 msgid "Загрузка..."
+msgstr ""
+
+#: templates/community/_like_button.html:6
+#, python-format
+msgid "Полезно %(n)s"
 msgstr ""
 
 #: templates/community/_post_card.html:26
@@ -665,6 +719,26 @@ msgstr ""
 
 #: templates/community/_specialist_options.html:16
 msgid "Введите имя специалиста"
+msgstr ""
+
+#: templates/community/comment_form.html:3
+#: templates/community/comment_form.html:7
+msgid "Изменить комментарий"
+msgstr ""
+
+#: templates/community/comment_form.html:14
+#: templates/community/nickname_form.html:18
+#: templates/community/post_form.html:87
+msgid "Сохранить"
+msgstr ""
+
+#: templates/community/comment_form.html:15
+#: templates/community/complaint_form.html:25
+msgid "Отмена"
+msgstr ""
+
+#: templates/community/complaint_form.html:24
+msgid "Отправить жалобу"
 msgstr ""
 
 #: templates/community/feed.html:3 templates/community/feed.html:8
@@ -736,21 +810,8 @@ msgstr ""
 msgid "3-40 символов: буквы, цифры, пробел и _"
 msgstr ""
 
-#: templates/community/nickname_form.html:18
-#: templates/community/post_form.html:87
-msgid "Сохранить"
-msgstr ""
-
-#: templates/community/post_detail.html:16
-msgid "Изменить"
-msgstr ""
-
 #: templates/community/post_detail.html:17
 msgid "Удалить пост?"
-msgstr ""
-
-#: templates/community/post_detail.html:19
-msgid "Удалить"
 msgstr ""
 
 #: templates/community/post_detail.html:24

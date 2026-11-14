@@ -40,7 +40,6 @@ def test_form_field_names_are_scale_only(client):
     assert 'method="post"' in form and "csrfmiddlewaretoken" in form
     names = set(re.findall(r'<(?:input|textarea)[^>]*\bname="([^"]+)"', form))
     assert names == SCALE_KEYS | {"csrfmiddlewaretoken"}
-    assert form.count('autocomplete="off"') == 10   # 4 general + 6 parents
 
 
 @pytest.mark.django_db
@@ -48,7 +47,59 @@ def test_form_has_no_personal_fields(client):
     form = _form_html(client.get("/ru/questionnaire/").content.decode())
     for text in ("Ф.И.О.", "Дата рождения", "Возраст", 'type="date"'):
         assert text not in form
-    assert form.count('autocomplete="off"') == 10
+
+
+@pytest.mark.django_db
+def test_form_has_no_text_sections(client):
+    form = _form_html(client.get("/ru/questionnaire/").content.decode())
+    assert "<textarea" not in form
+    assert "Общая информация" not in form
+    assert "Дополнительная информация от родителей" not in form
+
+
+@pytest.mark.django_db
+def test_form_paginates_by_section(client):
+    html = client.get("/ru/questionnaire/").content.decode()
+    form = _form_html(html)
+    shows = re.findall(r'x-show="step === (\d+)"', form)
+    assert shows == [str(i) for i in range(6)]
+    ids = re.findall(r'<section aria-labelledby="sec-([a-z]+)"', form)
+    assert ids == [s.key for s in SECTIONS]
+    tags = re.findall(r"<section [^>]*>", form)
+    assert len(tags) == 6
+    assert "data-step-cloak" not in tags[0]
+    assert all("data-step-cloak" in t for t in tags[1:])
+    assert "<noscript><style>[data-step-cloak]" in html
+    assert 'x-data="{ step: 0, total: 6,' in form
+    assert "[data-step=" in form and "x-init=" in form
+
+
+@pytest.mark.django_db
+def test_form_step_a11y_and_cloak_attributes(client):
+    form = _form_html(client.get("/ru/questionnaire/").content.decode())
+    for n, section in enumerate(SECTIONS):
+        assert f'<h2 id="sec-{section.key}" data-step="{n}" tabindex="-1"' in form
+    assert '<div x-cloak aria-hidden="true" class="grid grid-cols-6' in form
+    assert re.search(r'<button type="button" x-cloak x-show="step > 0"', form)
+    assert re.search(r'<button type="button" x-cloak x-show="step < total - 1"', form)
+    assert re.search(r'<button type="submit" x-show="step === total - 1" data-step-cloak', form)
+    assert '<div class="flex gap-3">' in form
+
+
+@pytest.mark.django_db
+def test_form_progress_labels(client):
+    form = _form_html(client.get("/ru/questionnaire/").content.decode())
+    for n in range(1, 7):
+        assert form.count(f"Раздел {n} из 6") == 1
+    assert form.count('class="h-1.5 rounded-full"') == 6
+
+
+@pytest.mark.django_db
+def test_form_navigation_buttons(client):
+    form = _form_html(client.get("/ru/questionnaire/").content.decode())
+    assert re.search(r'<button type="button" x-cloak x-show="step > 0"[^>]*>\s*Назад', form)
+    assert re.search(r'<button type="button" x-cloak x-show="step < total - 1"[^>]*>\s*Далее', form)
+    assert re.search(r'<button type="submit" x-show="step === total - 1" data-step-cloak[^>]*>\s*Получить рекомендацию', form)
 
 
 @pytest.mark.django_db
@@ -172,6 +223,8 @@ def test_kk_form_translated(client):
     assert "Речевое развитие и коммуникация" not in html and "Никогда" not in html
     assert html.count('type="radio"') == 264
     assert "Ешқашан" in html
+    assert "Раздел 1 из 6" not in html and "Далее" not in html
+    assert "Бөлім 1 / 6" in html and "Келесі" in html
 
 
 @pytest.mark.django_db

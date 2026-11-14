@@ -115,6 +115,11 @@
   }
 }
 
+/* questionnaire steps 2-6 and the submit button stay hidden until Alpine starts (all shown without JS, see <noscript> in questionnaire/form.html) */
+[data-step-cloak] {
+  display: none;
+}
+
 [x-cloak] {
   display: none !important;
 }

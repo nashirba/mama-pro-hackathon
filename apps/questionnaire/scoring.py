@@ -23,9 +23,7 @@ class SectionScore:
 
 
 def scale_sections() -> tuple[Section, ...]:
-    return tuple(
-        s for s in SECTIONS if s.questions and all(q.kind == "scale" for q in s.questions)
-    )
+    return SECTIONS
 
 
 def score_answers(data: Mapping[str, str]) -> list[SectionScore]:

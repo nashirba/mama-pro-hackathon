@@ -31,9 +31,9 @@
         {% for s in scores %}
         <tr class="border-b border-slate-200 align-top">
           <th scope="row" class="py-2 pr-3 text-left font-medium">{{ s.section.title }}</th>
-          <td class="py-2 text-slate-800">
+          <td class="whitespace-nowrap py-2 pl-3 text-right text-slate-800">
             {% blocktranslate with total=s.total max=s.max_total %}баллов: {{ total }} из {{ max }}{% endblocktranslate %}
-            <span class="block text-sm text-slate-600">{% if s.answered %}{% blocktranslate with answered=s.answered n=s.section.questions|length %}ответов: {{ answered }} из {{ n }}{% endblocktranslate %}{% else %}{% translate "нет ответов" %}{% endif %}</span>
+            <span class="block whitespace-nowrap text-sm text-slate-600">{% if s.answered %}{% blocktranslate with answered=s.answered n=s.section.questions|length %}ответов: {{ answered }} из {{ n }}{% endblocktranslate %}{% else %}{% translate "нет ответов" %}{% endif %}</span>
           </td>
         </tr>
         {% endfor %}

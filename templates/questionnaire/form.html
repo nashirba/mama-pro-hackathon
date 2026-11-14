@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{% translate "Опросник для родителей" %} - {{ BRAND_NAME }}{% endblock %}
+{% block extra_head %}<noscript><style>[data-step-cloak]{display:block!important}</style></noscript>{% endblock %}
 {% block content %}
 <div class="mx-auto max-w-3xl space-y-8 px-4 py-6 sm:px-6 sm:py-10">
   <header>
@@ -11,14 +12,14 @@
     <p class="mt-3 rounded border-l-4 border-slate-400 bg-slate-50 px-4 py-3 text-slate-700">{% translate "Ответы не сохраняются. Баллы считаются только для показа результата." %}</p>
   </header>
 
-  <form id="questionnaire-form" method="post" action="{% url 'questionnaire:questionnaire' %}" class="space-y-10">
+  <form id="questionnaire-form" method="post" action="{% url 'questionnaire:questionnaire' %}" class="space-y-6" x-data="{ step: 0, total: {{ sections|length }}, go(i) { this.step = i; this.$nextTick(() => { this.$root.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); this.$root.querySelector('[data-step=\'' + i + '\']').focus({ preventScroll: true }) }) } }" x-init="$root.querySelectorAll('[data-step-cloak]').forEach(el => el.removeAttribute('data-step-cloak'))" @submit="if (step < total - 1) { $event.preventDefault(); go(step + 1) }">
     {% csrf_token %}
+    <div x-cloak aria-hidden="true" class="grid grid-cols-6 gap-1">{% for section in sections %}<span class="h-1.5 rounded-full" :class="{{ forloop.counter0 }} <= step ? 'bg-primary-700' : 'bg-slate-200'"></span>{% endfor %}</div>
     {% for section in sections %}
-    <section aria-labelledby="sec-{{ section.key }}" class="space-y-4">
-      <h2 id="sec-{{ section.key }}" class="text-xl font-semibold">{{ section.title }}</h2>
+    <section aria-labelledby="sec-{{ section.key }}" x-show="step === {{ forloop.counter0 }}"{% if not forloop.first %} data-step-cloak{% endif %} class="space-y-4">
+      <h2 id="sec-{{ section.key }}" data-step="{{ forloop.counter0 }}" tabindex="-1" class="text-xl font-semibold focus:outline-none"><span class="block text-sm font-normal text-slate-600">{% blocktranslate with n=forloop.counter total=sections|length %}Раздел {{ n }} из {{ total }}{% endblocktranslate %}</span> {{ section.title }}</h2>
       {% if section.hint %}<p class="text-slate-700">{{ section.hint }}</p>{% endif %}
       {% for q in section.questions %}
-        {% if q.kind == "scale" %}
         <fieldset>
           <legend class="mb-2 font-medium">{{ q.text }}</legend>
           <div class="grid grid-cols-4 gap-1">
@@ -30,16 +31,14 @@
             {% endfor %}
           </div>
         </fieldset>
-        {% elif q.kind == "textarea" %}
-        <div>
-          <label for="{{ q.key }}" class="mb-1 block font-medium">{{ q.text }}</label>
-          <textarea id="{{ q.key }}" rows="3" autocomplete="off" class="w-full rounded border border-field bg-white px-3 py-2"></textarea>
-        </div>
-        {% endif %}
       {% endfor %}
     </section>
     {% endfor %}
-    <button type="submit" class="min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Получить рекомендацию" %}</button>
+    <div class="flex gap-3">
+      <button type="button" x-cloak x-show="step > 0" @click="go(step - 1)" class="min-h-12 rounded border-2 border-primary-700 bg-white px-6 py-2 font-semibold text-primary-800 hover:bg-primary-50">{% translate "Назад" %}</button>
+      <button type="button" x-cloak x-show="step < total - 1" @click="go(step + 1)" class="ml-auto min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Далее" %}</button>
+      <button type="submit" x-show="step === total - 1" data-step-cloak class="ml-auto min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Получить рекомендацию" %}</button>
+    </div>
   </form>
 </div>
 {% endblock %}

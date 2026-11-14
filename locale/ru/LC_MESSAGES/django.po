@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:09+0500\n"
+"POT-Creation-Date: 2026-11-14 14:22+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -175,341 +175,293 @@ msgid ""
 msgstr ""
 
 #: apps/questionnaire/questions.py:53
-msgid "Общая информация"
-msgstr ""
-
-#: apps/questionnaire/questions.py:54
-msgid "Посещает ли ребёнок образовательное учреждение?"
-msgstr ""
-
-#: apps/questionnaire/questions.py:55
-msgid "Есть ли у ребёнка официальное заключение специалистов? Если да, какое?"
-msgstr ""
-
-#: apps/questionnaire/questions.py:56
-msgid "Посещает ли ребёнок дополнительные занятия? Какие?"
-msgstr ""
-
-#: apps/questionnaire/questions.py:57
-msgid "Какие специалисты уже работали с ребёнком?"
-msgstr ""
-
-#: apps/questionnaire/questions.py:59
 msgid "Речевое развитие и коммуникация"
 msgstr ""
 
-#: apps/questionnaire/questions.py:60
+#: apps/questionnaire/questions.py:54
 msgid "Ребёнок понимает обращённую к нему речь."
 msgstr ""
 
-#: apps/questionnaire/questions.py:61
+#: apps/questionnaire/questions.py:55
 msgid "Выполняет простые устные инструкции."
 msgstr ""
 
-#: apps/questionnaire/questions.py:62
+#: apps/questionnaire/questions.py:56
 msgid "Выполняет инструкции из двух-трёх действий."
 msgstr ""
 
-#: apps/questionnaire/questions.py:63
+#: apps/questionnaire/questions.py:57
 msgid "Использует речь для выражения своих потребностей."
 msgstr ""
 
-#: apps/questionnaire/questions.py:64
+#: apps/questionnaire/questions.py:58
 msgid "Может самостоятельно составить предложение."
 msgstr ""
 
-#: apps/questionnaire/questions.py:65
+#: apps/questionnaire/questions.py:59
 msgid "Может поддержать диалог."
 msgstr ""
 
-#: apps/questionnaire/questions.py:66
+#: apps/questionnaire/questions.py:60
 msgid "Правильно произносит большинство звуков."
 msgstr ""
 
-#: apps/questionnaire/questions.py:67
+#: apps/questionnaire/questions.py:61
 msgid "Различает и правильно использует слова по смыслу."
 msgstr ""
 
-#: apps/questionnaire/questions.py:68
+#: apps/questionnaire/questions.py:62
 msgid "Может пересказать услышанный рассказ или событие."
 msgstr ""
 
-#: apps/questionnaire/questions.py:69
+#: apps/questionnaire/questions.py:63
 msgid "Может самостоятельно рассказать о своих желаниях и переживаниях."
 msgstr ""
 
-#: apps/questionnaire/questions.py:70
+#: apps/questionnaire/questions.py:64
 msgid "Использует жесты, указание или альтернативные способы коммуникации."
 msgstr ""
 
-#: apps/questionnaire/questions.py:71
+#: apps/questionnaire/questions.py:65
 msgid "Ребёнку трудно выразить свои мысли словами."
 msgstr ""
 
-#: apps/questionnaire/questions.py:73
+#: apps/questionnaire/questions.py:67
 msgid "Познавательное развитие"
 msgstr ""
 
-#: apps/questionnaire/questions.py:74
+#: apps/questionnaire/questions.py:68
 msgid "Ребёнок может удерживать внимание на одном задании."
 msgstr ""
 
-#: apps/questionnaire/questions.py:75
+#: apps/questionnaire/questions.py:69
 msgid "Может самостоятельно выполнять задания без постоянной помощи взрослого."
 msgstr ""
 
-#: apps/questionnaire/questions.py:76
+#: apps/questionnaire/questions.py:70
 msgid "Запоминает новую информацию."
 msgstr ""
 
-#: apps/questionnaire/questions.py:77
+#: apps/questionnaire/questions.py:71
 msgid "Может вспомнить ранее изученный материал."
 msgstr ""
 
-#: apps/questionnaire/questions.py:78
+#: apps/questionnaire/questions.py:72
 msgid "Различает цвета, формы и величины."
 msgstr ""
 
-#: apps/questionnaire/questions.py:79
+#: apps/questionnaire/questions.py:73
 msgid "Ориентируется в пространстве (право, лево, верх, низ)."
 msgstr ""
 
-#: apps/questionnaire/questions.py:80
+#: apps/questionnaire/questions.py:74
 msgid "Ориентируется во времени (вчера, сегодня, завтра, времена года)."
 msgstr ""
 
-#: apps/questionnaire/questions.py:81
+#: apps/questionnaire/questions.py:75
 msgid "Умеет сравнивать предметы и находить отличия."
 msgstr ""
 
-#: apps/questionnaire/questions.py:82
+#: apps/questionnaire/questions.py:76
 msgid "Может классифицировать предметы по определённым признакам."
 msgstr ""
 
-#: apps/questionnaire/questions.py:83
+#: apps/questionnaire/questions.py:77
 msgid "Понимает причинно-следственные связи."
 msgstr ""
 
-#: apps/questionnaire/questions.py:84
+#: apps/questionnaire/questions.py:78
 msgid "Может решать простые логические задачи."
 msgstr ""
 
-#: apps/questionnaire/questions.py:85
+#: apps/questionnaire/questions.py:79
 msgid "Испытывает трудности при усвоении новых знаний."
 msgstr ""
 
-#: apps/questionnaire/questions.py:86
+#: apps/questionnaire/questions.py:80
 msgid "Быстро забывает ранее изученный материал."
 msgstr ""
 
-#: apps/questionnaire/questions.py:88
+#: apps/questionnaire/questions.py:82
 msgid "Эмоциональное развитие и поведение"
 msgstr ""
 
-#: apps/questionnaire/questions.py:89
+#: apps/questionnaire/questions.py:83
 msgid "Ребёнок умеет контролировать свои эмоции."
 msgstr ""
 
-#: apps/questionnaire/questions.py:90
+#: apps/questionnaire/questions.py:84
 msgid "Спокойно реагирует на отказ или запрет."
 msgstr ""
 
-#: apps/questionnaire/questions.py:91
+#: apps/questionnaire/questions.py:85
 msgid "Может самостоятельно справляться с неудачами."
 msgstr ""
 
-#: apps/questionnaire/questions.py:92
+#: apps/questionnaire/questions.py:86
 msgid "Принимает изменения привычного распорядка."
 msgstr ""
 
-#: apps/questionnaire/questions.py:93
+#: apps/questionnaire/questions.py:87
 msgid "Может ждать своей очереди."
 msgstr ""
 
-#: apps/questionnaire/questions.py:94
+#: apps/questionnaire/questions.py:88
 msgid "Соблюдает правила и договорённости."
 msgstr ""
 
-#: apps/questionnaire/questions.py:95
+#: apps/questionnaire/questions.py:89
 msgid "Может длительное время заниматься одним видом деятельности."
 msgstr ""
 
-#: apps/questionnaire/questions.py:96
+#: apps/questionnaire/questions.py:90
 msgid "Проявляет агрессию по отношению к окружающим."
 msgstr ""
 
-#: apps/questionnaire/questions.py:97
+#: apps/questionnaire/questions.py:91
 msgid "Часто возникают истерики или эмоциональные срывы."
 msgstr ""
 
-#: apps/questionnaire/questions.py:98
+#: apps/questionnaire/questions.py:92
 msgid "Может причинять вред себе (бьёт себя, кусает, ударяется)."
 msgstr ""
 
-#: apps/questionnaire/questions.py:99
+#: apps/questionnaire/questions.py:93
 msgid "Проявляет повторяющиеся действия или движения."
 msgstr ""
 
-#: apps/questionnaire/questions.py:100
+#: apps/questionnaire/questions.py:94
 msgid "Трудно переключается с одного занятия на другое."
 msgstr ""
 
-#: apps/questionnaire/questions.py:102
+#: apps/questionnaire/questions.py:96
 msgid "Социальное взаимодействие"
 msgstr ""
 
-#: apps/questionnaire/questions.py:103
+#: apps/questionnaire/questions.py:97
 msgid "Ребёнок самостоятельно вступает в контакт со взрослыми."
 msgstr ""
 
-#: apps/questionnaire/questions.py:104
+#: apps/questionnaire/questions.py:98
 msgid "Инициирует общение со сверстниками."
 msgstr ""
 
-#: apps/questionnaire/questions.py:105
+#: apps/questionnaire/questions.py:99
 msgid "Проявляет интерес к совместным играм."
 msgstr ""
 
-#: apps/questionnaire/questions.py:106
+#: apps/questionnaire/questions.py:100
 msgid "Умеет играть по правилам."
 msgstr ""
 
-#: apps/questionnaire/questions.py:107
+#: apps/questionnaire/questions.py:101
 msgid "Понимает эмоции других людей."
 msgstr ""
 
-#: apps/questionnaire/questions.py:108
+#: apps/questionnaire/questions.py:102
 msgid "Может обратиться за помощью."
 msgstr ""
 
-#: apps/questionnaire/questions.py:109
+#: apps/questionnaire/questions.py:103
 msgid "Умеет делиться игрушками и предметами."
 msgstr ""
 
-#: apps/questionnaire/questions.py:110
+#: apps/questionnaire/questions.py:104
 msgid "Поддерживает зрительный контакт в естественных ситуациях общения."
 msgstr ""
 
-#: apps/questionnaire/questions.py:111
+#: apps/questionnaire/questions.py:105
 msgid "Проявляет интерес к окружающим людям."
 msgstr ""
 
-#: apps/questionnaire/questions.py:112
+#: apps/questionnaire/questions.py:106
 msgid "Предпочитает находиться в одиночестве."
 msgstr ""
 
-#: apps/questionnaire/questions.py:113
+#: apps/questionnaire/questions.py:107
 msgid "Испытывает трудности при взаимодействии с другими детьми."
 msgstr ""
 
-#: apps/questionnaire/questions.py:115
+#: apps/questionnaire/questions.py:109
 msgid "Двигательное развитие и физическая активность"
 msgstr ""
 
-#: apps/questionnaire/questions.py:116
+#: apps/questionnaire/questions.py:110
 msgid "Ребёнок уверенно ходит, бегает и прыгает."
 msgstr ""
 
-#: apps/questionnaire/questions.py:117
+#: apps/questionnaire/questions.py:111
 msgid "Хорошо сохраняет равновесие."
 msgstr ""
 
-#: apps/questionnaire/questions.py:118
+#: apps/questionnaire/questions.py:112
 msgid "Может выполнять движения по показу взрослого."
 msgstr ""
 
-#: apps/questionnaire/questions.py:119
+#: apps/questionnaire/questions.py:113
 msgid "Координирует движения рук и ног."
 msgstr ""
 
-#: apps/questionnaire/questions.py:120
+#: apps/questionnaire/questions.py:114
 msgid "Может ловить и бросать мяч."
 msgstr ""
 
-#: apps/questionnaire/questions.py:121
+#: apps/questionnaire/questions.py:115
 msgid "Испытывает трудности при выполнении физических упражнений."
 msgstr ""
 
-#: apps/questionnaire/questions.py:122
+#: apps/questionnaire/questions.py:116
 msgid "Быстро утомляется при физической нагрузке."
 msgstr ""
 
-#: apps/questionnaire/questions.py:123
+#: apps/questionnaire/questions.py:117
 msgid "Наблюдается неловкость движений."
 msgstr ""
 
-#: apps/questionnaire/questions.py:124
+#: apps/questionnaire/questions.py:118
 msgid ""
 "Испытывает трудности с мелкой моторикой (застёгивание пуговиц, использование "
 "ножниц, рисование)."
 msgstr ""
 
-#: apps/questionnaire/questions.py:125
+#: apps/questionnaire/questions.py:119
 msgid "Избегает подвижных игр и физических упражнений."
 msgstr ""
 
-#: apps/questionnaire/questions.py:127
+#: apps/questionnaire/questions.py:121
 msgid "Навыки самообслуживания и самостоятельность"
 msgstr ""
 
-#: apps/questionnaire/questions.py:128
+#: apps/questionnaire/questions.py:122
 msgid "Самостоятельно одевается и раздевается."
 msgstr ""
 
-#: apps/questionnaire/questions.py:129
+#: apps/questionnaire/questions.py:123
 msgid "Самостоятельно принимает пищу."
 msgstr ""
 
-#: apps/questionnaire/questions.py:130
+#: apps/questionnaire/questions.py:124
 msgid "Пользуется туалетом без помощи взрослого."
 msgstr ""
 
-#: apps/questionnaire/questions.py:131
+#: apps/questionnaire/questions.py:125
 msgid "Соблюдает правила личной гигиены."
 msgstr ""
 
-#: apps/questionnaire/questions.py:132
+#: apps/questionnaire/questions.py:126
 msgid "Может самостоятельно организовать простые бытовые действия."
 msgstr ""
 
-#: apps/questionnaire/questions.py:133
+#: apps/questionnaire/questions.py:127
 msgid "Убирает за собой игрушки и личные вещи."
 msgstr ""
 
-#: apps/questionnaire/questions.py:134
+#: apps/questionnaire/questions.py:128
 msgid "Может самостоятельно выполнять привычные повседневные действия."
 msgstr ""
 
-#: apps/questionnaire/questions.py:135
+#: apps/questionnaire/questions.py:129
 msgid "Требует постоянного контроля и помощи взрослых."
-msgstr ""
-
-#: apps/questionnaire/questions.py:137
-msgid "Дополнительная информация от родителей"
-msgstr ""
-
-#: apps/questionnaire/questions.py:138
-msgid "Какие трудности в развитии ребёнка беспокоят вас больше всего?"
-msgstr ""
-
-#: apps/questionnaire/questions.py:139
-msgid "Какие навыки вы хотели бы развить в первую очередь?"
-msgstr ""
-
-#: apps/questionnaire/questions.py:140
-msgid "В каких ситуациях ребёнку особенно трудно?"
-msgstr ""
-
-#: apps/questionnaire/questions.py:141
-msgid "Что у ребёнка получается лучше всего? Какие у него сильные стороны?"
-msgstr ""
-
-#: apps/questionnaire/questions.py:142
-msgid "Какие занятия ребёнку нравятся больше всего?"
-msgstr ""
-
-#: apps/questionnaire/questions.py:143
-msgid "Какой результат от коррекционных занятий вы хотели бы получить?"
 msgstr ""
 
 #: apps/search/forms.py:74
@@ -1002,20 +954,34 @@ msgstr ""
 msgid "Язык интерфейса"
 msgstr ""
 
-#: templates/questionnaire/form.html:3 templates/questionnaire/form.html:7
+#: templates/questionnaire/form.html:3 templates/questionnaire/form.html:8
 msgid "Опросник для родителей"
 msgstr ""
 
-#: templates/questionnaire/form.html:8
+#: templates/questionnaire/form.html:9
 msgid "Первичная оценка особенностей развития ребёнка"
 msgstr ""
 
-#: templates/questionnaire/form.html:10
+#: templates/questionnaire/form.html:11
 msgid "Это не медицинская диагностика, а рекомендация."
 msgstr ""
 
-#: templates/questionnaire/form.html:11
+#: templates/questionnaire/form.html:12
 msgid "Ответы не сохраняются. Баллы считаются только для показа результата."
+msgstr ""
+
+#: templates/questionnaire/form.html:20
+#, python-format
+msgid "Раздел %(n)s из %(total)s"
+msgstr ""
+
+#: templates/questionnaire/form.html:38
+#: templates/search/_results_partial.html:22
+msgid "Назад"
+msgstr ""
+
+#: templates/questionnaire/form.html:39
+msgid "Далее"
 msgstr ""
 
 #: templates/questionnaire/form.html:42
@@ -1272,10 +1238,6 @@ msgstr ""
 
 #: templates/search/_results_partial.html:21
 msgid "Страницы"
-msgstr ""
-
-#: templates/search/_results_partial.html:22
-msgid "Назад"
 msgstr ""
 
 #: templates/search/_results_partial.html:24

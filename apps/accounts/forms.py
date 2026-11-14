@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from apps.consents.models import Consent
 
+from .models import User
 from .phone import InvalidPhone, normalize_kz_mobile
 
 CONSENT_KINDS = [Consent.USER_AGREEMENT, Consent.PD_PROCESSING]
@@ -39,3 +40,15 @@ class CodeForm(forms.Form):
     @property
     def accepted_kinds(self) -> list[str]:
         return list(CONSENT_KINDS) if self.require_consents else []
+
+
+class FullNameForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["last_name", "first_name"]
+        labels = {"last_name": _("Фамилия"), "first_name": _("Имя")}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.required = True

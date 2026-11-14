@@ -2,6 +2,7 @@ from urllib.parse import urlencode
 
 from django.conf import settings
 from django.contrib.auth import login, logout
+from django.contrib.auth.views import redirect_to_login
 from django.shortcuts import redirect, render
 from django.urls import reverse, translate_url
 from django.utils import translation
@@ -11,7 +12,7 @@ from django.views.decorators.http import require_POST
 
 from apps.consents.services import record_consents
 
-from .forms import CodeForm, PhoneForm
+from .forms import CodeForm, FullNameForm, PhoneForm
 from .models import User
 from .otp import OtpLocked, issue_code, verify_code
 
@@ -44,17 +45,11 @@ def login_view(request):
     return render(request, "accounts/phone_form.html", {"form": form, "next": next_url})
 
 
-def _login_response(request, user: User, next_url: str):
-    lang = user.preferred_language
-    if next_url:
-        target = translate_url(next_url, lang)
-    else:
-        with translation.override(lang):
-            target = reverse("core:home")
+def _language_redirect(user: User, target: str):
     response = redirect(target)
     response.set_cookie(
         settings.LANGUAGE_COOKIE_NAME,
-        lang,
+        user.preferred_language,
         max_age=settings.LANGUAGE_COOKIE_AGE,
         path=settings.LANGUAGE_COOKIE_PATH,
         domain=settings.LANGUAGE_COOKIE_DOMAIN,
@@ -63,6 +58,16 @@ def _login_response(request, user: User, next_url: str):
         samesite=settings.LANGUAGE_COOKIE_SAMESITE,
     )
     return response
+
+
+def _login_response(request, user: User, next_url: str):
+    lang = user.preferred_language
+    if next_url:
+        target = translate_url(next_url, lang)
+    else:
+        with translation.override(lang):
+            target = reverse("core:home")
+    return _language_redirect(user, target)
 
 
 def _otp_login_allowed(user: User) -> bool:
@@ -97,6 +102,12 @@ def verify_view(request):
                         record_consents(user, form.accepted_kinds, request.META.get("REMOTE_ADDR", ""))
                     login(request, user)
                     request.session.pop(SESSION_PHONE, None)
+                    if is_new:
+                        with translation.override(user.preferred_language):
+                            target = reverse("accounts:register")
+                        if next_url:
+                            target += "?" + urlencode({"next": next_url})
+                        return _language_redirect(user, target)
                     return _login_response(request, user, next_url)
                 form.add_error("code", _("Неверный или просроченный код"))
     else:
@@ -112,6 +123,22 @@ def verify_view(request):
             "demo_otp_code": settings.DEMO_OTP_CODE,
         },
     )
+
+
+def register_view(request):
+    if not request.user.is_authenticated:
+        return redirect_to_login(request.get_full_path(), reverse("accounts:login"))
+    if request.user.has_full_name:
+        return redirect("core:home")  # Task 5: cabinet:home
+    next_url = _safe_next(request)
+    if request.method == "POST":
+        form = FullNameForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(next_url or "core:home")  # Task 5: cabinet:home
+    else:
+        form = FullNameForm(instance=request.user)
+    return render(request, "accounts/register.html", {"form": form, "next": next_url})
 
 
 @require_POST

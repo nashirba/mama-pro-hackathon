@@ -54,6 +54,8 @@ def test_new_user_registered_with_consents(client, db):
         REMOTE_ADDR="10.0.0.5",
     )
     assert r.status_code == 302
+    assert r.headers["Location"] == "/kk/register/"
+    assert r.cookies["django_language"].value == "kk"
     user = User.objects.get(phone="+77011234567")
     assert user.preferred_language == "kk"
     consents = Consent.objects.filter(user=user)

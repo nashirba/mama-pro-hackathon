@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Создать личный кабинет" %} — {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-md px-4 py-10">
+  <h1 class="text-2xl font-bold">{% translate "Создать личный кабинет" %}</h1>
+  <form method="post" class="mt-6 space-y-4" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <div>
+      <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium">{{ form.last_name.label }}</label>
+      <input type="text" name="last_name" id="{{ form.last_name.id_for_label }}" value="{{ form.last_name.value|default:'' }}"
+             autocomplete="family-name" maxlength="150" required autofocus
+             class="mt-1 min-h-12 w-full rounded border border-field px-3 py-2">
+      {% for error in form.last_name.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
+    </div>
+    <div>
+      <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium">{{ form.first_name.label }}</label>
+      <input type="text" name="first_name" id="{{ form.first_name.id_for_label }}" value="{{ form.first_name.value|default:'' }}"
+             autocomplete="given-name" maxlength="150" required
+             class="mt-1 min-h-12 w-full rounded border border-field px-3 py-2">
+      {% for error in form.first_name.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
+    </div>
+    <button type="submit" class="btn-press min-h-12 w-full rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Создать" %}</button>
+  </form>
+</div>
+{% endblock %}

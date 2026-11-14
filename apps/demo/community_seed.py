@@ -1,7 +1,9 @@
 """Synthetic community feed for the demo: parents with nicknames, posts, comments, replies, likes, a few photos.
 
 Everything random goes through the `random.Random` passed in. The seed owns only the posts of its own users
-(synthetic parents and the seed specialists), so a rerun deletes and recreates exactly that and nothing else.
+(synthetic parents and the seed specialists). Seeding is create-if-absent: a start of the service must never touch posts
+that already exist, because real users comment, like and complain on them and shared links point at their ids. Only an
+explicit reset deletes and recreates the seed data.
 """
 
 from datetime import timedelta
@@ -42,7 +44,12 @@ def _parents(nicknames: list[str]) -> list[User]:
     return parents
 
 
-def _clear() -> None:
+def has_seed_posts() -> bool:
+    return Post.objects.filter(author__phone__startswith=PARENT_PHONE_PREFIX).exists()
+
+
+def clear_community() -> None:
+    """Delete the seed posts and the seed accounts' comments, with everything attached to them."""
     authors = User.objects.filter(phone__startswith=PARENT_PHONE_PREFIX) | User.objects.filter(
         phone__startswith=LOGIN_PHONE_PREFIX
     )
@@ -63,12 +70,23 @@ def _review_target(rng: Random, author: User, visible: list[SpecialistProfile], 
 
 
 @transaction.atomic
-def seed_community(rng: Random) -> int:
-    """Recreate the demo community; returns the number of posts."""
+def seed_community(rng: Random, *, reset: bool = False) -> tuple[int, bool]:
+    """Create the demo community unless it exists; returns (number of seed posts, whether they were created now).
+
+    With `reset` the seed data is deleted first and recreated (posts get new ids, others' replies and likes on them go).
+    """
+    if reset:
+        clear_community()
+    elif has_seed_posts():
+        return Post.objects.filter(author__phone__startswith=PARENT_PHONE_PREFIX).count(), False
     data = load_json("community_ru.json")
-    _clear()
     parents = _parents(data["nicknames"])
-    specialists = list(catalog_visible_specialists().select_related("user").order_by("pk"))
+    specialists = list(
+        catalog_visible_specialists()
+        .filter(user__phone__startswith=LOGIN_PHONE_PREFIX)
+        .select_related("user")
+        .order_by("pk")
+    )
     conditions = {c.slug: c for c in DevelopmentalCondition.objects.all()}
     cities = {n.slug: n for n in KatoNode.objects.filter(level=KatoNode.Level.CITY)}
     now = timezone.now()
@@ -97,7 +115,7 @@ def seed_community(rng: Random) -> int:
         created += 1
         _seed_comments(rng, post, item["comments"], index, parents, specialists)
         _seed_likes(rng, post, parents)
-    return created
+    return created, True
 
 
 def _seed_comments(rng, post: Post, comments: list[dict], index: int, parents: list[User], specialists) -> None:

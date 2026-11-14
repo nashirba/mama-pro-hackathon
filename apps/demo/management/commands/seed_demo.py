@@ -48,6 +48,11 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("--specialists", type=int, default=80)
         parser.add_argument("--seed", type=int, default=42)
+        parser.add_argument(
+            "--reset-community",
+            action="store_true",
+            help="Delete and recreate the seed community posts (otherwise existing ones are kept untouched)",
+        )
 
     def handle(self, *args, **options):
         total, seed = options["specialists"], options["seed"]
@@ -88,7 +93,8 @@ class Command(BaseCommand):
         PracticeContext.objects.filter(pk__in=context_ids).update(catalog_enabled=True)
         offers = rebuild_all()
         self.stdout.write(f"Demo specialists: {total}, search offers: {offers}")
-        self.stdout.write(f"Community posts: {seed_community(Random(seed))}")
+        posts, created = seed_community(Random(seed), reset=options["reset_community"])
+        self.stdout.write(f"Community posts: {posts}" + ("" if created else " (kept)"))
 
     @staticmethod
     def _contact_phone() -> str:

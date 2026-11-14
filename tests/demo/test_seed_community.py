@@ -7,11 +7,12 @@ from apps.accounts.models import User
 from apps.catalog.models import DevelopmentalCondition, SpecialistProfile
 from apps.catalog.visibility import catalog_visible_specialists
 from apps.community.models import Comment, Like, Post
-from apps.community.services import add_comment, save_post, toggle_like
 from apps.community.pii import looks_sensitive
+from apps.community.services import add_comment, file_complaint, save_post, toggle_like
 from apps.demo.generators import DATA_DIR, load_json
 from apps.geo.models import KatoNode
 from tests.demo.test_seed_demo import STOP_PHRASES
+from tests.factories import PrivateContextFactory, SpecialistFactory, UserFactory
 
 
 @pytest.fixture
@@ -100,3 +101,52 @@ def test_seed_does_not_touch_real_users_data(db):
     assert before[0] == {post.pk, review.pk} and before[1] == {comment.pk} and len(before[2]) == 1
     user.refresh_from_db()
     assert user.display_name == "Реальная_мама"
+
+
+def _seed_post_and_comment() -> tuple[Post, Comment]:
+    post = Post.objects.filter(author__phone__startswith="+7700001", comments__parent__isnull=True).first()
+    return post, post.comments.filter(parent__isnull=True).first()
+
+
+def test_real_comment_on_seed_post_survives_reseed(db):
+    call_command("seed_demo", specialists=10, seed=1)
+    user = User.objects.create_user("+77015556677", preferred_language="ru")
+    user.display_name = "Реальная_мама"
+    user.save()
+    post, seed_comment = _seed_post_and_comment()
+    comment = add_comment(post, user, "Живой комментарий.")
+    reply = add_comment(post, user, "Живой ответ.", parent=seed_comment)
+    post_like = toggle_like(user, post=post) and Like.objects.get(user=user, post=post)
+    comment_like = toggle_like(user, comment=seed_comment) and Like.objects.get(user=user, comment=seed_comment)
+    complaint = file_complaint(user, post=post, reason="other", text="жалоба")
+    seed_ids = set(Post.objects.filter(author__phone__startswith="+7700001").values_list("pk", flat=True))
+
+    call_command("seed_demo", specialists=10, seed=1)
+
+    assert set(Post.objects.filter(author__phone__startswith="+7700001").values_list("pk", flat=True)) == seed_ids
+    for obj in (comment, reply, post_like, comment_like, complaint, seed_comment):
+        assert type(obj).objects.filter(pk=obj.pk).exists()
+
+
+def test_reset_community_recreates_seed_and_keeps_real_posts(db):
+    call_command("seed_demo", specialists=10, seed=1)
+    user = User.objects.create_user("+77015556677", preferred_language="ru")
+    user.display_name = "Реальная_мама"
+    user.save()
+    own = save_post(Post(author=user, kind="story", body="Моя настоящая история."))
+    old_ids = set(Post.objects.exclude(pk=own.pk).values_list("pk", flat=True))
+    count = len(old_ids)
+
+    call_command("seed_demo", specialists=10, seed=1, reset_community=True)
+
+    new_ids = set(Post.objects.exclude(pk=own.pk).values_list("pk", flat=True))
+    assert len(new_ids) == count and not new_ids & old_ids
+    assert Post.objects.filter(pk=own.pk).exists()
+
+
+def test_seed_skips_visible_non_seed_specialists(db):
+    outsider = SpecialistFactory(user=UserFactory(phone="+77019998877"))
+    PrivateContextFactory(specialist=outsider, catalog_enabled=True)
+    call_command("seed_demo", specialists=10, seed=1)
+    assert not Post.objects.filter(specialist=outsider).exists()
+    assert not Comment.objects.filter(author=outsider.user).exists()

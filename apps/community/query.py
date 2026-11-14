@@ -3,8 +3,23 @@
 from dataclasses import dataclass, field
 
 from django.conf import settings
-from django.contrib.postgres.search import SearchQuery, SearchRank, TrigramWordSimilarity
-from django.db.models import BooleanField, Count, Exists, F, IntegerField, OuterRef, Q, QuerySet, Subquery, Value
+from django.contrib.postgres.search import (
+    SearchQuery,
+    SearchRank,
+    TrigramWordSimilarity,
+)
+from django.db.models import (
+    BooleanField,
+    Count,
+    Exists,
+    F,
+    IntegerField,
+    OuterRef,
+    Q,
+    QuerySet,
+    Subquery,
+    Value,
+)
 from django.db.models.functions import Coalesce
 from django.http import Http404, QueryDict
 from django.shortcuts import get_object_or_404

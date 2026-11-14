@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from .models import Complaint, Comment, Post
+from .models import Comment, Complaint, Post
 from .names import author_name
 
 

@@ -14,7 +14,8 @@
     <a href="{% url 'community:complain' 'comment' comment.pk %}" class="inline-flex min-h-11 items-center rounded px-2 text-sm text-slate-600 hover:underline">{% translate "Пожаловаться" %}</a>
     {% if user.is_authenticated and user.pk == comment.author_id %}
     <a href="{% url 'community:comment_edit' comment.pk %}" class="inline-flex min-h-11 items-center rounded px-2 text-sm text-slate-600 hover:underline">{% translate "Изменить" %}</a>
-    <form method="post" action="{% url 'community:comment_delete' comment.pk %}" onsubmit="return confirm('{% translate 'Удалить комментарий?' %}')">
+    {% translate "Удалить комментарий?" as msg %}
+    <form method="post" action="{% url 'community:comment_delete' comment.pk %}" onsubmit="return confirm('{{ msg|escapejs }}')">
       {% csrf_token %}
       <button type="submit" class="inline-flex min-h-11 items-center rounded px-2 text-sm text-red-700 hover:underline">{% translate "Удалить" %}</button>
     </form>

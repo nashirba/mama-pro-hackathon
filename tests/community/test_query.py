@@ -9,7 +9,12 @@ from apps.catalog.models import DevelopmentalCondition
 from apps.community import query
 from apps.community.models import Like, Post, PostImage
 from apps.community.query import CommentNode, FeedParams
-from tests.factories import CommentFactory, NicknamedUserFactory, PostFactory, SpecialistFactory
+from tests.factories import (
+    CommentFactory,
+    NicknamedUserFactory,
+    PostFactory,
+    SpecialistFactory,
+)
 
 pytestmark = pytest.mark.django_db
 

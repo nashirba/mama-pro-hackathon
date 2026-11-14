@@ -206,7 +206,7 @@ msgstr "Суретті жою"
 
 #: apps/community/forms.py:160 templates/community/_comment_form.html:5
 msgid "Комментарий"
-msgstr "Пікір"
+msgstr "Түсініктеме"
 
 #: apps/community/forms.py:164
 msgid "Причина"
@@ -665,7 +665,7 @@ msgstr "Өзгерту"
 
 #: templates/community/_comment.html:17
 msgid "Удалить комментарий?"
-msgstr "Пікірді жою керек пе?"
+msgstr "Түсініктемені жою керек пе?"
 
 #: templates/community/_comment.html:19 templates/community/post_detail.html:19
 msgid "Удалить"
@@ -682,7 +682,7 @@ msgstr "Сіздің жауабыңыз"
 
 #: templates/community/_comment_form.html:6
 msgid "Ваш комментарий"
-msgstr "Сіздің пікіріңіз"
+msgstr "Сіздің түсініктемеңіз"
 
 #: templates/community/_comment_form.html:7
 msgid "Отправить"
@@ -690,11 +690,11 @@ msgstr "Жіберу"
 
 #: templates/community/_comments.html:5
 msgid "Комментарий удалён"
-msgstr "Пікір жойылды"
+msgstr "Түсініктеме жойылды"
 
 #: templates/community/_comments.html:11
 msgid "Комментариев пока нет"
-msgstr "Әзірге пікір жоқ"
+msgstr "Әзірге түсініктеме жоқ"
 
 #: templates/community/_feed_page.html:2
 msgid "Загрузка..."
@@ -723,7 +723,7 @@ msgstr "Маманның атын енгізіңіз"
 #: templates/community/comment_form.html:3
 #: templates/community/comment_form.html:7
 msgid "Изменить комментарий"
-msgstr "Пікірді өзгерту"
+msgstr "Түсініктемені өзгерту"
 
 #: templates/community/comment_form.html:14
 #: templates/community/nickname_form.html:18
@@ -817,7 +817,7 @@ msgstr "Жазбаны жою керек пе?"
 
 #: templates/community/post_detail.html:24
 msgid "Комментарии"
-msgstr "Пікірлер"
+msgstr "Түсініктемелер"
 
 #: templates/community/post_form.html:3 templates/community/post_form.html:13
 msgid "Изменить пост"
@@ -837,7 +837,7 @@ msgstr "Жарияламас бұрын оқыңыз:"
 
 #: templates/community/post_form.html:14
 msgid "правила сообщества"
-msgstr "Қауымдастық ережелері"
+msgstr "қауымдастық ережелері"
 
 #: templates/community/post_form.html:40
 msgid "Имя специалиста"

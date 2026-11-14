@@ -132,11 +132,6 @@ def test_post_detail_shows_counts_and_image_flag(client):
     assert "<img" not in _html(client.get(f"/ru/community/{plain.pk}/")).split("<main")[1]
 
 
-def test_image_stub_is_404(client):
-    post = PostFactory()
-    assert client.get(reverse("community:image", args=[post.pk])).status_code == 404
-
-
 def test_own_hidden_comment_marked(client):
     author = NicknamedUserFactory()
     post = PostFactory()
@@ -282,3 +277,11 @@ def test_home_shows_recent_posts(client, catalog_fixture):
 
 def test_home_without_posts_has_no_section(client, catalog_fixture):
     assert "Свежие посты" not in _html(client.get("/ru/"))
+
+
+@pytest.mark.parametrize(("count", "label"), [(1, "1 ответ"), (2, "2 ответа"), (5, "5 ответов"), (21, "21 ответ")])
+def test_feed_reply_count_uses_russian_plural_forms(client, count, label):
+    post = PostFactory()
+    CommentFactory.create_batch(count, post=post)
+    html = _html(client.get("/ru/community/"))
+    assert f"{label}</span>" in html

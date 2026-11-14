@@ -8,7 +8,10 @@ from PIL import Image
 
 from apps.community.models import Post, PostImage
 from apps.community.pii import looks_sensitive
-from tests.factories import NicknamedUserFactory, PostFactory, PrivateContextFactory, SpecialistFactory
+from tests.factories import (
+    NicknamedUserFactory,
+    PostFactory,
+)
 
 pytestmark = pytest.mark.django_db
 

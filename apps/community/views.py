@@ -26,7 +26,14 @@ from .query import (
     post_for_viewer,
     visible_posts,
 )
-from .services import add_comment, file_complaint, save_post, soft_delete_comment, soft_delete_post, toggle_like
+from .services import (
+    add_comment,
+    file_complaint,
+    save_post,
+    soft_delete_comment,
+    soft_delete_post,
+    toggle_like,
+)
 
 
 def _feed_qs(params: FeedParams, **override) -> str:
@@ -268,11 +275,10 @@ def _target(request, target: str, pk: int):
 def like(request, target: str, pk: int):
     post, found = _target(request, target, pk)
     liked, count = toggle_like(request.user, post=post, comment=found)
+    fallback = _post_url(post.pk) if post else _post_url(found.post_id, found.pk)
     if request.headers.get("HX-Request"):
-        fallback = _post_url(post.pk) if post else _post_url(found.post_id, found.pk)
         context = {"target": target, "pk": pk, "liked": liked, "count": count, "next": _back(request, fallback)}
         return render(request, "community/_like_button.html", context)
-    fallback = _post_url(post.pk) if post else _post_url(found.post_id, found.pk)
     return redirect(_back(request, fallback))
 
 

@@ -14,7 +14,8 @@
   {% if user.is_authenticated and user.pk == post.author_id %}
   <div class="flex flex-wrap items-center gap-3">
     <a href="{% url 'community:edit' post.pk %}" class="inline-flex min-h-11 items-center rounded-lg border border-slate-300 px-4 text-sm font-medium text-slate-700 hover:bg-slate-50">{% translate "Изменить" %}</a>
-    <form method="post" action="{% url 'community:delete' post.pk %}" onsubmit="return confirm('{% translate 'Удалить пост?' %}')">
+    {% translate "Удалить пост?" as msg %}
+    <form method="post" action="{% url 'community:delete' post.pk %}" onsubmit="return confirm('{{ msg|escapejs }}')">
       {% csrf_token %}
       <button type="submit" class="inline-flex min-h-11 items-center rounded-lg border border-red-300 px-4 text-sm font-medium text-red-700 hover:bg-red-50">{% translate "Удалить" %}</button>
     </form>

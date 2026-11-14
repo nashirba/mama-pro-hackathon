@@ -1,6 +1,5 @@
 import re
 import warnings
-
 from io import BytesIO
 
 from django import forms

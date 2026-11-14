@@ -2,7 +2,12 @@ import pytest
 from django.urls import reverse
 
 from apps.community.models import Complaint, Like
-from tests.factories import CommentFactory, NicknamedUserFactory, PostFactory, UserFactory
+from tests.factories import (
+    CommentFactory,
+    NicknamedUserFactory,
+    PostFactory,
+    UserFactory,
+)
 
 pytestmark = pytest.mark.django_db
 

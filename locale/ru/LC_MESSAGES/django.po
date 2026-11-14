@@ -675,11 +675,8 @@ msgid "Ответить"
 msgstr ""
 
 #: templates/community/_comment_form.html:6
-#, fuzzy
-#| msgid "Стаж %(n)s год"
-#| msgid_plural "Стаж %(n)s лет"
 msgid "Ваш ответ"
-msgstr "Стаж %(n)s год"
+msgstr ""
 
 #: templates/community/_comment_form.html:6
 msgid "Ваш комментарий"
@@ -707,15 +704,13 @@ msgid "Полезно %(n)s"
 msgstr ""
 
 #: templates/community/_post_card.html:26
-#, fuzzy, python-format
-#| msgid "Стаж %(n)s год"
-#| msgid_plural "Стаж %(n)s лет"
+#, python-format
 msgid "%(n)s ответ"
 msgid_plural "%(n)s ответов"
-msgstr[0] "Стаж %(n)s год"
-msgstr[1] "Стаж %(n)s года"
-msgstr[2] "Стаж %(n)s лет"
-msgstr[3] "Стаж %(n)s года"
+msgstr[0] "%(n)s ответ"
+msgstr[1] "%(n)s ответа"
+msgstr[2] "%(n)s ответов"
+msgstr[3] "%(n)s ответа"
 
 #: templates/community/_specialist_options.html:14
 msgid "Специалист не найден"

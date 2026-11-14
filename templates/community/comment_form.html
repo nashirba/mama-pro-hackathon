@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Изменить комментарий" %} - {{ BRAND_NAME }}{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl space-y-4 px-4 py-6 sm:px-6">
+  <h1 class="text-2xl font-bold">{% translate "Изменить комментарий" %}</h1>
+  <form method="post" class="space-y-3" novalidate>
+    {% csrf_token %}
+    <label for="{{ form.body.id_for_label }}" class="sr-only">{{ form.body.label }}</label>
+    <textarea id="{{ form.body.id_for_label }}" name="body" rows="4" maxlength="1000" required class="w-full rounded-lg border border-slate-300 px-3 py-2"{% if form.body.errors %} aria-invalid="true" aria-describedby="comment-error"{% endif %}>{{ form.body.value|default:'' }}</textarea>
+    {% if form.body.errors %}<p id="comment-error" class="text-sm text-red-700">{{ form.body.errors.0 }}</p>{% endif %}
+    <div class="flex flex-wrap items-center gap-3">
+      <button type="submit" class="inline-flex min-h-11 items-center rounded-lg bg-primary-700 px-5 font-medium text-white hover:bg-primary-800">{% translate "Сохранить" %}</button>
+      <a href="{% url 'community:post' comment.post_id %}#comment-{{ comment.pk }}" class="inline-flex min-h-11 items-center px-3 text-sm font-medium text-slate-700 hover:underline">{% translate "Отмена" %}</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

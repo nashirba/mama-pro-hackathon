@@ -12,6 +12,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     phone = models.CharField(max_length=16, unique=True)
     email = models.EmailField(blank=True)
+    # Community nickname; empty is stored as NULL so several users without one do not break `unique`.
+    display_name = models.CharField(max_length=40, null=True, blank=True, unique=True)
     preferred_language = models.CharField(max_length=2, choices=LANGUAGE_CHOICES, default="ru")
     # "Log out everywhere" increments it; it is part of the session auth hash.
     session_epoch = models.PositiveIntegerField(default=0)
@@ -26,6 +28,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.phone
+
+    def save(self, *args, **kwargs):
+        self.display_name = (self.display_name or "").strip() or None
+        super().save(*args, **kwargs)
 
     def get_session_auth_hash(self) -> str:
         key_salt = "apps.accounts.models.User.get_session_auth_hash"

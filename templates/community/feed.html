@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Сообщество" %} - {{ BRAND_NAME }}{% endblock %}
+{% block extra_head %}<meta name="robots" content="noindex">{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl space-y-4 px-4 py-6 sm:px-6">
+  <div class="flex flex-wrap items-baseline justify-between gap-2">
+    <h1 class="text-2xl font-bold">{% translate "Сообщество" %}</h1>
+    <div class="flex flex-wrap items-center gap-3">
+      <a href="{% url 'community:rules' %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Правила сообщества" %}</a>
+      <a href="{% url 'community:new' %}" class="inline-flex min-h-11 items-center rounded-lg bg-primary-700 px-4 text-sm font-medium text-white hover:bg-primary-800">{% translate "Написать" %}</a>
+    </div>
+  </div>
+
+  <form method="get" action="{% url 'community:feed' %}" role="search" class="space-y-3">
+    {% if params.kind %}<input type="hidden" name="kind" value="{{ params.kind }}">{% endif %}
+    {% if params.specialist_id %}<input type="hidden" name="specialist" value="{{ params.specialist_id }}">{% endif %}
+    <div class="flex gap-2">
+      <label for="feed-q" class="sr-only">{% translate "Поиск по постам" %}</label>
+      <input id="feed-q" type="search" name="q" value="{{ params.q }}" placeholder="{% translate 'Поиск по постам' %}" class="min-h-11 min-w-0 flex-1 rounded-lg border border-slate-300 px-3">
+      <button type="submit" class="inline-flex min-h-11 items-center rounded-lg bg-primary-700 px-4 text-sm font-medium text-white hover:bg-primary-800">{% translate "Найти" %}</button>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <label class="flex items-center gap-2 text-sm text-slate-700">{% translate "Особенность" %}
+        <select name="condition" onchange="this.form.requestSubmit()" class="min-h-11 rounded-lg border border-slate-300 bg-white px-2">
+          <option value="">{% translate "Любая" %}</option>
+          {% for c in conditions %}<option value="{{ c.pk }}"{% if c.pk == params.condition_id %} selected{% endif %}>{{ c.name }}</option>{% endfor %}
+        </select>
+      </label>
+      <label class="flex items-center gap-2 text-sm text-slate-700">{% translate "Город" %}
+        <select name="city" onchange="this.form.requestSubmit()" class="min-h-11 rounded-lg border border-slate-300 bg-white px-2">
+          <option value="">{% translate "Любой" %}</option>
+          {% for c in cities %}<option value="{{ c.pk }}"{% if c.pk == params.city_id %} selected{% endif %}>{{ c.name }}</option>{% endfor %}
+        </select>
+      </label>
+    </div>
+  </form>
+
+  <nav aria-label="{% translate 'Тип поста' %}" class="flex flex-wrap gap-2">
+    {% for tab in kind_tabs %}<a href="{{ tab.url }}"{% if tab.active %} aria-current="page"{% endif %} class="inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-medium {% if tab.active %}border-primary-700 bg-primary-700 text-white{% else %}border-slate-300 text-slate-700 hover:bg-slate-50{% endif %}">{{ tab.label }}</a>{% endfor %}
+  </nav>
+
+  {% if specialist %}<p>
+    <a href="{{ clear_specialist_url }}" class="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary-100 px-4 text-sm font-medium text-primary-800 hover:underline">{% blocktranslate with name=specialist.display_name %}Отзывы о {{ name }}{% endblocktranslate %} <span aria-hidden="true">×</span><span class="sr-only">{% translate "Снять фильтр" %}</span></a>
+  </p>{% endif %}
+
+  <div id="feed" class="space-y-3">
+    {% include "community/_feed_page.html" %}
+    {% if not posts %}<p class="rounded-lg border border-dashed border-slate-300 p-6 text-center text-slate-600">{% translate "Пока здесь нет постов" %}</p>{% endif %}
+  </div>
+</div>
+{% endblock %}

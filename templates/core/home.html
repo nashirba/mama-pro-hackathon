@@ -57,6 +57,18 @@
     </div>
   </section>
 
+  {% if recent_posts %}
+  <section>
+    <div class="flex items-baseline justify-between gap-3">
+      <h2 class="text-xl font-semibold">{% translate "Свежие посты" %}</h2>
+      <a href="{% url 'community:feed' %}" class="inline-flex min-h-11 items-center px-2 font-medium text-primary-700 hover:underline">{% translate "Перейти в сообщество" %}</a>
+    </div>
+    <div class="mt-4 grid gap-3 lg:grid-cols-3">
+      {% for post in recent_posts %}{% include "community/_post_card.html" %}{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
   <section>
     <h2 class="text-xl font-semibold">{% translate "Города" %}</h2>
     <ul class="mt-4 flex flex-wrap gap-2">

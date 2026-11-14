@@ -12,6 +12,7 @@ This is a demo MVP: it contains what the demo needs. Production hardening comes 
 - Results as a list or on a map (MapLibre + OpenFreeMap). On the specialist page: "Open in 2GIS" links and a WhatsApp contact button.
 - Landing pages "type × city" and "condition × city", for example `/ru/almaty/logoped/`.
 - Trained nannies section `/ru/nannies/` (city landing `/ru/almaty/nannies/`, nanny page `/ru/nanny/<slug>/`). A nanny is a separate profile category, not a specialist type, so nannies and specialists never mix. A nanny is shown only with a course certificate, a pediatric first aid course and a criminal record certificate date (`apps/catalog/visibility.py`). Filters: city and district, child age, condition, pay unit (hour, night, month), price per hour and per month, language, experience. No map: a nanny works at the family's home.
+- Community feed: parents and specialists post questions, stories and specialist reviews, with photos, comments, replies and likes. Guests read; writing needs sign-in and a nickname. Search and filters (type, condition, city, specialist), complaints and moderation in Django admin.
 - Login by phone and one-time code. In the demo no SMS is sent: the code is `0000` and is shown on the page.
 - Synthetic demo data: 80 specialists and 24 nannies in Almaty, Astana, Shymkent, Karaganda and Aktobe (3 nannies break the visibility rule on purpose and are not shown). Profiles, courses, certificates and verification badges are fictional.
 
@@ -54,6 +55,7 @@ Tests use `config/settings_test.py` and the PostGIS container.
 - `apps/geo`: KATO (administrative units), addresses, 2GIS links
 - `apps/catalog`: reference data, specialist and nanny profiles, nanny courses, services, specialist and nanny pages
 - `apps/search`: search index (`SearchOffer`), filters, results and the nanny section, landings, map GeoJSON, suggestions
+- `apps/community`: community feed (posts, reviews, comments, likes, complaints), visibility rules, admin moderation
 - `apps/demo`: `seed_demo` command
 - `config/`: settings (env-driven), URLs
 - `locale/`: RU/KZ translations; `.mo` files are compiled at build time and not committed

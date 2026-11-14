@@ -15,6 +15,7 @@ from apps.catalog.models import (
     SpecialistType,
     Training,
 )
+from apps.community.models import Comment, Post
 from apps.geo.models import Address, KatoNode
 
 
@@ -39,6 +40,12 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = User
 
     phone = factory.Sequence(lambda n: f"+7700{n:07d}")
+
+
+class NicknamedUserFactory(UserFactory):
+    """A parent who has already chosen a community nickname."""
+
+    display_name = factory.Sequence(lambda n: f"Мама {n}")
 
 
 class SpecialistFactory(factory.django.DjangoModelFactory):
@@ -151,3 +158,21 @@ class NannyServiceFactory(ServiceFactory):
     price_hour = 3000
     price_night = 15000
     price_month = None
+
+
+class PostFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Post
+
+    author = factory.SubFactory(NicknamedUserFactory)
+    kind = Post.Kind.QUESTION
+    body = "Текст поста"
+
+
+class CommentFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Comment
+
+    post = factory.SubFactory(PostFactory)
+    author = factory.SubFactory(NicknamedUserFactory)
+    body = "Текст комментария"

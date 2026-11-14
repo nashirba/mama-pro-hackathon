@@ -21,6 +21,7 @@ from apps.catalog.models import (
     SpecialistType,
     Training,
 )
+from apps.demo.community_seed import seed_community
 from apps.demo.generators import (
     NannySpec,
     SpecialistSpec,
@@ -55,6 +56,11 @@ class Command(BaseCommand):
         parser.add_argument("--specialists", type=int, default=80)
         parser.add_argument("--nannies", type=int, default=24)
         parser.add_argument("--seed", type=int, default=42)
+        parser.add_argument(
+            "--reset-community",
+            action="store_true",
+            help="Delete and recreate the seed community posts (otherwise existing ones are kept untouched)",
+        )
 
     def handle(self, *args, **options):
         total, nannies, seed = options["specialists"], options["nannies"], options["seed"]
@@ -103,6 +109,8 @@ class Command(BaseCommand):
         PracticeContext.objects.filter(pk__in=context_ids).update(catalog_enabled=True)
         offers = rebuild_all()
         self.stdout.write(f"Demo specialists: {total}, nannies: {nannies}, search offers: {offers}")
+        posts, created = seed_community(Random(seed), reset=options["reset_community"])
+        self.stdout.write(f"Community posts: {posts}" + ("" if created else " (kept)"))
 
     @staticmethod
     def _contact_phone() -> str:

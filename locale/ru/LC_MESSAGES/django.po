@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:18+0500\n"
+"POT-Creation-Date: 2026-11-14 14:26+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,6 +133,7 @@ msgid "Автор"
 msgstr ""
 
 #: apps/community/admin.py:33 apps/community/admin.py:50
+#: apps/community/forms.py:70
 msgid "Текст"
 msgstr ""
 
@@ -148,16 +149,58 @@ msgstr ""
 msgid "Закрыть жалобу"
 msgstr ""
 
-#: apps/community/forms.py:13
+#: apps/community/forms.py:24
 msgid "Псевдоним"
 msgstr ""
 
-#: apps/community/forms.py:22
+#: apps/community/forms.py:33
 msgid "Только буквы, цифры, пробел и _"
 msgstr ""
 
-#: apps/community/forms.py:24 apps/community/forms.py:34
+#: apps/community/forms.py:35 apps/community/forms.py:45
 msgid "Этот псевдоним уже занят"
+msgstr ""
+
+#: apps/community/forms.py:51
+msgid "Похоже, в тексте есть ИИН или телефон. Не публикуйте данные ребёнка."
+msgstr ""
+
+#: apps/community/forms.py:57
+msgid "Фото"
+msgstr ""
+
+#: apps/community/forms.py:60 templates/search/_suggest.html:1
+msgid "Особенность развития"
+msgstr ""
+
+#: apps/community/forms.py:63 apps/geo/models.py:20
+#: templates/community/feed.html:30 templates/core/home.html:24
+msgid "Город"
+msgstr ""
+
+#: apps/community/forms.py:86
+msgid "Фото больше 2 МБ"
+msgstr ""
+
+#: apps/community/forms.py:95
+msgid "Загрузите фото в формате JPEG или PNG"
+msgstr ""
+
+#: apps/community/forms.py:109 templates/community/_comment.html:6
+#: templates/community/_post_card.html:6 templates/search/_suggest.html:1
+msgid "Специалист"
+msgstr ""
+
+#: apps/community/forms.py:118
+msgid "Тип"
+msgstr ""
+
+#: apps/community/forms.py:127
+msgid "Выберите специалиста"
+msgstr ""
+
+#: apps/community/forms.py:134
+msgid "Удалить фото"
 msgstr ""
 
 #: apps/community/models.py:26
@@ -200,29 +243,28 @@ msgstr ""
 msgid "Закрыта"
 msgstr ""
 
-#: apps/community/views.py:38
+#: apps/community/views.py:43
 msgid "Все"
 msgstr ""
 
-#: apps/community/views.py:39
+#: apps/community/views.py:44
 msgid "Вопросы"
 msgstr ""
 
-#: apps/community/views.py:40
+#: apps/community/views.py:45
 msgid "Истории"
 msgstr ""
 
-#: apps/community/views.py:41
+#: apps/community/views.py:46
 msgid "Отзывы"
+msgstr ""
+
+#: apps/community/views.py:129
+msgid "Вы уже писали отзыв об этом специалисте - его можно изменить"
 msgstr ""
 
 #: apps/geo/models.py:19
 msgid "Область"
-msgstr ""
-
-#: apps/geo/models.py:20 templates/community/feed.html:27
-#: templates/core/home.html:24
-msgid "Город"
 msgstr ""
 
 #: apps/geo/models.py:21 templates/search/_filters.html:60
@@ -481,7 +523,8 @@ msgid "Адреса на карте"
 msgstr ""
 
 #: templates/catalog/specialist_detail.html:9
-#: templates/community/post_detail.html:7 templates/community/rules.html:7
+#: templates/community/post_detail.html:7 templates/community/post_form.html:7
+#: templates/community/rules.html:7
 msgid "Навигация"
 msgstr ""
 
@@ -578,17 +621,13 @@ msgstr ""
 msgid "Адреса и маршрут"
 msgstr ""
 
-#: templates/community/_comment.html:6 templates/community/_post_card.html:6
-#: templates/search/_suggest.html:1
-msgid "Специалист"
-msgstr ""
-
 #: templates/community/_comment.html:8 templates/community/_post_card.html:9
 #, python-format
 msgid "%(t)s назад"
 msgstr ""
 
 #: templates/community/_comment.html:10 templates/community/_post_card.html:15
+#: templates/community/post_form.html:16
 msgid "Скрыто модератором"
 msgstr ""
 
@@ -620,53 +659,66 @@ msgstr[1] "Стаж %(n)s года"
 msgstr[2] "Стаж %(n)s лет"
 msgstr[3] "Стаж %(n)s года"
 
+#: templates/community/_specialist_options.html:14
+msgid "Специалист не найден"
+msgstr ""
+
+#: templates/community/_specialist_options.html:16
+msgid "Введите имя специалиста"
+msgstr ""
+
 #: templates/community/feed.html:3 templates/community/feed.html:8
 #: templates/community/post_detail.html:3
-#: templates/community/post_detail.html:10 templates/community/rules.html:10
+#: templates/community/post_detail.html:10
+#: templates/community/post_form.html:10 templates/community/rules.html:10
 #: templates/partials/header.html:9
 msgid "Сообщество"
 msgstr ""
 
-#: templates/community/feed.html:9 templates/community/rules.html:3
+#: templates/community/feed.html:10 templates/community/rules.html:3
 #: templates/community/rules.html:13
 msgid "Правила сообщества"
 msgstr ""
 
-#: templates/community/feed.html:16 templates/community/feed.html:17
+#: templates/community/feed.html:11
+msgid "Написать"
+msgstr ""
+
+#: templates/community/feed.html:19 templates/community/feed.html:20
 msgid "Поиск по постам"
 msgstr ""
 
-#: templates/community/feed.html:18 templates/core/home.html:30
+#: templates/community/feed.html:21 templates/core/home.html:30
 msgid "Найти"
 msgstr ""
 
-#: templates/community/feed.html:21
+#: templates/community/feed.html:24
 msgid "Особенность"
 msgstr ""
 
-#: templates/community/feed.html:23
+#: templates/community/feed.html:26
 msgid "Любая"
 msgstr ""
 
-#: templates/community/feed.html:29 templates/search/_filters.html:55
+#: templates/community/feed.html:32 templates/search/_filters.html:55
 #: templates/search/_filters.html:62
 msgid "Любой"
 msgstr ""
 
-#: templates/community/feed.html:36
+#: templates/community/feed.html:39
 msgid "Тип поста"
 msgstr ""
 
-#: templates/community/feed.html:41
+#: templates/community/feed.html:44
 #, python-format
 msgid "Отзывы о %(name)s"
 msgstr ""
 
-#: templates/community/feed.html:41
+#: templates/community/feed.html:44
 msgid "Снять фильтр"
 msgstr ""
 
-#: templates/community/feed.html:46
+#: templates/community/feed.html:49
 msgid "Пока здесь нет постов"
 msgstr ""
 
@@ -685,11 +737,64 @@ msgid "3-40 символов: буквы, цифры, пробел и _"
 msgstr ""
 
 #: templates/community/nickname_form.html:18
+#: templates/community/post_form.html:87
 msgid "Сохранить"
 msgstr ""
 
-#: templates/community/post_detail.html:15
+#: templates/community/post_detail.html:16
+msgid "Изменить"
+msgstr ""
+
+#: templates/community/post_detail.html:17
+msgid "Удалить пост?"
+msgstr ""
+
+#: templates/community/post_detail.html:19
+msgid "Удалить"
+msgstr ""
+
+#: templates/community/post_detail.html:24
 msgid "Комментарии"
+msgstr ""
+
+#: templates/community/post_form.html:3 templates/community/post_form.html:13
+msgid "Изменить пост"
+msgstr ""
+
+#: templates/community/post_form.html:3 templates/community/post_form.html:13
+msgid "Новый пост"
+msgstr ""
+
+#: templates/community/post_form.html:10
+msgid "К посту"
+msgstr ""
+
+#: templates/community/post_form.html:14
+msgid "Перед публикацией прочитайте"
+msgstr ""
+
+#: templates/community/post_form.html:14
+msgid "правила сообщества"
+msgstr ""
+
+#: templates/community/post_form.html:40
+msgid "Имя специалиста"
+msgstr ""
+
+#: templates/community/post_form.html:58
+msgid "Всё равно опубликовать"
+msgstr ""
+
+#: templates/community/post_form.html:65 templates/community/post_form.html:71
+msgid "Не указывать"
+msgstr ""
+
+#: templates/community/post_form.html:80
+msgid "JPEG или PNG, до 2 МБ"
+msgstr ""
+
+#: templates/community/post_form.html:87
+msgid "Опубликовать"
 msgstr ""
 
 #: templates/community/rules.html:14
@@ -1038,10 +1143,6 @@ msgstr ""
 
 #: templates/search/_results_partial.html:24
 msgid "Вперёд"
-msgstr ""
-
-#: templates/search/_suggest.html:1
-msgid "Особенность развития"
 msgstr ""
 
 #: templates/search/_view_toggle.html:1

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 14:18+0500\n"
+"POT-Creation-Date: 2026-11-14 14:26+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -132,6 +132,7 @@ msgid "Автор"
 msgstr "Автор"
 
 #: apps/community/admin.py:33 apps/community/admin.py:50
+#: apps/community/forms.py:70
 msgid "Текст"
 msgstr "Мәтін"
 
@@ -147,17 +148,63 @@ msgstr "Мазмұнды жасырып, шағымды жабу"
 msgid "Закрыть жалобу"
 msgstr "Шағымды жабу"
 
-#: apps/community/forms.py:13
+#: apps/community/forms.py:24
 msgid "Псевдоним"
 msgstr "Бүркеншік ат"
 
-#: apps/community/forms.py:22
+#: apps/community/forms.py:33
 msgid "Только буквы, цифры, пробел и _"
 msgstr "Тек әріптер, сандар, бос орын және _"
 
-#: apps/community/forms.py:24 apps/community/forms.py:34
+#: apps/community/forms.py:35 apps/community/forms.py:45
 msgid "Этот псевдоним уже занят"
 msgstr "Бұл бүркеншік ат бос емес"
+
+#: apps/community/forms.py:51
+msgid "Похоже, в тексте есть ИИН или телефон. Не публикуйте данные ребёнка."
+msgstr ""
+"Мәтінде ЖСН немесе телефон нөмірі бар сияқты. Баланың деректерін "
+"жарияламаңыз."
+
+#: apps/community/forms.py:57
+msgid "Фото"
+msgstr "Сурет"
+
+#: apps/community/forms.py:60 templates/search/_suggest.html:1
+msgid "Особенность развития"
+msgstr "Даму ерекшелігі"
+
+#: apps/community/forms.py:63 apps/geo/models.py:20
+#: templates/community/feed.html:30 templates/core/home.html:24
+msgid "Город"
+msgstr "Қала"
+
+#: apps/community/forms.py:86
+msgid "Фото больше 2 МБ"
+msgstr "Сурет 2 МБ-тан үлкен"
+
+#: apps/community/forms.py:95
+msgid "Загрузите фото в формате JPEG или PNG"
+msgstr "Суретті JPEG немесе PNG форматында жүктеңіз"
+
+#: apps/community/forms.py:109 templates/community/_comment.html:6
+#: templates/community/_post_card.html:6 templates/search/_suggest.html:1
+msgid "Специалист"
+msgstr "Маман"
+
+#: apps/community/forms.py:118
+msgid "Тип"
+msgstr "Түрі"
+
+#: apps/community/forms.py:127
+#| msgid "Карта специалистов"
+msgid "Выберите специалиста"
+msgstr "Маманды таңдаңыз"
+
+#: apps/community/forms.py:134
+#| msgid "Получить код"
+msgid "Удалить фото"
+msgstr "Суретті жою"
 
 #: apps/community/models.py:26
 msgid "Вопрос"
@@ -199,30 +246,29 @@ msgstr "Жаңа"
 msgid "Закрыта"
 msgstr "Жабылды"
 
-#: apps/community/views.py:38
+#: apps/community/views.py:43
 msgid "Все"
 msgstr "Барлығы"
 
-#: apps/community/views.py:39
+#: apps/community/views.py:44
 msgid "Вопросы"
 msgstr "Сұрақтар"
 
-#: apps/community/views.py:40
+#: apps/community/views.py:45
 msgid "Истории"
 msgstr "Оқиғалар"
 
-#: apps/community/views.py:41
+#: apps/community/views.py:46
 msgid "Отзывы"
 msgstr "Пікірлер"
+
+#: apps/community/views.py:129
+msgid "Вы уже писали отзыв об этом специалисте - его можно изменить"
+msgstr "Сіз бұл маман туралы пікір жазғансыз - оны өзгертуге болады"
 
 #: apps/geo/models.py:19
 msgid "Область"
 msgstr "Облыс"
-
-#: apps/geo/models.py:20 templates/community/feed.html:27
-#: templates/core/home.html:24
-msgid "Город"
-msgstr "Қала"
 
 #: apps/geo/models.py:21 templates/search/_filters.html:60
 msgid "Район"
@@ -282,8 +328,8 @@ msgstr "Толығырақ"
 msgid "Открыть в 2ГИС"
 msgstr "2ГИС-те ашу"
 
-#: apps/search/templatetags/search_tags.py:33 templates/catalog/_minimap.html:1
-#: templates/search/_map.html:2
+#: apps/search/templatetags/search_tags.py:33
+#: templates/catalog/_minimap.html:1 templates/search/_map.html:2
 msgid "Загружаем карту…"
 msgstr "Картаны жүктеп жатырмыз…"
 
@@ -375,8 +421,8 @@ msgid ""
 "специалистов, сами отвечаете за выбор специалиста и не вносите реальные "
 "данные о детях в демо-версии."
 msgstr ""
-"Пайдаланушы келісімі: сіз «%(brand)s» сервисін мамандар анықтамалығы ретінде "
-"пайдаланасыз, маманды таңдауға өзіңіз жауап бересіз және демо-нұсқада "
+"Пайдаланушы келісімі: сіз «%(brand)s» сервисін мамандар анықтамалығы ретінде"
+" пайдаланасыз, маманды таңдауға өзіңіз жауап бересіз және демо-нұсқада "
 "балалар туралы нақты деректерді енгізбейсіз."
 
 #: templates/accounts/_consent_fields.html:10
@@ -485,12 +531,14 @@ msgid "Адреса на карте"
 msgstr "Мекенжайлар картада"
 
 #: templates/catalog/specialist_detail.html:9
-#: templates/community/post_detail.html:7 templates/community/rules.html:7
+#: templates/community/post_detail.html:7 templates/community/post_form.html:7
+#: templates/community/rules.html:7
 msgid "Навигация"
 msgstr "Навигация"
 
-#: templates/catalog/specialist_detail.html:12 templates/search/_heading.html:1
-#: templates/search/_results_partial.html:3 templates/search/results.html:3
+#: templates/catalog/specialist_detail.html:12
+#: templates/search/_heading.html:1 templates/search/_results_partial.html:3
+#: templates/search/results.html:3
 msgid "Каталог специалистов"
 msgstr "Мамандар каталогы"
 
@@ -578,17 +626,13 @@ msgstr "Бағыт"
 msgid "Адреса и маршрут"
 msgstr "Мекенжайлар және бағыт"
 
-#: templates/community/_comment.html:6 templates/community/_post_card.html:6
-#: templates/search/_suggest.html:1
-msgid "Специалист"
-msgstr "Маман"
-
 #: templates/community/_comment.html:8 templates/community/_post_card.html:9
 #, python-format
 msgid "%(t)s назад"
 msgstr "%(t)s бұрын"
 
 #: templates/community/_comment.html:10 templates/community/_post_card.html:15
+#: templates/community/post_form.html:16
 msgid "Скрыто модератором"
 msgstr "Модератор жасырды"
 
@@ -616,53 +660,68 @@ msgid_plural "%(n)s ответов"
 msgstr[0] "%(n)s жауап"
 msgstr[1] "%(n)s жауап"
 
+#: templates/community/_specialist_options.html:14
+#| msgid "Специалистов"
+msgid "Специалист не найден"
+msgstr "Маман табылмады"
+
+#: templates/community/_specialist_options.html:16
+#| msgid "Отзыв о специалисте"
+msgid "Введите имя специалиста"
+msgstr "Маманның атын енгізіңіз"
+
 #: templates/community/feed.html:3 templates/community/feed.html:8
 #: templates/community/post_detail.html:3
-#: templates/community/post_detail.html:10 templates/community/rules.html:10
+#: templates/community/post_detail.html:10
+#: templates/community/post_form.html:10 templates/community/rules.html:10
 #: templates/partials/header.html:9
 msgid "Сообщество"
 msgstr "Қауымдастық"
 
-#: templates/community/feed.html:9 templates/community/rules.html:3
+#: templates/community/feed.html:10 templates/community/rules.html:3
 #: templates/community/rules.html:13
 msgid "Правила сообщества"
 msgstr "Қауымдастық ережелері"
 
-#: templates/community/feed.html:16 templates/community/feed.html:17
+#: templates/community/feed.html:11
+msgid "Написать"
+msgstr "Жазу"
+
+#: templates/community/feed.html:19 templates/community/feed.html:20
 msgid "Поиск по постам"
 msgstr "Жазбалардан іздеу"
 
-#: templates/community/feed.html:18 templates/core/home.html:30
+#: templates/community/feed.html:21 templates/core/home.html:30
 msgid "Найти"
 msgstr "Іздеу"
 
-#: templates/community/feed.html:21
+#: templates/community/feed.html:24
 msgid "Особенность"
 msgstr "Даму ерекшелігі"
 
-#: templates/community/feed.html:23
+#: templates/community/feed.html:26
 msgid "Любая"
 msgstr "Кез келген"
 
-#: templates/community/feed.html:29 templates/search/_filters.html:55
+#: templates/community/feed.html:32 templates/search/_filters.html:55
 #: templates/search/_filters.html:62
 msgid "Любой"
 msgstr "Кез келген"
 
-#: templates/community/feed.html:36
+#: templates/community/feed.html:39
 msgid "Тип поста"
 msgstr "Жазба түрі"
 
-#: templates/community/feed.html:41
+#: templates/community/feed.html:44
 #, python-format
 msgid "Отзывы о %(name)s"
 msgstr "%(name)s туралы пікірлер"
 
-#: templates/community/feed.html:41
+#: templates/community/feed.html:44
 msgid "Снять фильтр"
 msgstr "Сүзгіні алып тастау"
 
-#: templates/community/feed.html:46
+#: templates/community/feed.html:49
 msgid "Пока здесь нет постов"
 msgstr "Мұнда әзірге жазба жоқ"
 
@@ -683,12 +742,72 @@ msgid "3-40 символов: буквы, цифры, пробел и _"
 msgstr "3-40 таңба: әріптер, сандар, бос орын және _"
 
 #: templates/community/nickname_form.html:18
+#: templates/community/post_form.html:87
 msgid "Сохранить"
 msgstr "Сақтау"
 
-#: templates/community/post_detail.html:15
+#: templates/community/post_detail.html:16
+#| msgid "Позвонить"
+msgid "Изменить"
+msgstr "Өзгерту"
+
+#: templates/community/post_detail.html:17
+msgid "Удалить пост?"
+msgstr "Жазбаны жою керек пе?"
+
+#: templates/community/post_detail.html:19
+msgid "Удалить"
+msgstr "Жою"
+
+#: templates/community/post_detail.html:24
 msgid "Комментарии"
 msgstr "Пікірлер"
+
+#: templates/community/post_form.html:3 templates/community/post_form.html:13
+#| msgid "Разместить профиль"
+msgid "Изменить пост"
+msgstr "Жазбаны өзгерту"
+
+#: templates/community/post_form.html:3 templates/community/post_form.html:13
+#| msgid "Тип поста"
+msgid "Новый пост"
+msgstr "Жаңа жазба"
+
+#: templates/community/post_form.html:10
+#| msgid "Тип поста"
+msgid "К посту"
+msgstr "Жазбаға"
+
+#: templates/community/post_form.html:14
+msgid "Перед публикацией прочитайте"
+msgstr "Жарияламас бұрын оқыңыз:"
+
+#: templates/community/post_form.html:14
+#| msgid "Правила сообщества"
+msgid "правила сообщества"
+msgstr "Қауымдастық ережелері"
+
+#: templates/community/post_form.html:40
+#| msgid "Вы специалист?"
+msgid "Имя специалиста"
+msgstr "Маманның аты"
+
+#: templates/community/post_form.html:58
+msgid "Всё равно опубликовать"
+msgstr "Бәрібір жариялау"
+
+#: templates/community/post_form.html:65 templates/community/post_form.html:71
+msgid "Не указывать"
+msgstr "Көрсетпеу"
+
+#: templates/community/post_form.html:80
+msgid "JPEG или PNG, до 2 МБ"
+msgstr "JPEG немесе PNG, 2 МБ-қа дейін"
+
+#: templates/community/post_form.html:87
+#| msgid "Зарегистрироваться"
+msgid "Опубликовать"
+msgstr "Жариялау"
 
 #: templates/community/rules.html:14
 msgid ""
@@ -746,9 +865,9 @@ msgstr ""
 
 #: templates/consents/pd_processing_v1.html:8
 msgid ""
-"2. Цель обработки — вход в демо-версию. Демо-версия размещена на серверах за "
-"пределами Республики Казахстан (Render и Neon, Германия) и не предназначена "
-"для реальных данных."
+"2. Цель обработки — вход в демо-версию. Демо-версия размещена на серверах за"
+" пределами Республики Казахстан (Render и Neon, Германия) и не предназначена"
+" для реальных данных."
 msgstr ""
 "2. Өңдеу мақсаты — демо-нұсқаға кіру. Демо-нұсқа Қазақстан Республикасынан "
 "тыс серверлерде (Render және Neon, Германия) орналастырылған және нақты "
@@ -779,9 +898,9 @@ msgid ""
 "специалиста и связаться с ним, но не оказывает медицинских, педагогических "
 "или психологических услуг."
 msgstr ""
-"1. «%(brand)s» — балаларға арналған мамандар каталогы. Сервис маманды табуға "
-"және онымен байланысуға көмектеседі, бірақ медициналық, педагогикалық немесе "
-"психологиялық қызмет көрсетпейді."
+"1. «%(brand)s» — балаларға арналған мамандар каталогы. Сервис маманды табуға"
+" және онымен байланысуға көмектеседі, бірақ медициналық, педагогикалық "
+"немесе психологиялық қызмет көрсетпейді."
 
 #: templates/consents/user_agreement_v1.html:7
 msgid ""
@@ -793,11 +912,11 @@ msgstr ""
 
 #: templates/consents/user_agreement_v1.html:10
 msgid ""
-"3. Вы обязуетесь указывать достоверный номер телефона и не передавать доступ "
-"к аккаунту третьим лицам."
+"3. Вы обязуетесь указывать достоверный номер телефона и не передавать доступ"
+" к аккаунту третьим лицам."
 msgstr ""
-"3. Сіз нақты телефон нөмірін көрсетуге және аккаунтқа қолжетімділікті үшінші "
-"тұлғаларға бермеуге міндеттенесіз."
+"3. Сіз нақты телефон нөмірін көрсетуге және аккаунтқа қолжетімділікті үшінші"
+" тұлғаларға бермеуге міндеттенесіз."
 
 #: templates/core/home.html:3 templates/partials/footer.html:4
 msgid "каталог специалистов для детей"
@@ -1026,7 +1145,8 @@ msgstr "Расталған құжаттар"
 msgid "Метод"
 msgstr "Әдіс"
 
-#: templates/search/_filters.html:174 templates/search/_results_partial.html:11
+#: templates/search/_filters.html:174
+#: templates/search/_results_partial.html:11
 msgid "Сбросить"
 msgstr "Тазалау"
 
@@ -1066,10 +1186,6 @@ msgstr "Артқа"
 #: templates/search/_results_partial.html:24
 msgid "Вперёд"
 msgstr "Алға"
-
-#: templates/search/_suggest.html:1
-msgid "Особенность развития"
-msgstr "Даму ерекшелігі"
 
 #: templates/search/_view_toggle.html:1
 msgid "Вид результатов"

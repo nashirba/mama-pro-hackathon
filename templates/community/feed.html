@@ -6,7 +6,10 @@
 <div class="mx-auto max-w-3xl space-y-4 px-4 py-6 sm:px-6">
   <div class="flex flex-wrap items-baseline justify-between gap-2">
     <h1 class="text-2xl font-bold">{% translate "Сообщество" %}</h1>
-    <a href="{% url 'community:rules' %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Правила сообщества" %}</a>
+    <div class="flex flex-wrap items-center gap-3">
+      <a href="{% url 'community:rules' %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Правила сообщества" %}</a>
+      <a href="{% url 'community:new' %}" class="inline-flex min-h-11 items-center rounded-lg bg-primary-700 px-4 text-sm font-medium text-white hover:bg-primary-800">{% translate "Написать" %}</a>
+    </div>
   </div>
 
   <form method="get" action="{% url 'community:feed' %}" role="search" class="space-y-3">

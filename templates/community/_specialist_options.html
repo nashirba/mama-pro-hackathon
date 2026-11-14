@@ -1,0 +1,17 @@
+{% load i18n %}
+{% if specialists %}
+<ul class="space-y-1">
+  {% for sp in specialists %}
+  <li>
+    <label class="flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-slate-200 px-3 hover:bg-slate-50">
+      <input type="radio" name="specialist" value="{{ sp.pk }}"{% if sp.pk == selected_id %} checked{% endif %} class="size-4">
+      <span>{{ sp.display_name }}</span>
+    </label>
+  </li>
+  {% endfor %}
+</ul>
+{% elif q %}
+<p class="text-sm text-slate-600">{% translate "Специалист не найден" %}</p>
+{% else %}
+<p class="text-sm text-slate-600">{% translate "Введите имя специалиста" %}</p>
+{% endif %}

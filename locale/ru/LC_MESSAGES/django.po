@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 13:58+0500\n"
+"POT-Creation-Date: 2026-11-14 14:09+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1102,22 +1102,18 @@ msgid "Убрать фильтр: %(label)s"
 msgstr ""
 
 #: templates/search/_results_partial.html:15
-msgid "Демо-версия: данные учебные, проверка документов не проводилась."
-msgstr ""
-
-#: templates/search/_results_partial.html:16
 msgid "Найдено"
 msgstr ""
 
-#: templates/search/_results_partial.html:21
+#: templates/search/_results_partial.html:20
 msgid "Страницы"
 msgstr ""
 
-#: templates/search/_results_partial.html:22
+#: templates/search/_results_partial.html:21
 msgid "Назад"
 msgstr ""
 
-#: templates/search/_results_partial.html:24
+#: templates/search/_results_partial.html:23
 msgid "Вперёд"
 msgstr ""
 

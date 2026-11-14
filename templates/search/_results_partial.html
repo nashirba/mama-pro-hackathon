@@ -12,7 +12,6 @@
   </ul>
 </nav>
 {% endif %}{% if result.cards %}
-{% if IS_DEMO and not is_nannies %}<p data-demo-notice class="mb-3 rounded bg-amber-50 px-3 py-2 text-sm text-amber-900">{% translate "Демо-версия: данные учебные, проверка документов не проводилась." %}</p>{% endif %}
 <p aria-live="polite" aria-atomic="true" class="mb-3 text-sm text-slate-600">{% translate "Найдено" %}: {{ result.total }}</p>
 <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-1{% if is_nannies %} xl:grid-cols-2{% endif %}">
   {% for card in result.cards %}{% if is_nannies %}{% include "search/_nanny_card.html" %}{% else %}{% include "search/_card.html" %}{% endif %}{% endfor %}

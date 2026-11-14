@@ -24,7 +24,7 @@
         <label for="home-city" class="sr-only">{% translate "Город" %}</label>
         <select id="home-city" name="kato_id" @focus="open = false" class="min-h-12 w-full rounded border border-field bg-white px-3 py-2">
           <option value="">{% translate "Любой город" %}</option>
-          {% for city in cities %}<option value="{{ city.id|unlocalize }}">{{ city|tr:"name" }}</option>{% endfor %}
+          {% for city in cities %}<option value="{{ city.id|unlocalize }}"{% if city.id == SELECTED_CITY.id %} selected{% endif %}>{{ city|tr:"name" }}</option>{% endfor %}
         </select>
       </div>
       <button type="submit" @click="open = false" class="btn-press min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Найти" %}</button>

@@ -7,7 +7,7 @@
       x-data="filters({ ageMin: '{{ params.child_age_min|default_if_none:'' }}', ageMax: '{{ params.child_age_max|default_if_none:'' }}' })" class="space-y-3 text-sm lg:space-y-4">
   <div>
     <div class="flex items-baseline justify-between gap-2"><label for="f-q" class="block font-medium">{% translate "Поиск" %}</label></div>
-    <input type="search" enterkeyhint="search" id="f-q" name="q" value="{{ params.q }}" placeholder="{% if is_nannies %}{% translate 'РАС, синдром Дауна, район...' %}{% else %}{% translate 'Логопед, РАС, не говорит...' %}{% endif %}"
+    <input type="search" enterkeyhint="search" id="f-q" name="q" value="{{ params.q }}"{% if request.GET.focus == "q" %} autofocus{% endif %} placeholder="{% if is_nannies %}{% translate 'РАС, синдром Дауна, район...' %}{% else %}{% translate 'Логопед, РАС, не говорит...' %}{% endif %}"
            class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
   </div>
 

@@ -1,14 +1,15 @@
 from django.conf import settings
 from django.db import connection
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy
+from django.views.decorators.http import require_POST
 from django.views.i18n import set_language as django_set_language
 
 from apps.catalog.models import ProfileCategory, SpecialistType
 from apps.community.query import latest_posts
-from apps.core.i18n import first_translated
-from apps.geo.models import KatoNode
+from apps.core.city import COOKIE, cities
 from apps.search.models import SearchOffer
 
 
@@ -47,20 +48,33 @@ def _nannies_count() -> int:
 
 def home(request):
     popular_types = _popular_types()
-    cities = sorted(
-        KatoNode.objects.filter(level=KatoNode.Level.CITY).prefetch_related("translations"),
-        key=lambda node: first_translated(node, "name"),
-    )
     return render(
         request,
         "core/home.html",
         {
             "popular_types": popular_types,
-            "cities": cities,
+            "cities": cities(),
             "nannies_count": _nannies_count(),
             "recent_posts": latest_posts(request.user),
         },
     )
+
+
+CITY_COOKIE_MAX_AGE = 365 * 24 * 60 * 60
+
+
+@require_POST
+def set_city(request) -> HttpResponse:
+    next_url = request.POST.get("next", "")
+    if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}, require_https=request.is_secure()):
+        next_url = ""
+    response = redirect(next_url or "core:home")
+    kato_id = request.POST.get("kato_id", "")
+    if kato_id.isdecimal() and any(str(c.pk) == kato_id for c in cities()):
+        response.set_cookie(COOKIE, kato_id, max_age=CITY_COOKIE_MAX_AGE, samesite="Lax", path="/")
+    else:
+        response.delete_cookie(COOKIE, path="/", samesite="Lax")
+    return response
 
 
 def set_language(request) -> HttpResponse:

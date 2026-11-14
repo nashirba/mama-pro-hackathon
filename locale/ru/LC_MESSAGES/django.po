@@ -1750,7 +1750,7 @@ msgid "Разместить профиль"
 msgstr ""
 
 #: templates/core/home.html:96
-msgid "В демо-версии анкеты специалистов заполняет команда Mama Pro."
+msgid "В демо-версии анкеты специалистов заполняет команда Мама Про."
 msgstr ""
 
 #: templates/partials/header.html:9

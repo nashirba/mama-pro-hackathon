@@ -36,7 +36,7 @@ DEPLOY_PROFILE = env.str("DEPLOY_PROFILE", default="demo")
 DEMO_OTP_CODE = env.str("DEMO_OTP_CODE", default="0000")
 DEMO_CONTACT_PHONE = env.str("DEMO_CONTACT_PHONE", default="")
 
-BRAND_NAME = "Особенный путь с Mama Pro"  # not translated: the same name in RU and KZ
+BRAND_NAME = "Особенный путь с Мама Про"  # not translated: the same name in RU and KZ
 
 GDAL_LIBRARY_PATH = env.str("GDAL_LIBRARY_PATH", default=None)
 if GDAL_LIBRARY_PATH is None:

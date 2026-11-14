@@ -88,7 +88,7 @@
     <h2 class="text-xl font-semibold">{% translate "Вы специалист?" %}</h2>
     <p class="mt-2 max-w-2xl text-primary-100">{% translate "Расскажите о себе и своих услугах родителям, которые ищут помощь." %}</p>
     <a href="{% url 'accounts:login' %}?next={% url 'core:home' as home_url %}{{ home_url|urlencode }}" class="mt-5 inline-flex min-h-12 items-center rounded bg-white px-6 py-2 font-semibold text-primary-800 hover:bg-primary-50">{% translate "Разместить профиль" %}</a>
-    <p class="mt-3 max-w-2xl text-sm text-primary-100">{% translate "В демо-версии анкеты специалистов заполняет команда Mama Pro." %}</p>
+    <p class="mt-3 max-w-2xl text-sm text-primary-100">{% translate "В демо-версии анкеты специалистов заполняет команда Мама Про." %}</p>
   </section>
 </div>
 {% endblock %}

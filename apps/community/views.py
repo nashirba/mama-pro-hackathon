@@ -153,8 +153,7 @@ def new(request):
                 return _already_reviewed(request, existing)
             return redirect("community:post", pk=post.pk)
     else:
-        kind = request.GET.get("kind")
-        form = PostForm(user=user, initial={"kind": kind} if kind else None)
+        form = PostForm(user=user, initial={"kind": request.GET.get("kind")})
     return render(request, "community/post_form.html", _form_context(form))
 
 

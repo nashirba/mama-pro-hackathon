@@ -1,3 +1,4 @@
+import re
 from io import BytesIO
 
 import pytest
@@ -180,6 +181,65 @@ def test_feed_has_write_button_and_author_sees_edit_delete(client, member):
 
 def test_post_form_links_to_rules(client, member):
     assert reverse("community:rules") in _html(client.get(NEW))
+
+
+def test_malicious_kind_is_not_rendered_into_x_data(client, member):
+    html = _html(client.get(NEW, {"kind": "' + alert(1) + '"}))
+    assert "alert(1)" not in html
+    assert "x-data=\"{ kind: 'question' }\"" in html
+    assert "kind: 'review'" in _html(client.get(NEW, {"kind": "review"}))
+
+
+def test_malicious_posted_kind_is_not_rendered_into_x_data(client, member):
+    html = _html(client.post(NEW, {"kind": "' + alert(1) + '", "body": "x"}))
+    assert "x-data=\"{ kind: 'question' }\"" in html  # the error text itself is HTML-escaped by Django
+
+
+def test_kind_has_no_blank_radio_and_defaults_to_question(client, member):
+    html = _html(client.get(NEW))
+    assert 'name="kind" value=""' not in html and "---------" not in html
+    assert re.search(r'value="question"[^>]*checked', html)
+
+
+def test_specialist_cannot_prefill_review_kind(client, catalog_fixture):
+    client.force_login(catalog_fixture.specialists["ivanova-logoped"].user)
+    html = _html(client.get(NEW, {"kind": "review"}))
+    assert "kind: 'question'" in html and 'value="review"' not in html
+
+
+def test_mpo_photo_is_accepted_as_jpeg(client, member):
+    buf = BytesIO()
+    Image.new("RGB", (10, 10), "red").save(buf, "MPO", save_all=True, append_images=[Image.new("RGB", (10, 10), "blue")])
+    assert Image.open(BytesIO(buf.getvalue())).format == "MPO"
+    upload = SimpleUploadedFile("p.jpg", buf.getvalue(), content_type="image/jpeg")
+    client.post(NEW, {"kind": "story", "body": "С телефона", "image": upload})
+    assert PostImage.objects.get().content_type == "image/jpeg"
+
+
+def test_decompression_bomb_gives_form_error(client, member, monkeypatch):
+    monkeypatch.setattr(Image, "MAX_IMAGE_PIXELS", 10)  # 100px image: warning level
+    response = client.post(NEW, {"kind": "story", "body": "Текст", "image": _image()})
+    assert response.status_code == 200 and "Загрузите фото в формате JPEG или PNG" in _html(response)
+    monkeypatch.setattr(Image, "MAX_IMAGE_PIXELS", 40)  # more than 2x: DecompressionBombError
+    response = client.post(NEW, {"kind": "story", "body": "Текст", "image": _image()})
+    assert response.status_code == 200 and not Post.objects.exists()
+
+
+def test_review_race_integrity_error_redirects_to_existing(client, member, catalog_fixture, monkeypatch):
+    from apps.community import views
+
+    visible = catalog_fixture.specialists["ivanova-logoped"]
+    real_save, competing = views.save_post, {}
+
+    def racing_save(post, *args, **kwargs):
+        competing["post"] = PostFactory(author=member, kind=Post.Kind.REVIEW, specialist=visible)
+        return real_save(post, *args, **kwargs)
+
+    monkeypatch.setattr(views, "save_post", racing_save)
+    response = client.post(NEW, {"kind": "review", "body": "Гонка", "specialist": visible.pk})
+    assert response.status_code == 302
+    assert response["Location"] == reverse("community:edit", args=[competing["post"].pk])
+    assert Post.objects.count() == 1
 
 
 def test_specialist_options_only_visible(client, catalog_fixture):

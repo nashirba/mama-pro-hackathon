@@ -1,4 +1,5 @@
 import re
+import warnings
 
 from io import BytesIO
 
@@ -47,7 +48,8 @@ class NicknameForm(forms.Form):
         return True
 
 
-IMAGE_TYPES = {"JPEG": "image/jpeg", "PNG": "image/png"}
+# Phone cameras write multi-picture JPEGs that Pillow reports as MPO; they are served as plain JPEG.
+IMAGE_TYPES = {"JPEG": "image/jpeg", "MPO": "image/jpeg", "PNG": "image/png"}
 SENSITIVE_MESSAGE = _("Похоже, в тексте есть ИИН или телефон. Не публикуйте данные ребёнка.")
 
 
@@ -86,10 +88,12 @@ class _PostFieldsForm(forms.ModelForm):
             raise forms.ValidationError(_("Фото больше 2 МБ"))
         data = file.read()
         try:
-            with Image.open(BytesIO(data)) as img:
-                fmt = img.format
-                img.verify()
-        except (UnidentifiedImageError, OSError, SyntaxError, ValueError):
+            with warnings.catch_warnings():
+                warnings.simplefilter("error", Image.DecompressionBombWarning)
+                with Image.open(BytesIO(data)) as img:
+                    fmt = img.format
+                    img.verify()
+        except (UnidentifiedImageError, OSError, SyntaxError, ValueError, Image.DecompressionBombError, Image.DecompressionBombWarning):
             fmt = None
         if fmt not in IMAGE_TYPES:
             raise forms.ValidationError(_("Загрузите фото в формате JPEG или PNG"))
@@ -116,8 +120,22 @@ class PostForm(_PostFieldsForm):
         super().__init__(*args, **kwargs)
         self.user = user
         self.fields["kind"].label = _("Тип")
-        if is_specialist(user):
-            self.fields["kind"].choices = [c for c in Post.Kind.choices if c[0] != Post.Kind.REVIEW]
+        self.fields["kind"].choices = [
+            c for c in Post.Kind.choices if not (c[0] == Post.Kind.REVIEW and is_specialist(user))
+        ]
+        self.initial.setdefault("kind", Post.Kind.QUESTION)
+        if self.initial["kind"] not in self.allowed_kinds:
+            self.initial["kind"] = Post.Kind.QUESTION
+
+    @property
+    def allowed_kinds(self) -> list[str]:
+        return [value for value, _label in self.fields["kind"].choices]
+
+    @property
+    def current_kind(self) -> str:
+        """The kind to show as selected: a submitted value only if it is a real choice."""
+        raw = self.data.get("kind") if self.is_bound else self.initial["kind"]
+        return raw if raw in self.allowed_kinds else Post.Kind.QUESTION
 
     def clean(self):
         cleaned = super().clean()

@@ -15,7 +15,7 @@
 
   {% if post and post.is_hidden %}<p class="rounded-lg bg-amber-50 p-3 text-sm font-medium text-amber-800">{% translate "Скрыто модератором" %}</p>{% endif %}
 
-  <form method="post" enctype="multipart/form-data" class="space-y-5" novalidate x-data="{ kind: '{{ form.kind.value|default:'question' }}' }">
+  <form method="post" enctype="multipart/form-data" class="space-y-5" novalidate x-data="{ kind: '{{ form.current_kind|escapejs }}' }">
     {% csrf_token %}
     <input type="hidden" name="next" value="{% if post %}{% url 'community:post' post.pk %}{% else %}{% url 'community:new' %}{% endif %}">
 

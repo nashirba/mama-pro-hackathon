@@ -4,7 +4,12 @@ from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
 from django.db import models
 
-from apps.catalog.models import PracticeContext, ProfileCategory, Service, SpecialistProfile
+from apps.catalog.models import (
+    PracticeContext,
+    ProfileCategory,
+    Service,
+    SpecialistProfile,
+)
 from apps.geo.models import Address
 
 

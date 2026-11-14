@@ -30,7 +30,6 @@ from apps.catalog.models import (
     SpecialistProfile,
     VerificationLevel,
 )
-
 from apps.catalog.pricing import lowest
 
 from .models import SearchOffer

@@ -21,9 +21,22 @@
   <section class="mt-8">
     <div class="flex items-center justify-between gap-4">
       <h2 class="text-lg font-semibold">{% translate "Дети" %}</h2>
+      <a href="{% url 'cabinet:child_add' %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Добавить ребёнка" %}</a>
     </div>
     {% for child in children %}
-    <p class="mt-3 rounded border border-slate-200 bg-white px-4 py-3">{{ child }}</p>
+    <div class="mt-3 flex items-start justify-between gap-4 rounded border border-slate-200 bg-white px-4 py-3">
+      <div>
+        <p class="font-medium">{% if child.last_name %}{{ child.last_name }} {% endif %}{{ child.first_name }}</p>
+        <p class="text-sm text-slate-600">{% if child.birth_date %}{{ child.birth_date|date:"j E Y" }} · {{ child.birth_date|age }}{% if child.sex %} · {% endif %}{% endif %}{% if child.sex %}{{ child.get_sex_display }}{% endif %}</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="{% url 'cabinet:child_edit' child.pk %}" class="inline-flex min-h-11 items-center text-sm font-medium text-primary-700 hover:underline">{% translate "Редактировать" %}</a>
+        <form method="post" action="{% url 'cabinet:child_delete' child.pk %}" onsubmit="return confirm('{{ _("Удалить профиль ребёнка?")|escapejs }}')">
+          {% csrf_token %}
+          <button type="submit" class="inline-flex min-h-11 items-center text-sm font-medium text-red-700 hover:underline">{% translate "Удалить" %}</button>
+        </form>
+      </div>
+    </div>
     {% empty %}
     <p class="mt-3 text-slate-600">{% translate "Вы ещё не добавили ребёнка" %}</p>
     {% endfor %}

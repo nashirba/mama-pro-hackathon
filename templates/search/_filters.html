@@ -1,25 +1,25 @@
 {% load i18n l10n %}{% localize off %}
-<form id="filters" method="get" action="{% url 'search:results' %}"
-      hx-get="{% url 'search:results' %}" hx-target="#results" hx-push-url="true" hx-trigger="change, submit"
+<form id="filters" method="get" action="{{ results_path }}"
+      hx-get="{{ results_path }}" hx-target="#results" hx-push-url="true" hx-trigger="change, submit"
       hx-indicator="#results, #filters"
       hx-on::before-request="document.getElementById('results').setAttribute('aria-busy','true')"
       hx-on::after-request="document.getElementById('results').removeAttribute('aria-busy')"
       x-data="filters({ ageMin: '{{ params.child_age_min|default_if_none:'' }}', ageMax: '{{ params.child_age_max|default_if_none:'' }}' })" class="space-y-3 text-sm lg:space-y-4">
   <div>
     <div class="flex items-baseline justify-between gap-2"><label for="f-q" class="block font-medium">{% translate "Поиск" %}</label></div>
-    <input type="search" enterkeyhint="search" id="f-q" name="q" value="{{ params.q }}" placeholder="{% translate 'Логопед, РАС, не говорит...' %}"
+    <input type="search" enterkeyhint="search" id="f-q" name="q" value="{{ params.q }}" placeholder="{% if is_nannies %}{% translate 'РАС, синдром Дауна, район...' %}{% else %}{% translate 'Логопед, РАС, не говорит...' %}{% endif %}"
            class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
   </div>
 
 
-  <div class="grid grid-cols-[1fr_auto] gap-2 lg:hidden">
+  <div class="grid {% if not is_nannies %}grid-cols-[1fr_auto] {% endif %}gap-2 lg:hidden">
   <button type="button" x-ref="opener" x-cloak @click="openSheet()" :aria-expanded="open" aria-controls="filters-panel" data-open-filters
           class="flex min-h-11 w-full min-w-0 items-center justify-center gap-2 rounded border border-primary-700 px-3 py-2 font-semibold text-primary-700 hover:bg-primary-50">
     <svg class="size-5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 5h14M6 10h8M9 15h2"/></svg>
     {% translate "Фильтры" %}
     {% include "search/_filter_count.html" %}
   </button>
-    {% include "search/_view_toggle.html" %}
+    {% if not is_nannies %}{% include "search/_view_toggle.html" %}{% endif %}
   </div>
 
   <div id="filters-panel" x-ref="panel" data-panel-cloak x-show="open || desktop"
@@ -34,12 +34,14 @@
     </button>
   </div>
   <div class="space-y-4">
+  {% if not is_nannies %}
   <div>
     <button type="button" data-geolocate @click="locate($el.form)"
             class="min-h-11 w-full rounded border border-primary-700 px-3 py-2 font-semibold text-primary-700 hover:bg-primary-50">{% translate "Рядом со мной" %}</button>
     <p x-show="failed" x-cloak class="mt-1 text-red-700" role="alert">{% translate "Не удалось определить местоположение" %}</p>
     <input type="hidden" name="near" value="{{ near_value }}">
   </div>
+  {% endif %}
 
   <div>
     <label for="f-sort" class="block font-medium">{% translate "Сортировка" %}</label>
@@ -87,6 +89,7 @@
     </ul>
   </fieldset>
 
+  {% if not is_nannies %}
   <details class="group" {% if params.specialist_type_ids %}open{% endif %}>
     <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-medium lg:min-h-8 [&::-webkit-details-marker]:hidden"><span class="min-w-0"><span class="block">{% translate "Специализация" %}</span><span class="block truncate text-slate-500 group-open:hidden [&>span+span]:before:content-[',_']">{% for t in choices.specialist_types %}{% if t.id in params.specialist_type_ids %}<span>{{ t.name }}</span>{% endif %}{% endfor %}</span></span><svg class="size-4 shrink-0 transition group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></summary>
     <div x-data="{ all: false }">
@@ -98,6 +101,7 @@
     {% if choices.specialist_types|length > 8 %}<button type="button" x-cloak @click="all = !all" :aria-expanded="all" class="mt-1 inline-flex min-h-11 items-center font-medium text-primary-700 hover:underline lg:min-h-8"><span x-show="!all">{% translate "Показать все" %} ({{ choices.specialist_types|length }})</span><span x-show="all">{% translate "Свернуть" %}</span></button>{% endif %}
     </div>
   </details>
+  {% endif %}
 
   <details class="group" {% if params.condition_ids %}open{% endif %}>
     <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 font-medium lg:min-h-8 [&::-webkit-details-marker]:hidden"><span class="min-w-0"><span class="block">{% translate "Особенности развития" %}</span><span class="block truncate text-slate-500 group-open:hidden [&>span+span]:before:content-[',_']">{% for c, depth in choices.conditions %}{% if c.id in params.condition_ids %}<span>{{ c.name }}</span>{% endif %}{% endfor %}</span></span><svg class="size-4 shrink-0 transition group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg></summary>
@@ -111,6 +115,23 @@
     </div>
   </details>
 
+  {% if is_nannies %}
+  <fieldset>
+    <legend class="font-medium">{% translate "Формат оплаты" %}</legend>
+    <ul class="mt-1 space-y-1">
+      {% for value, label in choices.pay_units %}
+      <li>{% include "search/_check.html" with name="pay_units" value=value selected=params.pay_units label=label %}</li>
+      {% endfor %}
+    </ul>
+  </fieldset>
+  <fieldset>
+    <legend class="font-medium">{% translate "Цена за час, ₸" %}</legend>
+    <div class="mt-1 flex items-center gap-2">
+      <input type="number" min="0" name="price_hour_min" value="{{ params.price_hour_min|default_if_none:'' }}" aria-label="{% translate 'Цена за час от' %}" placeholder="{% translate 'от' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
+      <input type="number" min="0" name="price_hour_max" value="{{ params.price_hour_max|default_if_none:'' }}" aria-label="{% translate 'Цена за час до' %}" placeholder="{% translate 'до' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
+    </div>
+  </fieldset>
+  {% else %}
   <fieldset>
     <legend class="font-medium">{% translate "Цена за занятие, ₸" %}</legend>
     <div class="mt-1 flex items-center gap-2">
@@ -118,6 +139,7 @@
       <input type="number" min="0" name="price_max" value="{{ params.price_max|default_if_none:'' }}" aria-label="{% translate 'Цена до' %}" placeholder="{% translate 'до' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
     </div>
   </fieldset>
+  {% endif %}
   <fieldset>
     <legend class="font-medium">{% translate "Цена в месяц, ₸" %}</legend>
     <div class="mt-1 flex items-center gap-2">
@@ -125,6 +147,7 @@
       <input type="number" min="0" name="price_month_max" value="{{ params.price_month_max|default_if_none:'' }}" aria-label="{% translate 'Цена в месяц до' %}" placeholder="{% translate 'до' %}" class="min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
     </div>
   </fieldset>
+  {% if not is_nannies %}
   <label class="flex min-h-11 cursor-pointer items-center gap-3 lg:min-h-7 lg:gap-2"><input type="checkbox" name="free_only" value="1" class="size-5 shrink-0 accent-primary-700 lg:size-4"{% if params.free_only %} checked{% endif %}> <span>{% translate "Только бесплатные" %}</span></label>
 
   <fieldset>
@@ -135,6 +158,7 @@
       {% endfor %}
     </ul>
   </fieldset>
+  {% endif %}
 
   <fieldset>
     <legend class="font-medium">{% translate "Язык общения" %}</legend>
@@ -146,10 +170,11 @@
   </fieldset>
 
   <div>
-    <label for="f-exp" class="block font-medium">{% translate "Стаж от, лет" %}</label>
+    <label for="f-exp" class="block font-medium">{% if is_nannies %}{% translate "Опыт от, лет" %}{% else %}{% translate "Стаж от, лет" %}{% endif %}</label>
     <input type="number" min="0" id="f-exp" name="experience_min" value="{{ params.experience_min|default_if_none:'' }}" class="mt-1 min-h-11 w-full rounded border border-field px-3 py-2 lg:min-h-0">
   </div>
 
+  {% if not is_nannies %}
   <fieldset>
     <legend class="font-medium">{% translate "Подтверждённые документы" %}{% if IS_DEMO %} ({% translate "демо" %}){% endif %}</legend>
     <ul class="mt-1 space-y-1">
@@ -167,6 +192,7 @@
       {% endfor %}
     </ul>
   </details>
+  {% endif %}
 
   </div>
   <div class="sticky bottom-0 -mx-4 mt-4 flex items-center gap-3 border-t border-slate-200 bg-white px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">

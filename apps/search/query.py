@@ -144,6 +144,7 @@ class SpecialistCard:
     price_hour: int | None = None
     price_night: int | None = None
     price_month: int | None = None
+    home_visit_area_name: str | None = None  # "city, district" of the first home visit offer
 
 
 @dataclass
@@ -260,6 +261,17 @@ def _lowest(offers: list[SearchOffer], column: str) -> int | None:
     return min(values) if values else None
 
 
+def _area_name(offers: list[SearchOffer]) -> str | None:
+    area = next((o.service.home_visit_area for o in offers if Format.HOME_VISIT in o.formats and o.service.home_visit_area_id), None)
+    if area is None:
+        return None
+    name = area.safe_translation_getter("name", any_language=True)
+    city = area.city()
+    if city is not None and city.pk != area.pk:
+        return f"{city.safe_translation_getter('name', any_language=True)}, {name}"
+    return name
+
+
 def _build_card(specialist: SpecialistProfile, offers: list[SearchOffer], distance_m: float | None, near) -> SpecialistCard:
     prices = [p for p in map(_offer_price, offers) if p is not None]
     with_address = [o for o in offers if o.address is not None]
@@ -282,6 +294,7 @@ def _build_card(specialist: SpecialistProfile, offers: list[SearchOffer], distan
         price_hour=_lowest(offers, "price_hour"),
         price_night=_lowest(offers, "price_night"),
         price_month=_lowest(offers, "price_month"),
+        home_visit_area_name=_area_name(offers),
     )
 
 
@@ -307,13 +320,15 @@ def search(params: SearchParams) -> SearchResult:
     by_specialist: dict[int, list[SearchOffer]] = {i: [] for i in ids}
     page_offers = (
         offers.filter(specialist_id__in=ids)
-        .select_related("specialist", "address__kato__parent__parent", "service")
+        .select_related("specialist", "address__kato__parent__parent", "service__home_visit_area__parent")
         .prefetch_related(
             "specialist__translations",
             "address__kato__translations",
             "address__kato__parent__translations",
             "address__kato__parent__parent__translations",
             "service__translations",
+            "service__home_visit_area__translations",
+            "service__home_visit_area__parent__translations",
         )
         .order_by("pk")
     )

@@ -1,3 +1,4 @@
+import datetime
 from dataclasses import dataclass
 
 import pytest
@@ -11,9 +12,12 @@ from apps.geo.models import Address, KatoNode
 from apps.search.builder import rebuild_all
 from tests.factories import (
     AddressFactory,
+    NannyFactory,
+    NannyServiceFactory,
     PrivateContextFactory,
     ServiceFactory,
     SpecialistFactory,
+    TrainingFactory,
 )
 
 
@@ -133,3 +137,39 @@ def catalog_fixture(db, kato_demo, reference) -> CatalogFixture:
         )
     rebuild_all()
     return CatalogFixture(specialists=specialists, kato=kato_demo, addresses=addresses)
+
+
+# slug, name, area (KATO slug), prices (hour, night, month), conditions, languages, experience, trainings, has record
+# trainings: (title, hours, is_first_aid); the last three nannies break one condition of the rule each
+NANNIES = [
+    ("aigul-nanny", "Сапарова Айгуль", "almalinskiy", (3000, 15000, None), ["ras", "zrr", "adhd", "down-syndrome"], ["kk", "ru"], 6,
+     [("Первая помощь детям", 16, True), ("Основы РАС для нянь", 72, False), ("Поведение ребёнка", 24, False)], True),
+    ("marina-nanny", "Ковалёва Марина", "astana", (2500, None, 200000), ["down-syndrome"], ["ru"], 3,
+     [("Первая помощь детям", 24, True), ("Альтернативная коммуникация", 40, False)], True),
+    ("no-record-nanny", "Без Справки", "almaty", (2000, None, None), ["ras"], ["ru"], 2, [("Первая помощь детям", 16, True)], False),
+    ("no-first-aid-nanny", "Без Первой Помощи", "almaty", (2000, None, None), ["ras"], ["ru"], 2, [("Основы РАС", 72, False)], True),
+    ("no-training-nanny", "Без Курсов", "almaty", (2000, None, None), ["ras"], ["ru"], 2, [], True),
+]
+
+
+@pytest.fixture
+def nannies(catalog_fixture) -> dict[str, SpecialistProfile]:
+    """Two nannies shown in the section and three hidden by the rule, next to the specialists of `catalog_fixture`."""
+    year = timezone.localdate().year
+    result = {}
+    for slug, name, area, (hour, night, month), conditions, languages, years, trainings, has_record in NANNIES:
+        profile = NannyFactory(
+            slug=slug, display_name=name, bio=f"О себе: {name}", approach=f"Как работаю: {name}",
+            availability=f"График: {name}", practice_start_year=year - years, age_min=2, age_max=12,
+            whatsapp_phone=TEST_PHONE, public_phone=TEST_PHONE, conditions=conditions, languages=languages,
+            criminal_record_issued_on=datetime.date(year, 2, 1) if has_record else None,
+        )
+        for title, hours, first_aid in trainings:
+            TrainingFactory(profile=profile, title=title, hours=hours, is_first_aid=first_aid, issuer="Центр «Забота»")
+        NannyServiceFactory(
+            context=PrivateContextFactory(specialist=profile), home_visit_area=catalog_fixture.kato[area],
+            price_hour=hour, price_night=night, price_month=month,
+        )
+        result[slug] = profile
+    rebuild_all()
+    return result

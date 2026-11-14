@@ -1,6 +1,6 @@
-{% load i18n %}{{ map_config|json_script:"map-config" }}{% if partial %}{# htmx response: the filters may no longer match the landing heading, so it becomes the neutral one #}
+{% load i18n %}{% if map_config %}{{ map_config|json_script:"map-config" }}{% endif %}{% if partial %}{# htmx response: the filters may no longer match the landing heading, so it becomes the neutral one #}
 {% include "search/_heading.html" with oob=True %}
-<title>{% translate "Каталог специалистов" %} - {{ BRAND_NAME }}</title>
+<title>{{ default_heading }} - {{ BRAND_NAME }}</title>
 {% include "search/_filter_count.html" with oob=True %}{% include "search/_filter_total.html" with oob=True %}
 {% endif %}{% if active_chips %}
 <nav aria-label="{% translate 'Активные фильтры' %}" class="mb-3">
@@ -12,10 +12,10 @@
   </ul>
 </nav>
 {% endif %}{% if result.cards %}
-{% if IS_DEMO %}<p data-demo-notice class="mb-3 rounded bg-amber-50 px-3 py-2 text-sm text-amber-900">{% translate "Демо-версия: данные учебные, проверка документов не проводилась." %}</p>{% endif %}
+{% if IS_DEMO and not is_nannies %}<p data-demo-notice class="mb-3 rounded bg-amber-50 px-3 py-2 text-sm text-amber-900">{% translate "Демо-версия: данные учебные, проверка документов не проводилась." %}</p>{% endif %}
 <p aria-live="polite" aria-atomic="true" class="mb-3 text-sm text-slate-600">{% translate "Найдено" %}: {{ result.total }}</p>
-<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
-  {% for card in result.cards %}{% include "search/_card.html" %}{% endfor %}
+<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-1{% if is_nannies %} xl:grid-cols-2{% endif %}">
+  {% for card in result.cards %}{% if is_nannies %}{% include "search/_nanny_card.html" %}{% else %}{% include "search/_card.html" %}{% endif %}{% endfor %}
 </div>
 {% if prev_url or next_url %}
 <nav class="mt-6 flex items-center justify-between text-sm" aria-label="{% translate 'Страницы' %}">

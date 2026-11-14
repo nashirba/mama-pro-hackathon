@@ -107,7 +107,7 @@ msgstr "Бұл сіздің қазіргі нөміріңіз"
 
 #: apps/cabinet/views.py:72 apps/cabinet/views.py:101
 msgid "Этот номер уже используется"
-msgstr "Бұл нөмір бұрыннан пайдаланылуда"
+msgstr "Бұл нөмір басқа аккаунтта қолданылады"
 
 #: apps/cabinet/views.py:104
 msgid "Номер телефона изменён"
@@ -1033,7 +1033,7 @@ msgstr "Баланың профилін өңдеу"
 #: templates/cabinet/child_form.html:3 templates/cabinet/child_form.html:6
 #: templates/cabinet/home.html:24
 msgid "Добавить ребёнка"
-msgstr "Баланы қосу"
+msgstr "Бала қосу"
 
 #: templates/cabinet/child_form.html:8
 msgid "Демо-версия: не вводите реальные данные ребёнка"
@@ -1094,7 +1094,7 @@ msgstr "Жою"
 
 #: templates/cabinet/home.html:41
 msgid "Вы ещё не добавили ребёнка"
-msgstr "Сіз әлі баланы қосқан жоқсыз"
+msgstr "Сіз әлі бала қоспадыңыз"
 
 #: templates/cabinet/phone_code.html:26
 msgid "Подтвердить"

@@ -93,11 +93,14 @@ def phone_change_verify(request):
         else:
             if code_ok:
                 user = request.user
+                old_phone = user.phone
                 user.phone = new_phone
                 try:
                     with transaction.atomic():
                         user.save(update_fields=["phone"])
                 except IntegrityError:
+                    user.phone = old_phone
+                    request.session.pop(SESSION_NEW_PHONE, None)
                     form.add_error("code", _("Этот номер уже используется"))
                 else:
                     request.session.pop(SESSION_NEW_PHONE, None)

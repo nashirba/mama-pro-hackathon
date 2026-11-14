@@ -27,6 +27,15 @@ def test_register_keeps_safe_next(client, db):
     assert r.headers["Location"] == "/ru/specialists/"
 
 
+def test_register_next_in_user_language(client, db):
+    client.post("/kk/login/", {"phone": "+77011234567"})
+    r = client.post(
+        "/kk/login/code/",
+        {"code": "0000", "user_agreement": "on", "pd_processing": "on", "next": "/kk/specialists/"},
+    )
+    assert r.headers["Location"] == "/kk/register/?next=%2Fkk%2Fspecialists%2F"
+
+
 def test_register_drops_external_next(client, db):
     _register_new(client)
     r = client.post(

@@ -38,12 +38,15 @@ def test_wrong_code_keeps_old_phone(client, db):
 
 
 def test_locked_after_five_wrong_codes(client, db):
-    client.force_login(UserFactory(phone="+77011234567"))
+    user = UserFactory(phone="+77011234567")
+    client.force_login(user)
     _start(client)
     for _ in range(5):
         client.post("/ru/cabinet/phone/code/", {"code": "1111"})
     r = client.post("/ru/cabinet/phone/code/", {"code": "0000"})
     assert "Слишком много неверных попыток" in r.content.decode()
+    user.refresh_from_db()
+    assert user.phone == "+77011234567"
 
 
 def test_same_phone_in_other_format_rejected(client, db):
@@ -64,6 +67,7 @@ def test_phone_taken_during_verification(client, db):
     UserFactory(phone="+77027654321")
     r = client.post("/ru/cabinet/phone/code/", {"code": "0000"})
     assert r.status_code == 200 and "Этот номер уже используется" in r.content.decode()
+    assert "cabinet_new_phone" not in client.session
     user.refresh_from_db()
     assert user.phone == "+77011234567"
 

@@ -30,6 +30,7 @@ make install   # dependencies + .env from .env.example
 make db        # PostGIS on localhost:5433
 make migrate
 make seed      # demo data
+make messages  # compile translations (Russian needs them too: age plurals)
 make run       # http://localhost:8000/ru/
 ```
 
@@ -46,7 +47,7 @@ make test-file F=tests/search/test_query.py   # one file
 make test                                      # full suite, heavy
 ```
 
-Tests use `config/settings_test.py` and the PostGIS container.
+Tests use `config/settings_test.py` and the PostGIS container. `compilemessages` must have run (`make messages`), otherwise age plurals fail.
 
 ## Structure
 

@@ -20,7 +20,11 @@ class ProfileForm(FullNameForm):
         fields = ["last_name", "first_name", "birth_date"]
         labels = {**FullNameForm.Meta.labels, "birth_date": _("Дата рождения")}
         widgets = {
-            "birth_date": forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d")
+            "last_name": forms.TextInput(attrs={"autocomplete": "family-name"}),
+            "first_name": forms.TextInput(attrs={"autocomplete": "given-name"}),
+            "birth_date": forms.DateInput(
+                attrs={"type": "date", "autocomplete": "bday"}, format="%Y-%m-%d"
+            ),
         }
 
     def __init__(self, *args, **kwargs):

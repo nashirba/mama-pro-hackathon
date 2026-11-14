@@ -106,6 +106,7 @@ def verify_view(request):
                         with translation.override(user.preferred_language):
                             target = reverse("accounts:register")
                         if next_url:
+                            next_url = translate_url(next_url, user.preferred_language)
                             target += "?" + urlencode({"next": next_url})
                         return _language_redirect(user, target)
                     return _login_response(request, user, next_url)

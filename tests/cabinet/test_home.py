@@ -23,6 +23,13 @@ def test_header_link_for_logged_in_only(client, db):
     assert 'href="/ru/cabinet/"' in client.get("/ru/").content.decode()
 
 
+def test_header_link_aria_current_on_cabinet_only(client, db):
+    client.force_login(UserFactory())
+    link = 'href="/ru/cabinet/" aria-current="page"'
+    assert link in client.get("/ru/cabinet/").content.decode()
+    assert link not in client.get("/ru/").content.decode()
+
+
 def test_profile_edit_saves_birth_date(client, db):
     user = UserFactory()
     client.force_login(user)

@@ -4,7 +4,12 @@ from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchVectorField
 from django.db import models
 
-from apps.catalog.models import PracticeContext, Service, SpecialistProfile
+from apps.catalog.models import (
+    PracticeContext,
+    ProfileCategory,
+    Service,
+    SpecialistProfile,
+)
 from apps.geo.models import Address
 
 
@@ -12,6 +17,7 @@ class SearchOffer(models.Model):
     """Denormalized catalog row: one per service format (one per address for in-person). Rebuilt by `apps.search.builder`."""
 
     specialist = models.ForeignKey(SpecialistProfile, on_delete=models.CASCADE, related_name="search_offers")
+    category = models.CharField(max_length=20, default=ProfileCategory.SPECIALIST, db_index=True)  # the section
     context = models.ForeignKey(PracticeContext, on_delete=models.CASCADE, related_name="search_offers")
     service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name="search_offers")
     address = models.ForeignKey(Address, null=True, blank=True, on_delete=models.CASCADE, related_name="search_offers")
@@ -22,6 +28,8 @@ class SearchOffer(models.Model):
 
     price_session = models.PositiveIntegerField(null=True, blank=True)
     price_month = models.PositiveIntegerField(null=True, blank=True)
+    price_hour = models.PositiveIntegerField(null=True, blank=True)  # a nanny only
+    price_night = models.PositiveIntegerField(null=True, blank=True)  # a nanny only
     is_free = models.BooleanField(default=False)
     age_min = models.PositiveSmallIntegerField()
     age_max = models.PositiveSmallIntegerField()
@@ -31,6 +39,7 @@ class SearchOffer(models.Model):
     specialist_type_ids = ArrayField(models.IntegerField(), default=list)
     language_codes = ArrayField(models.CharField(max_length=10), default=list)
     experience_years = models.PositiveSmallIntegerField(default=0)
+    training_hours = models.PositiveIntegerField(default=0)  # a nanny only: the sum over her courses
     verification_levels = ArrayField(models.CharField(max_length=20), default=list)  # plan 4 fills these from real badges
 
     search_vector = SearchVectorField(null=True)

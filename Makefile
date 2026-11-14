@@ -16,7 +16,7 @@ db-stop: ## Stop PostGIS
 migrate: ## Apply migrations
 	uv run python manage.py migrate
 
-seed: ## Load demo data (KATO, reference data, 80 specialists)
+seed: ## Load demo data (KATO, reference data, 80 specialists, 24 nannies)
 	uv run python manage.py seed_demo
 
 css: ## Build Tailwind CSS

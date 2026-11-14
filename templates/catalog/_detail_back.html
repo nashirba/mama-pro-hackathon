@@ -1,0 +1,6 @@
+{% load i18n %}<nav aria-label="{% translate 'Навигация' %}" class="-mb-2">
+    <a href="{{ back_url }}" x-data @click="const r = document.referrer && new URL(document.referrer); if (r && r.origin === location.origin && history.length > 1) { $event.preventDefault(); history.back(); }" class="-ml-2 inline-flex min-h-11 items-center gap-1 rounded px-2 text-sm font-medium text-primary-700 hover:underline">
+      <svg class="size-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5l-5 5 5 5"/></svg>
+      {{ back_label }}
+    </a>
+  </nav>

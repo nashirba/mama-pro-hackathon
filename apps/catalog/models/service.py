@@ -17,6 +17,9 @@ from .reference import (
     ServiceKind,
 )
 
+CHILDCARE_KIND = "childcare"  # the only service kind of a nanny
+NANNY_PRICES = ("price_hour", "price_night", "price_month")
+
 
 @dataclass(frozen=True)
 class ServiceAttrs:
@@ -35,6 +38,8 @@ class Service(TranslatableModel):
     formats = ArrayField(models.CharField(max_length=20, choices=Format.choices), default=list)
     price_session = models.PositiveIntegerField(null=True, blank=True)  # tenge
     price_month = models.PositiveIntegerField(null=True, blank=True)  # tenge
+    price_hour = models.PositiveIntegerField(null=True, blank=True)  # tenge, a nanny only
+    price_night = models.PositiveIntegerField(null=True, blank=True)  # tenge, a nanny only
     is_free = models.BooleanField(default=False)  # a free service keeps both prices as NULL, not 0
     addresses = models.ManyToManyField(Address, blank=True, related_name="services")
     home_visit_area = models.ForeignKey(KatoNode, null=True, blank=True, on_delete=models.PROTECT, related_name="+")
@@ -60,15 +65,38 @@ class Service(TranslatableModel):
         if Format.HOME_VISIT in (self.formats or []) and self.home_visit_area_id is None:
             errors["home_visit_area"] = _("Укажите область выезда")
         if self.is_free:
-            for field in ("price_session", "price_month"):
+            for field in ("price_session", *NANNY_PRICES):
                 if getattr(self, field) is not None:
                     errors[field] = _("У бесплатной услуги не должно быть цены")
         try:
             validate_age_range(self.age_min, self.age_max)
         except ValidationError as exc:
             errors.update(exc.message_dict)
+        if self.context_id is not None and self.kind_id is not None:
+            errors.update(self._category_errors())
         if errors:
             raise ValidationError(errors)
+
+    def _category_errors(self) -> dict:
+        """A nanny offers only childcare at the family's home, priced per hour, night or month; a specialist never does."""
+        errors = {}
+        is_childcare = self.kind.slug == CHILDCARE_KIND
+        if self.context.specialist.is_nanny:
+            if not is_childcare:
+                errors["kind"] = _("У няни только услуги няни")
+            if list(self.formats or []) != [Format.HOME_VISIT]:
+                errors["formats"] = _("Няня работает только с выездом на дом")
+            if all(getattr(self, field) is None for field in NANNY_PRICES):
+                errors["price_hour"] = _("Укажите цену за час, за ночь или за месяц")
+            if self.price_session is not None:
+                errors["price_session"] = _("У няни нет цены за занятие")
+        else:
+            if is_childcare:
+                errors["kind"] = _("Услуги няни есть только у няни")
+            for field in ("price_hour", "price_night"):
+                if getattr(self, field) is not None:
+                    errors[field] = _("Цена за час и за ночь есть только у няни")
+        return errors
 
     def effective_attrs(self) -> ServiceAttrs:
         profile = self.context.specialist

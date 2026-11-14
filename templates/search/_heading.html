@@ -1,1 +1,1 @@
-{% load i18n %}<h1 id="page-heading"{% if oob %} hx-swap-oob="true"{% endif %} class="text-2xl font-bold">{% if heading and not oob %}{{ heading }}{% else %}{% translate "Каталог специалистов" %}{% endif %}</h1>
+{% load i18n %}<h1 id="page-heading"{% if oob %} hx-swap-oob="true"{% endif %} class="text-2xl font-bold">{% if heading and not oob %}{{ heading }}{% else %}{{ default_heading }}{% endif %}</h1>

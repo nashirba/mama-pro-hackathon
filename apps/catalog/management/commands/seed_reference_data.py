@@ -13,6 +13,8 @@ from apps.catalog.models import (
 )
 
 DATA_FILE = Path(__file__).resolve().parents[2] / "data" / "reference_v1.json"
+# Rows dropped from the file that an older database may still hold. A nanny is a profile category, not a specialist type.
+REMOVED_SPECIALIST_TYPES = ("nanny",)
 
 
 def upsert(model, key: str, item: dict, plain: tuple[str, ...], translated: tuple[str, ...]):
@@ -42,6 +44,7 @@ class Command(BaseCommand):
 
         for item in data["specialist_types"]:
             upsert(SpecialistType, "slug", item, ("synonyms",), ("name", "name_plural", "landing_name"))
+        SpecialistType.objects.filter(slug__in=REMOVED_SPECIALIST_TYPES).delete()
 
         conditions = {}
         for item in data["conditions"]:

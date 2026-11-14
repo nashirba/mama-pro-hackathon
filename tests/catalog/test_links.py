@@ -10,3 +10,7 @@ def test_wa_me_url():
 
 def test_wa_default_text_is_gettext_string():
     assert wa_default_text() == "Здравствуйте! Нашёл(ла) вас через «Особенный путь с Mama Pro», хочу записаться на консультацию"
+
+
+def test_wa_default_text_for_nanny():
+    assert wa_default_text(nanny=True) == "Здравствуйте! Нашёл(ла) вас через «Особенный путь с Mama Pro», хочу обсудить работу няней"

@@ -1,0 +1,4 @@
+{% load i18n %}<p class="font-semibold lg:hidden">{{ price_label }}</p>
+      <div class="lg:hidden">
+      {% if contacts.disabled_in_demo %}<p class="text-sm text-slate-500">{% translate "Контакты в демо-версии недоступны" %}</p>{% else %}{% include "catalog/_contact_buttons.html" with profile=profile %}{% endif %}
+      </div>

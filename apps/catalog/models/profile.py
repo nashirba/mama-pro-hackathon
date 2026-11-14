@@ -23,6 +23,13 @@ class Format(models.TextChoices):
     ONLINE = "online", _("Онлайн")
 
 
+class ProfileCategory(models.TextChoices):
+    """Stored, not derived from the types: a nanny is never a specialist (catalog, reference data, home page counts)."""
+
+    SPECIALIST = "specialist", _("Специалист")
+    NANNY = "nanny", _("Няня")
+
+
 class VerificationLevel(models.TextChoices):
     IDENTITY = "identity", _("Личность подтверждена")
     EDUCATION = "education", _("Образование подтверждено")
@@ -42,6 +49,9 @@ def validate_age_range(age_min, age_max) -> None:
 class SpecialistProfile(TranslatableModel):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="specialist_profile")
     slug = models.SlugField(max_length=80, unique=True)
+    category = models.CharField(
+        max_length=20, choices=ProfileCategory.choices, default=ProfileCategory.SPECIALIST, db_index=True
+    )
     display_name = models.CharField(max_length=200)  # the name is not translated
     photo = models.ImageField(upload_to="specialists/", blank=True)
     practice_start_year = models.PositiveSmallIntegerField()
@@ -60,10 +70,13 @@ class SpecialistProfile(TranslatableModel):
     demo_verification_levels = ArrayField(
         models.CharField(max_length=20, choices=VerificationLevel.choices), default=list, blank=True
     )
+    # A nanny only; plan 4 adds the scan and its moderation.
+    criminal_record_issued_on = models.DateField(null=True, blank=True)
 
     translations = TranslatedFields(
         bio=models.TextField(blank=True),
         approach=models.TextField(blank=True),
+        availability=models.TextField(blank=True),  # a nanny's schedule, free text
     )
 
     def __str__(self):
@@ -72,6 +85,15 @@ class SpecialistProfile(TranslatableModel):
     @property
     def experience_years(self) -> int:
         return timezone.localdate().year - self.practice_start_year
+
+    @property
+    def is_nanny(self) -> bool:
+        return self.category == ProfileCategory.NANNY
+
+    @property
+    def training_hours(self) -> int:
+        """Uses the prefetched `trainings` when there are any."""
+        return sum(t.hours for t in self.trainings.all())
 
     def services(self):
         from .service import Service

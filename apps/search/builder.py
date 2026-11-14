@@ -12,7 +12,7 @@ from apps.catalog.models import (
     Service,
     SpecialistType,
 )
-from apps.catalog.visibility import is_catalog_visible
+from apps.catalog.visibility import is_catalog_visible, nanny_eligible
 from apps.geo.models import KatoNode
 
 from .models import SearchOffer
@@ -66,10 +66,13 @@ def _service_offers(service: Service, kato: _KatoCache) -> list[SearchOffer]:
 
     common = {
         "specialist": specialist,
+        "category": specialist.category,
         "context": context,
         "service": service,
         "price_session": service.price_session,
         "price_month": service.price_month,
+        "price_hour": service.price_hour,
+        "price_night": service.price_night,
         "is_free": service.is_free,
         "age_min": attrs.age_min,
         "age_max": attrs.age_max,
@@ -78,6 +81,7 @@ def _service_offers(service: Service, kato: _KatoCache) -> list[SearchOffer]:
         "specialist_type_ids": attrs.specialist_type_ids,
         "language_codes": attrs.language_codes,
         "experience_years": specialist.experience_years,
+        "training_hours": specialist.training_hours,
         "verification_levels": list(specialist.demo_verification_levels),
     }
 
@@ -110,12 +114,20 @@ def rebuild_for_context(context_id: int) -> int:
     """Replace all SearchOffer rows of a practice context; returns the number of rows written."""
     with transaction.atomic():
         SearchOffer.objects.filter(context_id=context_id).delete()
-        context = PracticeContext.objects.select_related("specialist").filter(pk=context_id).first()
+        context = (
+            PracticeContext.objects.select_related("specialist")
+            .prefetch_related("specialist__trainings")
+            .filter(pk=context_id)
+            .first()
+        )
         if context is None or not is_catalog_visible(context):
+            return 0
+        if context.specialist.is_nanny and not nanny_eligible(context.specialist):
             return 0
         kato = _KatoCache()
         rows = []
-        for service in context.services.select_related("context__specialist").order_by("pk"):
+        for service in context.services.order_by("pk"):
+            service.context = context  # the specialist with the prefetched trainings
             rows += _service_offers(service, kato)
         return len(SearchOffer.objects.bulk_create(rows))
 

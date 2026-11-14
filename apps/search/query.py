@@ -321,7 +321,11 @@ def _offers_by_specialist(offers: QuerySet[SearchOffer], ids: list[int]) -> dict
 def cards_for_profiles(profiles: list[SpecialistProfile]) -> list[SpecialistCard]:
     """Cards of the profiles in the given order; a profile without offers (not in the catalog) is dropped."""
     by_specialist = _offers_by_specialist(SearchOffer.objects.all(), [p.pk for p in profiles])
-    return [_build_card(p, by_specialist[p.pk], None, None) for p in profiles if by_specialist[p.pk]]
+    cards = [_build_card(p, by_specialist[p.pk], None, None) for p in profiles if by_specialist[p.pk]]
+    ratings = ratings_for(card.specialist.pk for card in cards)
+    for card in cards:
+        card.rating = ratings.get(card.specialist.pk, NO_RATING)
+    return cards
 
 
 def search(params: SearchParams) -> SearchResult:

@@ -8,11 +8,12 @@
   {% if IS_DEMO %}
   <p class="mt-4 rounded bg-amber-50 px-3 py-2 text-sm text-amber-900">{% translate "Демо-версия: не вводите реальные данные" %}</p>
   {% endif %}
-  <form method="post" class="mt-6 space-y-5" novalidate>
+  <form method="post" class="mt-6 space-y-5" novalidate{% if form.errors %} x-data x-init="$nextTick(() => { const t = $el.querySelector('[aria-invalid=true]') || $el.querySelector('[role=alert]'); if (t) t.focus(); })"{% endif %}>
     {% csrf_token %}
     {% for error in form.non_field_errors %}<p class="text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
     {% for field in form %}{% include "onboarding/_field.html" %}{% endfor %}
-    <div class="flex items-center gap-4">
+    {# Below lg the actions stay above the bottom nav, so a long questionnaire can be saved from anywhere. #}
+    <div class="sticky bottom-[calc(3.5rem+env(safe-area-inset-bottom))] -mx-4 flex items-center gap-4 border-t border-slate-200 bg-white px-4 py-3 lg:static lg:mx-0 lg:border-0 lg:px-0 lg:py-0">
       <button type="submit" class="btn-press min-h-12 rounded bg-primary-700 px-6 py-2 font-semibold text-white hover:bg-primary-800">{% translate "Сохранить" %}</button>
       <a href="{% url 'cabinet:home' %}" class="text-sm text-slate-700 hover:underline">{% translate "Отмена" %}</a>
     </div>

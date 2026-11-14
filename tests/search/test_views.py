@@ -270,5 +270,8 @@ def test_home_still_lists_verification_levels(client, catalog_fixture):
 
 
 def test_results_map_is_shorter_than_viewport_on_desktop(client, catalog_fixture):
+    # The product owner chose this height: the map fits a 1440x900 screen under the heading.
     html = client.get("/ru/specialists/").content.decode()
-    assert "xl:h-[calc(100vh-8rem)]" in html and "xl:h-[calc(100vh-2rem)]" not in html
+    tokens = re.search(r'<div id="map" class="([^"]*)"', html).group(1).split()
+    assert "xl:h-[calc(100dvh-13rem)]" in tokens
+

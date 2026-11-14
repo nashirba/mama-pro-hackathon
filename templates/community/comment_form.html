@@ -8,7 +8,7 @@
   <form method="post" class="space-y-3" novalidate>
     {% csrf_token %}
     <label for="{{ form.body.id_for_label }}" class="sr-only">{{ form.body.label }}</label>
-    <textarea id="{{ form.body.id_for_label }}" name="body" rows="4" maxlength="1000" required class="w-full rounded-lg border border-slate-300 px-3 py-2"{% if form.body.errors %} aria-invalid="true" aria-describedby="comment-error"{% endif %}>{{ form.body.value|default:'' }}</textarea>
+    <textarea id="{{ form.body.id_for_label }}" name="body" rows="4" maxlength="1000" required class="w-full rounded-lg border border-field px-3 py-2"{% if form.body.errors %} aria-invalid="true" aria-describedby="comment-error"{% endif %}>{{ form.body.value|default:'' }}</textarea>
     {% if form.body.errors %}<p id="comment-error" class="text-sm text-red-700">{{ form.body.errors.0 }}</p>{% endif %}
     {% if form.sensitive_warning %}
     <label class="flex min-h-11 items-center gap-3 rounded-lg bg-amber-50 p-3 text-sm font-medium text-amber-900">

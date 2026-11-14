@@ -93,20 +93,26 @@ window.kamqorMap = (function () {
     }
     var clustered = opts.geojsonUrl != null;
     var labels = Object.assign(
-      { free: "", from: "__PRICE__", onRequest: "", details: "", twoGis: "", loading: "", unavailable: "", toList: "" },
+      { free: "", from: "__PRICE__", onRequest: "", details: "", twoGis: "", loading: "", unavailable: "", toList: "", cooperative: {} },
       opts.labels
     );
     var listLabel = opts.listButton ? labels.toList : "";
     showStatus(el, labels.loading);
     var map;
     try {
-      map = new maplibregl.Map({
+      var options = {
         container: el,
         style: STYLE_URL,
         center: opts.center,
         zoom: opts.zoom,
         attributionControl: { compact: false },
-      });
+      };
+      // the minimap sits in the middle of a profile: a one-finger swipe or the wheel must scroll the page
+      if (opts.cooperative) {
+        options.cooperativeGestures = true;
+        options.locale = labels.cooperative;
+      }
+      map = new maplibregl.Map(options);
     } catch (error) {
       console.error(error);
       showStatus(el, labels.unavailable, listLabel);
@@ -181,11 +187,20 @@ window.kamqorMap = (function () {
           paint: { "text-color": "#ffffff" },
         });
       }
+      var pointFilter = clustered ? ["!", ["has", "point_count"]] : ["all"];
+      // an invisible larger circle under the visible one: a finger needs about a 44px target
+      map.addLayer({
+        id: "points-hit",
+        type: "circle",
+        source: SOURCE,
+        filter: pointFilter,
+        paint: { "circle-radius": 22, "circle-opacity": 0 },
+      });
       map.addLayer({
         id: "points",
         type: "circle",
         source: SOURCE,
-        filter: clustered ? ["!", ["has", "point_count"]] : ["all"],
+        filter: pointFilter,
         paint: {
           "circle-color": COLOR,
           "circle-radius": 8,
@@ -194,7 +209,7 @@ window.kamqorMap = (function () {
         },
       });
 
-      map.on("click", "points", function (event) {
+      map.on("click", "points-hit", function (event) {
         var feature = event.features[0];
         new maplibregl.Popup({ offset: 12 })
           .setLngLat(feature.geometry.coordinates.slice())
@@ -209,7 +224,7 @@ window.kamqorMap = (function () {
           });
         });
       }
-      (clustered ? ["clusters", "points"] : ["points"]).forEach(function (layer) {
+      (clustered ? ["clusters", "points-hit"] : ["points-hit"]).forEach(function (layer) {
         map.on("mouseenter", layer, function () { map.getCanvas().style.cursor = "pointer"; });
         map.on("mouseleave", layer, function () { map.getCanvas().style.cursor = ""; });
       });

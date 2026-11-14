@@ -13,15 +13,16 @@
     {% blocktranslate with code=demo_otp_code %}В демо-версии SMS не отправляются, код публичный: {{ code }}{% endblocktranslate %}
   </p>
   {% endif %}
-  <form method="post" class="mt-6 space-y-4" novalidate>
+  <form method="post" class="mt-6 space-y-4" novalidate{% if form.errors %} x-data x-init="$nextTick(() => { const t = $el.querySelector('[aria-invalid=true]') || $el.querySelector('[role=alert]'); if (t) t.focus(); })"{% endif %}>
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}">
     <div>
       <label for="{{ form.code.id_for_label }}" class="block text-sm font-medium">{{ form.code.label }}</label>
       <input type="text" name="code" id="{{ form.code.id_for_label }}" inputmode="numeric"
-             autocomplete="one-time-code" required autofocus
-             class="mt-1 min-h-12 w-full rounded border border-field px-3 py-2 tracking-widest">
-      {% for error in form.code.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
+             autocomplete="one-time-code" required{% if not form.errors %} autofocus{% endif %}
+             value="{{ form.code.value|default:'' }}"{% if form.code.errors %} aria-invalid="true" aria-describedby="{{ form.code.auto_id }}-error"{% endif %}
+             class="mt-1 min-h-12 w-full rounded border {% if form.code.errors %}border-red-600{% else %}border-field{% endif %} px-3 py-2 tracking-widest">
+      {% if form.code.errors %}<div id="{{ form.code.auto_id }}-error" role="alert" tabindex="-1" class="outline-none">{% for error in form.code.errors %}<p class="mt-1 text-sm text-red-700">{{ error }}</p>{% endfor %}</div>{% endif %}
     </div>
     {% if is_new %}{% include "accounts/_consent_fields.html" %}{% endif %}
     <button type="submit" class="btn-press min-h-12 w-full rounded bg-primary-700 px-4 py-2 font-semibold text-white hover:bg-primary-800">

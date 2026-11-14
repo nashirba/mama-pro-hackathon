@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 00:59+0500\n"
+"POT-Creation-Date: 2026-11-15 01:34+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,6 +63,7 @@ msgid "Специалист"
 msgstr "Маман"
 
 #: apps/accounts/models.py:16 apps/catalog/models/profile.py:30
+#: apps/community/views.py:353
 msgid "Няня"
 msgstr "Бала күтуші"
 
@@ -460,11 +461,11 @@ msgstr "Оқиғалар"
 msgid "Отзывы"
 msgstr "Пікірлер"
 
-#: apps/community/views.py:148
+#: apps/community/views.py:157
 msgid "Вы уже писали отзыв об этом специалисте - его можно изменить"
 msgstr "Сіз бұл маман туралы пікір жазғансыз - оны өзгертуге болады"
 
-#: apps/community/views.py:313
+#: apps/community/views.py:322
 msgid "Жалоба отправлена"
 msgstr "Шағым жіберілді"
 
@@ -1216,6 +1217,22 @@ msgstr "Карта қолжетімсіз"
 msgid "К списку"
 msgstr "Тізімге"
 
+#: apps/search/templatetags/search_tags.py:37
+msgid "Чтобы изменить масштаб карты, удерживайте Ctrl и прокручивайте колёсико"
+msgstr ""
+"Картаның масштабын өзгерту үшін Ctrl пернесін басып тұрып, дөңгелекшені "
+"айналдырыңыз"
+
+#: apps/search/templatetags/search_tags.py:38
+msgid "Чтобы изменить масштаб карты, удерживайте ⌘ и прокручивайте колёсико"
+msgstr ""
+"Картаның масштабын өзгерту үшін ⌘ пернесін басып тұрып, дөңгелекшені "
+"айналдырыңыз"
+
+#: apps/search/templatetags/search_tags.py:39
+msgid "Двигайте карту двумя пальцами"
+msgstr "Картаны екі саусақпен жылжытыңыз"
+
 #: apps/search/views.py:49
 #, python-format
 msgctxt "landing title without locative"
@@ -1384,11 +1401,11 @@ msgstr "Нөмірді өзгерту немесе кодты қайта жіб�
 msgid "В демо-версии SMS не отправляются, код публичный: %(code)s"
 msgstr "Демо-нұсқада SMS жіберілмейді, код ашық: %(code)s"
 
-#: templates/accounts/code_form.html:28
+#: templates/accounts/code_form.html:29
 msgid "Зарегистрироваться"
 msgstr "Тіркелу"
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:22
+#: templates/accounts/code_form.html:29 templates/partials/header.html:22
 msgid "Войти"
 msgstr "Кіру"
 
@@ -1458,13 +1475,13 @@ msgstr "Демо-нұсқа: баланың нақты деректерін ен
 #: templates/cabinet/child_form.html:20 templates/cabinet/profile_form.html:17
 #: templates/community/comment_form.html:20
 #: templates/community/nickname_form.html:18
-#: templates/community/post_form.html:90 templates/onboarding/form.html:16
+#: templates/community/post_form.html:94 templates/onboarding/form.html:17
 msgid "Сохранить"
 msgstr "Сақтау"
 
 #: templates/cabinet/child_form.html:21 templates/cabinet/profile_form.html:18
 #: templates/community/comment_form.html:21
-#: templates/community/complaint_form.html:25 templates/onboarding/form.html:17
+#: templates/community/complaint_form.html:25 templates/onboarding/form.html:18
 msgid "Отмена"
 msgstr "Бас тарту"
 
@@ -1831,11 +1848,11 @@ msgid_plural "%(n)s ответов"
 msgstr[0] "%(n)s жауап"
 msgstr[1] "%(n)s жауап"
 
-#: templates/community/_specialist_options.html:14
+#: templates/community/_specialist_options.html:17
 msgid "Никого не нашли"
 msgstr "Ешкім табылмады"
 
-#: templates/community/_specialist_options.html:16
+#: templates/community/_specialist_options.html:19
 msgid "Введите имя специалиста или няни"
 msgstr "Маманның немесе бала күтушінің атын енгізіңіз"
 
@@ -1960,15 +1977,23 @@ msgstr "Маманның немесе бала күтушінің аты"
 msgid "Не указывать"
 msgstr "Көрсетпеу"
 
-#: templates/community/post_form.html:82
+#: templates/community/post_form.html:83
+msgid "Выбрать фото"
+msgstr "Фото таңдау"
+
+#: templates/community/post_form.html:84
+msgid "Файл не выбран"
+msgstr "Файл таңдалмаған"
+
+#: templates/community/post_form.html:86
 msgid "JPEG или PNG, до 2 МБ"
 msgstr "JPEG немесе PNG, 2 МБ-қа дейін"
 
-#: templates/community/post_form.html:83
+#: templates/community/post_form.html:87
 msgid "Прикрепите фото ещё раз"
 msgstr "Фотоны қайта тіркеңіз"
 
-#: templates/community/post_form.html:90
+#: templates/community/post_form.html:94
 msgid "Опубликовать"
 msgstr "Жариялау"
 
@@ -2702,7 +2727,7 @@ msgstr "Барлығын көрсету"
 msgid "Свернуть"
 msgstr "Жасыру"
 
-#: templates/search/_filters.html:107 templates/search/_nanny_card.html:15
+#: templates/search/_filters.html:107 templates/search/_nanny_card.html:18
 msgid "Особенности развития"
 msgstr "Даму ерекшеліктері"
 
@@ -2782,19 +2807,19 @@ msgstr "Бөлімдегі әр бала күтушіде бар"
 msgid "Сертификат о курсе обучения"
 msgstr "Оқу курсы туралы сертификат"
 
-#: templates/search/_nanny_card.html:11
+#: templates/search/_nanny_card.html:15
 #, python-format
 msgid "Опыт %(n)s год"
 msgid_plural "Опыт %(n)s лет"
 msgstr[0] "Тәжірибесі %(n)s жыл"
 msgstr[1] "Тәжірибесі %(n)s жыл"
 
-#: templates/search/_nanny_card.html:11
+#: templates/search/_nanny_card.html:15
 #, python-format
 msgid "дети %(min)s–%(max)s лет"
 msgstr "%(min)s–%(max)s жастағы балалар"
 
-#: templates/search/_nanny_card.html:22
+#: templates/search/_nanny_card.html:25
 #, python-format
 msgid "Выезд: %(area)s"
 msgstr "Барады: %(area)s"

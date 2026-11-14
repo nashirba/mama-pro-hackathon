@@ -11,10 +11,10 @@
       <div class="mt-2 rounded bg-slate-50 p-3">{% include "consents/user_agreement_v1.html" %}</div>
     </details>
     <label class="mt-2 flex min-h-11 items-start gap-3 text-sm">
-      <input type="checkbox" name="user_agreement" class="mt-0.5 size-5 shrink-0 accent-primary-700"{% if form.user_agreement.value %} checked{% endif %}>
+      <input type="checkbox" name="user_agreement" class="mt-0.5 size-5 shrink-0 accent-primary-700"{% if form.user_agreement.value %} checked{% endif %}{% if form.user_agreement.errors %} aria-invalid="true" aria-describedby="user_agreement-error"{% endif %}>
       <span>{% translate "Я принимаю пользовательское соглашение" %}</span>
     </label>
-    {% for error in form.user_agreement.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
+    {% if form.user_agreement.errors %}<div id="user_agreement-error" role="alert" tabindex="-1" class="outline-none">{% for error in form.user_agreement.errors %}<p class="mt-1 text-sm text-red-700">{{ error }}</p>{% endfor %}</div>{% endif %}
   </div>
 
   <div>
@@ -26,9 +26,9 @@
       <div class="mt-2 rounded bg-slate-50 p-3">{% include "consents/pd_processing_v1.html" %}</div>
     </details>
     <label class="mt-2 flex min-h-11 items-start gap-3 text-sm">
-      <input type="checkbox" name="pd_processing" class="mt-0.5 size-5 shrink-0 accent-primary-700"{% if form.pd_processing.value %} checked{% endif %}>
+      <input type="checkbox" name="pd_processing" class="mt-0.5 size-5 shrink-0 accent-primary-700"{% if form.pd_processing.value %} checked{% endif %}{% if form.pd_processing.errors %} aria-invalid="true" aria-describedby="pd_processing-error"{% endif %}>
       <span>{% translate "Я даю согласие на обработку персональных данных" %}</span>
     </label>
-    {% for error in form.pd_processing.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
+    {% if form.pd_processing.errors %}<div id="pd_processing-error" role="alert" tabindex="-1" class="outline-none">{% for error in form.pd_processing.errors %}<p class="mt-1 text-sm text-red-700">{{ error }}</p>{% endfor %}</div>{% endif %}
   </div>
 </fieldset>

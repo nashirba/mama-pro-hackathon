@@ -89,3 +89,16 @@ def test_heading_in_kazakh(client, db):
     client.force_login(UserFactory())
     html = client.get("/kk/favorites/").content.decode()
     assert '<h1 class="text-2xl font-bold">Таңдаулылар</h1>' in html
+
+
+def test_favorites_card_shows_rating(client, catalog_fixture):
+    from apps.community.models import Post
+    from tests.factories import PostFactory
+
+    profile = catalog_fixture.specialists["ivanova-logoped"]
+    PostFactory(kind=Post.Kind.REVIEW, specialist=profile, rating=5)
+    user = UserFactory()
+    _favorite(user, profile)
+    client.force_login(user)
+    html = client.get("/ru/favorites/").content.decode()
+    assert 'data-rating="5.0"' in html and "1 отзыв" in html

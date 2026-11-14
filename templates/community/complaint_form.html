@@ -17,7 +17,7 @@
     </fieldset>
     <div>
       <label for="{{ form.text.id_for_label }}" class="block text-sm font-medium">{{ form.text.label }}</label>
-      <textarea id="{{ form.text.id_for_label }}" name="text" rows="3" maxlength="1000" class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2">{{ form.text.value|default:'' }}</textarea>
+      <textarea id="{{ form.text.id_for_label }}" name="text" rows="3" maxlength="1000" class="mt-1 w-full rounded-lg border border-field px-3 py-2">{{ form.text.value|default:'' }}</textarea>
       {% if form.text.errors %}<p class="mt-1 text-sm text-red-700">{{ form.text.errors.0 }}</p>{% endif %}
     </div>
     <div class="flex flex-wrap items-center gap-3">

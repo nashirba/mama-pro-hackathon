@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 00:59+0500\n"
+"POT-Creation-Date: 2026-11-15 01:34+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,6 +65,7 @@ msgid "Специалист"
 msgstr ""
 
 #: apps/accounts/models.py:16 apps/catalog/models/profile.py:30
+#: apps/community/views.py:353
 msgid "Няня"
 msgstr ""
 
@@ -473,11 +474,11 @@ msgstr ""
 msgid "Отзывы"
 msgstr ""
 
-#: apps/community/views.py:148
+#: apps/community/views.py:157
 msgid "Вы уже писали отзыв об этом специалисте - его можно изменить"
 msgstr ""
 
-#: apps/community/views.py:313
+#: apps/community/views.py:322
 msgid "Жалоба отправлена"
 msgstr ""
 
@@ -1222,6 +1223,18 @@ msgstr ""
 msgid "К списку"
 msgstr ""
 
+#: apps/search/templatetags/search_tags.py:37
+msgid "Чтобы изменить масштаб карты, удерживайте Ctrl и прокручивайте колёсико"
+msgstr ""
+
+#: apps/search/templatetags/search_tags.py:38
+msgid "Чтобы изменить масштаб карты, удерживайте ⌘ и прокручивайте колёсико"
+msgstr ""
+
+#: apps/search/templatetags/search_tags.py:39
+msgid "Двигайте карту двумя пальцами"
+msgstr ""
+
 #: apps/search/views.py:49
 #, python-format
 msgctxt "landing title without locative"
@@ -1383,11 +1396,11 @@ msgstr ""
 msgid "В демо-версии SMS не отправляются, код публичный: %(code)s"
 msgstr ""
 
-#: templates/accounts/code_form.html:28
+#: templates/accounts/code_form.html:29
 msgid "Зарегистрироваться"
 msgstr ""
 
-#: templates/accounts/code_form.html:28 templates/partials/header.html:22
+#: templates/accounts/code_form.html:29 templates/partials/header.html:22
 msgid "Войти"
 msgstr ""
 
@@ -1455,13 +1468,13 @@ msgstr ""
 #: templates/cabinet/child_form.html:20 templates/cabinet/profile_form.html:17
 #: templates/community/comment_form.html:20
 #: templates/community/nickname_form.html:18
-#: templates/community/post_form.html:90 templates/onboarding/form.html:16
+#: templates/community/post_form.html:94 templates/onboarding/form.html:17
 msgid "Сохранить"
 msgstr ""
 
 #: templates/cabinet/child_form.html:21 templates/cabinet/profile_form.html:18
 #: templates/community/comment_form.html:21
-#: templates/community/complaint_form.html:25 templates/onboarding/form.html:17
+#: templates/community/complaint_form.html:25 templates/onboarding/form.html:18
 msgid "Отмена"
 msgstr ""
 
@@ -1838,11 +1851,11 @@ msgstr[1] "%(n)s ответа"
 msgstr[2] "%(n)s ответов"
 msgstr[3] "%(n)s ответа"
 
-#: templates/community/_specialist_options.html:14
+#: templates/community/_specialist_options.html:17
 msgid "Никого не нашли"
 msgstr ""
 
-#: templates/community/_specialist_options.html:16
+#: templates/community/_specialist_options.html:19
 msgid "Введите имя специалиста или няни"
 msgstr ""
 
@@ -1965,15 +1978,23 @@ msgstr ""
 msgid "Не указывать"
 msgstr ""
 
-#: templates/community/post_form.html:82
+#: templates/community/post_form.html:83
+msgid "Выбрать фото"
+msgstr ""
+
+#: templates/community/post_form.html:84
+msgid "Файл не выбран"
+msgstr ""
+
+#: templates/community/post_form.html:86
 msgid "JPEG или PNG, до 2 МБ"
 msgstr ""
 
-#: templates/community/post_form.html:83
+#: templates/community/post_form.html:87
 msgid "Прикрепите фото ещё раз"
 msgstr ""
 
-#: templates/community/post_form.html:90
+#: templates/community/post_form.html:94
 msgid "Опубликовать"
 msgstr ""
 
@@ -2654,7 +2675,7 @@ msgstr ""
 msgid "Свернуть"
 msgstr ""
 
-#: templates/search/_filters.html:107 templates/search/_nanny_card.html:15
+#: templates/search/_filters.html:107 templates/search/_nanny_card.html:18
 msgid "Особенности развития"
 msgstr ""
 
@@ -2730,7 +2751,7 @@ msgstr ""
 msgid "Сертификат о курсе обучения"
 msgstr ""
 
-#: templates/search/_nanny_card.html:11
+#: templates/search/_nanny_card.html:15
 #, python-format
 msgid "Опыт %(n)s год"
 msgid_plural "Опыт %(n)s лет"
@@ -2739,12 +2760,12 @@ msgstr[1] "Опыт %(n)s года"
 msgstr[2] "Опыт %(n)s лет"
 msgstr[3] "Опыт %(n)s года"
 
-#: templates/search/_nanny_card.html:11
+#: templates/search/_nanny_card.html:15
 #, python-format
 msgid "дети %(min)s–%(max)s лет"
 msgstr ""
 
-#: templates/search/_nanny_card.html:22
+#: templates/search/_nanny_card.html:25
 #, python-format
 msgid "Выезд: %(area)s"
 msgstr ""

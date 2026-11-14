@@ -135,7 +135,16 @@ def _form_context(form, *, post=None) -> dict:
     selected = None
     if post is None:
         raw = str(form["specialist"].value() or "")
-        selected = catalog_visible_profiles().filter(pk=raw).first() if raw.isdigit() else None
+        selected = (
+            catalog_visible_profiles()
+            .prefetch_related("specialist_types", "contexts__services__addresses__kato", "contexts__services__home_visit_area__parent")
+            .filter(pk=raw)
+            .first()
+            if raw.isdigit()
+            else None
+        )
+        if selected:
+            _with_option_details([selected])
     return {
         "form": form,
         "post": post,
@@ -317,13 +326,46 @@ def complain(request, target: str, pk: int):
     return render(request, "community/complaint_form.html", {"form": form, "post_id": post_id, "target": found or post})
 
 
+def _kato_place(kato) -> str:
+    name = kato.safe_translation_getter("name", any_language=True) or ""
+    city = kato.city()
+    if city is not None and city.pk != kato.pk:
+        return f"{city.safe_translation_getter('name', any_language=True)}, {name}"
+    return name
+
+
+def _option_place(profile) -> str:
+    """"City, district" of the first practice address (a nanny: of the first home-visit area), so a mother can tell namesakes apart."""
+    for context in profile.contexts.all():
+        for service in context.services.all():
+            for address in service.addresses.all():
+                return _kato_place(address.kato)
+    for context in profile.contexts.all():
+        for service in context.services.all():
+            if service.home_visit_area is not None:
+                return _kato_place(service.home_visit_area)
+    return ""
+
+
+def _with_option_details(profiles: list) -> list:
+    for profile in profiles:
+        profile.option_role = (
+            _("Няня") if profile.is_nanny else ", ".join(t.name for t in profile.specialist_types.all())
+        )
+        profile.option_place = _option_place(profile)
+    return profiles
+
+
 def specialist_options(request):
     q = (request.GET.get("q") or "").strip()
-    visible = catalog_visible_profiles()
+    visible = catalog_visible_profiles().prefetch_related(
+        "specialist_types", "contexts__services__addresses__kato", "contexts__services__home_visit_area__parent"
+    )
     specialists = list(visible.filter(display_name__icontains=q).order_by("display_name")[:10]) if q else []
     raw = request.GET.get("specialist", "")
     selected = visible.filter(pk=raw).first() if raw.isdigit() else None
     if selected and selected not in specialists:
         specialists.insert(0, selected)
+    _with_option_details(specialists)
     context = {"specialists": specialists, "selected_id": selected.pk if selected else None, "q": q}
     return render(request, "community/_specialist_options.html", context)

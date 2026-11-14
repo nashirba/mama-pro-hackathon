@@ -3,9 +3,12 @@
 <ul class="space-y-1">
   {% for sp in specialists %}
   <li>
-    <label class="flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-slate-200 px-3 hover:bg-slate-50">
-      <input type="radio" name="specialist" value="{{ sp.pk }}"{% if sp.pk == selected_id %} checked{% endif %} class="size-4">
-      <span>{{ sp.display_name }}</span>
+    <label class="flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border border-slate-200 px-3 py-2 hover:bg-slate-50 has-[:checked]:border-primary-700 has-[:checked]:bg-primary-50 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary-600">
+      <input type="radio" name="specialist" value="{{ sp.pk }}"{% if sp.pk == selected_id %} checked{% endif %} class="size-5 shrink-0 accent-primary-700">
+      <span class="min-w-0">
+        <span class="block font-medium">{{ sp.display_name }}</span>
+        {% if sp.option_role or sp.option_place %}<span class="block text-sm text-slate-600">{{ sp.option_role }}{% if sp.option_role and sp.option_place %} · {% endif %}{{ sp.option_place }}</span>{% endif %}
+      </span>
     </label>
   </li>
   {% endfor %}

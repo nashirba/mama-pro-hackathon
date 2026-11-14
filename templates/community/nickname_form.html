@@ -11,7 +11,7 @@
     <input type="hidden" name="next" value="{{ next }}">
     <div>
       <label for="{{ form.display_name.id_for_label }}" class="block text-sm font-medium">{{ form.display_name.label }}</label>
-      <input id="{{ form.display_name.id_for_label }}" type="text" name="display_name" value="{{ form.display_name.value|default:'' }}" minlength="3" maxlength="40" required autocomplete="nickname" class="mt-1 min-h-11 w-full rounded-lg border border-slate-300 px-3"{% if form.display_name.errors %} aria-invalid="true" aria-describedby="nickname-error"{% endif %}>
+      <input id="{{ form.display_name.id_for_label }}" type="text" name="display_name" value="{{ form.display_name.value|default:'' }}" minlength="3" maxlength="40" required autocomplete="nickname" class="mt-1 min-h-11 w-full rounded-lg border border-field px-3"{% if form.display_name.errors %} aria-invalid="true" aria-describedby="nickname-error"{% endif %}>
       {% if form.display_name.errors %}<p id="nickname-error" class="mt-1 text-sm text-red-700">{{ form.display_name.errors.0 }}</p>{% endif %}
       <p class="mt-1 text-xs text-slate-500">{% translate "3-40 символов: буквы, цифры, пробел и _" %}</p>
     </div>

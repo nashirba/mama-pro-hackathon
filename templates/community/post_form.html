@@ -26,7 +26,7 @@
       <legend class="text-sm font-medium">{{ form.kind.label }}</legend>
       <div class="flex flex-wrap gap-2">
         {% for radio in form.kind %}
-        <label class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-slate-300 px-4 text-sm font-medium has-[:checked]:border-primary-700 has-[:checked]:bg-primary-700 has-[:checked]:text-white">
+        <label class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-slate-300 px-4 text-sm font-medium has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary-600 has-[:checked]:border-primary-700 has-[:checked]:bg-primary-700 has-[:checked]:text-white">
           <input type="radio" name="kind" value="{{ radio.data.value }}" class="sr-only" x-model="kind"{% if radio.data.selected %} checked{% endif %}>
           {{ radio.choice_label }}
         </label>
@@ -50,7 +50,7 @@
 
     <div>
       <label for="{{ form.body.id_for_label }}" class="block text-sm font-medium">{{ form.body.label }}</label>
-      <textarea id="{{ form.body.id_for_label }}" name="body" rows="8" maxlength="3000" required class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2"{% if form.body.errors %} aria-invalid="true" aria-describedby="body-error"{% endif %}>{{ form.body.value|default:'' }}</textarea>
+      <textarea id="{{ form.body.id_for_label }}" name="body" rows="8" maxlength="3000" required class="mt-1 w-full rounded-lg border border-field px-3 py-2"{% if form.body.errors %} aria-invalid="true" aria-describedby="body-error"{% endif %}>{{ form.body.value|default:'' }}</textarea>
       {% if form.body.errors %}<p id="body-error" class="mt-1 text-sm text-red-700">{{ form.body.errors.0 }}</p>{% endif %}
     </div>
 
@@ -63,13 +63,13 @@
 
     <div class="grid gap-3 sm:grid-cols-2">
       <label class="block text-sm font-medium">{{ form.condition.label }}
-        <select name="condition" class="mt-1 min-h-11 w-full rounded-lg border border-slate-300 bg-white px-2 font-normal">
+        <select name="condition" class="mt-1 min-h-11 w-full rounded-lg border border-field bg-white px-2 font-normal">
           <option value="">{% translate "Не указывать" %}</option>
           {% for c in form.condition_choices %}<option value="{{ c.pk }}"{% if c.pk|stringformat:"s" == form.condition.value|stringformat:"s" %} selected{% endif %}>{{ c.name }}</option>{% endfor %}
         </select>
       </label>
       <label class="block text-sm font-medium">{{ form.city.label }}
-        <select name="city" class="mt-1 min-h-11 w-full rounded-lg border border-slate-300 bg-white px-2 font-normal">
+        <select name="city" class="mt-1 min-h-11 w-full rounded-lg border border-field bg-white px-2 font-normal">
           <option value="">{% translate "Не указывать" %}</option>
           {% for c in form.city_choices %}<option value="{{ c.pk }}"{% if c.pk|stringformat:"s" == form.city.value|stringformat:"s" %} selected{% endif %}>{{ c.name }}</option>{% endfor %}
         </select>
@@ -78,7 +78,11 @@
 
     <div>
       <label for="post-image" class="block text-sm font-medium">{{ form.image.label }}</label>
-      <input id="post-image" type="file" name="image" accept="image/jpeg,image/png" class="mt-1 block w-full text-sm text-slate-600 file:mr-3 file:min-h-11 file:cursor-pointer file:rounded-lg file:border file:border-slate-300 file:bg-white file:px-4 file:text-sm file:font-medium file:text-slate-800 hover:file:bg-slate-50"{% if form.image.errors %} aria-invalid="true" aria-describedby="image-error"{% endif %}>
+      <div class="mt-1 flex flex-wrap items-center gap-3" x-data="{ name: '' }">
+        <input id="post-image" type="file" name="image" accept="image/jpeg,image/png" class="peer sr-only" @change="name = $event.target.files[0] ? $event.target.files[0].name : ''"{% if form.image.errors %} aria-invalid="true" aria-describedby="image-error"{% endif %}>
+        <label for="post-image" class="inline-flex min-h-11 cursor-pointer items-center rounded-lg border border-field px-4 font-medium text-slate-800 hover:bg-slate-50 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary-700">{% translate "Выбрать фото" %}</label>
+        <span class="min-w-0 break-all text-sm text-slate-600" x-text="name || '{% translate "Файл не выбран" %}'">{% translate "Файл не выбран" %}</span>
+      </div>
       <p class="mt-1 text-xs text-slate-500">{% translate "JPEG или PNG, до 2 МБ" %}</p>
       {% if form.photo_lost %}<p class="mt-1 text-sm font-medium text-amber-800" role="status">{% translate "Прикрепите фото ещё раз" %}</p>{% endif %}
       {% if form.image.errors %}<p id="image-error" class="mt-1 text-sm text-red-700">{{ form.image.errors.0 }}</p>{% endif %}

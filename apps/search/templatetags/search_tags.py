@@ -33,6 +33,11 @@ def map_labels_script():
             "loading": gettext("Загружаем карту…"),
             "unavailable": gettext("Карта недоступна"),
             "toList": gettext("К списку"),
+            "cooperative": {
+                "CooperativeGesturesHandler.WindowsHelpText": gettext("Чтобы изменить масштаб карты, удерживайте Ctrl и прокручивайте колёсико"),
+                "CooperativeGesturesHandler.MacHelpText": gettext("Чтобы изменить масштаб карты, удерживайте ⌘ и прокручивайте колёсико"),
+                "CooperativeGesturesHandler.MobileHelpText": gettext("Двигайте карту двумя пальцами"),
+            },
         },
         "map-labels",
     )

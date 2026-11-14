@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n form_tags %}
 {% block title %}{% translate "Редактировать" %} — {{ BRAND_NAME }}{% endblock %}
 {% block content %}
 <div class="mx-auto max-w-md px-4 py-10">
   <h1 class="text-2xl font-bold">{% translate "Мои данные" %}</h1>
-  <form method="post" class="mt-6 space-y-4" novalidate>
+  <form method="post" class="mt-6 space-y-4" novalidate{% if form.errors %} x-data x-init="$nextTick(() => { const t = $el.querySelector('[aria-invalid=true]') || $el.querySelector('[role=alert]'); if (t) t.focus(); })"{% endif %}>
     {% csrf_token %}
     {% for field in form %}
     <div>
       <label for="{{ field.id_for_label }}" class="block text-sm font-medium">{{ field.label }}</label>
-      <div class="mt-1 [&>input]:min-h-12 [&>input]:w-full [&>input]:rounded [&>input]:border [&>input]:border-field [&>input]:px-3 [&>input]:py-2">{{ field }}</div>
-      {% for error in field.errors %}<p class="mt-1 text-sm text-red-700" role="alert">{{ error }}</p>{% endfor %}
+      <div class="mt-1 [&>input]:min-h-12 [&>input]:w-full [&>input]:rounded [&>input]:border [&>input]:px-3 [&>input]:py-2 {% if field.errors %}[&>input]:border-red-600 [&>select]:border-red-600{% else %}[&>input]:border-field [&>select]:border-field{% endif %}">{{ field|with_errors }}</div>
+      {% if field.errors %}<div id="{{ field.auto_id }}-error" role="alert" tabindex="-1" class="outline-none">{% for error in field.errors %}<p class="mt-1 text-sm text-red-700">{{ error }}</p>{% endfor %}</div>{% endif %}
     </div>
     {% endfor %}
     <div class="flex items-center gap-4">

@@ -8,6 +8,7 @@
     window.kamqorMap.create(el, {
       center: geojson.features[0].geometry.coordinates,
       zoom: 15,
+      cooperative: true,
       geojson: geojson,
       labels: JSON.parse(document.getElementById("map-labels").textContent),
     });

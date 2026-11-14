@@ -26,3 +26,6 @@ openapi.generated.yaml
 
 static/css/
 /docs/
+/.agents/
+/.claude/
+/skills-lock.json

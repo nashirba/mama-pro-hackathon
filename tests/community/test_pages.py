@@ -235,3 +235,50 @@ def test_post_page_query_count_does_not_grow_with_specialist_comments(client):
     CommentFactory(post=post, author=hidden.user)
     html = _html(client.get(f"/ru/community/{post.pk}/"))
     assert html.count("/ru/specialist/") == 7 and hidden.slug not in html
+
+
+def test_specialist_page_shows_three_latest_reviews_and_all_link(client, catalog_fixture):
+    from apps.catalog.models import SpecialistProfile
+
+    spec = SpecialistProfile.objects.get(slug="ivanova-logoped")
+    for i in range(4):
+        PostFactory(kind=Post.Kind.REVIEW, specialist=spec, body=f"Отзыв номер {i}")
+    html = _html(client.get("/ru/specialist/ivanova-logoped/"))
+    assert "Отзывы в сообществе" in html
+    assert html.count('id="post-') == 3
+    assert "Отзыв номер 3" in html and "Отзыв номер 0" not in html
+    assert f"/ru/community/?kind=review&amp;specialist={spec.pk}" in html
+
+
+def test_specialist_page_without_reviews_has_no_section(client, catalog_fixture):
+    html = _html(client.get("/ru/specialist/ivanova-logoped/"))
+    assert "Отзывы в сообществе" not in html
+
+
+def test_hidden_review_not_on_specialist_page(client, catalog_fixture):
+    from apps.catalog.models import SpecialistProfile
+
+    spec = SpecialistProfile.objects.get(slug="ivanova-logoped")
+    PostFactory(kind=Post.Kind.REVIEW, specialist=spec, body="Скрытый отзыв", is_hidden=True)
+    html = _html(client.get("/ru/specialist/ivanova-logoped/"))
+    assert "Скрытый отзыв" not in html and "Отзывы в сообществе" not in html
+
+
+def test_specialist_page_review_card_shows_author_name(client, catalog_fixture):
+    from apps.catalog.models import SpecialistProfile
+
+    spec = SpecialistProfile.objects.get(slug="ivanova-logoped")
+    author = NicknamedUserFactory(display_name="Мама Айгуль")
+    PostFactory(kind=Post.Kind.REVIEW, specialist=spec, author=author)
+    assert "Мама Айгуль" in _html(client.get("/ru/specialist/ivanova-logoped/"))
+
+
+def test_home_shows_recent_posts(client, catalog_fixture):
+    PostFactory(body="Свежий пост на главной")
+    html = _html(client.get("/ru/"))
+    assert "Свежие посты" in html and "Свежий пост на главной" in html
+    assert "Перейти в сообщество" in html and 'href="/ru/community/"' in html
+
+
+def test_home_without_posts_has_no_section(client, catalog_fixture):
+    assert "Свежие посты" not in _html(client.get("/ru/"))

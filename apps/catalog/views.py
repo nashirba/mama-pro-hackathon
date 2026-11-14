@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 
+from apps.community.query import latest_reviews
 from apps.search.geojson import specialist_feature_collection
 
 from .models import Service, SpecialistProfile
@@ -44,5 +45,6 @@ def specialist_detail(request, slug):
             "services": services,
             "addresses": list(addresses.values()),
             "geojson": specialist_feature_collection(profile),
+            "community_reviews": latest_reviews(profile, request.user),
         },
     )

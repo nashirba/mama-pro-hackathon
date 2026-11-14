@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.i18n import set_language as django_set_language
 
 from apps.catalog.models import SpecialistType
+from apps.community.query import latest_posts
 from apps.core.i18n import first_translated
 from apps.geo.models import KatoNode
 from apps.search.models import SearchOffer
@@ -43,7 +44,11 @@ def home(request):
         KatoNode.objects.filter(level=KatoNode.Level.CITY).prefetch_related("translations"),
         key=lambda node: first_translated(node, "name"),
     )
-    return render(request, "core/home.html", {"popular_types": popular_types, "cities": cities})
+    return render(
+        request,
+        "core/home.html",
+        {"popular_types": popular_types, "cities": cities, "recent_posts": latest_posts(request.user)},
+    )
 
 
 def set_language(request) -> HttpResponse:

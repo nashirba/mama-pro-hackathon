@@ -248,3 +248,25 @@ def test_card_badges_and_filter_legend_unmarked_outside_demo(client, catalog_fix
     settings.DEPLOY_PROFILE = "test"
     html = client.get("/ru/specialists/").content.decode()
     assert "(демо)" not in html and "Демо: проверка не проводилась" not in html
+
+
+def test_specialists_intro_explains_verification(client, catalog_fixture):
+    html = client.get("/ru/specialists/").content.decode()
+    assert "Что значит проверенный специалист" in html
+    assert "Мы показываем не общую галочку" in html
+    for level in ("Личность подтверждена", "Образование подтверждено", "Квалификация подтверждена", "Проверка на безопасность пройдена"):
+        assert level in html
+
+
+def test_specialists_intro_not_on_nannies_page(client, catalog_fixture):
+    assert "Что значит проверенный специалист" not in client.get("/ru/nannies/").content.decode()
+
+
+def test_home_still_lists_verification_levels(client, catalog_fixture):
+    html = client.get("/ru/").content.decode()
+    assert html.count("Квалификация подтверждена") == 1 and "Видели диплом по специальности" in html
+
+
+def test_results_map_is_shorter_than_viewport_on_desktop(client, catalog_fixture):
+    html = client.get("/ru/specialists/").content.decode()
+    assert "xl:h-[calc(100vh-8rem)]" in html and "xl:h-[calc(100vh-2rem)]" not in html

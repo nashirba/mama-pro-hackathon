@@ -15,6 +15,7 @@ urlpatterns += i18n_patterns(
     path("", include("apps.accounts.urls")),
     path("", include("apps.core.urls")),
     path("", include("apps.catalog.urls")),
+    path("", include("apps.community.urls")),
     path("", include("apps.search.urls")),  # last: its landing pattern matches any two-segment path
     prefix_default_language=True,
 )

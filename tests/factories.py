@@ -13,6 +13,7 @@ from apps.catalog.models import (
     SpecialistProfile,
     SpecialistType,
 )
+from apps.community.models import Comment, Post
 from apps.geo.models import Address, KatoNode
 
 
@@ -37,6 +38,12 @@ class UserFactory(factory.django.DjangoModelFactory):
         model = User
 
     phone = factory.Sequence(lambda n: f"+7700{n:07d}")
+
+
+class NicknamedUserFactory(UserFactory):
+    """A parent who has already chosen a community nickname."""
+
+    display_name = factory.Sequence(lambda n: f"Мама {n}")
 
 
 class SpecialistFactory(factory.django.DjangoModelFactory):
@@ -110,3 +117,21 @@ class ServiceFactory(factory.django.DjangoModelFactory):
     conditions = _m2m("conditions", DevelopmentalCondition, "slug")
     methods = _m2m("methods", Method, "slug")
     languages = _m2m("languages", CommunicationLanguage, "code")
+
+
+class PostFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Post
+
+    author = factory.SubFactory(NicknamedUserFactory)
+    kind = Post.Kind.QUESTION
+    body = "Текст поста"
+
+
+class CommentFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Comment
+
+    post = factory.SubFactory(PostFactory)
+    author = factory.SubFactory(NicknamedUserFactory)
+    body = "Текст комментария"

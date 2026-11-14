@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 12:52+0500\n"
+"POT-Creation-Date: 2026-11-14 14:11+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,6 +118,74 @@ msgstr ""
 
 #: apps/catalog/models/service.py:65
 msgid "У бесплатной услуги не должно быть цены"
+msgstr ""
+
+#: apps/community/admin.py:11
+msgid "Скрыть"
+msgstr ""
+
+#: apps/community/admin.py:15 templates/search/_filters.html:173
+msgid "Показать"
+msgstr ""
+
+#: apps/community/admin.py:29 apps/community/admin.py:46
+msgid "Автор"
+msgstr ""
+
+#: apps/community/admin.py:33 apps/community/admin.py:50
+msgid "Текст"
+msgstr ""
+
+#: apps/community/admin.py:62
+msgid "Объект"
+msgstr ""
+
+#: apps/community/admin.py:68
+msgid "Скрыть контент и закрыть жалобу"
+msgstr ""
+
+#: apps/community/admin.py:76
+msgid "Закрыть жалобу"
+msgstr ""
+
+#: apps/community/models.py:26
+msgid "Вопрос"
+msgstr ""
+
+#: apps/community/models.py:27
+msgid "История"
+msgstr ""
+
+#: apps/community/models.py:28
+msgid "Отзыв о специалисте"
+msgstr ""
+
+#: apps/community/models.py:135
+msgid "Реклама"
+msgstr ""
+
+#: apps/community/models.py:136
+msgid "Данные ребёнка"
+msgstr ""
+
+#: apps/community/models.py:137
+msgid "Оскорбление"
+msgstr ""
+
+#: apps/community/models.py:138
+msgid "Опасный медицинский совет"
+msgstr ""
+
+#: apps/community/models.py:139
+msgid "Другое"
+msgstr ""
+
+#: apps/community/models.py:142
+msgid "Новая"
+msgstr ""
+
+#: apps/community/models.py:143
+msgid "Закрыта"
 msgstr ""
 
 #: apps/geo/models.py:19
@@ -761,10 +829,6 @@ msgstr ""
 
 #: templates/search/_filters.html:163 templates/search/_suggest.html:1
 msgid "Метод"
-msgstr ""
-
-#: templates/search/_filters.html:173
-msgid "Показать"
 msgstr ""
 
 #: templates/search/_filters.html:174 templates/search/_results_partial.html:11

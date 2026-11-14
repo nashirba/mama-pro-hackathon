@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 12:52+0500\n"
+"POT-Creation-Date: 2026-11-14 14:11+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -118,6 +118,74 @@ msgstr "Үйге шығу аумағын көрсетіңіз"
 #: apps/catalog/models/service.py:65
 msgid "У бесплатной услуги не должно быть цены"
 msgstr "Тегін қызметтің бағасы болмауы керек"
+
+#: apps/community/admin.py:11
+msgid "Скрыть"
+msgstr "Жасыру"
+
+#: apps/community/admin.py:15 templates/search/_filters.html:173
+msgid "Показать"
+msgstr "Көрсету"
+
+#: apps/community/admin.py:29 apps/community/admin.py:46
+msgid "Автор"
+msgstr "Автор"
+
+#: apps/community/admin.py:33 apps/community/admin.py:50
+msgid "Текст"
+msgstr "Мәтін"
+
+#: apps/community/admin.py:62
+msgid "Объект"
+msgstr "Объект"
+
+#: apps/community/admin.py:68
+msgid "Скрыть контент и закрыть жалобу"
+msgstr "Мазмұнды жасырып, шағымды жабу"
+
+#: apps/community/admin.py:76
+msgid "Закрыть жалобу"
+msgstr "Шағымды жабу"
+
+#: apps/community/models.py:26
+msgid "Вопрос"
+msgstr "Сұрақ"
+
+#: apps/community/models.py:27
+msgid "История"
+msgstr "Оқиға"
+
+#: apps/community/models.py:28
+msgid "Отзыв о специалисте"
+msgstr "Маман туралы пікір"
+
+#: apps/community/models.py:135
+msgid "Реклама"
+msgstr "Жарнама"
+
+#: apps/community/models.py:136
+msgid "Данные ребёнка"
+msgstr "Баланың деректері"
+
+#: apps/community/models.py:137
+msgid "Оскорбление"
+msgstr "Қорлау"
+
+#: apps/community/models.py:138
+msgid "Опасный медицинский совет"
+msgstr "Қауіпті медициналық кеңес"
+
+#: apps/community/models.py:139
+msgid "Другое"
+msgstr "Басқа"
+
+#: apps/community/models.py:142
+msgid "Новая"
+msgstr "Жаңа"
+
+#: apps/community/models.py:143
+msgid "Закрыта"
+msgstr "Жабылды"
 
 #: apps/geo/models.py:19
 msgid "Область"
@@ -782,10 +850,6 @@ msgstr "Расталған құжаттар"
 #: templates/search/_filters.html:163 templates/search/_suggest.html:1
 msgid "Метод"
 msgstr "Әдіс"
-
-#: templates/search/_filters.html:173
-msgid "Показать"
-msgstr "Көрсету"
 
 #: templates/search/_filters.html:174 templates/search/_results_partial.html:11
 msgid "Сбросить"

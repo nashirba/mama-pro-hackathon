@@ -1,3 +1,4 @@
+import datetime
 import json
 
 import pytest
@@ -6,6 +7,7 @@ from django.contrib.gis.measure import D
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.db.models import F
+from django.utils import timezone
 
 from apps.accounts.models import User
 from apps.catalog.models import (
@@ -169,3 +171,10 @@ def test_nanny_data_uses_existing_condition_slugs_and_no_stop_phrases(db):
     assert set(data["conditions"]) <= set(DevelopmentalCondition.objects.values_list("slug", flat=True))
     text = (DATA_DIR / "nannies.json").read_text(encoding="utf-8").lower()
     assert not [p for p in STOP_PHRASES if p in text]
+
+
+def test_seed_demo_criminal_records_are_in_the_past(db):
+    call_command("seed_demo", specialists=0, nannies=24, seed=1)
+    today = timezone.localdate()
+    dates = [n.criminal_record_issued_on for n in SpecialistProfile.objects.filter(category=ProfileCategory.NANNY)]
+    assert any(dates) and all(d <= today - datetime.timedelta(days=30) for d in dates if d)

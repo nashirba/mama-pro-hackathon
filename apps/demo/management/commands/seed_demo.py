@@ -73,7 +73,8 @@ class Command(BaseCommand):
         self.contact_phone = contact_phone
         self.kinds = {k.slug: k for k in ServiceKind.objects.all()}
         rng = Random(seed)
-        year = timezone.localdate().year
+        today = timezone.localdate()
+        year = today.year
 
         in_person_index = 0
         context_ids = []
@@ -96,7 +97,7 @@ class Command(BaseCommand):
             nanny_rng = Random(f"nannies:{seed}")
             nanny_data = load_json("nannies.json")
             for i in range(nannies):
-                spec = build_nanny(nanny_rng, i, self.names, nanny_data, year)
+                spec = build_nanny(nanny_rng, i, self.names, nanny_data, year, today)
                 context_ids.append(self._save_nanny(spec, districts[i % len(districts)]))
 
         PracticeContext.objects.filter(pk__in=context_ids).update(catalog_enabled=True)

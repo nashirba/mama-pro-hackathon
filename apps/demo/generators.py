@@ -305,7 +305,7 @@ def _trainings(rng: Random, data: dict, current_year: int, first_aid: bool) -> l
     return result
 
 
-def build_nanny(rng: Random, index: int, names: dict, data: dict, current_year: int) -> NannySpec:
+def build_nanny(rng: Random, index: int, names: dict, data: dict, current_year: int, today: datetime.date) -> NannySpec:
     """A nanny of the demo. Indexes picked by `nanny_without_record` / `nanny_without_first_aid` break the visibility
     rule on purpose: they exist in the database but the nanny section does not show them."""
     has_kk = has_kk_translation(index)
@@ -320,7 +320,7 @@ def build_nanny(rng: Random, index: int, names: dict, data: dict, current_year: 
     conditions = rng.sample(data["conditions"], rng.randint(1, 4))
     record = None
     if not nanny_without_record(index):
-        record = datetime.date(current_year - rng.randint(0, 1), rng.randint(1, 12), rng.randint(1, 28))
+        record = today - datetime.timedelta(days=rng.randint(30, 700))
     low, high = data["prices"]["hour"]
     price_hour = _round_price(rng, low, high)
     price_night = _round_price(rng, *data["prices"]["night"]) if rng.random() < 0.6 else None

@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}kamqor{% endblock %}</title>
+  <title>{% block title %}{{ BRAND_NAME }}{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{% static 'img/brand/mamapro-mark.png' %}">
   {% tailwind_css %}
   <script src="{% static 'vendor/htmx.min.js' %}" defer></script>
   <script src="{% static 'vendor/alpine.min.js' %}" defer></script>
   {% block extra_head %}{% endblock %}
 </head>
 <body class="min-h-full flex flex-col bg-white font-sans text-slate-900 antialiased">
-  {% include "partials/demo_banner.html" %}
   {% include "partials/header.html" %}
   <main class="flex-1">
     {% block content %}{% endblock %}

@@ -7,7 +7,9 @@ from django.utils.translation import gettext
 
 
 def wa_default_text() -> str:
-    return gettext("Здравствуйте! Нашёл(ла) вас на kamqor, хочу записаться на консультацию")
+    return gettext("Здравствуйте! Нашёл(ла) вас через «%(brand)s», хочу записаться на консультацию") % {
+        "brand": settings.BRAND_NAME
+    }
 
 
 def wa_me_url(phone_e164: str, text: str) -> str:

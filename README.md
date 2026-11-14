@@ -1,4 +1,6 @@
-# kamqor
+# Особенный путь с Mama Pro
+
+Code name: kamqor.
 
 Web platform for finding verified specialists and centres for children with developmental needs in Kazakhstan. Interface in Russian and Kazakh.
 

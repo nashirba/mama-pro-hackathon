@@ -21,7 +21,7 @@ def issue_code(phone: str) -> None:
         phone=phone,
         expires_at=timezone.now() + timedelta(minutes=settings.OTP_TTL_MIN),
     )
-    get_sms_sender().send(phone, _("Код входа в kamqor: %(code)s") % {"code": code})
+    get_sms_sender().send(phone, _("Код входа в «%(brand)s»: %(code)s") % {"brand": settings.BRAND_NAME, "code": code})
 
 
 def verify_code(phone: str, code: str) -> bool:

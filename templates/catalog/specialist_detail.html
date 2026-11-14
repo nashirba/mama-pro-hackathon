@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n catalog_tags %}
-{% block title %}{{ profile.display_name }} - kamqor{% endblock %}
+{% block title %}{{ profile.display_name }} - {{ BRAND_NAME }}{% endblock %}
 {% block extra_head %}{% if geojson.features %}{% include "partials/map_assets.html" %}{% endif %}{% endblock %}
 {% block content %}
 <div class="mx-auto max-w-4xl space-y-8 px-4 py-6">

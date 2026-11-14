@@ -11,11 +11,11 @@ def test_html_lang_attribute(client, db):
     assert '<html lang="kk"' in client.get("/kk/").content.decode()
 
 
-def test_demo_banner_only_in_demo(client, db, settings):
+def test_no_demo_banner(client, db, settings):
     settings.DEPLOY_PROFILE = "demo"
-    assert "Демо-версия" in client.get("/ru/").content.decode()
-    settings.DEPLOY_PROFILE = "test"
-    assert "Демо-версия" not in client.get("/ru/").content.decode()
+    html = client.get("/ru/").content.decode()
+    assert "не вводите реальные данные о детях" not in html
+    assert "вымышлены" not in html
 
 
 def test_setlang_saves_preferred_language_for_authenticated_user(client, db, django_user_model):
@@ -30,14 +30,6 @@ def test_setlang_saves_preferred_language_for_authenticated_user(client, db, dja
 def test_setlang_anonymous_sets_cookie_only(client, db):
     r = client.post("/i18n/setlang/", {"language": "kk", "next": "/ru/"})
     assert r.cookies["django_language"].value == "kk"
-
-
-def test_demo_banner_says_profiles_and_badges_are_fictional(client, db, settings):
-    settings.DEPLOY_PROFILE = "demo"
-    assert "Анкеты специалистов и отметки о проверке вымышлены." in client.get("/ru/").content.decode()
-    assert "Мамандардың анкеталары мен тексеру белгілері ойдан шығарылған." in client.get("/kk/").content.decode()
-    settings.DEPLOY_PROFILE = "test"
-    assert "вымышлены" not in client.get("/ru/").content.decode()
 
 
 def test_language_switcher_refreshes_next_from_current_location(client, db):

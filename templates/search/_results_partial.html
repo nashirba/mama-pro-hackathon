@@ -1,6 +1,6 @@
 {% load i18n %}{{ map_config|json_script:"map-config" }}{% if partial %}{# htmx response: the filters may no longer match the landing heading, so it becomes the neutral one #}
 {% include "search/_heading.html" with oob=True %}
-<title>{% translate "Каталог специалистов" %} - kamqor</title>
+<title>{% translate "Каталог специалистов" %} - {{ BRAND_NAME }}</title>
 {% endif %}{% if result.cards %}
 <p class="mb-3 text-sm text-slate-600">{% translate "Найдено" %}: {{ result.total }}</p>
 <div class="space-y-4">

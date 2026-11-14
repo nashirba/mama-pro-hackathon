@@ -4,7 +4,7 @@
 
   <div>
     <p class="text-sm text-slate-700" data-consent-summary="user_agreement">
-      {% translate "Пользовательское соглашение: вы используете kamqor как справочник специалистов, сами отвечаете за выбор специалиста и не вносите реальные данные о детях в демо-версии." %}
+      {% blocktranslate trimmed with brand=BRAND_NAME %}Пользовательское соглашение: вы используете «{{ brand }}» как справочник специалистов, сами отвечаете за выбор специалиста и не вносите реальные данные о детях в демо-версии.{% endblocktranslate %}
     </p>
     <details class="mt-1 text-sm">
       <summary class="cursor-pointer text-teal-700">{% translate "Полный текст соглашения" %}</summary>

@@ -31,6 +31,8 @@ from apps.catalog.models import (
     VerificationLevel,
 )
 
+from apps.catalog.pricing import lowest
+
 from .models import SearchOffer
 from .normalize import normalize_kk
 
@@ -46,6 +48,11 @@ INT_FIELDS = (
     "kato_id", "child_age_min", "child_age_max", "price_min", "price_max", "price_month_min", "price_month_max", "experience_min",
     "price_hour_min", "price_hour_max",
 )
+# filters that exist in one section only; the other section ignores them, so a stale link cannot empty its results
+SPECIALIST_ONLY_FIELDS = (
+    "specialist_type_ids", "method_ids", "formats", "price_min", "price_max", "free_only", "verification_levels", "near",
+)
+NANNY_ONLY_FIELDS = ("pay_units", "price_hour_min", "price_hour_max")
 INT_LIST_FIELDS = ("specialist_type_ids", "condition_ids", "method_ids")
 STR_LIST_FIELDS = ("formats", "language_codes", "verification_levels", "pay_units")
 
@@ -105,6 +112,9 @@ class SearchParams:
             kwargs[name] = [v for v in qd.getlist(name) if v]
         kwargs["free_only"] = qd.get("free_only", "").lower() in {"1", "true", "on", "yes"}
         kwargs["near"] = _parse_near(qd.get("near"))
+        defaults = cls()
+        for name in SPECIALIST_ONLY_FIELDS if kwargs["section"] == "nannies" else NANNY_ONLY_FIELDS:
+            kwargs[name] = getattr(defaults, name)
         sort = qd.get("sort", "relevance")
         if sort not in SORTS or (sort == "distance" and kwargs["near"] is None):
             sort = "relevance"
@@ -256,11 +266,6 @@ def _offer_price(offer: SearchOffer) -> int | None:
     return 0 if offer.is_free else offer.price_session
 
 
-def _lowest(offers: list[SearchOffer], column: str) -> int | None:
-    values = [getattr(o, column) for o in offers if getattr(o, column) is not None]
-    return min(values) if values else None
-
-
 def _area_name(offers: list[SearchOffer]) -> str | None:
     area = next((o.service.home_visit_area for o in offers if Format.HOME_VISIT in o.formats and o.service.home_visit_area_id), None)
     if area is None:
@@ -291,9 +296,9 @@ def _build_card(specialist: SpecialistProfile, offers: list[SearchOffer], distan
         nearest_city_name=city_name,
         has_online=any(o.is_online for o in offers),
         distance_m=distance_m,
-        price_hour=_lowest(offers, "price_hour"),
-        price_night=_lowest(offers, "price_night"),
-        price_month=_lowest(offers, "price_month"),
+        price_hour=lowest(offers, "price_hour"),
+        price_night=lowest(offers, "price_night"),
+        price_month=lowest(offers, "price_month"),
         home_visit_area_name=_area_name(offers),
     )
 

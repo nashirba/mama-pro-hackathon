@@ -48,9 +48,7 @@ class Migration(migrations.Migration):
             options={
                 "ordering": ["-created_at", "-id"],
                 "constraints": [
-                    models.UniqueConstraint(
-                        fields=("user", "profile"), name="favorite_user_profile_unique"
-                    )
+                    models.UniqueConstraint(fields=("user", "profile"), name="favorite_user_profile_unique")
                 ],
             },
         ),

@@ -10,11 +10,7 @@ def favorite_button(context, profile):
     request = context["request"]
     if not hasattr(request, "_favorite_ids"):
         request._favorite_ids = (
-            set(
-                Favorite.objects.filter(user=request.user).values_list(
-                    "profile_id", flat=True
-                )
-            )
+            set(Favorite.objects.filter(user=request.user).values_list("profile_id", flat=True))
             if request.user.is_authenticated
             else set()
         )

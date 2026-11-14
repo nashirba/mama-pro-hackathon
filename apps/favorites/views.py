@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -22,11 +23,16 @@ def _safe_next(request) -> str:
 @login_required
 def toggle(request, slug):
     profile = get_object_or_404(SpecialistProfile, slug=slug)
-    favorite, created = Favorite.objects.get_or_create(
-        user=request.user, profile=profile
-    )
-    if not created:
+    favorite = Favorite.objects.filter(user=request.user, profile=profile).first()
+    if favorite:
         favorite.delete()
+        created = False
+    else:
+        # Adding is allowed only for catalog-visible profiles: search_offers exists only for them.
+        if not profile.search_offers.exists():
+            raise Http404
+        Favorite.objects.get_or_create(user=request.user, profile=profile)
+        created = True
     next_url = _safe_next(request)
     if request.headers.get("HX-Request"):
         return render(

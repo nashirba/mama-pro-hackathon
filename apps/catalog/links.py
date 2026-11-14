@@ -6,10 +6,12 @@ from django.conf import settings
 from django.utils.translation import gettext
 
 
-def wa_default_text() -> str:
-    return gettext("Здравствуйте! Нашёл(ла) вас через «%(brand)s», хочу записаться на консультацию") % {
-        "brand": settings.BRAND_NAME
-    }
+def wa_default_text(nanny: bool = False) -> str:
+    if nanny:
+        text = gettext("Здравствуйте! Нашёл(ла) вас через «%(brand)s», хочу обсудить работу няней")
+    else:
+        text = gettext("Здравствуйте! Нашёл(ла) вас через «%(brand)s», хочу записаться на консультацию")
+    return text % {"brand": settings.BRAND_NAME}
 
 
 def wa_me_url(phone_e164: str, text: str) -> str:
@@ -30,12 +32,13 @@ class ContactLinks:
 
 def contact_links(profile) -> ContactLinks:
     """In demo every contact leads only to DEMO_CONTACT_PHONE (never to a seeded number); empty = disabled buttons."""
+    text = wa_default_text(nanny=profile.is_nanny)
     if settings.DEPLOY_PROFILE == "demo":
         demo_phone = settings.DEMO_CONTACT_PHONE
         if not demo_phone:
             return ContactLinks(whatsapp=None, phone=None, disabled_in_demo=True)
-        return ContactLinks(whatsapp=wa_me_url(demo_phone, wa_default_text()), phone=f"tel:{demo_phone}")
+        return ContactLinks(whatsapp=wa_me_url(demo_phone, text), phone=f"tel:{demo_phone}")
     return ContactLinks(
-        whatsapp=wa_me_url(profile.whatsapp_phone, wa_default_text()) if profile.whatsapp_phone else None,
+        whatsapp=wa_me_url(profile.whatsapp_phone, text) if profile.whatsapp_phone else None,
         phone=f"tel:{profile.public_phone}" if profile.public_phone else None,
     )

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 13:44+0500\n"
+"POT-Creation-Date: 2026-11-14 13:50+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,31 +216,26 @@ msgid "По стажу"
 msgstr ""
 
 #: apps/search/suggest.py:51 apps/search/views.py:268
+#: templates/catalog/nanny_detail.html:9
 msgid "Обученные няни"
 msgstr ""
 
 #: apps/search/templatetags/search_tags.py:28
-#: templates/catalog/specialist_detail.html:21
-#: templates/catalog/specialist_detail.html:81
-#: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:124 templates/search/_card.html:9
+#: templates/catalog/specialist_detail.html:7
+#: templates/catalog/specialist_detail.html:75 templates/search/_card.html:9
 msgid "бесплатно"
 msgstr ""
 
 #: apps/search/templatetags/search_tags.py:29
-#: templates/catalog/specialist_detail.html:21
-#: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:124 templates/search/_card.html:9
+#: templates/catalog/specialist_detail.html:7 templates/search/_card.html:9
 #, python-format
 msgid "от %(price)s ₸"
 msgstr ""
 
 #: apps/search/templatetags/search_tags.py:30
-#: templates/catalog/_nanny_prices.html:1
-#: templates/catalog/specialist_detail.html:21
-#: templates/catalog/specialist_detail.html:81
-#: templates/catalog/specialist_detail.html:110
-#: templates/catalog/specialist_detail.html:124 templates/search/_card.html:9
+#: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
+#: templates/catalog/specialist_detail.html:7
+#: templates/catalog/specialist_detail.html:75 templates/search/_card.html:9
 msgid "цена по запросу"
 msgstr ""
 
@@ -249,7 +244,7 @@ msgid "Подробнее"
 msgstr ""
 
 #: apps/search/templatetags/search_tags.py:32
-#: templates/catalog/specialist_detail.html:99
+#: templates/catalog/specialist_detail.html:93
 msgid "Открыть в 2ГИС"
 msgstr ""
 
@@ -366,7 +361,7 @@ msgstr ""
 msgid "Рядом со мной"
 msgstr ""
 
-#: apps/search/views.py:268 templates/catalog/specialist_detail.html:12
+#: apps/search/views.py:268 templates/catalog/specialist_detail.html:10
 msgid "Каталог специалистов"
 msgstr ""
 
@@ -481,6 +476,16 @@ msgstr ""
 msgid "в демо-версии не работает"
 msgstr ""
 
+#: templates/catalog/_detail_action_bar.html:5
+#: templates/catalog/_detail_aside.html:4
+#: templates/catalog/_detail_mobile_contacts.html:3
+msgid "Контакты в демо-версии недоступны"
+msgstr ""
+
+#: templates/catalog/_detail_back.html:1
+msgid "Навигация"
+msgstr ""
+
 #: templates/catalog/_minimap.html:1
 msgid "Адреса на карте"
 msgstr ""
@@ -490,22 +495,24 @@ msgstr ""
 msgid "%(price)s ₸ в час"
 msgstr ""
 
-#: templates/catalog/_nanny_prices.html:1
+#: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
 #, python-format
 msgid "%(price)s ₸ за ночь"
 msgstr ""
 
-#: templates/catalog/_nanny_prices.html:1
-#: templates/catalog/specialist_detail.html:82
+#: templates/catalog/_nanny_prices.html:1 templates/catalog/nanny_detail.html:6
+#: templates/catalog/specialist_detail.html:76
 #, python-format
 msgid "%(price)s ₸ в месяц"
 msgstr ""
 
 #: templates/catalog/_training_total.html:1
+#: templates/catalog/nanny_detail.html:26
 msgid "Обучение"
 msgstr ""
 
 #: templates/catalog/_training_total.html:1
+#: templates/catalog/_trainings.html:13 templates/catalog/nanny_detail.html:26
 #, python-format
 msgid "%(n)s час"
 msgid_plural "%(n)s часов"
@@ -523,21 +530,57 @@ msgstr[1] "%(n)s курса"
 msgstr[2] "%(n)s курсов"
 msgstr[3] "%(n)s курса"
 
-#: templates/catalog/specialist_detail.html:9
-msgid "Навигация"
+#: templates/catalog/_trainings.html:2
+msgid "Обучение и сертификаты"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:23
-#: templates/catalog/specialist_detail.html:111
-#: templates/catalog/specialist_detail.html:124
-msgid "Контакты в демо-версии недоступны"
+#: templates/catalog/_trainings.html:8 templates/catalog/nanny_detail.html:17
+#: templates/search/_nanny_card.html:10
+msgid "Первая помощь"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:27
-msgid "Стаж"
+#: templates/catalog/_trainings.html:12
+#, fuzzy, python-format
+#| msgid "Стаж %(n)s год"
+#| msgid_plural "Стаж %(n)s лет"
+msgid "%(year)s год"
+msgstr "Стаж %(n)s год"
+
+#: templates/catalog/_trainings.html:14
+#, python-format
+msgid "Сертификат № %(number)s"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:27
+#: templates/catalog/_trainings.html:19
+#, python-format
+msgid "Всего: %(n)s час обучения"
+msgid_plural "Всего: %(n)s часов обучения"
+msgstr[0] "Всего: %(n)s час обучения"
+msgstr[1] "Всего: %(n)s часа обучения"
+msgstr[2] "Всего: %(n)s часов обучения"
+msgstr[3] "Всего: %(n)s часа обучения"
+
+#: templates/catalog/nanny_detail.html:6
+#, python-format
+msgid "от %(price)s ₸ в час"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:15
+msgid "Няня для ребёнка с особенностями развития"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:18
+#: templates/catalog/nanny_detail.html:33
+#: templates/search/_nannies_intro.html:7 templates/search/_nanny_card.html:11
+msgid "Справка о несудимости"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:23
+msgid "Опыт"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:23
+#: templates/catalog/specialist_detail.html:21
 #, fuzzy, python-format
 #| msgid "Стаж %(n)s год"
 #| msgid_plural "Стаж %(n)s лет"
@@ -548,65 +591,122 @@ msgstr[1] "Стаж %(n)s года"
 msgstr[2] "Стаж %(n)s лет"
 msgstr[3] "Стаж %(n)s года"
 
-#: templates/catalog/specialist_detail.html:28
+#: templates/catalog/nanny_detail.html:24
+#: templates/catalog/specialist_detail.html:22
 msgid "Возраст детей"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:28
+#: templates/catalog/nanny_detail.html:24
+#: templates/catalog/specialist_detail.html:22
 #, python-format
 msgid "%(min)s–%(max)s лет"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:29
+#: templates/catalog/nanny_detail.html:25
+msgid "Языки"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:34
+#, python-format
+msgid "Есть, выдана %(date)s"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:39
+msgid "С какими особенностями развития есть опыт"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:49
+#: templates/catalog/specialist_detail.html:31
+msgid "О себе"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:56
+msgid "Как работаю"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:63
+msgid "Когда может работать"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:70
+#: templates/catalog/nanny_detail.html:81
+msgid "Цены"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:72
+#, fuzzy
+#| msgid "%(n)s час"
+#| msgid_plural "%(n)s часов"
+msgid "За час"
+msgstr "%(n)s час"
+
+#: templates/catalog/nanny_detail.html:73
+msgid "За ночь"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:74
+msgid "За месяц"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:75
+msgid "Район выезда"
+msgstr ""
+
+#: templates/catalog/nanny_detail.html:79
+msgid ""
+"Няня не проводит коррекционных занятий и не ставит диагнозов. Оплата - "
+"напрямую няне."
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:21
+msgid "Стаж"
+msgstr ""
+
+#: templates/catalog/specialist_detail.html:23
 msgid "Язык занятий"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:30
+#: templates/catalog/specialist_detail.html:24
 #: templates/search/_filters.html:154
 msgid "Формат"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:37
-msgid "О себе"
-msgstr ""
-
-#: templates/catalog/specialist_detail.html:44
+#: templates/catalog/specialist_detail.html:38
 msgid "Подход к работе"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:52
+#: templates/catalog/specialist_detail.html:46
 msgid "С какими особенностями развития работает"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:61
+#: templates/catalog/specialist_detail.html:55
 msgid "Методы"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:71
-#: templates/catalog/specialist_detail.html:113
+#: templates/catalog/specialist_detail.html:65
+#: templates/catalog/specialist_detail.html:102
 msgid "Услуги и цены"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:77
+#: templates/catalog/specialist_detail.html:71
 #, python-format
 msgid "%(n)s мин"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:81
+#: templates/catalog/specialist_detail.html:75
 #, python-format
 msgid "%(price)s ₸ за занятие"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:92
+#: templates/catalog/specialist_detail.html:86
 msgid "Адреса приёма"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:100
+#: templates/catalog/specialist_detail.html:94
 msgid "Маршрут"
 msgstr ""
 
-#: templates/catalog/specialist_detail.html:112
-#: templates/catalog/specialist_detail.html:126
+#: templates/catalog/specialist_detail.html:102
 msgid "Адреса и маршрут"
 msgstr ""
 
@@ -949,10 +1049,6 @@ msgstr ""
 msgid "Курс первой помощи детям"
 msgstr ""
 
-#: templates/search/_nannies_intro.html:7 templates/search/_nanny_card.html:11
-msgid "Справка о несудимости"
-msgstr ""
-
 #: templates/search/_nanny_card.html:7
 #, python-format
 msgid "Опыт %(n)s год"
@@ -965,10 +1061,6 @@ msgstr[3] "Опыт %(n)s года"
 #: templates/search/_nanny_card.html:7
 #, python-format
 msgid "дети %(min)s–%(max)s лет"
-msgstr ""
-
-#: templates/search/_nanny_card.html:10
-msgid "Первая помощь"
 msgstr ""
 
 #: templates/search/_nanny_card.html:21

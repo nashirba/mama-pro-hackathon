@@ -1,0 +1,10 @@
+{% load i18n %}{# The bottom action bar of a profile page on phones and tablets; the caller decides whether it is shown. #}
+<style>@media (max-width: 1023.98px) { body > footer { padding-bottom: 5rem; } }</style>
+<div data-action-bar class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:hidden">
+ <div class="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 sm:px-6">
+  <div class="min-w-0"><p class="text-base font-semibold">{{ price_label }}</p>{% if contacts.disabled_in_demo %}<p class="text-xs text-slate-500">{% translate "Контакты в демо-версии недоступны" %}</p>{% endif %}</div>
+  <div class="ml-auto">
+    {% if contacts.disabled_in_demo %}<a href="{{ demo_href }}" class="btn-press inline-flex min-h-11 items-center rounded bg-primary-700 px-5 py-2 font-semibold text-white hover:bg-primary-800">{{ demo_label }}</a>{% else %}{% include "catalog/_contact_buttons.html" with profile=profile %}{% endif %}
+  </div>
+ </div>
+</div>

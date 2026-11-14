@@ -46,6 +46,8 @@ def specialist_detail(request, slug):
         for address in service.addresses.all():
             addresses.setdefault(address.pk, address)
     prices = [0 if s.is_free else s.price_session for s in services if s.is_free or s.price_session is not None]
+    first = next(iter(addresses.values()), None)
+    first_city = (first.kato.city() or first.kato) if first else None
     return render(
         request,
         "catalog/specialist_detail.html",
@@ -54,6 +56,7 @@ def specialist_detail(request, slug):
             "profile": profile,
             "services": services,
             "addresses": list(addresses.values()),
+            "first_address_city": first_city.safe_translation_getter("name", any_language=True) if first_city else "",
             "geojson": specialist_feature_collection(profile),
         },
     )

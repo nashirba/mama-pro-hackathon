@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load i18n catalog_tags %}
+{% block title %}{{ profile.display_name }} — {{ BRAND_NAME }}{% endblock %}
+{% block content %}
+{% contact_links profile as contacts %}
+{% if price_hour %}{% blocktranslate with price=price_hour|floatformat:"0g" asvar price_label %}от {{ price }} ₸ в час{% endblocktranslate %}{% elif price_night %}{% blocktranslate with price=price_night|floatformat:"0g" asvar price_label %}{{ price }} ₸ за ночь{% endblocktranslate %}{% elif price_month %}{% blocktranslate with price=price_month|floatformat:"0g" asvar price_label %}{{ price }} ₸ в месяц{% endblocktranslate %}{% else %}{% translate "цена по запросу" as price_label %}{% endif %}
+<div class="mx-auto max-w-7xl px-4 pb-28 pt-4 sm:px-6 lg:pb-10 lg:grid lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-10">
+ <div class="min-w-0 space-y-8 [&>*]:max-w-3xl">
+  {% url 'search:nannies' as back_url %}{% translate "Обученные няни" as back_label %}
+  {% include "catalog/_detail_back.html" %}
+  <header class="flex flex-wrap gap-4">
+    {% include "catalog/_photo.html" with size_class="h-16 w-16 text-2xl sm:h-24 sm:w-24 sm:text-4xl" %}
+    <div class="min-w-0 flex-1 space-y-2">
+      <h1 class="text-2xl font-bold">{{ profile.display_name }}</h1>
+      <p class="text-slate-600">{% translate "Няня для ребёнка с особенностями развития" %}</p>
+      <ul class="flex flex-wrap gap-1 text-xs font-medium text-primary-800">
+        <li class="inline-flex items-center gap-1 rounded-md bg-primary-50 px-2 py-0.5"><svg class="size-3.5 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>{% translate "Первая помощь" %}</li>
+        <li class="inline-flex items-center gap-1 rounded-md bg-primary-50 px-2 py-0.5"><svg class="size-3.5 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>{% translate "Справка о несудимости" %}</li>
+      </ul>
+      {% include "catalog/_detail_mobile_contacts.html" %}
+    </div>
+  <dl class="grid w-full grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4 sm:gap-x-6">
+    <div><dt class="text-xs text-slate-500">{% translate "Опыт" %}</dt><dd class="text-sm text-slate-900">{% blocktranslate count n=profile.experience_years %}{{ n }} год{% plural %}{{ n }} лет{% endblocktranslate %}</dd></div>
+    <div><dt class="text-xs text-slate-500">{% translate "Возраст детей" %}</dt><dd class="text-sm text-slate-900">{% blocktranslate with min=profile.age_min max=profile.age_max %}{{ min }}–{{ max }} лет{% endblocktranslate %}</dd></div>
+    <div><dt class="text-xs text-slate-500">{% translate "Языки" %}</dt><dd class="text-sm text-slate-900">{% for lang in profile.languages.all %}{{ lang.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</dd></div>
+    <div><dt class="text-xs text-slate-500">{% translate "Обучение" %}</dt><dd class="text-sm text-slate-900">{% blocktranslate count n=profile.training_hours %}{{ n }} час{% plural %}{{ n }} часов{% endblocktranslate %}</dd></div>
+  </dl>
+  </header>
+
+  {% include "catalog/_trainings.html" %}
+
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Справка о несудимости" %}</h2>
+    <p class="mt-2 flex items-start gap-2 text-slate-800">{% include "search/_check_icon.html" %}<span>{% blocktranslate with date=profile.criminal_record_issued_on|date:"DATE_FORMAT" %}Есть, выдана {{ date }}{% endblocktranslate %}</span></p>
+  </section>
+
+  {% if profile.conditions.all %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "С какими особенностями развития есть опыт" %}</h2>
+    <ul class="mt-2 flex flex-wrap gap-2 text-sm">
+      {% for c in profile.conditions.all %}<li class="rounded-full bg-slate-100 px-3 py-1">{{ c.name }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% with bio=profile|tr:"bio" approach=profile|tr:"approach" availability=profile|tr:"availability" %}
+  {% if bio %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "О себе" %}</h2>
+    <p class="mt-2 whitespace-pre-line text-slate-800">{{ bio }}</p>
+  </section>
+  {% endif %}
+
+  {% if approach %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Как работаю" %}</h2>
+    <p class="mt-2 whitespace-pre-line text-slate-800">{{ approach }}</p>
+  </section>
+  {% endif %}
+
+  {% if availability %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Когда может работать" %}</h2>
+    <p class="mt-2 whitespace-pre-line text-slate-800">{{ availability }}</p>
+  </section>
+  {% endif %}
+  {% endwith %}
+
+  <section id="prices" class="scroll-mt-4">
+    <h2 class="text-lg font-semibold">{% translate "Цены" %}</h2>
+    <dl class="mt-2 divide-y divide-slate-200 rounded-lg border border-slate-200">
+      {% if price_hour %}<div class="flex items-baseline justify-between gap-4 px-4 py-3"><dt class="text-slate-700">{% translate "За час" %}</dt><dd class="font-semibold">{{ price_hour|floatformat:"0g" }} ₸</dd></div>{% endif %}
+      {% if price_night %}<div class="flex items-baseline justify-between gap-4 px-4 py-3"><dt class="text-slate-700">{% translate "За ночь" %}</dt><dd class="font-semibold">{{ price_night|floatformat:"0g" }} ₸</dd></div>{% endif %}
+      {% if price_month %}<div class="flex items-baseline justify-between gap-4 px-4 py-3"><dt class="text-slate-700">{% translate "За месяц" %}</dt><dd class="font-semibold">{{ price_month|floatformat:"0g" }} ₸</dd></div>{% endif %}
+      {% if areas %}<div class="flex items-baseline justify-between gap-4 px-4 py-3"><dt class="text-slate-700">{% translate "Район выезда" %}</dt><dd class="text-right">{% for area in areas %}{% with city=area.city %}{% if city and city.pk != area.pk %}{{ city.name }}, {% endif %}{% endwith %}{{ area.name }}{% if not forloop.last %}; {% endif %}{% endfor %}</dd></div>{% endif %}
+    </dl>
+  </section>
+
+  <p data-nanny-disclaimer class="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">{% translate "Няня не проводит коррекционных занятий и не ставит диагнозов. Оплата - напрямую няне." %}</p>
+ </div>
+{% translate "Цены" as prices_label %}
+{% include "catalog/_detail_aside.html" with primary_href="" secondary_href="#prices" secondary_label=prices_label aside_note="" %}
+</div>
+
+{% if contacts.visible %}
+{% include "catalog/_detail_action_bar.html" with demo_href="#prices" demo_label=prices_label %}
+{% endif %}
+{% endblock %}

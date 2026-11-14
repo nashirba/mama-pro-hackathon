@@ -1,0 +1,20 @@
+{% load i18n catalog_tags %}<section id="trainings" class="scroll-mt-4">
+    <h2 class="text-lg font-semibold">{% translate "Обучение и сертификаты" %}</h2>
+    <ul class="mt-2 divide-y divide-slate-200 rounded-lg border border-slate-200">
+      {% for t in trainings %}
+      <li class="space-y-1 p-4{% if t.is_first_aid %} bg-primary-50/60{% endif %}"{% if t.is_first_aid %} data-first-aid{% endif %}>
+        <p class="flex flex-wrap items-baseline gap-x-2 gap-y-1 font-medium">
+          <span>{{ t|tr:"title" }}</span>
+          {% if t.is_first_aid %}<span class="inline-flex items-center gap-1 rounded-md bg-primary-100 px-2 py-0.5 text-xs font-medium text-primary-800"><svg class="size-3.5 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>{% translate "Первая помощь" %}</span>{% endif %}
+        </p>
+        <p class="text-sm text-slate-700">{{ t.issuer }}</p>
+        <p class="flex flex-wrap gap-x-3 gap-y-1 text-sm text-slate-600 [&>span+span]:before:mr-3 [&>span+span]:before:text-slate-400 [&>span+span]:before:content-['·']">
+          <span>{% blocktranslate with year=t.year|stringformat:"d" %}{{ year }} год{% endblocktranslate %}</span>
+          <span>{% blocktranslate count n=t.hours %}{{ n }} час{% plural %}{{ n }} часов{% endblocktranslate %}</span>
+          <span>{% blocktranslate with number=t.certificate_number %}Сертификат № {{ number }}{% endblocktranslate %}</span>
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="mt-2 text-sm font-semibold text-slate-900">{% blocktranslate count n=profile.training_hours %}Всего: {{ n }} час обучения{% plural %}Всего: {{ n }} часов обучения{% endblocktranslate %}</p>
+  </section>

@@ -103,10 +103,14 @@ def test_form_navigation_buttons(client):
 
 
 @pytest.mark.django_db
-def test_form_scale_shows_points(client):
+def test_form_scale_labels_without_points_and_bulleted(client):
     form = _form_html(client.get("/ru/questionnaire/").content.decode())
-    for value in range(4):
-        assert form.count(f'<span class="block text-xs">{value}</span>') == 66
+    assert "text-xs" not in form   # points are not shown on the options
+    for label in ("Никогда", "Редко", "Иногда", "Часто"):
+        assert form.count(f">{label}</span>") == 66
+    assert form.count('<ul class="list-none') == 6
+    assert len(re.findall(r"<li>\s*<fieldset>", form)) == 66
+    assert form.count('<span aria-hidden="true" class="text-primary-700">&bull;</span>') == 66
 
 
 @pytest.mark.django_db

@@ -19,19 +19,23 @@
     <section aria-labelledby="sec-{{ section.key }}" x-show="step === {{ forloop.counter0 }}"{% if not forloop.first %} data-step-cloak{% endif %} class="space-y-4">
       <h2 id="sec-{{ section.key }}" data-step="{{ forloop.counter0 }}" tabindex="-1" class="text-xl font-semibold focus:outline-none"><span class="block text-sm font-normal text-slate-600">{% blocktranslate with n=forloop.counter total=sections|length %}Раздел {{ n }} из {{ total }}{% endblocktranslate %}</span> {{ section.title }}</h2>
       {% if section.hint %}<p class="text-slate-700">{{ section.hint }}</p>{% endif %}
+      <ul class="list-none space-y-5">
       {% for q in section.questions %}
+        <li>
         <fieldset>
-          <legend class="mb-2 font-medium">{{ q.text }}</legend>
+          <legend class="mb-2 flex gap-2 font-medium"><span aria-hidden="true" class="text-primary-700">&bull;</span><span>{{ q.text }}</span></legend>
           <div class="grid grid-cols-4 gap-1">
             {% for value, label in scale %}
             <label class="relative block cursor-pointer">
               <input type="radio" class="peer sr-only" name="{{ q.key }}" value="{{ value }}" id="{{ q.key }}-{{ value }}">
-              <span class="hover:bg-primary-50 peer-checked:bg-primary-700 peer-checked:text-white peer-checked:hover:bg-primary-700 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-600 min-h-14 flex flex-col items-center justify-center rounded border border-field px-1 text-sm"><span class="block">{{ label }}</span> <span class="block text-xs">{{ value }}</span></span>
+              <span class="hover:bg-primary-50 peer-checked:bg-primary-700 peer-checked:text-white peer-checked:hover:bg-primary-700 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-600 min-h-11 flex items-center justify-center rounded border border-field px-1 text-sm">{{ label }}</span>
             </label>
             {% endfor %}
           </div>
         </fieldset>
+        </li>
       {% endfor %}
+      </ul>
     </section>
     {% endfor %}
     <div class="flex gap-3">

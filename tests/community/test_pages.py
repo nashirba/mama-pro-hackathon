@@ -84,6 +84,40 @@ def test_feed_specialist_chip_clears_filter(client):
     assert "specialist" not in chip and "kind=review" in chip
 
 
+def test_feed_specialist_chip_hidden_for_unlisted_or_unknown_profile(client):
+    hidden = SpecialistFactory(display_name="Скрытая Соня")
+    PrivateContextFactory(specialist=hidden, catalog_enabled=False)
+    no_context = SpecialistFactory(display_name="Без Контекста")
+    for pk in (hidden.pk, no_context.pk, 999999):
+        html = _html(client.get(f"/ru/community/?specialist={pk}&kind=review"))
+        assert "Отзывы о" not in html and "Скрытая Соня" not in html and "Без Контекста" not in html
+
+
+def test_feed_page_fragment_like_next_is_post_page_not_fragment_url(client):
+    posts = PostFactory.create_batch(21)
+    fragment = _html(client.get("/ru/community/?page=1", HTTP_HX_REQUEST="true"))
+    nexts = re.findall(r'name="next" value="([^"]*)"', fragment)
+    assert len(nexts) == 20
+    assert all(n.startswith("/ru/community/") and n.rstrip("/").split("/")[-1].isdigit() for n in nexts)
+    assert f'name="next" value="/ru/community/{posts[-1].pk}/"' in fragment
+    assert not any("page=" in n or "?" in n for n in nexts)
+
+
+def test_like_next_on_full_pages_is_the_current_page(client, catalog_fixture):
+    post = PostFactory()
+    feed = _html(client.get("/ru/community/?kind=question"))
+    assert 'name="next" value="/ru/community/?kind=question"' in feed
+    assert f'name="next" value="/ru/community/{post.pk}/"' in _html(client.get(f"/ru/community/{post.pk}/"))
+    assert 'name="next" value="/ru/"' in _html(client.get("/ru/"))
+
+
+def test_comment_like_next_points_to_post_page_with_anchor(client):
+    post = PostFactory()
+    comment = CommentFactory(post=post)
+    html = _html(client.get(f"/ru/community/{post.pk}/"))
+    assert f'name="next" value="/ru/community/{post.pk}/#comment-{comment.pk}"' in html
+
+
 def test_post_detail_404_for_deleted(client):
     post = PostFactory(is_deleted=True)
     assert client.get(f"/ru/community/{post.pk}/").status_code == 404
@@ -285,3 +319,28 @@ def test_feed_reply_count_uses_russian_plural_forms(client, count, label):
     CommentFactory.create_batch(count, post=post)
     html = _html(client.get("/ru/community/"))
     assert f"{label}</span>" in html
+
+
+def test_home_query_count_does_not_grow_with_cards(client, catalog_fixture):
+    PostFactory()
+    base = _count_queries(client, "/ru/")
+    for _ in range(2):
+        sp = SpecialistFactory()
+        PrivateContextFactory(specialist=sp)
+        PostFactory(author=sp.user)
+        PostFactory(kind=Post.Kind.REVIEW, specialist=sp)
+    assert _count_queries(client, "/ru/") <= base + 1
+    assert "Свежие посты" in _html(client.get("/ru/"))
+
+
+def test_specialist_page_query_count_does_not_grow_with_community_posts(client, catalog_fixture):
+    from apps.catalog.models import SpecialistProfile
+
+    spec = SpecialistProfile.objects.get(slug="ivanova-logoped")
+    PostFactory(kind=Post.Kind.REVIEW, specialist=spec)
+    url = "/ru/specialist/ivanova-logoped/"
+    base = _count_queries(client, url)
+    for _ in range(2):
+        PostFactory(kind=Post.Kind.REVIEW, specialist=spec)
+    assert _count_queries(client, url) <= base + 1
+    assert _html(client.get(url)).count('id="post-') == 3

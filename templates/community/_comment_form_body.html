@@ -1,0 +1,15 @@
+{% load i18n %}<form id="comment-form-{{ key }}" method="post" action="{% url 'community:comment' post.pk %}" hx-post="{% url 'community:comment' post.pk %}" hx-target="#comments" hx-swap="outerHTML" {% if oob %}hx-swap-oob="true" {% endif %} class="mt-2 space-y-2">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{% url 'community:post' post.pk %}">
+  {% if parent %}<input type="hidden" name="parent" value="{{ parent }}">{% endif %}
+  <label for="comment-body-{{ key }}" class="sr-only">{% translate "Комментарий" %}</label>
+  <textarea id="comment-body-{{ key }}" name="body" rows="3" maxlength="1000" required placeholder="{% if parent %}{% translate 'Ваш ответ' %}{% else %}{% translate 'Ваш комментарий' %}{% endif %}" class="w-full rounded-lg border border-slate-300 px-3 py-2"{% if f.body.errors %} aria-invalid="true" aria-describedby="comment-error-{{ key }}"{% endif %}>{{ f.body.value|default:'' }}</textarea>
+  {% if f.body.errors %}<p id="comment-error-{{ key }}" class="text-sm text-red-700" role="alert">{{ f.body.errors.0 }}</p>{% endif %}
+  {% if f.sensitive_warning %}
+  <label class="flex min-h-11 items-center gap-3 rounded-lg bg-amber-50 p-3 text-sm font-medium text-amber-900">
+    <input type="checkbox" name="confirm_sensitive" value="1" class="size-4">
+    {% translate "Всё равно опубликовать" %}
+  </label>
+  {% endif %}
+  <button type="submit" class="inline-flex min-h-11 items-center rounded-lg bg-primary-700 px-5 text-sm font-medium text-white hover:bg-primary-800">{% if parent %}{% translate "Ответить" %}{% else %}{% translate "Отправить" %}{% endif %}</button>
+</form>

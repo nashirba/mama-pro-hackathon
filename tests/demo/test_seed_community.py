@@ -80,6 +80,20 @@ def test_specialist_comments_come_only_from_marked_json_entries(seeded):
     assert Comment.objects.filter(author__specialist_profile__isnull=False, parent__isnull=True).count() == marked
 
 
+def test_specialist_comments_have_at_most_one_reply_so_no_specialist_replies():
+    """`_seed_comments` alternates repliers (post author, then the commenter); the second reply would be the specialist's."""
+    data = load_json("community_ru.json")
+    offenders = [
+        c["body"] for p in data["posts"] for c in p["comments"] if c.get("by") == "specialist" and len(c["replies"]) > 1
+    ]
+    assert not offenders
+
+
+def test_no_seed_reply_is_authored_by_a_specialist(seeded):
+    replies = Comment.objects.filter(parent__isnull=False, author__specialist_profile__isnull=False)
+    assert not replies.exists()
+
+
 def test_seed_does_not_touch_real_users_data(db):
     call_command("seed_demo", specialists=10, seed=1)
     user = User.objects.create_user("+77015556677", preferred_language="ru")
@@ -136,13 +150,24 @@ def test_reset_community_recreates_seed_and_keeps_real_posts(db):
     user.save()
     own = save_post(Post(author=user, kind="story", body="Моя настоящая история."))
     old_ids = set(Post.objects.exclude(pk=own.pk).values_list("pk", flat=True))
-    count = len(old_ids)
+    old_comment_ids = set(Comment.objects.values_list("pk", flat=True))
+    old_like_ids = set(Like.objects.values_list("pk", flat=True))
+    count, comment_count, like_count = len(old_ids), len(old_comment_ids), len(old_like_ids)
+    assert comment_count and like_count
 
     call_command("seed_demo", specialists=10, seed=1, reset_community=True)
 
     new_ids = set(Post.objects.exclude(pk=own.pk).values_list("pk", flat=True))
     assert len(new_ids) == count and not new_ids & old_ids
     assert Post.objects.filter(pk=own.pk).exists()
+    new_comments = set(Comment.objects.values_list("pk", flat=True))
+    new_likes = set(Like.objects.values_list("pk", flat=True))
+    assert new_comments and not new_comments & old_comment_ids
+    assert new_likes and not new_likes & old_like_ids
+    # same seed, same content: comments and replies are recreated in full
+    assert len(new_comments) == comment_count
+    assert Comment.objects.filter(parent__isnull=False).exists()
+    assert not Comment.objects.filter(post__in=old_ids).exists() and not Like.objects.filter(post__in=old_ids).exists()
 
 
 def test_seed_skips_visible_non_seed_specialists(db):

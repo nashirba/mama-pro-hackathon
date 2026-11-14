@@ -197,3 +197,25 @@ def test_latest_reviews_only_visible():
 def test_latest_posts_limit_and_order():
     posts = [PostFactory(created_at=timezone.now() - timedelta(hours=i)) for i in range(5)]
     assert [p.pk for p in query.latest_posts(GUEST)] == [p.pk for p in posts[:3]]
+
+
+def test_comment_for_viewer_is_one_query(django_assert_num_queries):
+    comment = CommentFactory()
+    with django_assert_num_queries(1):
+        found = query.comment_for_viewer(comment.pk, GUEST)
+        assert found.post.pk == comment.post_id and found.author.pk == comment.author_id
+
+
+def test_feed_cards_do_not_load_search_columns():
+    PostFactory()
+    card = query.feed(FeedParams(), GUEST)[0]
+    assert {"search_vector", "search_norm"} <= card.get_deferred_fields()
+    assert {"search_vector", "search_norm"} <= query.post_for_viewer(card.pk, GUEST).get_deferred_fields()
+
+
+def test_null_search_vector_does_not_sort_first():
+    strong = PostFactory(body="логопед для ребёнка", created_at=timezone.now() - timedelta(days=2))
+    weak = PostFactory(body="логопед", created_at=timezone.now())
+    Post.objects.filter(pk=weak.pk).update(search_vector=None)
+    ordered = [p.pk for p in query.feed(FeedParams(q="логопед для ребёнка"), GUEST)]
+    assert ordered == [strong.pk, weak.pk]

@@ -22,8 +22,9 @@
   <p class="whitespace-pre-line break-words text-slate-800">{% if detail %}{{ post.body }}{% else %}{{ post.body|truncatechars:400 }}{% endif %}</p>
   {% if post.has_image %}<img src="{% url 'community:image' post.pk %}" alt="" loading="lazy" class="max-h-96 w-full rounded-lg object-cover">{% endif %}
   <footer class="flex flex-wrap items-center gap-4 text-sm text-slate-600">
-    {% include "community/_like_button.html" with target="post" pk=post.pk liked=post.viewer_liked count=post.like_count %}
-    <span>{% blocktranslate count n=post.reply_count %}{{ n }} ответ{% plural %}{{ n }} ответов{% endblocktranslate %}</span>
+    {% url 'community:post' post.pk as post_url %}
+    {% include "community/_like_button.html" with target="post" pk=post.pk liked=post.viewer_liked count=post.like_count fragment_next=post_url %}
+    {% include "community/_reply_count.html" with count=post.reply_count %}
     {% if detail %}<a href="{% url 'community:complain' 'post' post.pk %}" class="inline-flex min-h-11 items-center rounded px-2 hover:underline">{% translate "Пожаловаться" %}</a>{% endif %}
   </footer>
 </article>

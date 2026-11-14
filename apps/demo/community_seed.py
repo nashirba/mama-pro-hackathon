@@ -45,6 +45,11 @@ def _parents(nicknames: list[str]) -> list[User]:
 
 
 def has_seed_posts() -> bool:
+    """Whether the seed was already created: some post by a synthetic parent exists.
+
+    Deliberately not "any post exists" - real users' posts must not block seeding, and the seed must not
+    be recreated over its own posts. Specialist accounts are not checked: they only add comments and reviews on top.
+    """
     return Post.objects.filter(author__phone__startswith=PARENT_PHONE_PREFIX).exists()
 
 

@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
-from apps.catalog.models import DevelopmentalCondition, SpecialistProfile
+from apps.catalog.models import DevelopmentalCondition
 from apps.catalog.visibility import catalog_visible_specialists
 from apps.geo.models import KatoNode
 
@@ -29,7 +29,9 @@ from .query import (
 from .services import (
     add_comment,
     file_complaint,
+    mention_prefix,
     save_post,
+    save_post_edit,
     soft_delete_comment,
     soft_delete_post,
     toggle_like,
@@ -75,9 +77,10 @@ def feed_view(request):
     next_url = _with_qs(f"{_feed_qs(params)}&page={params.page + 1}".lstrip("&")) if has_more else ""
     context = {"posts": posts, "next_url": next_url, "params": params}
     if request.headers.get("HX-Request"):
-        return render(request, "community/_feed_page.html", context)
+        # The fragment URL is not a page to come back to: like buttons fall back to the post page.
+        return render(request, "community/_feed_page.html", {**context, "fragment": True})
 
-    specialist = SpecialistProfile.objects.filter(pk=params.specialist_id).first() if params.specialist_id else None
+    specialist = catalog_visible_specialists().filter(pk=params.specialist_id).first() if params.specialist_id else None
     conditions = sorted(DevelopmentalCondition.objects.prefetch_related("translations"), key=lambda c: c.name)
     cities = sorted(KatoNode.objects.filter(level=KatoNode.Level.CITY).prefetch_related("translations"), key=lambda c: c.name)
     context.update(
@@ -119,7 +122,8 @@ def image(request, pk: int):
     post = post_for_viewer(pk, request.user)
     photo = get_object_or_404(PostImage, post_id=post.pk)
     response = HttpResponse(bytes(photo.data), content_type=photo.content_type)
-    response["Cache-Control"] = "public, max-age=86400"
+    # A hidden post is visible to its author only, so its photo must not sit in a shared cache.
+    response["Cache-Control"] = "private, no-store" if post.is_hidden else "public, max-age=86400"
     return response
 
 
@@ -178,7 +182,7 @@ def edit(request, pk: int):
     if request.method == "POST":
         form = PostEditForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            save_post(form.instance, form.upload, remove_image=form.cleaned_data["remove_image"])
+            save_post_edit(form.instance, form.upload, remove_image=form.cleaned_data["remove_image"])
             return redirect("community:post", pk=post.pk)
     else:
         form = PostEditForm(instance=post)
@@ -204,8 +208,27 @@ def _back(request, fallback: str) -> str:
     return candidate if is_safe_url(request, candidate) else fallback
 
 
-def _comments_fragment(request, post, **extra):
-    return render(request, "community/_comments.html", {"post": post, "nodes": comment_tree(post, request.user), **extra})
+def _comments_fragment(request, post):
+    """The comment tree plus an out-of-band refresh of the "N ответов" counter (recounted after the write)."""
+    post = post_for_viewer(post.pk, request.user)
+    context = {"post": post, "nodes": comment_tree(post, request.user), "with_reply_count": True}
+    return render(request, "community/_comments.html", context)
+
+
+def _comment_form_response(request, post, form, key: str):
+    """Re-show a comment form that was not saved (error or sensitive-data warning) with the user's text kept.
+
+    HTMX: only that form is swapped (retargeted), so other forms and the thread stay as they are.
+    Without HTMX: the whole post page, with the reply box of that comment open.
+    """
+    context = {"post": post, "comment_form": form, "comment_form_key": key}
+    if request.headers.get("HX-Request"):
+        response = render(request, "community/_comment_form.html", {**context, "parent": "" if key == "new" else key})
+        response["HX-Retarget"] = f"#comment-form-{key}"
+        response["HX-Reswap"] = "outerHTML"
+        return response
+    context["nodes"] = comment_tree(post, request.user)
+    return render(request, "community/post_detail.html", context)
 
 
 @member_required
@@ -220,12 +243,9 @@ def comment(request, pk: int):
         parent = comment_for_viewer(int(parent_id), request.user)
         if parent.post_id != post.pk:
             raise Http404
-    form = CommentForm(request.POST)
+    form = CommentForm(request.POST, mention=mention_prefix(parent))
     if not form.is_valid():
-        if request.headers.get("HX-Request"):
-            return _comments_fragment(request, post, comment_error=form.errors["body"][0])
-        messages.error(request, form.errors["body"][0])
-        return redirect(_post_url(post.pk))
+        return _comment_form_response(request, post, form, str(parent.pk) if parent else "new")
     created = add_comment(post, request.user, form.cleaned_data["body"], parent)
     if request.headers.get("HX-Request"):
         return _comments_fragment(request, post)

@@ -21,7 +21,7 @@ from django.db.models import (
     Value,
 )
 from django.db.models.functions import Coalesce
-from django.http import Http404, QueryDict
+from django.http import QueryDict
 from django.shortcuts import get_object_or_404
 
 from apps.catalog.models import SpecialistProfile
@@ -87,10 +87,8 @@ def _comment_visible(comment: Comment, viewer) -> bool:
 
 def comment_for_viewer(pk: int, viewer) -> Comment:
     """A comment the viewer may act on; 404 if it, or its post, is not visible to them."""
-    comment = get_object_or_404(Comment.objects.filter(_visible_q(viewer)).select_related("post"), pk=pk)
-    if not visible_posts(viewer).filter(pk=comment.post_id).exists():
-        raise Http404
-    return comment
+    visible = Comment.objects.filter(_visible_q(viewer), post__in=visible_posts(viewer))
+    return get_object_or_404(visible.select_related("post", "author"), pk=pk)
 
 
 def _count(model, **lookup) -> Subquery:
@@ -126,6 +124,8 @@ def _cards(qs: QuerySet[Post], viewer) -> QuerySet[Post]:
         )
         .select_related("author__specialist_profile", "condition", "city", "specialist")
         .prefetch_related("condition__translations", "city__translations")
+        # Cards are read-only: never save() these instances, the deferred search fields would be recomputed or lost.
+        .defer("search_vector", "search_norm")
     )
 
 
@@ -145,7 +145,7 @@ def feed(params: FeedParams, viewer) -> QuerySet[Post]:
         query = SearchQuery(params.q, config="russian", search_type="websearch") | SearchQuery(normalized_q, config="simple")
         trgm = TrigramWordSimilarity(normalized_q, "search_norm")
         qs = qs.annotate(trgm=trgm).filter(Q(search_vector=query) | Q(trgm__gte=settings.SEARCH_TRIGRAM_MIN))
-        qs = qs.annotate(text_rank=SearchRank(F("search_vector"), query) + F("trgm"))
+        qs = qs.annotate(text_rank=Coalesce(SearchRank(F("search_vector"), query), Value(0.0)) + F("trgm"))
         order = ["-text_rank", "-created_at", "-pk"]
     else:
         order = ["-created_at", "-pk"]

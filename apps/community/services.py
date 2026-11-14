@@ -14,11 +14,26 @@ def set_image(post: Post, upload: tuple[bytes, str] | None, *, remove: bool = Fa
         PostImage.objects.filter(post=post).delete()
 
 
+POST_EDIT_FIELDS = ["body", "condition", "city", "updated_at"]
+
+
 @transaction.atomic
-def save_post(post: Post, upload: tuple[bytes, str] | None = None, *, remove_image: bool = False) -> Post:
-    post.save()
+def save_post(
+    post: Post,
+    upload: tuple[bytes, str] | None = None,
+    *,
+    remove_image: bool = False,
+    update_fields: list[str] | None = None,
+) -> Post:
+    """Save the post and its photo; `update_fields` limits the UPDATE so a concurrent moderator change is not reverted."""
+    post.save(update_fields=update_fields)
     set_image(post, upload, remove=remove_image)
     return post
+
+
+def save_post_edit(post: Post, upload: tuple[bytes, str] | None = None, *, remove_image: bool = False) -> Post:
+    """Persist an author's edit: only the editable fields, never `is_hidden`, `is_deleted`, `kind` or `specialist`."""
+    return save_post(post, upload, remove_image=remove_image, update_fields=POST_EDIT_FIELDS)
 
 
 def soft_delete_post(post: Post) -> None:
@@ -26,13 +41,20 @@ def soft_delete_post(post: Post) -> None:
     post.save(update_fields=["is_deleted", "updated_at"])
 
 
+def mention_prefix(parent: Comment | None) -> str:
+    """The "@name " text prepended to a reply to a reply (empty for any other comment)."""
+    if parent is not None and parent.parent_id is not None:
+        return f"@{author_name(parent.author)} "
+    return ""
+
+
 def add_comment(post: Post, author: User, body: str, parent: Comment | None = None) -> Comment:
     """Comments nest two levels: a reply to a reply is attached to the top-level comment with an @mention."""
     if parent is not None:
         if parent.post_id != post.pk:
             raise ValueError("parent belongs to another post")
+        body = mention_prefix(parent) + body
         if parent.parent_id is not None:
-            body = f"@{author_name(parent.author)} {body}"
             parent = parent.parent
     return Comment.objects.create(post=post, author=author, parent=parent, body=body)
 

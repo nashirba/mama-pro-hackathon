@@ -43,8 +43,19 @@ def member(client):
         ("+7 701 123 45 67", ["phone"]),
         ("87011234567", ["phone"]),
         ("8 (701) 123-45-67", ["phone"]),
+        ("701 123 45 67", ["phone"]),
+        ("7011234567", ["phone"]),
+        ("(701) 123-45-67", ["phone"]),
+        ("пишите на 777 123 45 67 вечером", ["phone"]),
         ("номер заказа 1234567890123", []),
         ("сыну 5 лет", []),
+        ("цена 15 000 тенге", []),
+        ("стоит 700 000 тенге", []),
+        ("в 2019 году, с 7 лет", []),
+        ("700 123 45 6", []),
+        ("70112345678", []),
+        ("ИИН 701123456789", ["iin"]),
+        ("ИИН 770112345678", ["iin"]),
     ],
 )
 def test_looks_sensitive(text, expected):
@@ -109,6 +120,13 @@ def test_image_upload_and_serve(client, member):
     assert response.status_code == 200 and response["Content-Type"] == "image/png"
     assert response["Cache-Control"] == "public, max-age=86400"
     assert response.content.startswith(b"\x89PNG")
+
+
+def test_hidden_post_image_is_not_publicly_cached(client, member):
+    post = PostFactory(author=member, is_hidden=True)
+    PostImage.objects.create(post=post, data=b"x", content_type="image/png")
+    response = client.get(reverse("community:image", args=[post.pk]))
+    assert response.status_code == 200 and response["Cache-Control"] == "private, no-store"
 
 
 def test_image_rejects_gif_text_and_oversize(client, member, settings):
@@ -253,3 +271,65 @@ def test_specialist_options_only_visible(client, catalog_fixture):
     assert f'value="{visible.pk}"' in html and 'name="specialist"' in html
     hidden = catalog_fixture.specialists["hidden-logoped"]
     assert f'value="{hidden.pk}"' not in _html(client.get(url, {"q": "Скрытов"}))
+
+
+def test_form_rerender_asks_to_reattach_photo(client, member):
+    data = {"kind": "story", "body": "Наш ИИН 150101500123"}
+    with_photo = _html(client.post(NEW, {**data, "image": _image()}))
+    assert "Не публикуйте данные ребёнка" in with_photo and "Прикрепите фото ещё раз" in with_photo
+    assert "Прикрепите фото ещё раз" not in _html(client.post(NEW, data))
+    assert "Прикрепите фото ещё раз" not in _html(client.get(NEW))
+    invalid = _html(client.post(NEW, {"kind": "story", "body": "", "image": _image()}))
+    assert "Прикрепите фото ещё раз" in invalid
+    assert not Post.objects.exists()
+
+
+def test_edit_form_rerender_asks_to_reattach_photo(client, member):
+    post = PostFactory(author=member)
+    html = _html(client.post(reverse("community:edit", args=[post.pk]), {"body": "ИИН 150101500123", "image": _image()}))
+    assert "Прикрепите фото ещё раз" in html
+
+
+def test_edit_save_does_not_revert_concurrent_hide(client, member, monkeypatch):
+    from apps.community import views
+
+    post = PostFactory(author=member, body="Старый")
+    real_save = views.save_post_edit
+
+    def hidden_meanwhile(instance, *args, **kwargs):
+        Post.objects.filter(pk=post.pk).update(is_hidden=True)  # a moderator acts after the form loaded the post
+        return real_save(instance, *args, **kwargs)
+
+    monkeypatch.setattr(views, "save_post_edit", hidden_meanwhile)
+    response = client.post(reverse("community:edit", args=[post.pk]), {"body": "Новый"})
+    assert response.status_code == 302
+    post.refresh_from_db()
+    assert post.is_hidden is True and post.body == "Новый"
+
+
+def test_save_post_edit_touches_only_editable_fields_and_search():
+    from apps.community.forms import PostEditForm
+    from apps.community.services import save_post_edit
+
+    post = PostFactory(body="Старый текст")
+    form = PostEditForm({"body": "Совсем другой"}, instance=post)
+    assert form.is_valid()
+    Post.objects.filter(pk=post.pk).update(is_hidden=True, is_deleted=True)
+    before = Post.objects.get(pk=post.pk).updated_at
+    save_post_edit(form.instance)
+    fresh = Post.objects.get(pk=post.pk)
+    assert fresh.is_hidden and fresh.is_deleted and fresh.body == "Совсем другой"
+    assert fresh.updated_at > before and "другой" in fresh.search_norm
+
+
+def test_nickname_form_does_not_mutate_user_when_save_fails():
+    from apps.community.forms import NicknameForm
+
+    user = NicknamedUserFactory(display_name="Старое_имя")
+    form = NicknameForm({"display_name": "Новое_имя"}, user=user)
+    assert form.is_valid()
+    NicknamedUserFactory(display_name="Новое_имя")  # taken between validation and save
+    assert form.save() is False
+    assert user.display_name == "Старое_имя" and form.errors["display_name"]
+    user.refresh_from_db()
+    assert user.display_name == "Старое_имя"

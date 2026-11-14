@@ -1,3 +1,5 @@
+import re
+
 import pytest
 from django.urls import reverse
 
@@ -36,9 +38,11 @@ def test_like_toggles_and_counts(client, member):
     comment = CommentFactory(post=post)
     for target, obj in (("post", post), ("comment", comment)):
         first = client.post(_like(target, obj.pk), HTTP_HX_REQUEST="true")
-        assert first.status_code == 200 and "1" in _html(first) and 'aria-pressed="true"' in _html(first)
+        assert first.status_code == 200 and 'aria-pressed="true"' in _html(first)
+        assert re.search(r"Полезно 1\s*</button>", _html(first))
         second = client.post(_like(target, obj.pk), HTTP_HX_REQUEST="true")
         assert 'aria-pressed="false"' in _html(second)
+        assert re.search(r"Полезно 0\s*</button>", _html(second))
     assert not Like.objects.exists()
     client.post(_like("post", post.pk))
     assert Like.objects.filter(user=member, post=post).count() == 1

@@ -78,6 +78,7 @@
       <label for="post-image" class="block text-sm font-medium">{{ form.image.label }}</label>
       <input id="post-image" type="file" name="image" accept="image/jpeg,image/png" class="mt-1 block w-full text-sm"{% if form.image.errors %} aria-invalid="true" aria-describedby="image-error"{% endif %}>
       <p class="mt-1 text-xs text-slate-500">{% translate "JPEG или PNG, до 2 МБ" %}</p>
+      {% if form.photo_lost %}<p class="mt-1 text-sm font-medium text-amber-800" role="status">{% translate "Прикрепите фото ещё раз" %}</p>{% endif %}
       {% if form.image.errors %}<p id="image-error" class="mt-1 text-sm text-red-700">{{ form.image.errors.0 }}</p>{% endif %}
       {% if post and has_image %}
       <label class="mt-2 flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" name="remove_image" value="1" class="size-4"> {{ form.remove_image.label }}</label>

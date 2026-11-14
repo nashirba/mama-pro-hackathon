@@ -36,12 +36,14 @@ class NicknameForm(forms.Form):
         return name
 
     def save(self) -> bool:
-        """False when another user took the name between validation and save."""
+        """False when another user took the name between validation and save; the user is then left unchanged."""
+        previous = self.user.display_name
         self.user.display_name = self.cleaned_data["display_name"]
         try:
             with transaction.atomic():
                 self.user.save(update_fields=["display_name"])
         except IntegrityError:
+            self.user.display_name = previous
             self.add_error("display_name", _("Этот псевдоним уже занят"))
             return False
         return True
@@ -69,6 +71,11 @@ class _PostFieldsForm(forms.ModelForm):
         self.upload: tuple[bytes, str] | None = None
         self.sensitive_warning = False
         self.fields["body"].label = _("Текст")
+
+    @property
+    def photo_lost(self) -> bool:
+        """A photo was sent with this POST, but a re-rendered form cannot carry it over: ask for it again."""
+        return self.is_bound and bool(self.files.get("image"))
 
     @property
     def condition_choices(self) -> list[DevelopmentalCondition]:
@@ -156,7 +163,29 @@ class PostEditForm(_PostFieldsForm):
 
 
 class CommentForm(forms.Form):
+    """`mention` is the "@name " the service will prepend, so it counts towards the length limit."""
+
     body = forms.CharField(label=_("Комментарий"), max_length=COMMENT_BODY_MAX, strip=True, widget=forms.Textarea)
+    confirm_sensitive = forms.BooleanField(required=False)
+
+    def __init__(self, *args, mention: str = "", **kwargs):
+        super().__init__(*args, **kwargs)
+        self.mention = mention
+        self.sensitive_warning = False
+
+    def clean_body(self):
+        body = self.cleaned_data["body"]
+        if len(self.mention) + len(body) > COMMENT_BODY_MAX:
+            raise forms.ValidationError(_("С упоминанием имени ответ длиннее 1000 символов. Сократите текст."))
+        return body
+
+    def clean(self):
+        cleaned = super().clean()
+        body = cleaned.get("body")
+        if body and looks_sensitive(body) and not cleaned.get("confirm_sensitive"):
+            self.sensitive_warning = True
+            self.add_error("body", SENSITIVE_MESSAGE)
+        return cleaned
 
 
 class ComplaintForm(forms.Form):

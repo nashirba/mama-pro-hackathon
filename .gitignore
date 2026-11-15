@@ -30,3 +30,5 @@ static/css/
 /.claude/
 /skills-lock.json
 .gstack/
+/.django_tailwind_cli/
+/.mcp.json

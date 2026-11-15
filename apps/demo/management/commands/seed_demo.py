@@ -34,6 +34,7 @@ from apps.demo.generators import (
 )
 from apps.geo.models import Address, KatoNode
 from apps.search.builder import rebuild_all
+from apps.search.models import SearchOffer
 
 
 def _set_translations(obj, fields: dict[str, dict[str, str]]) -> None:
@@ -62,8 +63,16 @@ class Command(BaseCommand):
             action="store_true",
             help="Delete and recreate the seed community posts (otherwise existing ones are kept untouched)",
         )
+        parser.add_argument(
+            "--if-empty",
+            action="store_true",
+            help="Do nothing when the catalog already has search offers (fast restarts on a seeded database)",
+        )
 
     def handle(self, *args, **options):
+        if options["if_empty"] and SearchOffer.objects.exists():
+            self.stdout.write("Demo data already present, skipping seed (run without --if-empty to reseed)")
+            return
         total, nannies, seed = options["specialists"], options["nannies"], options["seed"]
         if total < 0 or nannies < 0:
             raise CommandError("--specialists and --nannies must not be negative")

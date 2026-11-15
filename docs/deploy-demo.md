@@ -40,7 +40,7 @@ Neon (Free plan), по документации на дату проверки:
    - `DEMO_CONTACT_PHONE` - номер команды в формате `+77XXXXXXXXX`, опционально. Пока значение пустое, кнопки WhatsApp и телефона отключены. Номера других людей сюда не вписывать.
    - `DEPLOY_PROFILE=demo` и `SECRET_KEY` уже заданы в `render.yaml` (`SECRET_KEY` генерирует Render).
 
-4. Запустите deploy. При каждом старте `dockerCommand: ./scripts/start.sh` выполняет `migrate --noinput` и `seed_demo` (обе команды идемпотентны), затем запускает gunicorn на `$PORT`.
+4. Запустите deploy. При каждом старте `dockerCommand: ./scripts/start.sh` выполняет `migrate --noinput` и `seed_demo --if-empty`, затем запускает gunicorn на `$PORT`. `--if-empty` пропускает seed, если в базе уже есть search offers: полный seed идёт десятки минут, и без этого флага каждое пробуждение сервиса стало бы таким же долгим. Чтобы пересоздать демо-данные (например, после изменения данных seed), выполните `python manage.py seed_demo` без флага в Render Shell.
 
 5. Проверьте endpoint:
 

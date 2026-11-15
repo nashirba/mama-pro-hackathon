@@ -57,6 +57,19 @@ def test_seed_demo_idempotent(db):
     assert counts() == before
 
 
+def test_seed_demo_if_empty_seeds_empty_database(db):
+    call_command("seed_demo", specialists=10, nannies=0, seed=1, if_empty=True)
+    assert SpecialistProfile.objects.count() == 10
+    assert SearchOffer.objects.exists()
+
+
+def test_seed_demo_if_empty_skips_seeded_database(db):
+    call_command("seed_demo", specialists=10, seed=1)
+    before = SpecialistProfile.objects.count()
+    call_command("seed_demo", specialists=20, seed=2, if_empty=True)
+    assert SpecialistProfile.objects.count() == before
+
+
 def test_seed_demo_has_online_only_and_kk_bios(db):
     call_command("seed_demo", specialists=30, seed=1)
     specialists = SpecialistProfile.objects.filter(category=ProfileCategory.SPECIALIST)
